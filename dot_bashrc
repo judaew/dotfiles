@@ -43,8 +43,6 @@ elif [ -f "/usr/share/git/completion/git-prompt.sh" ]; then
     source /usr/share/git/completion/git-prompt.sh
 elif [ -f "${HOME}/.config/git-prompt.sh" ]; then
     source "${HOME}"/.config/git-prompt.sh
-else
-    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh --output "${HOME}"/.config/git-prompt.sh
 fi
 
 GIT_PS1_SHOWDIRTYSTATE='1'        # '*'=unstaged, '+'=staged
@@ -119,11 +117,13 @@ HISTFILESIZE=100000
 # --- keybindings
 # source fzf key bindings
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    test /opt/local/share/fzf/shell/key-bindings.bash && \
+    if [ -f "/opt/local/share/fzf/shell/key-bindings.bash" ]; then
         source /opt/local/share/fzf/shell/key-bindings.bash
+    fi
 else
-    test /usr/share/fzf/key-bindings.bash && \
+    if [ if /usr/share/fzf/key-bindings.bash ]; then
         source /usr/share/fzf/key-bindings.bash
+    fi
 fi
 
 # --- functions

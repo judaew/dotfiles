@@ -28,6 +28,9 @@ filename_chezmoi="v${tag_chezmoi}/chezmoi_${tag_chezmoi}_${os}_${arch}.tar.gz"
 
 mkdir -p /tmp/chezmoi
 curl -L ${url_chezmoi}${filename_chezmoi} | tar xzf - -C /tmp/chezmoi
+curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh --output "${HOME}"/.config/git-prompt.sh
 
 /tmp/chezmoi/chezmoi init ${HOME}/dotfiles
 /tmp/chezmoi/chezmoi apply
+
+exit 0
