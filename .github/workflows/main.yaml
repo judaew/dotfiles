@@ -2,7 +2,7 @@ name: "lint changes files"
 on: push
 
 jobs:
-  spellcheck-lint:
+  shellcheck-lint:
     runs-on: macos-latest
     steps:
       - name: Cancel Previous Runs
@@ -19,7 +19,7 @@ jobs:
           mkdir $HOME/shellcheck
           ./bin/chezmoi init .
           ./bin/chezmoi -v apply -D ~/shellcheck
-      - name: Check with SpellCheck
+      - name: Check with ShellCheck
         run: |
           export SHELLCHECK_OPTS="-e SC1090 -e SC1091 -e SC2034"
           cd ~/shellcheck
