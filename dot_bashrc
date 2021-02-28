@@ -42,9 +42,9 @@ if [ -f "/opt/local/share/git/contrib/completion/git-prompt.sh" ]; then
 elif [ -f "/usr/share/git/completion/git-prompt.sh" ]; then
     source /usr/share/git/completion/git-prompt.sh
 elif [ -f "${HOME}/.config/git-prompt.sh" ]; then
-    source ${HOME}/.config/git-prompt.sh
+    source "${HOME}"/.config/git-prompt.sh
 else
-    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh --output ${HOME}/.config/git-prompt.sh
+    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh --output "${HOME}"/.config/git-prompt.sh
 fi
 
 GIT_PS1_SHOWDIRTYSTATE='1'        # '*'=unstaged, '+'=staged
