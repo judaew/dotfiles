@@ -3,6 +3,15 @@
 [[ -f "$HOME"/.profile ]] && . "$HOME"/.profile
 [[ -f "$HOME"/.bashrc ]] && . "$HOME"/.bashrc
 
+if command -v nvim &> /dev/null; then
+    export EDITOR="nvim"
+    export MANPAGER="nvim -c 'set ft=man nomod nolist' -c 'map q :q<CR>' -"
+elif command -v vim &> /dev/null; then
+    export EDIROR="vim"
+else
+    export EDITRO="vi"
+fi
+
 # init direnv
 if command -v direnv &> /dev/null; then
     eval "$(direnv hook bash)"

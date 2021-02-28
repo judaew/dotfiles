@@ -1,8 +1,9 @@
 # shellcheck shell=bash
 
 # --- paths
+MAC_GPG2="/usr/local/MacGPG2/bin"
 MACPORTS_GNUBIN="/opt/local/libexec/gnubin"
-MACPORTS_PATH="$MACPORTS_GNUBIN:/opt/local/bin:/opt/local/sbin"
+MACPORTS_PATH="$MAC_GPG2:$MACPORTS_GNUBIN:/opt/local/bin:/opt/local/sbin"
 PATH="$MACPORTS_PATH:/usr/local/bin:/usr/local/sbin:/bin:/sbin:$PATH"
 export PATH
 
@@ -17,8 +18,6 @@ export DISPLAY=:0
 # fix locale
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
-export EDITOR="nvim"
-export MANPAGER="nvim -c 'set ft=man nomod nolist' -c 'map q :q<CR>' -"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -29,8 +28,5 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 export PATH="$PATH:$GOBIN"
-
-# GPG Suite
-export PATH="/usr/local/MacGPG2/bin:$PATH"
 
 # vim:ft=sh
