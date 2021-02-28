@@ -1,0 +1,11 @@
+# shellcheck shell=bash
+
+[[ -f "$HOME"/.profile ]] && . "$HOME"/.profile
+[[ -f "$HOME"/.bashrc ]] && . "$HOME"/.bashrc
+
+# init direnv
+if command -v direnv &> /dev/null; then
+    eval "$(direnv hook bash)"
+fi
+
+# vim:ft=sh

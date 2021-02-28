@@ -1,0 +1,43 @@
+name: "lint changes files"
+on: push
+
+jobs:
+  spellcheck-lint:
+    runs-on: macos-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - name: Install Chezmoi and ShellCheck
+        run: |
+          curl -sfL https://git.io/chezmoi | sh
+          brew install shellcheck
+      - name: Initialize dotfiles
+        run: |
+          mkdir $HOME/shellcheck
+          ./bin/chezmoi init .
+          ./bin/chezmoi -v apply -D ~/shellcheck
+      - name: Check with SpellCheck
+        run: |
+          export SHELLCHECK_OPTS="-e SC1090 -e SC1091 -e SC2034"
+          cd ~/shellcheck
+          shellcheck .profile .bash_profile .bashrc
+
+  markdown-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v2
+      - name: Set-up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+      - name: Install dependencies
+        run: gem install mdl
+      - name: Run tests
+        run: mdl -r ~MD013,~MD029,~MD033 README.md

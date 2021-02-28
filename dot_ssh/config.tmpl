@@ -1,0 +1,20 @@
+# vim: set ft=sshconfig:
+
+Host judaew-Bitbucket
+    HostName bitbucket.org
+    User judaew
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/rsa_{{ .chezmoi.hostname }}_bitbucket@judaew
+
+Host judaew-Github
+    HostName github.com
+    User judaew
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/rsa_{{ .chezmoi.hostname }}_github@judaew
+
+Host *
+    Compression yes
+    AddKeysToAgent yes
+    {{- if eq .chezmoi.os "darwin" }}
+    UseKeychain yes
+    {{- end }}

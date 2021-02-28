@@ -1,0 +1,88 @@
+# The default configuration file there
+# https://github.com/alacritty/alacritty/blob/master/alacritty.yml
+
+window:
+  dimensions:
+    columns: 88
+    lines: 30
+
+scrolling:
+  history: 20000
+  multiplier: 3
+
+font:
+  size: 13.0
+  normal:
+    family: JetBrains Mono
+    style: Regular
+  bold:
+    family: JetBrains Mono
+    style: Bold
+  italic:
+    family: JetBrains Mono
+    style: Italic
+
+  use_thin_strokes: true
+
+# Colors (Solarized Light)
+colors:
+  # Default colors
+  primary:
+    background: '#fdf6e3' # base3
+    foreground: '#657b83' # base00
+
+  # Cursor colors
+  cursor:
+    text:   '#fdf6e3' # base3
+    cursor: '#657b83' # base00
+
+  # Normal colors
+  normal:
+    black:   '#073642' # base02
+    red:     '#dc322f' # red
+    green:   '#859900' # green
+    yellow:  '#b58900' # yellow
+    blue:    '#268bd2' # blue
+    magenta: '#d33682' # magenta
+    cyan:    '#2aa198' # cyan
+    white:   '#eee8d5' # base2
+
+  # Bright colors
+  bright:
+    black:   '#002b36' # base03
+    red:     '#cb4b16' # orange
+    green:   '#586e75' # base01
+    yellow:  '#657b83' # base00
+    blue:    '#839496' # base0
+    magenta: '#6c71c4' # violet
+    cyan:    '#93a1a1' # base1
+    white:   '#fdf6e3' # base3
+
+key_bindings:
+  # move/resize in tmux with arrows
+  - { key: Left,  mods: Command,       chars: "\x01\x68" }
+  - { key: Down,  mods: Command,       chars: "\x01\x6a" }
+  - { key: Up,    mods: Command,       chars: "\x01\x6b" }
+  - { key: Right, mods: Command,       chars: "\x01\x6c" }
+  - { key: Left,  mods: Command|Shift, chars: "\x01\x48" }
+  - { key: Down,  mods: Command|Shift, chars: "\x01\x4a" }
+  - { key: Up,    mods: Command|Shift, chars: "\x01\x4b" }
+  - { key: Right, mods: Command|Shift, chars: "\x01\x4c" }
+  # move between panes
+  - { key: Key1,  mods: Command,       chars: "\x01\x31" } # C-a 1
+  - { key: Key2,  mods: Command,       chars: "\x01\x32" } # C-a 2
+  - { key: Key3,  mods: Command,       chars: "\x01\x33" } # C-a 3
+  - { key: Key4,  mods: Command,       chars: "\x01\x34" } # C-a 4
+  - { key: Key5,  mods: Command,       chars: "\x01\x35" } # C-a 5
+  - { key: Key6,  mods: Command,       chars: "\x01\x36" } # C-a 6
+  - { key: Key7,  mods: Command,       chars: "\x01\x37" } # C-a 7
+  - { key: Key8,  mods: Command,       chars: "\x01\x38" } # C-a 8
+  - { key: Key9,  mods: Command,       chars: "\x01\x39" } # C-a 9
+  - { key: Key0,  mods: Command,       chars: "\x01\x30" } # C-a 0
+  # Copy/paste (tmux)
+  - { key: LBracket, mods: Command,    chars: "\x01\x5b" } # C-a [
+  - { key: RBracket, mods: Command,    chars: "\x01\x5d" } # C-a ]
+  # Increase/Decrease font size
+  - { key: Equals, mods: Command|Shift, action: IncreaseFontSize }
+  - { key: Minus,  mods: Command,       action: DecreaseFontSize }
+  - { key: Equals, mods: Command,       action: ResetFontSize }

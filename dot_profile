@@ -1,0 +1,36 @@
+# shellcheck shell=bash
+
+# --- paths
+MACPORTS_GNUBIN="/opt/local/libexec/gnubin"
+MACPORTS_PATH="$MACPORTS_GNUBIN:/opt/local/bin:/opt/local/sbin"
+PATH="$MACPORTS_PATH:/usr/local/bin:/usr/local/sbin:/bin:/sbin:$PATH"
+export PATH
+
+MANPATH="/opt/local/man:/usr/local/share/man:/usr/share/man:/Library/Apple/usr/share/man:$MANPATH"
+export MANPATH
+
+INFOPATH="/opt/local/info:/usr/local/share/info:$INFOPATH"
+export INFOPATH
+
+# --- general variables
+export DISPLAY=:0
+# fix locale
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+export EDITOR="nvim"
+export MANPAGER="nvim -c 'set ft=man nomod nolist' -c 'map q :q<CR>' -"
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
+
+# Golang
+export GOPATH="$HOME/go"
+export GOBIN="$GOPATH/bin"
+export PATH="$PATH:$GOBIN"
+
+# GPG Suite
+export PATH="/usr/local/MacGPG2/bin:$PATH"
+
+# vim:ft=sh

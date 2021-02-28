@@ -1,0 +1,71 @@
+# vim: set ft=gitconfig nomodeline:
+
+# git
+[user]
+    name = Vadim-Valdis Yudaev
+    email = "{{ .email }}"
+    signinkey = "{{ .signinkey }}"
+
+[commit]
+    gpgsign = "{{ .gpgsign }}"
+
+[push]
+    default = current
+
+[pull]
+    rebase = true
+
+[color]
+    ui = auto
+
+# gpg
+[gpg]
+    program = gpg2
+
+# git.alias
+[alias]
+    br = branch
+    ls = ls-files
+    # Show files ignored by git:
+    ign = ls-files -o -i --exclude-standard
+
+    shoot = push origin --delete
+    unstage = reset HEAD --
+    prev = checkout -
+    discard = checkout --
+
+# git.diff
+[diff]
+    tool = Kaleidoscope
+
+[difftool]
+    prompt = false
+    thustExitCode = true
+
+[difftool "nvimdiff"]
+    cmd = nvim -d $LOCAL $REMOTE
+
+[difftool "Kaleidoscope"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+# git.merge
+[merge]
+    tool = Kaleidoscope
+    conflictstyle = diff3
+
+[mergetool]
+    prompt = false
+
+[mergetool "nvimdiff"]
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[mergetool "Kaleidoscope"]
+    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+    trustExitCode = true
+
+# git-lfs
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true

@@ -1,0 +1,30 @@
+# ctags
+# auto-generated tag files
+tags
+
+# jetbrains
+.idea/
+.idea_modules/
+
+# vscode
+.vscode
+
+# go #
+# binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# test binary, built with `go test -c`
+*.test
+
+# linux
+*~
+
+# macOS
+# general
+.DS_Store
+# thumbnails
+._*

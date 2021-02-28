@@ -1,0 +1,195 @@
+# shellcheck shell=bash
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# --- plugins and third party
+
+# source bash-completion
+if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
+    . /opt/local/etc/profile.d/bash_completion.sh
+fi
+
+if [ -f /opt/local/share/bash-completion/completions/pass ]; then
+    . /opt/local/share/bash-completion/completions/pass-otp
+    . /opt/local/share/bash-completion/completions/pass-update
+fi
+
+# --- options
+
+shopt -s autocd
+shopt -s cdable_vars
+shopt -s checkhash
+shopt -s checkjobs
+shopt -s checkwinsize
+shopt -s direxpand
+shopt -s dirspell
+shopt -s dotglob
+shopt -s histappend
+shopt -s nocaseglob
+
+export HISTCONTROL=ignoredups
+
+# --- colors and prompt
+# select highlight theme for `ranger`
+export HIGHLIGHT_STYLE=solarized-light
+
+# allows the shortening of paths
+PROMPT_DIRTRIM=2
+
+if [ -f "/opt/local/share/git/contrib/completion/git-prompt.sh" ]; then
+    source /opt/local/share/git/contrib/completion/git-prompt.sh
+elif [ -f "/usr/share/git/completion/git-prompt.sh" ]; then
+    source /usr/share/git/completion/git-prompt.sh
+elif [ -f "${HOME}/.config/git-prompt.sh" ]; then
+    source ${HOME}/.config/git-prompt.sh
+else
+    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh --output ${HOME}/.config/git-prompt.sh
+fi
+
+GIT_PS1_SHOWDIRTYSTATE='1'        # '*'=unstaged, '+'=staged
+GIT_PS1_SHOWSTASHSHATE='1'        # '$'=stashed
+GIT_PS1_SHOWUPSTREAM='verbose'    # 'u='=no difference, 'u+1'=ahead by 1 commit
+GIT_PS1_STATESEPARATOR=''         # no space between branch and index status
+GIT_PS1_DESCRIBE_STYLE='describe'
+
+function __prompt_cmd() {
+    local exit_status=$?
+
+    local LIGHT_GRAY="\[\e[0;37m\]"
+    local RED="\[\e[0;31m\]"
+    local CYAN="\[\e[0;36m\]"
+    local PURPLE="\[\e[0;35m\]"
+    local DARK_GRAY="\[\e[0;90m\]"
+    local COLOR_RESET="\[\e[0;0m\]"
+
+    # set window title bar
+    printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
+
+    # check for ssh session
+    if [[ -n "$SSH_CLIENT" ]]; then
+        PS1="\n ${LIGHT_GRAY}\u@\h ${CYAN}\w "
+    else
+        PS1="\n ${CYAN}\w "
+    fi
+    PS1+="${DARK_GRAY}\$(__git_ps1)"
+
+    # set main prompt
+    if [[ $exit_status = 0 ]]; then
+        PS1+="\n${PURPLE}❯ ${COLOR_RESET}"
+    else
+        PS1+="\n${RED}❯ ${COLOR_RESET}"
+    fi
+}
+PROMPT_COMMAND="__prompt_cmd"
+
+# --- aliases
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias ls="ls -G"
+else
+    alias ls="ls --color=auto"
+fi
+
+alias la="ls -a"
+alias ll="ls -al"
+alias ldot="ls -ld .*"
+alias mv="mv -v"
+alias cp="cp -i"
+alias df="df -h"
+alias du="du -h"
+
+alias week="date +%V"
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias random-mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
+
+# darwin specific
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+    alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+    alias typora="open -a typora"
+fi
+
+# --- variables
+# Most environment variables have been moved to ~/.profile
+HISTCONTROL=ignoreboth:erasedups
+HISTSIZE=100000
+HISTFILESIZE=100000
+
+# --- keybindings
+# source fzf key bindings
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    test /opt/local/share/fzf/shell/key-bindings.bash && \
+        source /opt/local/share/fzf/shell/key-bindings.bash
+else
+    test /usr/share/fzf/key-bindings.bash && \
+        source /usr/share/fzf/key-bindings.bash
+fi
+
+# --- functions
+function __path_remove() {
+    PATH=$(echo -n "$PATH" | awk -v RS=: -v ORS=: '$0 != "$1"' | sed 's/:$//');
+    export PATH
+}
+
+function __java_check_current_version() {
+    java -version 2>&1 | head -1 | cut -d'"' -f2 | sed '/^1\./s///' | cut -d'.' -f1
+}
+
+function java-set() {
+    if [ "$1" ]; then
+        case $1 in
+            -l|--list) /usr/libexec/java_home -V ;;
+            -s|--set)
+                __path_remove "$JAVA_HOME" && __path_remove "$JAVA_BIN"
+                JAVA_HOME=$(/usr/libexec/java_home -v "$2")
+                export JAVA_HOME
+                JAVA_BIN=${JAVA_HOME}/bin
+                export JAVA_BIN
+                export PATH=$PATH:$JAVA_BIN && \
+                    echo "The current Java version is $(__java_check_current_version)"
+                ;;
+        esac
+    fi
+}
+
+function portlist-create() {
+    true portlist-requested.txt
+    cat <<'EOF' > portlist-requested.txt
+This file contains packages I use on Darwin and install with Macports.
+Install them with the followin command:
+
+    for i in $(sed '1,13d' portlist-requested.txt); do
+        sudo port -N install $i||echo $i failed
+    done
+
+To recreate this list after adding packages, use the follow command:
+
+    portlist-create
+
+Packages:
+
+EOF
+    port echo requested | cut -d ' ' -f 1 >> portlist-requested.txt
+}
+
+# `sprunge filename # post file to sprunge`
+# `some_command | sprunge # pipe output to sprunge`
+function sprunge() {
+  if [[ $1 ]]; then
+    curl -F 'sprunge=<-' "http://sprunge.us" <"$1"
+  else
+    curl -F 'sprunge=<-' "http://sprunge.us"
+  fi
+}
+
+# Adds all available keys to SSH agent
+function ssh-add-all() {
+    for i in $(find "$HOME"/.ssh/* -type f ! -name "*.*" | sed \
+        's!.*/!!' | sed '/config/,/known_hosts/d; /.pub/d')
+    do
+        ssh-add -K ~/.ssh/"${i}"||echo "${i}" failed
+    done
+}
+
+# vim:ft=sh
