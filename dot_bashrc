@@ -121,7 +121,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         source /opt/local/share/fzf/shell/key-bindings.bash
     fi
 else
-    if [ if /usr/share/fzf/key-bindings.bash ]; then
+    if [ -f /usr/share/fzf/key-bindings.bash ]; then
         source /usr/share/fzf/key-bindings.bash
     fi
 fi
