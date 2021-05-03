@@ -9,8 +9,7 @@ function! PackInit() abort
     call minpac#add('k-takata/minpac', {'type': 'opt'})
 
     " theme
-    call minpac#add('lifepillar/vim-solarized8')
-    call minpac#add('doums/darcula')
+    call minpac#add('fatih/molokai')
 
     " ui
     call minpac#add('junegunn/goyo.vim')
@@ -44,13 +43,14 @@ function! PackInit() abort
 
     " dev and lang
     call minpac#add('editorconfig/editorconfig-vim')
-    " call minpac#add('fatih/vim-go')
+    call minpac#add('fatih/vim-go')
     " call minpac#update('', {'do': ':GoUpdateBinaries'})
     call minpac#add('jparise/vim-graphql')
     call minpac#add('cespare/vim-toml')
     call minpac#add('fatih/vim-nginx')
     call minpac#add('ekalinin/dockerfile.vim')
     call minpac#add('dzeban/vim-log-syntax')
+    call minpac#add('jstrater/mpvim')
 endfunction
 
 if has('mac')
@@ -73,11 +73,10 @@ filetype plugin indent on
 
 " colors and theme
 set termguicolors
-set background=light
-colorscheme solarized8_high
-if g:colors_name == "solarized8_high"
-  hi Error guifg=#586e75 guibg=#eee8d5 gui=NONE cterm=NONE
-endif
+set background=dark
+colorscheme molokai
+let g:molokai_origin = 1
+let g:rehash = 1
 
 set encoding=utf-8
 set tabstop=8
@@ -267,7 +266,7 @@ function! LightlineReadonly()
 endfunction
 
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'molokai',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified' ],

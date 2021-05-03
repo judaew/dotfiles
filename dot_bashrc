@@ -32,7 +32,7 @@ export HISTCONTROL=ignoredups
 
 # --- colors and prompt
 # select highlight theme for `ranger`
-export HIGHLIGHT_STYLE=solarized-light
+export HIGHLIGHT_STYLE=molokai
 
 # allows the shortening of paths
 PROMPT_DIRTRIM=2
