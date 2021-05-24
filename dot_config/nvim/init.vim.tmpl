@@ -43,14 +43,14 @@ function! PackInit() abort
 
     " dev and lang
     call minpac#add('editorconfig/editorconfig-vim')
-    call minpac#add('fatih/vim-go')
+    " call minpac#add('fatih/vim-go')
     " call minpac#update('', {'do': ':GoUpdateBinaries'})
     call minpac#add('jparise/vim-graphql')
     call minpac#add('cespare/vim-toml')
     call minpac#add('fatih/vim-nginx')
     call minpac#add('ekalinin/dockerfile.vim')
     call minpac#add('dzeban/vim-log-syntax')
-    call minpac#add('jstrater/mpvim')
+    call minpac#add('judaew/vim-macports', {'branch': 'devel'})
 endfunction
 
 if has('mac')
@@ -311,19 +311,8 @@ nmap <leader>n :Fern . -drawer<CR>
 " Open current working directory
 nmap <leader>f :Fern . -reveal=% -drawer<CR>
 
-" ]]]
-
-" search [[[
-" ---- jesseleite/vim-agriculture
-nmap <Leader>/ <Plug>AgRawSearch
-vmap <Leader>/ <Plug>AgRawVisualSelection
-nmap <Leader>* <Plug>AgRawWordUnderCursor
-
-" ]]]
-
-" lang [[[
-" ---- fatih/vim-go
-let g:go_test_show_name = 1
+" ---- justinmk/vim-gtfo
+let g:gtfo#terminals = { 'mac': 'kitty' }
 
 " ]]]
 
