@@ -7,9 +7,9 @@ if command -v nvim &> /dev/null; then
     export EDITOR="nvim"
     export MANPAGER="nvim -c 'set ft=man nomod nolist' -c 'map q :q<CR>' -"
 elif command -v vim &> /dev/null; then
-    export EDIROR="vim"
+    export EDITOR="vim"
 else
-    export EDITRO="vi"
+    export EDITOR="vi"
 fi
 
 # init direnv
