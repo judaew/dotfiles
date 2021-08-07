@@ -12,7 +12,6 @@ function! PackInit() abort
     call minpac#add('fatih/molokai')
 
     " ui
-    call minpac#add('junegunn/goyo.vim')
     call minpac#add('itchyny/lightline.vim')
     call minpac#add('machakann/vim-highlightedyank')
     call minpac#add('junegunn/vim-peekaboo')
@@ -26,7 +25,6 @@ function! PackInit() abort
     call minpac#add('tpope/vim-commentary')
     call minpac#add('tpope/vim-dispatch')
     call minpac#add('simnalamburt/vim-mundo')
-    call minpac#add('AndrewRadev/splitjoin.vim')
 
     " browsing
     call minpac#add('lambdalisue/fern.vim')
@@ -43,10 +41,7 @@ function! PackInit() abort
 
     " dev and lang
     call minpac#add('editorconfig/editorconfig-vim')
-    " call minpac#add('fatih/vim-go')
-    " call minpac#update('', {'do': ':GoUpdateBinaries'})
     call minpac#add('jparise/vim-graphql')
-    call minpac#add('cespare/vim-toml')
     call minpac#add('fatih/vim-nginx')
     call minpac#add('ekalinin/dockerfile.vim')
     call minpac#add('dzeban/vim-log-syntax')
@@ -111,8 +106,10 @@ set completeopt-=preview
 set completeopt+=menuone,noselect
 " Better command-line completion
 set wildmenu wildmode=full
-" Highlight tabs and spaces
-" set list listchars=tab:\│\ ,trail:·,extends:>,precedes:<,nbsp:+
+
+" TODO: Make a function that can highlight tabs or trailling whitespace
+"       by hotkey.
+set list listchars=tab:\│\ ,extends:>,precedes:<,nbsp:+
 
 " Shut off completion messages
 " If Vim beeps during completion
@@ -152,6 +149,12 @@ endif
 " ]]]
 
 " mapping [[[
+
+" remove newbie crutches (temporarily)
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
 
 " this comes first, because we have mappings that depend on leader
 " with a map leader it's possible to do extra key combinations
@@ -223,10 +226,10 @@ else
   set clipboard^=unnamedplus
 endif
 
-" Switch layout (en-ru)
-set keymap=russian-jcukenmac
-set iminsert=0 imsearch=0
-imap <leader>l <C-^>
+" TODO: Make a function that recognizes the link, otherwise uses netrw for
+"       this hotkey
+" https://stackoverflow.com/a/63352904
+nmap gx :!open <c-r><c-a>
 
 " ]]]
 
