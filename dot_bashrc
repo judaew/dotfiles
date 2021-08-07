@@ -137,20 +137,13 @@ function __java_check_current_version() {
 }
 
 function java-set() {
-    if [ "$1" ]; then
-        case $1 in
-            -l|--list) /usr/libexec/java_home -V ;;
-            -s|--set)
-                __path_remove "$JAVA_HOME" && __path_remove "$JAVA_BIN"
-                JAVA_HOME=$(/usr/libexec/java_home -v "$2")
-                export JAVA_HOME
-                JAVA_BIN=${JAVA_HOME}/bin
-                export JAVA_BIN
-                export PATH=$PATH:$JAVA_BIN && \
-                    echo "The current Java version is $(__java_check_current_version)"
-                ;;
-        esac
-    fi
+    __path_remove "$JAVA_HOME" && __path_remove "$JAVA_BIN"
+    JAVA_HOME=$(/usr/libexec/java_home -v "$1")
+    export JAVA_HOME
+    JAVA_BIN=${JAVA_HOME}/bin
+    export JAVA_BIN
+    export PATH=$PATH:$JAVA_BIN && \
+        echo "The current Java version is $(__java_check_current_version)"
 }
 
 function portlist-create() {
