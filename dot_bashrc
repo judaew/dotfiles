@@ -115,14 +115,11 @@ HISTSIZE=100000
 HISTFILESIZE=100000
 
 # --- keybindings
-# source fzf key bindings
+set -o vi
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    if [ -f "/opt/local/share/fzf/shell/key-bindings.bash" ]; then
-        source /opt/local/share/fzf/shell/key-bindings.bash
-    fi
-else
-    if [ -f /usr/share/fzf/key-bindings.bash ]; then
-        source /usr/share/fzf/key-bindings.bash
+    if [[ -r "/opt/local/share/mcfly/mcfly.bash" ]]; then
+        source "/opt/local/share/mcfly/mcfly.bash"
     fi
 fi
 
