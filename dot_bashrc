@@ -7,12 +7,12 @@
 
 # source bash-completion
 if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
-    . /opt/local/etc/profile.d/bash_completion.sh
+    source /opt/local/etc/profile.d/bash_completion.sh
 fi
 
 if [ -f /opt/local/share/bash-completion/completions/pass ]; then
-    . /opt/local/share/bash-completion/completions/pass-otp
-    . /opt/local/share/bash-completion/completions/pass-update
+    source /opt/local/share/bash-completion/completions/pass-otp
+    source /opt/local/share/bash-completion/completions/pass-update
 fi
 
 # --- options
@@ -118,8 +118,8 @@ HISTFILESIZE=100000
 set -o vi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    if [[ -r "/opt/local/share/mcfly/mcfly.bash" ]]; then
-        source "/opt/local/share/mcfly/mcfly.bash"
+    if [[ -r "/opt/local/share/bash-completion/completions/mcfly" ]]; then
+        source /opt/local/share/bash-completion/completions/mcfly
     fi
 fi
 
