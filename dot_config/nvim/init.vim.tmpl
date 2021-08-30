@@ -25,6 +25,7 @@ function! PackInit() abort
     call minpac#add('tpope/vim-commentary')
     call minpac#add('tpope/vim-dispatch')
     call minpac#add('simnalamburt/vim-mundo')
+    call minpac#add('lyokha/vim-xkbswitch')
 
     " browsing
     call minpac#add('lambdalisue/fern.vim')
@@ -46,6 +47,10 @@ function! PackInit() abort
     call minpac#add('ekalinin/dockerfile.vim')
     call minpac#add('dzeban/vim-log-syntax')
     call minpac#add('judaew/vim-macports', {'branch': 'devel'})
+
+    " knowledge
+    call minpac#add('vimwiki/vimwiki')
+    call minpac#add('michal-h21/vim-zettel')
 endfunction
 
 if has('mac')
@@ -306,6 +311,10 @@ nmap gcc <Plug>CommentaryLine
 " ---- simnalamburt/vim-mundo
 nnoremap U :MundoToggle<CR>
 
+" ---- lyokha/vim-xkbswitch
+let g:XkbSwitchEnabled = 1
+let g:XkbSwitchLib = '/opt/local/lib/libInputSourceSwitcher.dylib'
+
 " ]]]
 
 " browsing [[[
@@ -317,6 +326,18 @@ nmap <leader>f :Fern . -reveal=% -drawer<CR>
 
 " ---- justinmk/vim-gtfo
 let g:gtfo#terminals = { 'mac': 'kitty' }
+
+" ]]]
+
+" knowledge [[[
+" ---- vimwiki/vimwiki
+let wiki = {}
+let wiki.path = '~/Documents/vimwiki/'
+let wiki.nested_syntaxes = {'c': 'c', 'c++': 'cpp'}
+let g:vimwiki_list = [wiki]
+
+" ---- michal-h21/vim-zettel
+let g:zettel_format = "%y%m%d-%H%M"
 
 " ]]]
 
