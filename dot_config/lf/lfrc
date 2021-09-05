@@ -51,7 +51,7 @@ cmd open ${{
 # (also see 'man mv' for backup/overwrite options)
 cmd trash %set -f; mv $fx ~/.trash
 
-define a custom 'delete' command
+# define a custom 'delete' command
 cmd delete ${{
     set -f
     printf "$fx\n"
