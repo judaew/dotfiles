@@ -118,8 +118,8 @@ HISTFILESIZE=100000
 set -o vi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    if [[ -r "/opt/local/share/bash-completion/completions/mcfly" ]]; then
-        source /opt/local/share/bash-completion/completions/mcfly
+    if [[ -r "/opt/local/share/mcfly/mcfly.bash" ]]; then
+        source /opt/local/share/mcfly/mcfly.bash
     fi
 fi
 
