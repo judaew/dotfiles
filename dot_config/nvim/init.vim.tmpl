@@ -49,8 +49,8 @@ function! PackInit() abort
     call minpac#add('judaew/vim-macports', {'branch': 'devel'})
 
     " knowledge
-    call minpac#add('vimwiki/vimwiki')
-    call minpac#add('michal-h21/vim-zettel')
+    call minpac#add('ratfactor/vviki')
+    call minpac#add('habamax/vim-asciidoctor')
 endfunction
 
 if has('mac')
@@ -330,14 +330,9 @@ let g:gtfo#terminals = { 'mac': 'kitty' }
 " ]]]
 
 " knowledge [[[
-" ---- vimwiki/vimwiki
-let wiki = {}
-let wiki.path = '~/Documents/vimwiki/'
-let wiki.nested_syntaxes = {'c': 'c', 'c++': 'cpp'}
-let g:vimwiki_list = [wiki]
-
-" ---- michal-h21/vim-zettel
-let g:zettel_format = "%y%m%d-%H%M"
+" " ---- ratfactor/vviki
+" VViki setup - relies on the default wiki root dir (~/wiki)
+nnoremap <leader>ww :e ~/wiki/index.adoc<cr>
 
 " ]]]
 
