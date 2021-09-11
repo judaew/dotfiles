@@ -1,7 +1,7 @@
 # shellcheck shell=bash
 
 # If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+[[ ${-} != *i* ]] && return
 
 # --- plugins and third party
 
@@ -31,9 +31,6 @@ shopt -s nocaseglob
 export HISTCONTROL=ignoredups
 
 # --- colors and prompt
-# select highlight theme for `ranger`
-export HIGHLIGHT_STYLE=molokai
-
 # allows the shortening of paths
 PROMPT_DIRTRIM=2
 
@@ -52,7 +49,7 @@ GIT_PS1_STATESEPARATOR=''         # no space between branch and index status
 GIT_PS1_DESCRIBE_STYLE='describe'
 
 function __prompt_cmd() {
-    local exit_status=$?
+    local exit_status=${?}
 
     local LIGHT_GRAY="\[\e[0;37m\]"
     local RED="\[\e[0;31m\]"
@@ -65,7 +62,7 @@ function __prompt_cmd() {
     printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
 
     # check for ssh session
-    if [[ -n "$SSH_CLIENT" ]]; then
+    if [[ -n "${SSH_CLIENT}" ]]; then
         PS1="\n ${LIGHT_GRAY}\u@\h ${CYAN}\w "
     else
         PS1="\n ${CYAN}\w "
@@ -73,7 +70,7 @@ function __prompt_cmd() {
     PS1+="${DARK_GRAY}\$(__git_ps1)"
 
     # set main prompt
-    if [[ $exit_status = 0 ]]; then
+    if [[ ${exit_status} = 0 ]]; then
         PS1+="\n${PURPLE}❯ ${COLOR_RESET}"
     else
         PS1+="\n${RED}❯ ${COLOR_RESET}"
@@ -82,7 +79,7 @@ function __prompt_cmd() {
 PROMPT_COMMAND="__prompt_cmd"
 
 # --- aliases
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "${OSTYPE}" == "darwin"* ]]; then
     alias ls="ls -G"
 else
     alias ls="ls --color=auto"
@@ -102,7 +99,7 @@ alias localip="ipconfig getifaddr en0"
 alias random-mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 
 # darwin specific
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "${OSTYPE}" == "darwin"* ]]; then
     alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
     alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
     alias typora="open -a typora"
@@ -117,7 +114,7 @@ HISTFILESIZE=100000
 # --- keybindings
 set -o vi
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "${OSTYPE}" == "darwin"* ]]; then
     if [[ -r "/opt/local/share/mcfly/mcfly.bash" ]]; then
         source /opt/local/share/mcfly/mcfly.bash
     fi
@@ -125,7 +122,7 @@ fi
 
 # --- functions
 function __path_remove() {
-    PATH=$(echo -n "$PATH" | awk -v RS=: -v ORS=: '$0 != "$1"' | sed 's/:$//');
+    PATH=$(echo -n "${PATH}" | awk -v RS=: -v ORS=: '$0 != "$1"' | sed 's/:$//');
     export PATH
 }
 
@@ -134,12 +131,12 @@ function __java_check_current_version() {
 }
 
 function java-set() {
-    __path_remove "$JAVA_HOME" && __path_remove "$JAVA_BIN"
-    JAVA_HOME=$(/usr/libexec/java_home -v "$1")
+    __path_remove "${JAVA_HOME}" && __path_remove "${JAVA_BIN}"
+    JAVA_HOME=$(/usr/libexec/java_home -v "${1}")
     export JAVA_HOME
     JAVA_BIN=${JAVA_HOME}/bin
     export JAVA_BIN
-    export PATH=$PATH:$JAVA_BIN && \
+    export PATH=${PATH}:${JAVA_BIN} && \
         echo "The current Java version is $(__java_check_current_version)"
 }
 
@@ -166,8 +163,8 @@ EOF
 # `sprunge filename # post file to sprunge`
 # `some_command | sprunge # pipe output to sprunge`
 function sprunge() {
-  if [[ $1 ]]; then
-    curl -F 'sprunge=<-' "http://sprunge.us" <"$1"
+  if [[ ${1} ]]; then
+    curl -F 'sprunge=<-' "http://sprunge.us" <"${1}"
   else
     curl -F 'sprunge=<-' "http://sprunge.us"
   fi
@@ -175,7 +172,7 @@ function sprunge() {
 
 # Adds all available keys to SSH agent
 function ssh-add-all() {
-    for i in $(find "$HOME"/.ssh/* -type f ! -name "*.*" | sed \
+    for i in $(find "${HOME}"/.ssh/* -type f ! -name "*.*" | sed \
         's!.*/!!' | sed '/config/,/known_hosts/d; /.pub/d')
     do
         ssh-add -K ~/.ssh/"${i}"||echo "${i}" failed
