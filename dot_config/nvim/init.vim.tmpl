@@ -330,9 +330,13 @@ let g:gtfo#terminals = { 'mac': 'kitty' }
 " ]]]
 
 " knowledge [[[
-" " ---- ratfactor/vviki
+" ---- ratfactor/vviki
 " VViki setup - relies on the default wiki root dir (~/wiki)
 nnoremap <leader>ww :e ~/wiki/index.adoc<cr>
+
+" ---- habamax/vim-asciidoctor
+let g:asciidoctor_executable = 'asciidoctorj'
+let g:asciidoctor_pdf_executable = 'asciidoctorj -b pdf'
 
 " ]]]
 
