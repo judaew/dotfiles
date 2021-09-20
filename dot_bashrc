@@ -15,6 +15,11 @@ if [ -f /opt/local/share/bash-completion/completions/pass ]; then
     source /opt/local/share/bash-completion/completions/pass-update
 fi
 
+# settings mcfly
+export MCFLY_KEY_SCHEME=vim
+export MCFLY_FUZZY=true
+export MCFLY_RESULTS=50
+
 # --- options
 
 shopt -s autocd
