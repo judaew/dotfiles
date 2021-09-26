@@ -18,31 +18,40 @@ function! PackInit() abort
     call minpac#add('t9md/vim-choosewin')
 
     " edit
-    call minpac#add('Raimondi/delimitMate')
+    " call minpac#add('Raimondi/delimitMate')
     call minpac#add('tpope/vim-repeat')
-    call minpac#add('tpope/vim-surround')
+    " call minpac#add('tpope/vim-surround')
     call minpac#add('tpope/vim-endwise')
     call minpac#add('tpope/vim-commentary')
-    call minpac#add('tpope/vim-dispatch')
-    call minpac#add('simnalamburt/vim-mundo')
-    call minpac#add('lyokha/vim-xkbswitch')
+    call minpac#add('tpope/vim-dispatch')     " asynchronous build dispatcher
+    call minpac#add('simnalamburt/vim-mundo') " visualizes the Vim undo tree
+    call minpac#add('lyokha/vim-xkbswitch')   " automatic layout switching
 
     " browsing
-    call minpac#add('lambdalisue/fern.vim')
-    call minpac#add('justinmk/vim-gtfo')
+    call minpac#add('lambdalisue/fern.vim')   " asynchronous tree viewer
+    call minpac#add('justinmk/vim-gtfo')      " go to term or file manager
 
     " search
     call minpac#add('junegunn/fzf.vim')
 
     " git
-    call minpac#add('tpope/vim-fugitive') " git
-    call minpac#add('tpope/vim-rhubarb')  " hub
-    call minpac#add('junegunn/gv.vim')    " commit browser
-    call minpac#add('mhinz/vim-signify')  " show diff
+    call minpac#add('tpope/vim-fugitive')      " git
+    call minpac#add('junegunn/gv.vim')         " commit browser
+    call minpac#add('nvim-lua/plenary.nvim')   " (dependency for gitsigns.nvim)
+    call minpac#add('lewis6991/gitsigns.nvim') " show diff
+
+    " lsp
+    call minpac#add('neovim/nvim-lspconfig')
+    call minpac#add('hrsh7th/cmp-nvim-lsp')
+    call minpac#add('hrsh7th/cmp-buffer')
+    call minpac#add('hrsh7th/nvim-cmp')
+    " snippets
+    call minpac#add('hrsh7th/cmp-vsnip')
+    call minpac#add('hrsh7th/vim-vsnip')
+    " call minpac#add('rafamadriz/friendly-snippets')
 
     " dev and lang
     call minpac#add('editorconfig/editorconfig-vim')
-    call minpac#add('jparise/vim-graphql')
     call minpac#add('fatih/vim-nginx')
     call minpac#add('ekalinin/dockerfile.vim')
     call minpac#add('dzeban/vim-log-syntax')
@@ -293,7 +302,7 @@ let g:lightline = {
       \ }
 
 " ---- t9md/vim-choosewin
-nmap <leader>- <Plug>(choosewin)
+nmap - <Plug>(choosewin)
 
 " ]]]
 
@@ -326,6 +335,77 @@ nmap <leader>f :Fern . -reveal=% -drawer<CR>
 
 " ---- justinmk/vim-gtfo
 let g:gtfo#terminals = { 'mac': 'kitty' }
+
+" ]]]
+
+" git [[[
+" ---- lewis6991/gitsigns.nvim
+lua <<EOF
+  require('gitsigns').setup {
+    -- make gitsigns look like vim-signify
+    signs = {
+      add          = {hl = 'DiffAdd'   , text = '+'},
+      change       = {hl = 'DiffChange', text = '!'},
+      delete       = {hl = 'DiffDelete', text = '_', show_count=true},
+      topdelete    = {hl = 'DiffDelete', text = '‾', show_count=true},
+      changedelete = {hl = 'DiffChange', text = '~', show_count=true},
+    }
+  }
+EOF
+
+" ]]]
+
+" lsp [[[
+
+lua <<EOF
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
+
+  cmp.setup({
+    snippet = {
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
+      end,
+    },
+    mapping = {
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = {
+      { name = 'nvim_lsp' },
+      -- For vsnip user.
+      { name = 'vsnip' },
+      { name = 'buffer' },
+    }
+  })
+
+  -- Setup lspconfig.
+  require'lspconfig'.clangd.setup{
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities());
+    cmd = { "clangd-mp-12", "--background-index" };
+  }
+EOF
+
+" ]]]
+
+" snippets [[[
+" ---- hrsh7th/vim-vsnip
+" Expand
+imap <expr> <C-j>   vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'
+smap <expr> <C-j>   vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'
+
+" Expand or jump
+imap <expr> <C-l>   vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+smap <expr> <C-l>   vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+
+" Jump forward or backward
+imap <expr> <Tab>   vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'
 
 " ]]]
 
