@@ -2,75 +2,23 @@
 
 " packages [[[
 
-function! PackInit() abort
-    packadd minpac
+lua <<EOF
+local fn = vim.fn
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  fn.system({'git', 'clone', '--depth', '1',
+             'https://github.com/wbthomason/packer.nvim', install_path})
+  vim.cmd 'packadd packer.nvim'
+end
+EOF
 
-    call minpac#init()
-    call minpac#add('k-takata/minpac', {'type': 'opt'})
-
-    " theme
-    call minpac#add('fatih/molokai')
-
-    " ui
-    call minpac#add('itchyny/lightline.vim')
-    call minpac#add('machakann/vim-highlightedyank')
-    call minpac#add('junegunn/vim-peekaboo')
-    call minpac#add('t9md/vim-choosewin')
-
-    " edit
-    " call minpac#add('Raimondi/delimitMate')
-    call minpac#add('tpope/vim-repeat')
-    " call minpac#add('tpope/vim-surround')
-    call minpac#add('tpope/vim-endwise')
-    call minpac#add('tpope/vim-commentary')
-    call minpac#add('tpope/vim-dispatch')     " asynchronous build dispatcher
-    call minpac#add('simnalamburt/vim-mundo') " visualizes the Vim undo tree
-    call minpac#add('lyokha/vim-xkbswitch')   " automatic layout switching
-
-    " browsing
-    call minpac#add('lambdalisue/fern.vim')   " asynchronous tree viewer
-    call minpac#add('justinmk/vim-gtfo')      " go to term or file manager
-
-    " search
-    call minpac#add('junegunn/fzf.vim')
-
-    " git
-    call minpac#add('tpope/vim-fugitive')      " git
-    call minpac#add('junegunn/gv.vim')         " commit browser
-    call minpac#add('nvim-lua/plenary.nvim')   " (dependency for gitsigns.nvim)
-    call minpac#add('lewis6991/gitsigns.nvim') " show diff
-
-    " lsp
-    call minpac#add('neovim/nvim-lspconfig')
-    call minpac#add('hrsh7th/cmp-nvim-lsp')
-    call minpac#add('hrsh7th/cmp-buffer')
-    call minpac#add('hrsh7th/nvim-cmp')
-    " snippets
-    call minpac#add('hrsh7th/cmp-vsnip')
-    call minpac#add('hrsh7th/vim-vsnip')
-    " call minpac#add('rafamadriz/friendly-snippets')
-
-    " dev and lang
-    call minpac#add('editorconfig/editorconfig-vim')
-    call minpac#add('fatih/vim-nginx')
-    call minpac#add('ekalinin/dockerfile.vim')
-    call minpac#add('dzeban/vim-log-syntax')
-    call minpac#add('judaew/vim-macports', {'branch': 'devel'})
-
-    " knowledge
-    call minpac#add('ratfactor/vviki')
-    call minpac#add('habamax/vim-asciidoctor')
-endfunction
+lua require('plugins')
 
 if has('mac')
     set rtp+=/opt/local/share/fzf/vim
 else
     set rtp+=/usr/bin/fzf
 endif
-
-command! PackUpdate call PackInit() | call minpac#update()
-command! PackClean  call PackInit() | call minpac#clean()
-command! PackStatus packadd minpac | call minpac#status()
 
 " ]]]
 
@@ -276,6 +224,8 @@ endif
 
 " plugins conf [[[
 
+lua require('plugins-conf-lua')
+
 " ui [[[
 
 " ---- itchyny/lightline.vim
@@ -307,11 +257,6 @@ nmap - <Plug>(choosewin)
 " ]]]
 
 " edit [[[
-" --- Raimondi/delimitMate
-let g:delimitMate_expand_cr = 1
-let g:delimitMate_expand_space = 1
-let g:delimitMate_smart_quotes = 1
-let g:delimitMate_expand_inside_quotes = 0
 
 " ---- tpope/vim-commentary
 map gc   <Plug>Commentary
@@ -327,6 +272,7 @@ let g:XkbSwitchLib = '/opt/local/lib/libInputSourceSwitcher.dylib'
 " ]]]
 
 " browsing [[[
+
 " ---- lambdalisue/fern
 " Open project (pwd)
 nmap <leader>n :Fern . -drawer<CR>
@@ -336,62 +282,14 @@ nmap <leader>f :Fern . -reveal=% -drawer<CR>
 " ---- justinmk/vim-gtfo
 let g:gtfo#terminals = { 'mac': 'kitty' }
 
-" ]]]
-
-" git [[[
-" ---- lewis6991/gitsigns.nvim
-lua <<EOF
-  require('gitsigns').setup {
-    -- make gitsigns look like vim-signify
-    signs = {
-      add          = {hl = 'DiffAdd'   , text = '+'},
-      change       = {hl = 'DiffChange', text = '!'},
-      delete       = {hl = 'DiffDelete', text = '_', show_count=true},
-      topdelete    = {hl = 'DiffDelete', text = '‾', show_count=true},
-      changedelete = {hl = 'DiffChange', text = '~', show_count=true},
-    }
-  }
-EOF
+" ---- ratfactor/vviki
+" VViki setup - relies on the default wiki root dir (~/wiki)
+nnoremap <leader>ww :e ~/wiki/index.adoc<cr>
 
 " ]]]
 
-" lsp [[[
+" dev [[[
 
-lua <<EOF
-  -- Setup nvim-cmp.
-  local cmp = require'cmp'
-
-  cmp.setup({
-    snippet = {
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
-      end,
-    },
-    mapping = {
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.close(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    },
-    sources = {
-      { name = 'nvim_lsp' },
-      -- For vsnip user.
-      { name = 'vsnip' },
-      { name = 'buffer' },
-    }
-  })
-
-  -- Setup lspconfig.
-  require'lspconfig'.clangd.setup{
-    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities());
-    cmd = { "clangd-mp-12", "--background-index" };
-  }
-EOF
-
-" ]]]
-
-" snippets [[[
 " ---- hrsh7th/vim-vsnip
 " Expand
 imap <expr> <C-j>   vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'
@@ -409,10 +307,7 @@ smap <expr> <S-Tab> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'
 
 " ]]]
 
-" knowledge [[[
-" ---- ratfactor/vviki
-" VViki setup - relies on the default wiki root dir (~/wiki)
-nnoremap <leader>ww :e ~/wiki/index.adoc<cr>
+" lang [[[
 
 " ---- habamax/vim-asciidoctor
 let g:asciidoctor_executable = 'asciidoctorj'
