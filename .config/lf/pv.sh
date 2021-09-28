@@ -36,8 +36,8 @@ handle_extension() {
 }
 
 handle_mime() {
-    local mimetype="${1}"
-    case "${mimetype}" in
+    _mimetype="${1}"
+    case "${MIMETYPE}" in
         *wordprocessingml.document|*/epub+zip|*/x-fictionbook+xml)
             pandoc -s -t markdown -- "${FILE_PATH}";;
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-REPOSITORY=$(pwd)
+REPOSITORY="$(pwd)"
 
-source $(pwd)/utils/arrays.sh
+source "$(pwd)/utils/arrays.sh"
 
 for i in "${!files[@]}"; do
     # Get the destination path
@@ -18,6 +18,6 @@ for i in "${!files[@]}"; do
 done
 
 # ~/.ssh
-[[ ! -d ${HOME}/.ssh ]] && mkdir -m ${HOME}/.ssh
+[[ ! -d ${HOME}/.ssh ]] && mkdir -m "${HOME}/.ssh"
 sed "s,@@HOSTNAME@@,$(hostname -s),g" "${REPOSITORY}/.ssh/config" > \
-    ${HOME}/.ssh/config
+    "${HOME}/.ssh/config"

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-REPOSITORY=$(pwd)
+REPOSITORY="$(pwd)"
 
-source $(pwd)/utils/arrays.sh
+source "$(pwd)/utils/arrays.sh"
 
 for i in "${!files[@]}"; do
     # Get the destination path
