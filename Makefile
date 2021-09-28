@@ -1,6 +1,6 @@
-.PHONY: all sync
+.PHONY: all install sync clean
 
-all: sync
+all: clean sync
 
 install:
 	./bootstrap.sh
@@ -8,4 +8,5 @@ install:
 sync:
 	./utils/sync.sh
 
-
+clean:
+	./utils/clean.sh
