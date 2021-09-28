@@ -14,7 +14,7 @@ for i in "${!files[@]}"; do
     fi
 
     # Synchronize files from the home dir with the repository dir
-    rsync -av --copy-links "${HOME}/${i}" "${REPOSITORY}/${files[${i}]}"
+    rsync -av --copy-links "${HOME:?}/${i}" "${REPOSITORY:?}/${files[${i}]}"
 done
 
 # Cleanup

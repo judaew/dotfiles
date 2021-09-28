@@ -14,7 +14,7 @@ for i in "${!files[@]}"; do
     fi
 
     # Synchronize files from the repository dir to home dir
-    rsync -av --copy-links "${REPOSITORY}/${i}" "${HOME}/${files[${i}]}"
+    rsync -av --copy-links "${REPOSITORY:?}/${i}" "${HOME:?}/${files[${i}]}"
 done
 
 # ~/.ssh

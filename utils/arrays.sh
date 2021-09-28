@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2034
 declare -A files=(
     # ~/
     [".bash_profile"]=""
@@ -16,3 +17,4 @@ declare -A files=(
     # ~/.local/share
     [".local/share/bash-completion/get_completions.sh"]=".local/share/bash-completion"
 )
+
