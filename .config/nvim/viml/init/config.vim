@@ -21,6 +21,7 @@ set splitbelow
 set hidden
 set noshowmode
 set ignorecase
+set completeopt+=menuone
 set conceallevel=2
 
 " TODO: Make a function that can highlight tabs or trailling whitespace by hotkey.
