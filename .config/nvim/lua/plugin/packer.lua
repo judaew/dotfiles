@@ -36,7 +36,7 @@ return packer.startup
                 }
         }
         use {'neovim/nvim-lspconfig', config=req 'lsp/lspconfig'}
-        use {'hrsh7th/vim-vsnip', config=req 'vim-vsnip',
+        use {'hrsh7th/vim-vsnip', config=runtime 'vim-vsnip',
                 requires =
                 {
                     'hrsh7th/nvim-cmp',
