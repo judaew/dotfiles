@@ -10,20 +10,14 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - uses: actions/checkout@v2
-      - name: Install Chezmoi and ShellCheck
-        run: |
-          curl -sfL https://git.io/chezmoi | sh
-          brew install shellcheck
-      - name: Initialize dotfiles
-        run: |
-          mkdir $HOME/shellcheck
-          ./bin/chezmoi init .
-          ./bin/chezmoi -v apply -D ~/shellcheck
+      - name: Install ShellCheck
+        run: brew install shellcheck
       - name: Check with ShellCheck
         run: |
           export SHELLCHECK_OPTS="-e SC1090 -e SC1091 -e SC2034"
-          cd ~/shellcheck
-          shellcheck .profile .bash_profile .bashrc
+          shellcheck \
+            .bash_profile .bashrc .profile .config/lf/pv.sh \
+            utils/arrays.sh utils/bootstrap.sh utils/sync.sh
 
   markdown-lint:
     runs-on: ubuntu-latest
