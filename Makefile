@@ -3,7 +3,7 @@
 all: clean sync
 
 install:
-	./bootstrap.sh
+	./utils/bootstrap.sh
 
 sync:
 	./utils/sync.sh
