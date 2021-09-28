@@ -3,35 +3,55 @@ on: push
 
 jobs:
   shellcheck-lint:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
-        with:
-          access_token: ${{ github.token }}
-      - uses: actions/checkout@v2
-      - name: Install ShellCheck
-        run: brew install shellcheck
-      - name: Check with ShellCheck
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup "shellcheck"
+        run: |
+          sudo apt update
+          sudo apt install -y shellcheck
+
+      - name: Lint with "spellcheck"
         run: |
           export SHELLCHECK_OPTS="-e SC1090 -e SC1091 -e SC2034"
           shellcheck \
             .bash_profile .bashrc .profile .config/lf/pv.sh \
             utils/arrays.sh utils/bootstrap.sh utils/sync.sh
 
+  luacheck-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup "luarocks"
+        run: |
+          sudo apt update
+          sudo apt install -y luarocks
+
+      - name: Setup "luacheck"
+        run: |
+          sudo luarocks install luacheck
+
+      - name: Lint with "luacheck"
+        run: |
+          luacheck .config/nvim
+
   markdown-lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.6.0
-        with:
-          access_token: ${{ github.token }}
-      - uses: actions/checkout@v2
-      - name: Set-up Ruby
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup "ruby"
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6
-      - name: Install dependencies
+          ruby-version: 3.0
+
+      - name: Setup "markdownlint"
         run: gem install mdl
-      - name: Run tests
+
+      - name: Lint with "markdownlint"
         run: mdl -r ~MD013,~MD029,~MD033 README.md
