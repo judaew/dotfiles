@@ -4,6 +4,7 @@ REPOSITORY="$(pwd)"
 
 source "$(pwd)/utils/arrays.sh"
 
+# shellcheck disable=SC2154
 for i in "${!files[@]}"; do
     # Get the destination path
     destpath="${files[${i}]}"
