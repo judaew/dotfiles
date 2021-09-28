@@ -3,11 +3,11 @@
 # git
 [user]
     name = Vadim-Valdis Yudaev
-    email = "{{ .email }}"
-    signinkey = "{{ .signinkey }}"
+    email = "judaew@outlook.de"
+    signinkey = "DDF9DB0BBB06E35F"
 
 [commit]
-    gpgsign = "{{ .gpgsign }}"
+    gpgsign = "false"
 
 [push]
     default = current
