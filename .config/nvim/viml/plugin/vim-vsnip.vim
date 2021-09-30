@@ -1,3 +1,6 @@
+" Set snippets directory
+let g:vsnip_snippet_dir=$HOME."/.local/share/nvim/vsnip"
+
 " Expand
 imap <expr> <C-j>   vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'
 smap <expr> <C-j>   vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'

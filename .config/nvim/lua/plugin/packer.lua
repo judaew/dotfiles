@@ -25,7 +25,7 @@ packer.init {compile_path = vim.fn.stdpath('config')..'/lua/init/packer_compiled
 return packer.startup
 {
     function(use)
-	use {'wbthomason/packer.nvim', opt=true}
+    use {'wbthomason/packer.nvim', opt=true}
 
         -- ### Language Servers / Linting / Snippets
         use {'hrsh7th/nvim-cmp', config=req 'lsp/cmp',
@@ -41,7 +41,7 @@ return packer.startup
                 {
                     'hrsh7th/nvim-cmp',
                     'hrsh7th/cmp-vsnip',
-                    'rafamadriz/friendly-snippets',
+                    -- 'rafamadriz/friendly-snippets',
                 }
         }
 
@@ -49,9 +49,10 @@ return packer.startup
         use 'editorconfig/editorconfig-vim'
         use 'fatih/vim-nginx'
         use 'ekalinin/dockerfile.vim'
-        use 'dzeban/vim-log-syntax'
+        use 'MTDL9/vim-log-highlighting'
         use '~/Projects/judaew/vim-macports'
         use {'habamax/vim-asciidoctor', config=runtime 'vim-asciidoctor'}
+        use 'bfrg/vim-cpp-modern'
 
         -- ### Special Features
         use 'tpope/vim-dispatch'
