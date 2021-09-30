@@ -57,7 +57,7 @@ return packer.startup
         use 'tpope/vim-dispatch'
 
         -- ### Movement
-        use 'junegunn/fzf.vim'
+        use 'farmergreg/vim-lastplace'
         use {'junegunn/fzf.vim', config=runtime 'fzf'}
         use {'lambdalisue/fern.vim', config=req 'fern'}
         use {'justinmk/vim-gtfo', config=runtime 'vim-gtfo'}
