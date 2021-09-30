@@ -58,6 +58,7 @@ return packer.startup
 
         -- ### Movement
         use 'junegunn/fzf.vim'
+        use {'junegunn/fzf.vim', config=runtime 'fzf'}
         use {'lambdalisue/fern.vim', config=req 'fern'}
         use {'justinmk/vim-gtfo', config=runtime 'vim-gtfo'}
         use {'ratfactor/vviki', config=req 'vviki'}
