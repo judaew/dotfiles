@@ -78,7 +78,7 @@ return packer.startup
         }
 
         -- ### UI
-        use {'itchyny/lightline.vim', config=runtime 'lightline'}
+        use {'famiu/feline.nvim', config=req 'feline'}
         use 'machakann/vim-highlightedyank'
         use 'junegunn/vim-peekaboo'
 
