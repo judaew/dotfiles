@@ -19,6 +19,6 @@ for i in "${!files[@]}"; do
 done
 
 # ~/.ssh
-[[ ! -d ${HOME}/.ssh ]] && mkdir -m "${HOME}/.ssh"
-sed "s,@@HOSTNAME@@,$(hostname -s),g" "${REPOSITORY}/.ssh/config" > \
-    "${HOME}/.ssh/config"
+[[ ! -d ${HOME:?}/.ssh ]] && mkdir -m "${HOME:?}/.ssh"
+sed "s,@@HOSTNAME@@,$(hostname -s),g" "${REPOSITORY:?}/.ssh/config" > \
+    "${HOME:?}/.ssh/config"

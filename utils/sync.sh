@@ -19,4 +19,4 @@ for i in "${!files[@]}"; do
 done
 
 # Cleanup
-rm -rf "${REPOSITORY}/.config/nvim/lua/init/packer_compiled.lua"
+rm -rf "${REPOSITORY:?}/.config/nvim/lua/init/packer_compiled.lua"
