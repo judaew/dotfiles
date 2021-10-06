@@ -83,6 +83,8 @@ return packer.startup
         use {'famiu/feline.nvim', config=req 'feline'}
         use 'machakann/vim-highlightedyank'
         use 'junegunn/vim-peekaboo'
+        use {'folke/todo-comments.nvim', config=req 'todo-comments',
+                requires = {'nvim-lua/plenary.nvim'}}
 
         -- ### Themes
         use 'fatih/molokai'
