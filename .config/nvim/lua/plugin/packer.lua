@@ -50,7 +50,7 @@ return packer.startup
         use 'fatih/vim-nginx'
         use 'ekalinin/dockerfile.vim'
         use 'MTDL9/vim-log-highlighting'
-        use '~/Projects/judaew/vim-macports'
+        use {'~/Projects/judaew/macports.nvim', config=req 'macports'}
         use {'habamax/vim-asciidoctor', config=runtime 'vim-asciidoctor'}
         use 'bfrg/vim-cpp-modern'
 
