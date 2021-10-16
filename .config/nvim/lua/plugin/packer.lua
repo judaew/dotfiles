@@ -32,7 +32,7 @@ return packer.startup
                 requires =
                 {
                     'hrsh7th/cmp-nvim-lsp',
-                    'hrsh7th/cmp-buffer',
+                    'hrsh7th/cmp-buffer'
                 }
         }
         use {'neovim/nvim-lspconfig', config=req 'lsp/lspconfig'}
@@ -40,7 +40,7 @@ return packer.startup
                 requires =
                 {
                     'hrsh7th/nvim-cmp',
-                    'hrsh7th/cmp-vsnip',
+                    'hrsh7th/cmp-vsnip'
                     -- 'rafamadriz/friendly-snippets',
                 }
         }
