@@ -28,6 +28,9 @@ return packer.startup
     use {'wbthomason/packer.nvim', opt=true}
 
         -- ### Language Servers / Linting / Snippets
+        use {'neovim/nvim-lspconfig', config=req 'lsp/lspconfig'}
+        use {'nvim-treesitter/nvim-treesitter',
+                run = ':TSUpdate', config=req 'nvim-treesitter'}
         use {'hrsh7th/nvim-cmp', config=req 'lsp/cmp',
                 requires =
                 {
@@ -35,7 +38,6 @@ return packer.startup
                     'hrsh7th/cmp-buffer'
                 }
         }
-        use {'neovim/nvim-lspconfig', config=req 'lsp/lspconfig'}
         use {'hrsh7th/vim-vsnip', config=runtime 'vim-vsnip',
                 requires =
                 {
@@ -48,11 +50,9 @@ return packer.startup
         -- ### Specific Language Support / Syntax Highlighting / Formatting
         use 'editorconfig/editorconfig-vim'
         use 'fatih/vim-nginx'
-        use 'ekalinin/dockerfile.vim'
         use 'MTDL9/vim-log-highlighting'
         use {'~/Projects/judaew/macports.nvim', config=req 'macports'}
         use {'habamax/vim-asciidoctor', config=runtime 'vim-asciidoctor'}
-        use 'bfrg/vim-cpp-modern'
 
         -- ### Special Features
         use 'tpope/vim-dispatch'
@@ -72,7 +72,7 @@ return packer.startup
         use {'b3nj5m1n/kommentary', config=req 'kommentary'}
         use {'lyokha/vim-xkbswitch', config=runtime 'vim-xkbswitch'}
 
-        -- Git
+        -- ### Git
         use 'tpope/vim-fugitive'
         use 'junegunn/gv.vim'
         use {'lewis6991/gitsigns.nvim', config=req 'gitsigns',
