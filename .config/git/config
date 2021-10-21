@@ -4,10 +4,10 @@
 [user]
     name = Vadim-Valdis Yudaev
     email = "judaew@outlook.de"
-    signinkey = "DDF9DB0BBB06E35F"
+    signingkey = "AB1AE3383414A8AD"
 
 [commit]
-    gpgsign = "false"
+    gpgsign = true
 
 [push]
     default = current
