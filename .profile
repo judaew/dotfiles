@@ -1,29 +1,54 @@
 # shellcheck shell=bash
 
-# --- paths
+#     +-------+
+# --- | paths |
+#     +-------+
+
 # unix paths
 PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:${PATH}"
-
-MAC_GPG2_PATH="/usr/local/MacGPG2/bin"
-MACPORTS_PATH="/opt/local/bin:/opt/local/sbin"
-MACPORTS_GNUBIN_PATH="/opt/local/libexec/gnubin"
+MANPATH="/usr/local/share/man:/usr/share/man:${MANPATH}"
+INFOPATH="/usr/local/share/info:${INFOPATH}"
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-    OS_SPEC_PATH="${MAC_GPG2_PATH}:${MACPORTS_PATH}:${MACPORTS_GNUBIN_PATH}"
+    # --- PATH
+    # GPG Suite -> Macports -> MacPorts GnuBin -> MacOS
+    OS_SPEC_PATH="/usr/local/MacGPG2/bin"
+    OS_SPEC_PATH="${OS_SPEC_PATH}:/opt/local/bin:/opt/local/sbin"
+    OS_SPEC_PATH="${OS_SPEC_PATH}:/opt/local/libexec/gnubin"
+    OS_SPEC_PATH="${OS_SPEC_PATH}:/Library/Apple/usr/bin"
+
+    # --- MANPATH
+    # MacPorts -> MacOS
+    OS_SPEC_MANPATH="/opt/local/share/man"
+    OS_SPEC_MANPATH="${OS_SPEC_MANPATH}:/Library/Apple/usr/share/man"
+
+    # --- INFOPATH (MacPorts)
+    OS_SPEC_INFOPATH="/opt/local/share/info"
 else
     OS_SPEC_PATH=""
+    OS_SPEC_MANPATH=""
+    OS_SPEC_INFOPATH=""
 fi
 
-PATH="${OS_SPEC_PATH}:${PATH}"
-export PATH
+export PATH="${OS_SPEC_PATH}:${PATH}"
+export MANPATH="${OS_SPEC_MANPATH}:${MANPATH}"
+export INFOPATH="${OS_SPEC_INFOPATH}:${INFOPATH}"
+export OS_SPEC_CPATH="${OS_SPEC_CPATH}"
 
-MANPATH="/opt/local/man:/usr/local/share/man:/usr/share/man:/Library/Apple/usr/share/man:${MANPATH}"
-export MANPATH
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+    CPATH="/opt/local/include:${CPATH}"
+else
+    CPATH=""
+fi
+export CPATH
 
-INFOPATH="/opt/local/info:/usr/local/share/info:${INFOPATH}"
-export INFOPATH
+# Local PATH
+export PATH="${PATH}:${HOME}/.local/bin"
 
-# --- general variables
+#     +-------------------+
+# --- | general variables |
+#     +-------------------+
+
 export DISPLAY=:0
 # fix locale
 export LC_ALL="en_US.UTF-8"
@@ -39,7 +64,12 @@ export GOPATH="${HOME}/go"
 export GOBIN="${GOPATH}/bin"
 export PATH="${PATH}:${GOBIN}"
 
-# Local path
-export PATH="${PATH}:${HOME}/.local/bin"
+# JAVA
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+    JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk17-temurin/Contents/Home"
+    PATH="${PATH}:${JAVA_HOME}/bin"
+    MANPATH="${MANPATH}:${JAVA_HOME}/man"
+    CPATH="${CPATH}:${JAVA_HOME}/include"
+fi
 
 # vim:ft=sh
