@@ -25,8 +25,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Luacheck Linter
-        uses: judaew/luacheck-action@v0.1.0-alpha
+        uses: judaew/luacheck-action@v0.2.0
+        with:
+          targets: "."
 
   markdown-lint:
     runs-on: ubuntu-latest
