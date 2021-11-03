@@ -180,7 +180,7 @@ function ssh-add-all() {
     for i in $(find "${HOME}"/.ssh/* -type f ! -name "*.*" | sed \
         's!.*/!!' | sed '/config/,/known_hosts/d; /.pub/d')
     do
-        ssh-add -K ~/.ssh/"${i}"||echo "${i}" failed
+        ssh-add --apple-use-keychain ~/.ssh/"${i}"||echo "${i}" failed
     done
 }
 
