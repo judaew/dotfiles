@@ -32,15 +32,13 @@ return packer.startup
         use {'nvim-treesitter/nvim-treesitter',
                 run = ':TSUpdate', config=req 'nvim-treesitter'}
         use {'hrsh7th/nvim-cmp', config=req 'lsp/cmp',
-                requires =
-                {
+                requires = {
                     'hrsh7th/cmp-nvim-lsp',
                     'hrsh7th/cmp-buffer'
                 }
         }
         use {'hrsh7th/vim-vsnip', config=runtime 'vim-vsnip',
-                requires =
-                {
+                requires = {
                     'hrsh7th/nvim-cmp',
                     'hrsh7th/cmp-vsnip'
                     -- 'rafamadriz/friendly-snippets',

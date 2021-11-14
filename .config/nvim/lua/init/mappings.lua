@@ -29,10 +29,7 @@ vim.api.nvim_set_keymap('n', '[b', ':bprev<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', ']t', ':tabn<CR>', {noremap = true})
 vim.api.nvim_set_keymap('n', '[t', ':tabp<CR>', {noremap = true})
 
--- Exit on 'j'
-vim.api.nvim_set_keymap('i', 'jj', '<Esc>', {})
-
--- Don't show stupid q: window
+-- Exit on 'jj'
 vim.api.nvim_set_keymap('i', 'jj', '<Esc>', {})
 
 -- Map <C-l> (redraw screen) to also turn off search highlighting until the
