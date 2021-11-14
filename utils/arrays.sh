@@ -6,6 +6,7 @@ declare -A files=(
     [".bash_profile"]=""
     [".bashrc"]=""
     [".profile"]=""
+    [".ideavimrc"]=""
     # ~/.config
     [".config/git"]=".config"
     [".config/kitty"]=".config"
