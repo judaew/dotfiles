@@ -11,9 +11,8 @@ INFOPATH="/usr/local/share/info:${INFOPATH}"
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     # --- PATH
-    # GPG Suite -> Macports -> MacPorts GnuBin -> MacOS
-    OS_SPEC_PATH="/usr/local/MacGPG2/bin"
-    OS_SPEC_PATH="${OS_SPEC_PATH}:/opt/local/bin:/opt/local/sbin"
+    # Macports -> MacPorts GnuBin -> MacOS
+    OS_SPEC_PATH="/opt/local/bin:/opt/local/sbin"
     OS_SPEC_PATH="${OS_SPEC_PATH}:/opt/local/libexec/gnubin"
     OS_SPEC_PATH="${OS_SPEC_PATH}:/Library/Apple/usr/bin"
 
