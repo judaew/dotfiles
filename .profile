@@ -4,7 +4,7 @@
 # --- | paths |
 #     +-------+
 
-# unix paths
+# Unix defaults paths
 PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:${PATH}"
 MANPATH="/usr/local/share/man:/usr/share/man:${MANPATH}"
 INFOPATH="/usr/local/share/info:${INFOPATH}"
