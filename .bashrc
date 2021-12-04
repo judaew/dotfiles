@@ -184,4 +184,12 @@ function ssh-add-all() {
     done
 }
 
+function git-latest-branch() {
+    local rev_list latest_tag
+    rev_list=$(git rev-list --tags --max-count=1)
+    latest_tag=$(git describe --tags "${rev_list}")
+    git fetch --tags
+    git checkout "${latest_tag}"
+}
+
 # vim:ft=sh
