@@ -58,6 +58,9 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/password-store"
 
+# GDB
+export GDBHISTFILE="${XDG_DATA_HOME}/gdb/history"
+
 # Golang
 export GOPATH="${HOME}/go"
 export GOBIN="${GOPATH}/bin"

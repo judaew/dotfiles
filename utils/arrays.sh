@@ -6,7 +6,6 @@ declare -A files=(
     [".bash_profile"]=""
     [".bashrc"]=""
     [".profile"]=""
-    [".ideavimrc"]=""
     # ~/.config
     [".config/git"]=".config"
     [".config/kitty"]=".config"
@@ -15,6 +14,8 @@ declare -A files=(
     [".config/nvim/viml"]=".config/nvim"
     [".config/lf"]=".config"
     [".config/tmux"]=".config"
+    [".config/ideavim/ideavimrc"]=".config/ideavim"
+    [".config/gdb/gdbinit"]=".config/gdb"
     # ~/.local/share
     [".local/share/bash-completion/get_completions.sh"]=".local/share/bash-completion"
 )
