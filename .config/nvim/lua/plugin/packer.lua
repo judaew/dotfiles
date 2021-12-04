@@ -58,11 +58,11 @@ return packer.startup
         -- ### Movement
         use 'farmergreg/vim-lastplace'
         use {'junegunn/fzf.vim', config=runtime 'fzf'}
-        use {'lambdalisue/fern.vim', config=req 'fern'}
+        use {'lambdalisue/fern.vim', config=runtime 'fern'}
         use {'justinmk/vim-gtfo', config=runtime 'vim-gtfo'}
-        use {'ratfactor/vviki', config=req 'vviki'}
-        use {'simnalamburt/vim-mundo', config=req 'vim-mundo'}
-        use {'t9md/vim-choosewin', config=req 'vim-choosewin'}
+        use {'ratfactor/vviki', config=runtime 'vviki'}
+        use {'simnalamburt/vim-mundo', config=runtime 'vim-mundo'}
+        use {'t9md/vim-choosewin', config=runtime 'vim-choosewin'}
         use 'tpope/vim-eunuch'
 
         -- ### Text Manipulation
