@@ -63,6 +63,7 @@ return packer.startup
         use {'ratfactor/vviki', config=req 'vviki'}
         use {'simnalamburt/vim-mundo', config=req 'vim-mundo'}
         use {'t9md/vim-choosewin', config=req 'vim-choosewin'}
+        use 'tpope/vim-eunuch'
 
         -- ### Text Manipulation
         use 'tpope/vim-repeat'
