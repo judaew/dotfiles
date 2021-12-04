@@ -35,7 +35,7 @@ export INFOPATH="${OS_SPEC_INFOPATH}:${INFOPATH}"
 export OS_SPEC_CPATH="${OS_SPEC_CPATH}"
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-    CPATH="/opt/local/include:${CPATH}"
+    CPATH="/opt/local/include"
 else
     CPATH=""
 fi
