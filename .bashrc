@@ -12,7 +12,6 @@ fi
 
 if [ -f /opt/local/share/bash-completion/completions/pass ]; then
     source /opt/local/share/bash-completion/completions/pass-otp
-    source /opt/local/share/bash-completion/completions/pass-update
 fi
 
 # settings mcfly
