@@ -191,4 +191,14 @@ function git-latest-branch() {
     git checkout "${latest_tag}"
 }
 
+function project() {
+    local projs_dir proj_name
+    projs_dir="${HOME}/Projects/judaew"
+    proj_name=$(find "${projs_dir}"/* -type d -maxdepth 0 -print0 |\
+        xargs -0 basename | fzf)
+    cd "${projs_dir}/${proj_name}" || exit
+}
+
+alias proj="project"
+
 # vim:ft=sh
