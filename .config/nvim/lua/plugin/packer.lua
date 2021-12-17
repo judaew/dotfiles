@@ -60,7 +60,6 @@ return packer.startup
         use {'junegunn/fzf.vim', config=runtime 'fzf'}
         use {'lambdalisue/fern.vim', config=runtime 'fern'}
         use {'justinmk/vim-gtfo', config=runtime 'vim-gtfo'}
-        use {'ratfactor/vviki', config=runtime 'vviki'}
         use {'simnalamburt/vim-mundo', config=runtime 'vim-mundo'}
         use {'t9md/vim-choosewin', config=runtime 'vim-choosewin'}
         use 'tpope/vim-eunuch'
