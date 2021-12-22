@@ -47,10 +47,6 @@ vim.api.nvim_set_keymap('n', '<Leader>P', '\"P', {noremap = true})
 vim.api.nvim_set_keymap('v', '<Leader>p', '\"p', {noremap = true})
 vim.api.nvim_set_keymap('v', '<Leader>P', '\"P', {noremap = true})
 
--- TODO: Make a function that recognizes the link, otherwise uses netrw for
--- this hotkey. See https://stackoverflow.com/a/63352904
-vim.api.nvim_set_keymap('n', 'gx', ':!open <C-r><C-a>', {})
-
 -- Spell
 vim.api.nvim_set_keymap('n', '<Leader>s', '', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>ss', ':setlocal spell spl=en_us,ru_yo<CR>', {noremap = true})
