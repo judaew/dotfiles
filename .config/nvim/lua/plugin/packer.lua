@@ -86,5 +86,10 @@ return packer.startup
 
         -- ### Themes
         use 'fatih/molokai'
+
+        -- ### Load local plugins
+        if vim.fn.has('macunix') then
+            use {'/opt/local/share/vim/vimfiles'}
+        end
     end
 }
