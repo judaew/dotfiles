@@ -120,8 +120,8 @@ local comps = {
     },
     line_info = {
         provider = function(winid)
-            local position = f_cursor.position(winid)
-            local line_percentage = f_cursor.line_percentage(winid)
+            local position = f_cursor.position(nil, winid)
+            local line_percentage = f_cursor.line_percentage()
 
             return ' ' .. position .. ' ' .. line_percentage .. ' '
         end,
