@@ -5,6 +5,7 @@ declare -A files=(
     # ~/
     [".bash_profile"]=""
     [".bashrc"]=""
+    [".inputrc"]=""
     [".profile"]=""
     # ~/.config
     [".config/git"]=".config"
