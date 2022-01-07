@@ -55,29 +55,39 @@ GIT_PS1_DESCRIBE_STYLE='describe'
 function __prompt_cmd() {
     local exit_status=${?}
 
-    local LIGHT_GRAY="\[\e[0;37m\]"
-    local RED="\[\e[0;31m\]"
-    local CYAN="\[\e[0;36m\]"
-    local PURPLE="\[\e[0;35m\]"
-    local DARK_GRAY="\[\e[0;90m\]"
-    local COLOR_RESET="\[\e[0;0m\]"
+    # cache the value in a variable before using pringf to avoid delay
+    local GIT_PS1
+    GIT_PS1="$(__git_ps1)"
+
+    local GRAY="\e[0;37m"
+    local DARK_GRAY="\e[0;90m"
+    local RED="\e[0;31m"
+    local CYAN="\e[0;36m"
+    local PURPLE="\e[0;35m"
+    local NORMAL="\e[0;0m"
 
     # set window title bar
     printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
 
+    # empty line before the prompt
+    printf "\n"
+
     # check for ssh session
     if [[ -n "${SSH_CLIENT}" ]]; then
-        PS1="\n ${LIGHT_GRAY}\u@\h ${CYAN}\w "
-    else
-        PS1="\n ${CYAN}\w "
+        printf "%b" "${GRAY}${USER}@${HOSTNAME%%.*} "
     fi
-    PS1+="${DARK_GRAY}\$(__git_ps1)"
+     
+    # print current directory
+    printf "%b" "${CYAN}${PWD/#$HOME/\~}"
 
-    # set main prompt
+    # print git prompt
+    printf "%b\n" "${DARK_GRAY}${GIT_PS1}${NORMAL}"
+
+    # set prompt
     if [[ ${exit_status} = 0 ]]; then
-        PS1+="\n${PURPLE}❯ ${COLOR_RESET}"
+        PS1="\[${PURPLE}\]❯ \[${NORMAL}\]"
     else
-        PS1+="\n${RED}❯ ${COLOR_RESET}"
+        PS1="\[${RED}\]❯ \[${NORMAL}\]"
     fi
 }
 PROMPT_COMMAND="__prompt_cmd"
