@@ -21,11 +21,9 @@ export MCFLY_RESULTS=50
 
 # --- options
 
-shopt -s autocd
 shopt -s cdable_vars
 shopt -s checkhash
 shopt -s checkjobs
-shopt -s checkwinsize
 shopt -s direxpand
 shopt -s dirspell
 shopt -s dotglob
