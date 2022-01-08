@@ -35,8 +35,6 @@ shopt -s nocaseglob
 export HISTCONTROL=ignoredups
 
 # --- colors and prompt
-# allows the shortening of paths
-PROMPT_DIRTRIM=2
 
 if [ -f "/opt/local/share/git/contrib/completion/git-prompt.sh" ]; then
     source /opt/local/share/git/contrib/completion/git-prompt.sh
@@ -59,6 +57,19 @@ function __prompt_cmd() {
     local GIT_PS1
     GIT_PS1="$(__git_ps1)"
 
+    DIRTRIM_AWK=$(cat << 'EOF'
+BEGIN { FS = OFS = "/" }
+{ 
+   sub(ENVIRON["HOME"], "~");
+   if (length($0) > 35 && NF > 4)
+      print $1,$2,".." NF-4 "..",$(NF-1),$NF
+   else
+      print $0
+}
+EOF
+)
+    DIRTRIM="$(printf "%b" "${PWD}" | awk "${DIRTRIM_AWK}")"
+
     local GRAY="\e[0;37m"
     local DARK_GRAY="\e[0;90m"
     local RED="\e[0;31m"
@@ -76,9 +87,9 @@ function __prompt_cmd() {
     if [[ -n "${SSH_CLIENT}" ]]; then
         printf "%b" "${GRAY}${USER}@${HOSTNAME%%.*} "
     fi
-     
+
     # print current directory
-    printf "%b" "${CYAN}${PWD/#$HOME/\~}"
+    printf "%b" "${CYAN}${DIRTRIM}"
 
     # print git prompt
     printf "%b\n" "${DARK_GRAY}${GIT_PS1}${NORMAL}"
