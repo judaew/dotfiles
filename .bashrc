@@ -111,7 +111,6 @@ fi
 alias la="ls -a"
 alias ll="ls -al"
 alias ldot="ls -ld .*"
-alias mv="mv -v"
 alias cp="cp -i"
 alias df="df -h"
 alias du="du -h"
@@ -219,5 +218,9 @@ function project() {
 }
 
 alias proj="project"
+
+function lfmp() {
+    lf "$(port dir "${1}")"
+}
 
 # vim:ft=sh
