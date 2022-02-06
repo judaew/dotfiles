@@ -66,7 +66,7 @@ return packer.startup
 
         -- ### Text Manipulation
         use 'tpope/vim-repeat'
-        use 'tpope/vim-endwise'
+        -- use 'tpope/vim-endwise'
         use {'b3nj5m1n/kommentary', config=req 'kommentary'}
         use {'lyokha/vim-xkbswitch', config=runtime 'vim-xkbswitch'}
 
