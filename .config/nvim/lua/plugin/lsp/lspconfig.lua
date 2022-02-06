@@ -29,3 +29,10 @@ lspconfig.sumneko_lua.setup {
         }
     }
 }
+
+lspconfig.cmake.setup {
+    cmd = {'/opt/local/bin/cmake-language-server'},
+    init_options = {
+        buildDirectory = {'build', 'cmake-build-debug'},
+    }
+}
