@@ -210,11 +210,14 @@ function git-latest-branch() {
 }
 
 function project() {
-    local projs_dir proj_name
-    projs_dir="${HOME}/Projects/judaew"
-    proj_name=$(find "${projs_dir}"/* -type d -maxdepth 0 -print0 |\
+    local proj_path proj_tag proj_name
+    proj_path="${HOME}/Projects"
+
+    proj_tag=$(find "${proj_path}"/* -type d -maxdepth 0 -print0 |\
         xargs -0 basename | fzf)
-    cd "${projs_dir}/${proj_name}" || exit
+    proj_name=$(find "${proj_path}/${proj_tag}"/* -type d -maxdepth 0 -print0 |\
+        xargs -0 basename | fzf)
+    cd "${proj_path}/${proj_tag}/${proj_name}" || echo "error 1"
 }
 
 alias proj="project"
