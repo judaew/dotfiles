@@ -16,7 +16,12 @@ require'nvim-treesitter.configs'.setup {
         "go",
         "gomod",
         "json",
+        "llvm",
         "lua",
+        "markdown",
+        "ninja",
+        "python",
+        "toml",
         "yaml"
     }
 }
