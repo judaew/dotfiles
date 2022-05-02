@@ -1,10 +1,3 @@
--- Install and load Packer
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
-
-if not vim.loop.fs_stat(vim.fn.glob(install_path)) then
-    os.execute('git clone https://github.com/wbthomason/packer.nvim '..install_path)
-end
-
 -- Source a Lua file
 local function req(plugin)
     return 'require "plugin/'..plugin..'"'
@@ -16,15 +9,12 @@ local function runtime(plugin)
 end
 
 -- Load plugins
-vim.cmd 'packadd packer.nvim'
+vim.cmd [[packadd packer.nvim]]
 
 local packer = require 'packer'
-
 packer.init {compile_path = vim.fn.stdpath('config')..'/lua/init/packer_compiled.lua'}
 
-return packer.startup
-{
-    function(use)
+return require('packer').startup(function()
     use {'wbthomason/packer.nvim', opt=true}
 
         -- ### Language Servers / Linting / Snippets
@@ -94,5 +84,4 @@ return packer.startup
         if vim.fn.has('macunix') then
             use {'/opt/local/share/vim/vimfiles'}
         end
-    end
-}
+end)
