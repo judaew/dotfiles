@@ -1,5 +1,4 @@
 local f_cursor = require 'feline.providers.cursor'
-local f_file = require 'feline.providers.file'
 
 local colors = {
     black   = '#232526',
@@ -99,17 +98,12 @@ local comps = {
             hl = {fg = colors.white, bg = colors.gray}
         },
         type = {
-            provider = function(winid)
-                local file_type = f_file.file_type(winid)
-
-                if (file_type == '') then
-                    file_type = ' no ft '
-                else
-                    file_type = ' ' .. file_type:lower() .. ' '
-                end
-
-                return file_type
-            end,
+            provider = {
+                name = 'file_type',
+                opts = {
+                    case = 'lowercase'
+                },
+            },
             hl = {fg = colors.black, bg = colors.pink}
         }
     },
