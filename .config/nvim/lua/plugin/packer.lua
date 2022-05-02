@@ -46,7 +46,7 @@ return packer.startup
         }
 
         -- ### Specific Language Support / Syntax Highlighting / Formatting
-        use 'editorconfig/editorconfig-vim'
+        use 'gpanders/editorconfig.nvim'
         use 'fatih/vim-nginx'
         use 'MTDL9/vim-log-highlighting'
         use {'~/Projects/judaew/macports.nvim', config=req 'macports'}
