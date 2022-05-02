@@ -8,6 +8,7 @@
 PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:${PATH}"
 MANPATH="/usr/local/share/man:/usr/share/man:${MANPATH}"
 INFOPATH="/usr/local/share/info:${INFOPATH}"
+CPATH=""
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     # --- PATH
@@ -23,23 +24,20 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
 
     # --- INFOPATH (MacPorts)
     OS_SPEC_INFOPATH="/opt/local/share/info"
+
+    # --- CPATH (MacPorts)
+    OS_SPEC_CPATH="/opt/local/include"
 else
     OS_SPEC_PATH=""
     OS_SPEC_MANPATH=""
     OS_SPEC_INFOPATH=""
+    OS_SPEC_CPATH=""
 fi
 
 export PATH="${OS_SPEC_PATH}:${PATH}"
 export MANPATH="${OS_SPEC_MANPATH}:${MANPATH}"
 export INFOPATH="${OS_SPEC_INFOPATH}:${INFOPATH}"
-export OS_SPEC_CPATH="${OS_SPEC_CPATH}"
-
-if [[ "${OSTYPE}" == "darwin"* ]]; then
-    CPATH="/opt/local/include"
-else
-    CPATH=""
-fi
-export CPATH
+export CPATH="${OS_SPEC_CPATH}"
 
 # Local PATH
 export PATH="${PATH}:${HOME}/.local/bin"
@@ -68,7 +66,7 @@ export PATH="${PATH}:${GOBIN}"
 
 # JAVA
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-    JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk17-temurin/Contents/Home"
+    JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk18-temurin/Contents/Home"
     PATH="${PATH}:${JAVA_HOME}/bin"
     MANPATH="${MANPATH}:${JAVA_HOME}/man"
     CPATH="${CPATH}:${JAVA_HOME}/include"
