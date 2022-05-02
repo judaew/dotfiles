@@ -76,12 +76,16 @@ return packer.startup
         use {'lewis6991/gitsigns.nvim', config=req 'gitsigns',
                 requires = {'nvim-lua/plenary.nvim'}
         }
+        use { 'TimUntersberger/neogit', config=req 'neogit',
+            requires = 'nvim-lua/plenary.nvim'
+        }
 
         -- ### UI
         use {'famiu/feline.nvim', config=req 'feline'}
         use 'junegunn/vim-peekaboo'
         use {'folke/todo-comments.nvim', config=req 'todo-comments',
                 requires = {'nvim-lua/plenary.nvim'}}
+        use {'norcalli/nvim-colorizer.lua', config=req 'nvim-colorizer'}
 
         -- ### Themes
         use 'fatih/molokai'
