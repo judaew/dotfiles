@@ -209,19 +209,6 @@ function git-latest-branch() {
     git checkout "${latest_tag}"
 }
 
-function project() {
-    local proj_path proj_tag proj_name
-    proj_path="${HOME}/Projects"
-
-    proj_tag=$(find "${proj_path}"/* -type d -maxdepth 0 -print0 |\
-        xargs -0 basename | fzf)
-    proj_name=$(find "${proj_path}/${proj_tag}"/* -type d -maxdepth 0 -print0 |\
-        xargs -0 basename | fzf)
-    cd "${proj_path}/${proj_tag}/${proj_name}" || echo "error 1"
-}
-
-alias proj="project"
-
 function lfmp() {
     lf "$(port dir "${1}")"
 }
