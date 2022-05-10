@@ -56,9 +56,6 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/password-store"
 
-# GDB
-export GDBHISTFILE="${XDG_DATA_HOME}/gdb/history"
-
 # Golang
 export GOPATH="${HOME}/go"
 export GOBIN="${GOPATH}/bin"
@@ -66,7 +63,7 @@ export PATH="${PATH}:${GOBIN}"
 
 # JAVA
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-    JAVA_HOME="/Library/Java/JavaVirtualMachines/openjdk18-temurin/Contents/Home"
+    JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk18/Contents/Home"
     PATH="${PATH}:${JAVA_HOME}/bin"
     MANPATH="${MANPATH}:${JAVA_HOME}/man"
     CPATH="${CPATH}:${JAVA_HOME}/include"
