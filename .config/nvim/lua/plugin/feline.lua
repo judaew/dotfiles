@@ -1,5 +1,3 @@
-local f_cursor = require 'feline.providers.cursor'
-
 local colors = {
     black   = '#232526',
     gray    = '#585858',
@@ -104,7 +102,21 @@ local comps = {
                     case = 'lowercase'
                 },
             },
-            hl = {fg = colors.black, bg = colors.pink}
+            hl = {fg = colors.black, bg = colors.pink},
+            left_sep = ' '
+        }
+    },
+    line = {
+        position = {
+            provider = 'position',
+            hl = {bg = colors.gray},
+            left_sep = {str = ' ', hl = {bg = colors.gray}},
+            right_sep = {str = ' ', hl = {bg = colors.gray}}
+        },
+        percentage = {
+            provider = 'line_percentage',
+            hl = {bg = colors.gray},
+            right_sep = {str= ' ', hl = {bg = colors.gray}}
         }
     },
     git_branch = {
@@ -112,14 +124,11 @@ local comps = {
         left_sep = ' ',
         icon = '',
     },
-    line_info = {
-        provider = function(winid)
-            local position = f_cursor.position(nil, winid)
-            local line_percentage = f_cursor.line_percentage()
-
-            return ' ' .. position .. ' ' .. line_percentage .. ' '
-        end,
-        hl = {bg = colors.gray}
+    lsp = {
+        errors = {provider = 'diagnostic_errors'},
+        warnings = {provider = 'diagnostic_warnings'},
+        info = {provider = 'diagnostic_info'},
+        hints = {provider = 'diagnostic_hints'}
     }
 }
 
@@ -135,8 +144,13 @@ local components = {
         },
 
         { -- Right
+            comps.lsp.errors,
+            comps.lsp.warnings,
+            comps.lsp.info,
+            comps.lsp.hints,
             comps.file.type,
-            comps.line_info
+            comps.line.position,
+            comps.line.percentage
         }
     },
 
@@ -151,7 +165,8 @@ local components = {
 
         { -- Right
             comps.file.type,
-            comps.line_info
+            comps.line.position,
+            comps.line.percentage
         }
     }
 }
