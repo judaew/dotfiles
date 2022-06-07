@@ -4,8 +4,8 @@ require'nvim-treesitter.configs'.setup {
         disable = {},
     },
     indent = {
-        enable = false,
-        disable = {},
+        enable = true,
+        disable = { "yaml" },
     },
     ensure_installed = {
         "bash",
