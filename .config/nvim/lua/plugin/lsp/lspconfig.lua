@@ -3,12 +3,27 @@ local cmp_nvim_lsp = require'cmp_nvim_lsp'
 
 lspconfig.clangd.setup {
     capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities());
-    cmd = { 'clangd-mp-14', '--background-index', '--suggest-missing-includes',
-            '--clang-tidy', '--header-insertion=iwyu' };
+    cmd = { vim.fn.exepath('clangd-mp-14'),
+            '--all-scopes-completion',
+            '--suggest-missing-includes',
+            '--background-index',
+            '--cross-file-rename',
+            '--log=info',
+            '--completion-style=detailed',
+            '--clang-tidy',
+            '--clang-tidy-checks=-*,llvm-*,clang-analyzer-*,modernize-*,-modernize-use-trailing-return-type',
+            '--fallback-style=Google',
+            '--header-insertion=never',
+
+            -- clangd 11+ supports reading from .clangd configuration file
+            '--enable-config',
+
+            -- store PCHs in RAM
+            '--pch-storage=memory'}
 }
 
 lspconfig.sumneko_lua.setup {
-    cmd = {'/opt/local/bin/lua-language-server'};
+    cmd = {vim.fn.exepath('lua-language-server')};
     settings = {
         Lua = {
             runtime = {
@@ -31,7 +46,7 @@ lspconfig.sumneko_lua.setup {
 }
 
 lspconfig.cmake.setup {
-    cmd = {'/opt/local/bin/cmake-language-server'},
+    cmd = {vim.fn.exepath('cmake-language-server')},
     init_options = {
         buildDirectory = {'build', 'cmake-build-debug'},
     }
