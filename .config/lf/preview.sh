@@ -1,8 +1,14 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 FILE_PATH="${1}"
 FILE_EXTENSION="${FILE_PATH##*.}"
 FILE_EXTENSION_LOWER="$(printf "%s" "${FILE_EXTENSION}" | tr '[:upper:]' '[:lower:]')"
+
+# Preview pane size
+WIDTH=$(expr ${2} - 1)
+HEIGHT=$(expr ${3} - 1)
+X_POS=${4}
+Y_POS=$(expr ${5} + 1)
 
 handle_extension() {
     case "${FILE_EXTENSION_LOWER}" in
@@ -28,10 +34,14 @@ handle_extension() {
         # HTML
         htm|html|xhtml)
             pandoc -s -t markdown -- "${FILE_PATH}";;
-    
-        # JSON
+
+        # JSON (text/plain)
         json)
             jq --color-output . "${FILE_PATH}";;
+
+        # Databases
+        sqlite | db)
+            sqlite3 -readonly "${FILE_PATH}" .tables;;
     esac
 }
 
@@ -45,8 +55,27 @@ handle_mime() {
             env COLORTERM=8bit bat --color="always" --style="plain" \
                 --pager="never" -- "${FILE_PATH}";;
 
+        */jpg | */jpeg | */png)
+            printf "size: "
+            kitty +kitten icat --print-window-size ${FILE_PATH} &
+            kitty +kitten icat --transfer-mode file \
+                --place "${WIDTH}x${HEIGHT}@${X_POS}x${Y_POS}" "${FILE_PATH}"
+            exit 1
+            ;;
+
         image/* | video/*)
             exiftool "${FILE_PATH}";;
+
+        application/json)
+            jq --color-output . "${FILE_PATH}";;
+
+        application/x-mach-binary)
+            OTOOL_OUTPUT="$(otool -L "${FILE_PATH}")"
+            echo "$(basename "$(echo "${OTOOL_OUTPUT}" | head -n 1)")"
+            echo
+            echo "$(echo "${OTOOL_OUTPUT}" |\
+                tail -n +2 | sed "s/.*\t//g" | sed 's/(compatibility.*$//g')"
+            ;;
     esac
 }
 
