@@ -12,19 +12,19 @@ handle_extension() {
             bsdtar --list --file "${FILE_PATH}";;
         # 7z)
         #     7z l "${1}";;
-    
+
         # Software archive
         deb|jar|mpkg|pkg|rpm)
             bsdtar --list --file "${FILE_PATH}";;
-    
+
         # PDF
         pdf)
             exiftool "${FILE_PATH}";;
-    
+
         # OpenDocument
         odt|ods|odp|sxw)
             pandoc -s -t markdown -- "${FILE_PATH}";;
-    
+
         # HTML
         htm|html|xhtml)
             pandoc -s -t markdown -- "${FILE_PATH}";;
