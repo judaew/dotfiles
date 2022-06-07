@@ -5,10 +5,10 @@ FILE_EXTENSION="${FILE_PATH##*.}"
 FILE_EXTENSION_LOWER="$(printf "%s" "${FILE_EXTENSION}" | tr '[:upper:]' '[:lower:]')"
 
 # Preview pane size
-WIDTH=$(expr ${2} - 1)
-HEIGHT=$(expr ${3} - 1)
+WIDTH=$((${2} - 1))
+HEIGHT=$(( ${3} - 1))
 X_POS=${4}
-Y_POS=$(expr ${5} + 1)
+Y_POS=$(( ${5} + 1))
 
 handle_extension() {
     case "${FILE_EXTENSION_LOWER}" in
