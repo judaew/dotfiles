@@ -3,10 +3,10 @@
 -- ######################
 
 -- Basic settings
-vim.api.nvim_command 'runtime config.vim'
-vim.api.nvim_command 'runtime autogroups.vim'
-vim.api.nvim_command 'runtime mappings.vim'
+require 'options'
+require 'autocommands'
+require 'keymaps'
 
 -- Plugins and their setup
-require 'plugin/packer'
+require 'plugins'
 require 'init/packer_compiled'
