@@ -20,6 +20,9 @@ set ifs "\n"
 # leave some space at the top and the bottom of the screen
 set scrolloff 10
 
+# draw boxes around panes
+set drawbox on
+
 # previewing files
 set previewer ~/.config/lf/pv.sh
 map i $LESSOPEN='| ~/.config/lf/pv.sh %s' less -R $f
