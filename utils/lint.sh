@@ -28,7 +28,7 @@ linter="shellcheck"
 if command -v shellcheck &> /dev/null; then
     if SHELLCHECK_OPTS="-e SC1090 -e SC1091 -e SC2034" \
         shellcheck \
-        .bash_profile .bashrc .profile .config/lf/pv.sh utils/*.sh; then
+        .bash_profile .bashrc .profile .config/lf/*.sh utils/*.sh; then
     passed
     else
         error

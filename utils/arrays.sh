@@ -19,7 +19,6 @@ declare -A files=(
     [".config/lf"]=".config"
     [".config/tmux"]=".config"
     [".config/ideavim/ideavimrc"]=".config/ideavim"
-    [".config/gdb/gdbinit"]=".config/gdb"
     # ~/.local/share
     [".local/share/bash-completion/get_completions.sh"]=".local/share/bash-completion"
 )
