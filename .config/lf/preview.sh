@@ -57,7 +57,7 @@ handle_mime() {
 
         */jpg | */jpeg | */png)
             printf "size: "
-            kitty +kitten icat --print-window-size ${FILE_PATH} &
+            kitty +kitten icat --print-window-size "${FILE_PATH}" &
             kitty +kitten icat --transfer-mode file \
                 --place "${WIDTH}x${HEIGHT}@${X_POS}x${Y_POS}" "${FILE_PATH}"
             exit 1
@@ -71,10 +71,10 @@ handle_mime() {
 
         application/x-mach-binary)
             OTOOL_OUTPUT="$(otool -L "${FILE_PATH}")"
-            echo "$(basename "$(echo "${OTOOL_OUTPUT}" | head -n 1)")"
+            basename "$(echo "${OTOOL_OUTPUT}" | head -n 1)"
             echo
-            echo "$(echo "${OTOOL_OUTPUT}" |\
-                tail -n +2 | sed "s/.*\t//g" | sed 's/(compatibility.*$//g')"
+            echo "${OTOOL_OUTPUT}" |\
+                tail -n +2 | sed "s/.*\t//g" | sed 's/(compatibility.*$//g'
             ;;
     esac
 }
