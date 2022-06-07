@@ -81,7 +81,7 @@ EOF
         printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
     else
         # the var isn't empty
-        printf "\033]0;"${PROMPT_TITLE}"\a"
+        printf "\033]0;%s\a" "${PROMPT_TITLE}"
     fi
 
     # empty line before the prompt
