@@ -10,7 +10,7 @@ declare -A files=(
     # ~/.config
     [".config/git"]=".config"
     [".config/kitty"]=".config"
-    [".config/nvim/init.lua"]=".config/nvim"
+    [".config/nvim/init.vim"]=".config/nvim"
     [".config/nvim/autogroups.vim"]=".config/nvim"
     [".config/nvim/config.vim"]=".config/nvim"
     [".config/nvim/mappings.vim"]=".config/nvim"
