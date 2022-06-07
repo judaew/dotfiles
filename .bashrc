@@ -76,7 +76,13 @@ EOF
     local NORMAL="\e[0;0m"
 
     # set window title bar
-    printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
+    if [ -z "${PROMPT_TITLE}" ]; then
+        # the var is empty
+        printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
+    else
+        # the var isn't empty
+        printf "\033]0;"${PROMPT_TITLE}"\a"
+    fi
 
     # empty line before the prompt
     printf "\n"
@@ -211,6 +217,10 @@ function git-latest-branch() {
 
 function lfmp() {
     lf "$(port dir "${1}")"
+}
+
+function title() {
+    PROMPT_TITLE="${1}"
 }
 
 # vim:ft=sh
