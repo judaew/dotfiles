@@ -26,7 +26,7 @@ set drawbox on
 # previewing files
 # see https://github.com/gokcehan/lf/wiki/Previews
 set previewer ~/.config/lf/preview.sh
-map i $LESSOPEN='| ~/.config/lf/pv.sh %s' less -R $f
+map i $LESSOPEN='| ~/.config/lf/preview.sh %s' less -R $f
 set cleaner ~/.config/lf/cleaner.sh
 
 # use enter for shell commands
