@@ -16,8 +16,8 @@ handle_extension() {
         a|bz|bz2|cpio|gz|lz|lzma|lzo|rz|t7z|tar|tbz|\
         tbz2|tgz|tlz|txz|tzo|tzst|xz|zip|zst)
             bsdtar --list --file "${FILE_PATH}";;
-        # 7z)
-        #     7z l "${1}";;
+        7z)
+            7zz l "${FILE_PATH}" | tail -n +11;;
 
         # Software archive
         deb|jar|mpkg|pkg|rpm)
