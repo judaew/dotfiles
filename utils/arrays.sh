@@ -16,6 +16,7 @@ declare -A files=(
     [".config/nvim/mappings.vim"]=".config/nvim"
     [".config/nvim/lua"]=".config/nvim"
     [".config/nvim/viml"]=".config/nvim"
+    [".config/nvimpager/init.vim"]=".config/nvimpager"
     [".config/lf"]=".config"
     [".config/tmux"]=".config"
     [".config/ideavim/ideavimrc"]=".config/ideavim"
