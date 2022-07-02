@@ -83,7 +83,8 @@ return packer.startup(function(use)
     use {'lewis6991/impatient.nvim', config=req 'impatient'}
 
     -- ### Movement
-    use 'farmergreg/vim-lastplace'
+    -- Error detected while processing function <SNR>59_lastplace
+    -- use 'farmergreg/vim-lastplace'
     use {'junegunn/fzf.vim', config=runtime 'fzf'}
     use {'lambdalisue/fern.vim', config=runtime 'fern'}
     use {'justinmk/vim-gtfo', config=runtime 'vim-gtfo'}
