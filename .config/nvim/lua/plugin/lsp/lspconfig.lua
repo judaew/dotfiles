@@ -51,3 +51,7 @@ lspconfig.cmake.setup {
         buildDirectory = {'build', 'cmake-build-debug'},
     }
 }
+
+lspconfig.pyright.setup {
+    cmd = {vim.fn.exepath('pyright-langserver'), "--stdio"}
+}
