@@ -56,6 +56,11 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/password-store"
 
+# GnuPG
+# https://www.gnupg.org/documentation/manuals/gnupg/Invoking-GPG_002dAGENT.html
+GPG_TTY=$(tty)
+export GPG_TTY
+
 # Golang
 export GOPATH="${HOME}/go"
 export GOBIN="${GOPATH}/bin"
