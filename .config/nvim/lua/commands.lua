@@ -1,3 +1,4 @@
+-- Auto Commands
 vim.cmd ([[
     augroup local_general
         autocmd!
@@ -19,4 +20,12 @@ vim.cmd ([[
         autocmd Filetype vim setlocal expandtab tabstop=2 shiftwidth=2
         autocmd Filetype yaml setlocal expandtab tabstop=2 shiftwidth=2
     augroup end
+]])
+
+-- Custom Commands
+vim.cmd ([[
+command! -bar SpellEn set spell spelllang=en spellfile=${HOME}/.local/share/nvim/site/spell/en.utf-8.add
+command! -bar SpellUk set spell spelllang=uk spellfile=${HOME}/.local/share/nvim/site/spell/uk.utf-8.add
+command! -bar SpellRu set spell spelllang=ru_yo spellfile=${HOME}/.local/share/nvim/site/spell/ru.utf-8.add
+command! -bar NoSpell set nospell
 ]])

@@ -4,7 +4,7 @@
 
 -- Basic settings
 require 'options'
-require 'autocommands'
+require 'commands'
 require 'keymaps'
 
 -- Plugins and their setup
