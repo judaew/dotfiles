@@ -38,8 +38,8 @@ keymap("", "<C-l>", "<C-W>l", opts)
 keymap("n", "]b", ":bnext<CR>", opts)
 keymap("n", "[b", ":bprev<CR>", opts)
 -- Tabs
-keymap("n", "]t", "tabn<CR>", opts)
-keymap("n", "[t", "tabp<CR>", opts)
+keymap("n", "]t", ":tabn<CR>", opts)
+keymap("n", "[t", ":tabp<CR>", opts)
 
 -- Exit on 'jj'
 keymap("i", "jj", "<Esc>", opts)
@@ -58,3 +58,8 @@ keymap("", "<Leader>p", "\"p", opts)
 keymap("", "<Leader>P", "\"P", opts)
 keymap("", "<Leader>p", "\"p", opts)
 keymap("", "<Leader>P", "\"P", opts)
+
+-- Toggle for wrap options
+keymap("n", "<Leader>w", ":set wrap!<CR>", opts)
+
+
