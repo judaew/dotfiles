@@ -108,7 +108,7 @@ EOF
 PROMPT_COMMAND="__prompt_cmd"
 
 # --- aliases
-if [[ "${OSTYPE}" == "darwin"* ]]; then
+if [[ "${OSTYPE}" == "darwin"* && ! -f /opt/local/libexec/gnubin/ls ]] ; then
     alias ls="ls -G"
 else
     alias ls="ls --color=auto"
