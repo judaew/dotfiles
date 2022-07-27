@@ -32,4 +32,7 @@ set background=dark
 colorscheme molokai
 let g:molokai_origin=1
 let g:rehash=1
+
+" Fix netrw for macOS, see https://github.com/vim/vim/issues/4738
+let g:netrw_http_cmd='open'
 ]])
