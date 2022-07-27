@@ -224,8 +224,8 @@ function title() {
 
 function fedit() {
     local filepath
-    if filepath=$(env COLORTERM=8bit fzf --preview 'bat --color=always \
-        --style=numbers --line-range=:500 {}');
+    if filepath=$(env COLORTERM=8bit fzf --preview 'bat --color=always' \
+        '--style=numbers --line-range=:500 {}');
     then
         nvim "${filepath}"
     fi
