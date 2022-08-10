@@ -39,33 +39,18 @@
     discard = checkout --
 
 # git.diff
-[diff]
-    tool = Kaleidoscope
-
 [difftool]
-    prompt = false
     thustExitCode = true
 
 [difftool "nvimdiff"]
     cmd = nvim -d $LOCAL $REMOTE
 
-[difftool "Kaleidoscope"]
-    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-
 # git.merge
 [merge]
-    tool = Kaleidoscope
     conflictstyle = diff3
-
-[mergetool]
-    prompt = false
 
 [mergetool "nvimdiff"]
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-
-[mergetool "Kaleidoscope"]
-    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-    trustExitCode = true
 
 # git-lfs
 [filter "lfs"]
