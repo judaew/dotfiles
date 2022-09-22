@@ -27,6 +27,11 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# speed-up fzf
+export FZF_DEFAULT_COMMAND='fd --type f --color=never'
+export FZF_ALT_C_COMMAND='fd --type d . --color=never'
+
 # --- options
 
 shopt -s cdable_vars
@@ -134,10 +139,16 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
 alias random-mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 
+# Make colors in ripgrep as in The Silver Searcher
+alias rg="rg --colors 'match:fg:black' --colors 'match:bg:yellow'\
+             --colors 'match:style:nobold' --colors 'path:fg:green'\
+             --colors 'path:style:bold' --colors 'line:fg:yellow'"
+
 # darwin specific
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
     alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+    alias vscode="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
 fi
 
 # --- variables
