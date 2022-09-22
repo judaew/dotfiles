@@ -36,3 +36,8 @@ let g:rehash=1
 " Fix netrw for macOS, see https://github.com/vim/vim/issues/4738
 let g:netrw_http_cmd='open'
 ]])
+
+-- fix shada
+vim.cmd ([[
+set shada+=n~/.local/share/nvim/shada/main.shada
+]])

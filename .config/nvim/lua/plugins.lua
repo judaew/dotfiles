@@ -76,7 +76,7 @@ return packer.startup(function(use)
     use 'gpanders/editorconfig.nvim'
     use 'fatih/vim-nginx'
     use 'MTDL9/vim-log-highlighting'
-    use {'~/Projects/judaew/macports.nvim', config=req 'macports'}
+    use {'~/Workspaces/github.com/judaew/macports.nvim', config=req 'macports'}
     use {'habamax/vim-asciidoctor', config=runtime 'vim-asciidoctor'}
 
     -- ### Special Features

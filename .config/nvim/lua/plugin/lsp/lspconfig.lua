@@ -53,5 +53,5 @@ lspconfig.cmake.setup {
 }
 
 lspconfig.pyright.setup {
-    cmd = {vim.fn.exepath('pyright-langserver'), "--stdio"}
+    cmd = {vim.fn.exepath('pyright-langserver'), "--pythonversion 3.10", "--stdio",}
 }
