@@ -19,6 +19,14 @@ export MCFLY_KEY_SCHEME=vim
 export MCFLY_FUZZY=true
 export MCFLY_RESULTS=50
 
+# settings colors for less
+export LESS_TERMCAP_mb=${HOME}'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
 # --- options
 
 shopt -s cdable_vars

@@ -38,6 +38,14 @@
     prev = checkout -
     discard = checkout --
 
+# git.pager
+[pager]
+    diff = riff
+    show = riff
+
+[interactive]
+    diffFilter = riff
+
 # git.diff
 [difftool]
     thustExitCode = true

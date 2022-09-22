@@ -10,8 +10,6 @@ fi
 
 if command -v nvim &> /dev/null; then
     export EDITOR="nvim"
-    export PAGER=nvimpager
-    export MANPAGER=nvimpager
 elif command -v vim &> /dev/null; then
     export EDITOR="vim"
 else
