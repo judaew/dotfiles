@@ -68,7 +68,7 @@ export PATH="${PATH}:${GOBIN}"
 
 # JAVA
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-    JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk19/Contents/Home"
+    JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk17/Contents/Home"
     PATH="${PATH}:${JAVA_HOME}/bin"
     MANPATH="${MANPATH}:${JAVA_HOME}/man"
     CPATH="${CPATH}:${JAVA_HOME}/include"
