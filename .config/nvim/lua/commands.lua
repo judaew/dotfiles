@@ -3,7 +3,7 @@ vim.cmd ([[
     augroup local_general
         autocmd!
         autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
-        autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
+        autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=750, on_visual=true}
     augroup end
 
     augroup local_git
