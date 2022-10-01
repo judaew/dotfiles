@@ -107,6 +107,8 @@ return packer.startup(function(use)
             requires = {'nvim-lua/plenary.nvim'}
     }
     use { 'TimUntersberger/neogit', config=req 'neogit',
+        -- WARN: see https://github.com/TimUntersberger/neogit/issues/349
+        commit = '8adf22f103250864171f7eb087046db8ad296f78',
         requires = 'nvim-lua/plenary.nvim'
     }
 
