@@ -2,8 +2,8 @@ local lspconfig = require'lspconfig'
 local cmp_nvim_lsp = require'cmp_nvim_lsp'
 
 lspconfig.clangd.setup {
-    capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities());
-    cmd = { vim.fn.exepath('clangd-mp-14'),
+    capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities());
+    cmd = { vim.fn.exepath('clangd-mp-15'),
             '--all-scopes-completion',
             '--suggest-missing-includes',
             '--background-index',
