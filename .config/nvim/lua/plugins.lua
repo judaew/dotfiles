@@ -78,6 +78,7 @@ return packer.startup(function(use)
     use 'MTDL9/vim-log-highlighting'
     use {'~/Workspaces/github.com/judaew/macports.nvim', config=req 'macports'}
     use {'habamax/vim-asciidoctor', config=runtime 'vim-asciidoctor'}
+    use 'ziglang/zig.vim'
 
     -- ### Special Features
     use 'tpope/vim-dispatch'
@@ -107,8 +108,6 @@ return packer.startup(function(use)
             requires = {'nvim-lua/plenary.nvim'}
     }
     use { 'TimUntersberger/neogit', config=req 'neogit',
-        -- WARN: see https://github.com/TimUntersberger/neogit/issues/349
-        commit = '8adf22f103250864171f7eb087046db8ad296f78',
         requires = 'nvim-lua/plenary.nvim'
     }
 
