@@ -1,9 +1,9 @@
 # vim: set ft=gitconfig nomodeline:
 
 # git
-[core]
+# [core]
     # See https://github.blog/2022-06-27-highlights-from-git-2-37/#a-builtin-filesystem-monitor-for-windows-and-macos
-    fsmonitor = true
+    # fsmonitor = true
 
 [user]
     name = "Vadym-Valdis Yudaiev"
