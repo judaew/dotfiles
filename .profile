@@ -25,8 +25,10 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
     # --- INFOPATH (MacPorts)
     OS_SPEC_INFOPATH="/opt/local/share/info"
 
-    # --- CPATH (MacPorts)
+    # --- CPATH
+    # MacPorts -> Xcode CLT (disabled) ->
     OS_SPEC_CPATH="/opt/local/include"
+    # OS_SPEC_CPATH="${OS_SPEC_CPATH}:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/"
 else
     OS_SPEC_PATH=""
     OS_SPEC_MANPATH=""
@@ -72,6 +74,13 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
     PATH="${PATH}:${JAVA_HOME}/bin"
     MANPATH="${MANPATH}:${JAVA_HOME}/man"
     CPATH="${CPATH}:${JAVA_HOME}/include"
+fi
+
+# Qt
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+    MY_QT_VERSION="6.4.1"
+    export PATH="${PATH}:/opt/Qt/${MY_QT_VERSION}/macos/bin"
+    export CPATH="${CPATH}:/opt/Qt/${MY_QT_VERSION}/macos/include"
 fi
 
 # vim:ft=sh
