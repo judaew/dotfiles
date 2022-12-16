@@ -6,19 +6,19 @@ c_red="$(tput setaf 1)"
 c_yellow="$(tput setaf 3)"
 c_reset="$(tput sgr0)"
 
-function passed() {
+passed() {
     echo
     echo "${c_main} lint ${c_reset}${c_green} ${linter} passed${c_reset}"
     echo
 }
 
-function error() {
+error() {
     echo
     echo "${c_main} lint ${c_reset}${c_red} ${linter} failed${c_reset}"
     echo
 }
 
-function skipped() {
+skipped() {
     echo
     echo "${c_main} lint ${c_reset}${c_yellow} ${linter} skipped${c_reset}"
     echo
