@@ -186,45 +186,6 @@ function java-set() {
         echo "The current Java version is $(__java_check_current_version)"
 }
 
-function portlist-create() {
-    true portlist-requested.txt
-    cat <<'EOF' > portlist-requested.txt
-This file contains packages I use on Darwin and install with Macports.
-Install them with the followin command:
-
-    for i in $(sed '1,13d' portlist-requested.txt); do
-        sudo port -N install $i||echo $i failed
-    done
-
-To recreate this list after adding packages, use the follow command:
-
-    portlist-create
-
-Packages:
-
-EOF
-    port echo requested | cut -d ' ' -f 1 >> portlist-requested.txt
-}
-
-# `sprunge filename # post file to sprunge`
-# `some_command | sprunge # pipe output to sprunge`
-function sprunge() {
-  if [[ ${1} ]]; then
-    curl -F 'sprunge=<-' "http://sprunge.us" <"${1}"
-  else
-    curl -F 'sprunge=<-' "http://sprunge.us"
-  fi
-}
-
-# Adds all available keys to SSH agent
-function ssh-add-all() {
-    for i in $(find "${HOME}"/.ssh/* -type f ! -name "*.*" | sed \
-        's!.*/!!' | sed '/config/,/known_hosts/d; /.pub/d')
-    do
-        ssh-add --apple-use-keychain ~/.ssh/"${i}"||echo "${i}" failed
-    done
-}
-
 function git-latest-branch() {
     local rev_list latest_tag
     rev_list=$(git rev-list --tags --max-count=1)
@@ -233,23 +194,8 @@ function git-latest-branch() {
     git checkout "${latest_tag}"
 }
 
-function lfmp() {
-    lf "$(port dir "${1}")"
-}
-
 function title() {
     PROMPT_TITLE="${1}"
 }
-
-function fedit() {
-    local filepath
-    if filepath=$(env COLORTERM=8bit fzf --preview 'bat --color=always' \
-        '--style=numbers --line-range=:500 {}');
-    then
-        nvim "${filepath}"
-    fi
-}
-alias fe="fedit"
-
 
 # vim:ft=sh

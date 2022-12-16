@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# find and edit
+
+if [ -z "(which fzf)" ]; then
+    echo "Error: FZF not found."
+    exit 1
+fi
+
+if [ -z "(which bat)" ]; then
+    echo "Error: bat not found."
+    exit 1
+fi
+
+if FILEPATH=$(env COLORTERM=8bit fzf --preview 'bat --color=always \
+    --style=numbers --line-range=:500 {}');
+then
+    ${EDITOR} "${FILEPATH}"
+fi
