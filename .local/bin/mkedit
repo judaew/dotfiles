@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+# mkdir and edit
+
+FILEPATH="${1}"
+DIRPATH="$(dirname ${FILEPATH})"
+[ ! -d "${DIRPATH}" ] && mkdir -p ${DIRPATH}
+${EDITOR} ${FILEPATH}
