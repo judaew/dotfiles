@@ -2,12 +2,12 @@
 
 # find and edit
 
-if [ -z "(which fzf)" ]; then
+if [ -z "$(which fzf)" ]; then
     echo "Error: FZF not found."
     exit 1
 fi
 
-if [ -z "(which bat)" ]; then
+if [ -z "$(which bat)" ]; then
     echo "Error: bat not found."
     exit 1
 fi

@@ -1,6 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-if [ -z "(which port)" ]; then
+if [ -z "$(which port)" ]; then
     echo "MacPorts not found, this script is primarily for use with MacPorts."
     exit 1
 fi
@@ -14,7 +14,7 @@ echo "${green}[maintainers]${reset_color}"
 echo "----------------------------------------"
 
 if [ "${maintainer}" != "" ]; then
-    port livecheck maintainer:${maintainer}
+    port livecheck maintainer:"${maintainer}"
 else
     port livecheck maintainers:judaew
 fi
@@ -23,6 +23,7 @@ echo
 echo "${green}[nomaintainer]${reset_color}"
 echo "----------------------------------------"
 
-source "${XDG_DATA_HOME}/my_scripts/ports_nomaintainer-list.sh"
+. "${XDG_DATA_HOME}/my_scripts/ports_nomaintainer-list.sh"
 
-port livecheck ${ports_nomaintainer[@]}
+# shellcheck disable=SC2154
+port livecheck "${ports_nomaintainer[@]}"

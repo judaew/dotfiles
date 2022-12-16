@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if [ -z "(which port)" ]; then
+if [ -z "$(which port)" ]; then
     echo "MacPorts not found, this script is primarily for use with MacPorts."
     exit 1
 fi
