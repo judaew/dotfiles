@@ -17,7 +17,7 @@ jobs:
         run: |
           export SHELLCHECK_OPTS="-e SC1090 -e SC1091 -e SC2034"
           shellcheck \
-            .bash_profile .bashrc .profile .config/lf/*.sh utils/*.sh
+            .bash_profile .bashrc .profile .config/lf/*.sh utils/*.sh .local/bin/*
 
   luacheck-lint:
     runs-on: ubuntu-latest
