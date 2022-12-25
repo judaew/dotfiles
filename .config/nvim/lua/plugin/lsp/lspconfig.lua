@@ -46,14 +46,6 @@ lspconfig.sumneko_lua.setup {
     }
 }
 
-lspconfig.cmake.setup {
-    capabilities = capabilities;
-    cmd = {vim.fn.exepath('cmake-language-server')},
-    init_options = {
-        buildDirectory = {'build', 'cmake-build-debug'},
-    }
-}
-
 lspconfig.pyright.setup {
     capabilities = capabilities;
     cmd = {vim.fn.exepath('pyright-langserver'), "--pythonversion 3.10", "--stdio",}
