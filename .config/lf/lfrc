@@ -59,3 +59,6 @@ cmd trash %set -f; mv $fx ~/.trash
 # use '<delete>' key for either 'trash' or 'delete' command
 # map <delete> trash
 map <delete> delete
+
+# preview in QuickLook
+map <tab> $qlmanage -p $f >& /dev/null
