@@ -21,8 +21,9 @@ PROJ_INSTANCES_LIST=( \
     "local" \
 )
 
-cd $(printf "%s\n" "${PROJ_INSTANCES_LIST[@]}" | fzf) || error_enter_dir
+cd "$(printf "%s\n" "${PROJ_INSTANCES_LIST[@]}" | fzf)" || error_enter_dir
 
+# shellcheck disable=SC2144
 while [ ! -d "./.git" ] || [ ! -f "./README"* ] ;
 do
     cd "$(find . -maxdepth 1 -mindepth 1 -type d | fzf)" || error_enter_dir

@@ -10,7 +10,7 @@ error_enter() {
     exit 1
 }
 
-if [ ${1} = "" ]; then
+if [ "${1}" = "" ]; then
     tmpdir=$(mktemp -d "test-(XXXX)") || error_create
     cd "${tmpdir}" || error-enter
 else
