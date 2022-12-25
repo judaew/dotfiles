@@ -5,8 +5,13 @@
 # hotkeys. For example, with curses that attempt to provide portable keyboard
 # input facilities.
 
+error_enter_dir() {
+    echo "Can't enter to directory, exiting..."
+    exit 1
+}
+
 WORKSPACES_DIR="${HOME}/Workspaces"
-cd ${WORKSPACES_DIR}
+cd "${WORKSPACES_DIR}" || error_enter_dir
 
 PROJ_INSTANCES_LIST=( \
     "gitlab.com" \
@@ -16,10 +21,10 @@ PROJ_INSTANCES_LIST=( \
     "local" \
 )
 
-cd $(printf "%s\n" "${PROJ_INSTANCES_LIST[@]}" | fzf)
+cd $(printf "%s\n" "${PROJ_INSTANCES_LIST[@]}" | fzf) || error_enter_dir
 
 while [ ! -d "./.git" ] || [ ! -f "./README"* ] ;
 do
-    cd "$(ls . | fzf)"
+    cd "$(find . -maxdepth 1 -mindepth 1 -type d | fzf)" || error_enter_dir
     sleep 0.1
 done

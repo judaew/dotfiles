@@ -12,8 +12,8 @@ error_enter() {
 
 if [ ${1} = "" ]; then
     tmpdir=$(mktemp -d "test-(XXXX)") || error_create
-    cd ${tmpdir} || error-enter
+    cd "${tmpdir}" || error-enter
 else
     tmpdir=$(mktemp -d "${1}-(XXXX)") || error_create
-    cd ${tmpdir} || error-enter
+    cd "${tmpdir}" || error-enter
 fi
