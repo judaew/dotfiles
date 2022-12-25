@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+error_create() {
+    echo "Can't create temp directory, exiting..."
+    exit 1
+}
+
+error_enter() {
+    echo "Can't enter to temp directory, exiting..."
+    exit 1
+}
+
+if [ ${1} = "" ]; then
+    tmpdir=$(mktemp -d "test-(XXXX)") || error_create
+    cd ${tmpdir} || error-enter
+else
+    tmpdir=$(mktemp -d "${1}-(XXXX)") || error_create
+    cd ${tmpdir} || error-enter
+fi

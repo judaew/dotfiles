@@ -144,6 +144,8 @@ alias rg="rg --colors 'match:fg:black' --colors 'match:bg:yellow'\
              --colors 'match:style:nobold' --colors 'path:fg:green'\
              --colors 'path:style:bold' --colors 'line:fg:yellow'"
 
+alias proj="source projects.sh"
+
 # darwin specific
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
