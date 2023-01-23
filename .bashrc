@@ -100,6 +100,10 @@ EOF
     # empty line before the prompt
     printf "\n"
 
+    if [ -n "${PROMPT_PRIVATE_SESSION}" ]; then
+        printf "%b" "${RED}private "
+    fi
+
     # check for ssh session
     if [[ -n "${SSH_CLIENT}" ]]; then
         printf "%b" "${GRAY}${USER}@${HOSTNAME%%.*} "
@@ -198,6 +202,10 @@ function git-latest-branch() {
 
 function title() {
     PROMPT_TITLE="${1}"
+}
+
+function bash-private() {
+    PROMPT_PRIVATE_SESSION="TRUE" HISTFILE=/dev/null bash
 }
 
 # vim:ft=sh
