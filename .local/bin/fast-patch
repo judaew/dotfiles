@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if [ -z "$(which ffmpeg)" ]; then
+if [ -z "$(which nvim)" ]; then
     echo "Error: Neovim not found."
     exit 1
 fi
