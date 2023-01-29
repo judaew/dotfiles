@@ -10,5 +10,7 @@ if [ "${1}" = "" ]; then
     exit 1
 fi
 
-nvim -c 'set patchmode=.orig' "${1}"
-diff -u "${1}.orig" "${1}"
+EDITOR="nvim"
+
+${EDITOR} -c "set patchmode=.orig" "${1}"
+diff -du "${1}.orig" "${1}"
