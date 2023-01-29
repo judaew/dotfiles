@@ -4,6 +4,8 @@
 #
 # Use the command 'task show' to see all defaults and overrides
 
+news.version=2.6.0
+
 # Files
 data.location=~/.local/share/task
 
