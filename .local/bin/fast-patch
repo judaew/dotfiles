@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+if [ -z "$(which ffmpeg)" ]; then
+    echo "Error: Neovim not found."
+    exit 1
+fi
+
+if [ "${1}" = "" ]; then
+    echo 'Error: Enter the file you want to patch'
+    exit 1
+fi
+
+nvim -c 'set patchmode=.orig' "${1}"
+diff -u "${1}"{.orig,}
