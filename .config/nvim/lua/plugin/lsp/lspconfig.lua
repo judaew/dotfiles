@@ -2,7 +2,6 @@ local lspconfig = require'lspconfig'
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 lspconfig.clangd.setup {
-    capabilities = capabilities;
     cmd = { vim.fn.exepath('clangd-mp-15'),
             '--all-scopes-completion',
             '--suggest-missing-includes',
@@ -22,8 +21,9 @@ lspconfig.clangd.setup {
             '--pch-storage=memory'}
 }
 
+lspconfig.gopls.setup {}
+
 lspconfig.sumneko_lua.setup {
-    capabilities = capabilities;
     cmd = {vim.fn.exepath('lua-language-server')};
     settings = {
         Lua = {
@@ -47,6 +47,5 @@ lspconfig.sumneko_lua.setup {
 }
 
 lspconfig.pyright.setup {
-    capabilities = capabilities;
     cmd = {vim.fn.exepath('pyright-langserver'), "--pythonversion 3.10", "--stdio",}
 }
