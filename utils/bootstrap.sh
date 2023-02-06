@@ -10,8 +10,8 @@ for i in "${!files[@]}"; do
     destpath="${files[${i}]}"
 
     # Create directory
-    if [[ "${destpath}" != "${HOME}" ]]; then
-        mkdir -p "${destpath}"
+    if [[ "${destpath}" != "" ]]; then
+        mkdir -p "${HOME}/${destpath}"
     fi
 
     # Synchronize files from the repository dir to home dir
