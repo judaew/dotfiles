@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 COMPLETION_PATH="${XDG_DATA_HOME:?}/bash-completion/completions"
+mkdir -p ${COMPLETION_PATH}
 
 TMUX_URL="https://raw.githubusercontent.com/imomaliev/tmux-bash-completion/master/completions/tmux"
 DOCKER_URL="https://raw.githubusercontent.com/docker/cli/master/contrib/completion/bash/docker"
