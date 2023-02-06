@@ -155,6 +155,8 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
     alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
     alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
     alias vscode="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+    alias smerge="/Applications/Sublime\ Merge.app/Contents/SharedSupport/bin/smerge"
+    alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 fi
 
 # --- variables
