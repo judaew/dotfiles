@@ -13,7 +13,7 @@ lspconfig.clangd.setup {
             '--completion-style=detailed',
             '--clang-tidy',
             '--clang-tidy-checks=-*,llvm-*,clang-analyzer-*,modernize-*,-modernize-use-trailing-return-type',
-            '--fallback-style=Google',
+            '--fallback-style=LLVM',
             '--header-insertion=never',
 
             -- clangd 11+ supports reading from .clangd configuration file
