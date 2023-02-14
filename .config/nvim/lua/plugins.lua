@@ -70,7 +70,6 @@ return packer.startup(function(use)
                 -- 'rafamadriz/friendly-snippets',
         }
     }
-    use {'lewis6991/spellsitter.nvim', config=req 'spellsitter'}
 
     -- ### Specific Language Support / Syntax Highlighting / Formatting
     use 'gpanders/editorconfig.nvim'
