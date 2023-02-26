@@ -77,7 +77,6 @@ return packer.startup(function(use)
     use 'MTDL9/vim-log-highlighting'
     use {'~/Workspaces/github.com/judaew/macports.nvim', config=req 'macports'}
     use {'habamax/vim-asciidoctor', config=runtime 'vim-asciidoctor'}
-    use 'ziglang/zig.vim'
 
     -- ### Special Features
     use 'tpope/vim-dispatch'
