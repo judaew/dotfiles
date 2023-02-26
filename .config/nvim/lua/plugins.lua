@@ -116,6 +116,7 @@ return packer.startup(function(use)
     use {'folke/todo-comments.nvim', config=req 'todo-comments',
             requires = {'nvim-lua/plenary.nvim'}}
     use {'norcalli/nvim-colorizer.lua', config=req 'nvim-colorizer'}
+    use {'lewis6991/hover.nvim', config=req 'hover'}
 
     -- ### Themes
     use 'fatih/molokai'
