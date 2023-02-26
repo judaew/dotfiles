@@ -25,7 +25,7 @@ lspconfig.clangd.setup {
 
 lspconfig.gopls.setup {}
 
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
     capabilities = compose_capabilities,
     cmd = {vim.fn.exepath('lua-language-server')};
     settings = {
