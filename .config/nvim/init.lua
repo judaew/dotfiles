@@ -8,5 +8,4 @@ require 'commands'
 require 'keymaps'
 
 -- Plugins and their setup
-require 'plugins'
-require 'init/packer_compiled'
+require 'package-manager'

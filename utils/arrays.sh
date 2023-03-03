@@ -12,11 +12,9 @@ declare -A files=(
     [".config/kitty"]=".config"
     [".config/nvim/init.lua"]=".config/nvim"
     [".config/nvim/lua"]=".config/nvim"
-    [".config/nvim/viml"]=".config/nvim"
     [".config/lf"]=".config"
     [".config/task"]=".config"
     [".config/tmux"]=".config"
-    [".config/ideavim/ideavimrc"]=".config/ideavim"
     # ~/.local/share
     [".local/bin"]=".local"
     [".local/share/bash-completion/get_completions.sh"]=".local/share/bash-completion"

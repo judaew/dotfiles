@@ -26,18 +26,12 @@ for k,v in pairs(options) do
     vim.opt[k] = v
 end
 
--- setup theme
+-- Fix netrw for macOS, see https://github.com/vim/vim/issues/4738
 vim.cmd ([[
-set background=dark
-colorscheme molokai
-let g:molokai_origin=1
-let g:rehash=1
-
-" Fix netrw for macOS, see https://github.com/vim/vim/issues/4738
 let g:netrw_http_cmd='open'
 ]])
 
--- fix shada
+-- Fix shada
 vim.cmd ([[
 set shada+=n~/.local/share/nvim/shada/main.shada
 ]])

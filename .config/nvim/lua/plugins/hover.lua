@@ -1,3 +1,5 @@
+local keymap = vim.keymap.set
+
 require("hover").setup {
     init = function()
         -- Require providers
@@ -19,5 +21,5 @@ require("hover").setup {
 
 -- Setup keymaps
 -- vim.keymap.set("n", 'K', vim.lsp.buf.hover)
-vim.keymap.set("n", "K", require("hover").hover, {desc = "hover.nvim"})
-vim.keymap.set("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
+keymap("n", "K", require("hover").hover, {desc = "hover.nvim"})
+keymap("n", "gK", require("hover").hover_select, {desc = "hover.nvim (select)"})
