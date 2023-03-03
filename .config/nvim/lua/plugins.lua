@@ -55,7 +55,10 @@ return packer.startup(function(use)
     -- ### LSP / Linting / DAP / Snippets
     use {'neovim/nvim-lspconfig', config=req 'lsp/lspconfig'}
     use {'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate', config=req 'nvim-treesitter'}
+        run = ':TSUpdate', config=req 'nvim-treesitter',
+        -- plugin for additional functions
+        requires = {'nvim-treesitter/nvim-treesitter-textobjects'}
+    }
     use {'hrsh7th/nvim-cmp', config=req 'lsp/cmp',
             requires = {
                 'hrsh7th/cmp-nvim-lsp',
@@ -67,7 +70,6 @@ return packer.startup(function(use)
             requires = {
                 'hrsh7th/nvim-cmp',
                 'hrsh7th/cmp-vsnip'
-                -- 'rafamadriz/friendly-snippets',
         }
     }
 
@@ -85,6 +87,7 @@ return packer.startup(function(use)
     -- ### Movement
     -- Error detected while processing function <SNR>59_lastplace
     -- use 'farmergreg/vim-lastplace'
+    use 'preservim/tagbar'
     use {'junegunn/fzf.vim', config=runtime 'fzf'}
     use {'lambdalisue/fern.vim', config=runtime 'fern'}
     use {'justinmk/vim-gtfo', config=runtime 'vim-gtfo'}
