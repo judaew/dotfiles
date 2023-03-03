@@ -65,7 +65,10 @@ return packer.startup(function(use)
                 'hrsh7th/cmp-buffer'
         }
     }
-    -- use {'mfussenegger/nvim-dap', config=req 'lsp/dap'}
+    use {'mfussenegger/nvim-dap', config=req 'lsp/dap',
+        -- plugin for UI
+        requires = {'rcarriga/nvim-dap-ui'}
+    }
     use {'hrsh7th/vim-vsnip', config=runtime 'vim-vsnip',
             requires = {
                 'hrsh7th/nvim-cmp',

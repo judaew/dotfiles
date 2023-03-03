@@ -1,23 +1,20 @@
-local dap = require('dap')
+local dap = require("dap")
+local dapui = require("dapui")
 
--- Mappings
--- FIXME: F11 don't work on Darwin
-vim.cmd([[
-nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
-nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
-nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
-nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
-nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
-nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
-]])
+local keymap = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+-- keymaps
+keymap('n', '<F5>', require 'dap'.continue, opts)
+keymap('n', '<F10>', require 'dap'.step_over, opts)
+keymap('n', '<F11>', require 'dap'.step_into, opts)
+keymap('n', '<F12>', require 'dap'.step_out, opts)
+keymap('n', '<leader>b', require 'dap'.toggle_breakpoint, opts)
 
 -- See https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#ccrust-via-lldb-vscode
 dap.adapters.lldb = {
     type = 'executable',
-    command = vim.fn.exepath('lldb-vscode-mp-14'),
+    command = vim.fn.exepath('lldb-vscode-mp-15'),
     name = 'lldb'
 }
 
@@ -33,9 +30,40 @@ dap.configurations.cpp = {
         stopOnEntry = false,
         args = {},
         runInTerminal = false,
-        -- postRunCommands = {'process handle -p true -s false -n false SIGWINCH'}
     }
 }
 
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
+
+dapui.setup({
+    layouts = {
+        {
+            elements = {
+                { id = "scopes", size = 0.25 },
+                { id = "breakpoints", size = 0.20 },
+                { id = "stacks", size = 0.25 },
+                { id = "watches", size = 0.30 },
+            },
+            size = 50,
+            position = 'right',
+        },
+        {
+            elements = { 'repl' },
+            size = 10,
+            position = 'bottom',
+        },
+    },
+    windows = { indent = 1 },
+})
+
+dap.listeners.after.event_initialized["dapui_config"] = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+  dapui.close()
+end
+
