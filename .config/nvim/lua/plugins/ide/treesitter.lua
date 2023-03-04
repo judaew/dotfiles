@@ -1,60 +1,57 @@
 require'nvim-treesitter.configs'.setup {
+    ensure_installed = {
+            "bash",
+            "c",
+            "cmake",
+            "cpp",
+            "css",
+            "diff",
+            "dockerfile",
+            "gdscript",
+            "git_rebase",
+            "gitattributes",
+            "gitcommit",
+            "go",
+            "gomod",
+            "html",
+            "javascript",
+            "json",
+            "llvm",
+            "lua",
+            "markdown",
+            "ninja",
+            "proto",
+            "python",
+            "rust",
+            "toml",
+            "typescript",
+            "yaml",
+            "zig"
+        },
     highlight = {
         enable = true,
         disable = {},
     },
     indent = {
         enable = true,
-        disable = { "yaml" },
+        disable = { "yaml", "python" },
     },
-    ensure_installed = {
-        "bash",
-        "c",
-        "cmake",
-        "cpp",
-        "css",
-        "diff",
-        "dockerfile",
-        "gdscript",
-        "git_rebase",
-        "gitattributes",
-        "gitcommit",
-        "go",
-        "gomod",
-        "html",
-        "javascript",
-        "json",
-        "llvm",
-        "lua",
-        "markdown",
-        "ninja",
-        "proto",
-        "python",
-        "rust",
-        "toml",
-        "typescript",
-        "yaml",
-        "zig"
-    }
-}
-
-require'nvim-treesitter.configs'.setup {
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = '<Leader>v',
+            node_incremental = '<Leader>vi',
+            scope_incremental = '<Leader>vs',
+            node_decremental = '<Leader>vd',
+        },
+    },
     textobjects = {
         move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
                 ["]m"] = "@function.outer",
-                ["]]"] = { query = "@class.outer", desc = "Next class start" },
-                --
-                -- You can use regex matching and/or pass a list in a "query" key to group multiple queires.
-                ["]o"] = "@loop.*",
-                -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
-                --
-                -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-                -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-                ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
-                ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+                ["]]"] = "@class.outer",
             },
             goto_next_end = {
                 ["]M"] = "@function.outer",
@@ -68,15 +65,6 @@ require'nvim-treesitter.configs'.setup {
                 ["[M"] = "@function.outer",
                 ["[]"] = "@class.outer",
             },
-            -- Below will go to either the start or the end, whichever is closer.
-            -- Use if you want more granular movements
-            -- Make it even more gradual by adding multiple queries and regex.
-            goto_next = {
-                ["]d"] = "@conditional.outer",
-            },
-            goto_previous = {
-                ["[d"] = "@conditional.outer",
-            }
         },
         lsp_interop = {
             enable = true,
