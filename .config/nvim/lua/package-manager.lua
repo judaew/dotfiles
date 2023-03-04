@@ -17,9 +17,11 @@ require 'lazy'.setup({
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            'hrsh7th/nvim-cmp',
+            -- plugin for automatically configures lua-language-server for
+            -- Neovim config, Neovim runtime and plugin directories
             'folke/neodev.nvim',
-            'weilbith/nvim-code-action-menu'
+            -- plugin for better action menu
+            'weilbith/nvim-code-action-menu',
         },
         config=function() require 'plugins/ide/lsp' end
     },
@@ -79,12 +81,17 @@ require 'lazy'.setup({
     },
 
     -- *** Movement
-    -- Error detected while processing function <SNR>59_lastplace
-    -- { 'farmergreg/vim-lastplace' }
+    {
+        'ethanholz/nvim-lastplace',
+        opts = {
+            lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help' },
+            lastplace_ignore_filetype = { 'gitcommit', 'gitrebase' },
+            lastplace_open_folds = true
+        }
+    },
     { 'preservim/tagbar' },
     {
         'nvim-telescope/telescope.nvim',
-        version = '*',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {
@@ -178,9 +185,9 @@ require 'lazy'.setup({
     {
         'lukas-reineke/indent-blankline.nvim',
         opts = {
-            -- char = '┊',
             show_trailing_blankline_indent = false,
-            show_current_context = true
+            show_current_context = true,
+            use_treesitter = true
         }
     },
 
