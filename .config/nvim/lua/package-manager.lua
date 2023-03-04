@@ -18,6 +18,8 @@ require 'lazy'.setup({
         'neovim/nvim-lspconfig',
         dependencies = {
             'hrsh7th/nvim-cmp',
+            'folke/neodev.nvim',
+            'weilbith/nvim-code-action-menu'
         },
         config=function() require 'plugins/ide/lsp' end
     },
@@ -49,8 +51,8 @@ require 'lazy'.setup({
     {
         'hrsh7th/vim-vsnip',
         dependencies = {
-                'hrsh7th/nvim-cmp',
-                'hrsh7th/cmp-vsnip'
+            'hrsh7th/nvim-cmp',
+            'hrsh7th/cmp-vsnip'
         },
         config=function() require 'plugins/vim-vsnip' end
     },
