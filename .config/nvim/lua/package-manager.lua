@@ -59,6 +59,16 @@ require 'lazy'.setup({
         },
         config=function() require 'plugins/vim-vsnip' end
     },
+    {
+        'Dax89/automaton.nvim',
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim",
+            -- Debug support for 'launch' configurations (Optional)
+            "mfussenegger/nvim-dap"
+        },
+        config=function() require 'plugins/ide/automaton' end
+    },
 
     -- *** Specific Language Support / Syntax Highlighting / Formatting
     { 'gpanders/editorconfig.nvim' },
