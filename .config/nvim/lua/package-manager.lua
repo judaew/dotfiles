@@ -174,8 +174,6 @@ require 'lazy'.setup({
         config=function() require 'plugins/nvim-colorizer' end
     },
     {
-        'lewis6991/hover.nvim',
-        config=function() require 'plugins/hover' end
     },
 
     -- *** Themes
