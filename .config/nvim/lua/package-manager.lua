@@ -121,8 +121,8 @@ require 'lazy'.setup({
     -- *** Text Manipulation
     { 'tpope/vim-repeat' },
     {
-        'b3nj5m1n/kommentary',
-        config=function() require 'plugins/kommentary' end
+        'numToStr/Comment.nvim',
+        opts = { mappings = { basic = true, extra = false } }
     },
     {
         'lyokha/vim-xkbswitch',
