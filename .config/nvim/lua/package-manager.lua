@@ -174,16 +174,32 @@ require 'lazy'.setup({
         config=function() require 'plugins/nvim-colorizer' end
     },
     {
+        'lukas-reineke/indent-blankline.nvim',
+        opts = {
+            -- char = '┊',
+            show_trailing_blankline_indent = false,
+            show_current_context = true
+        }
     },
 
     -- *** Themes
     {
         'fatih/molokai',
+        enabled=true,
+        priority = 1000,
         config=function() vim.cmd ([[
             set background=dark
             colorscheme molokai
             let g:molokai_origin=1
             let g:rehash=1
         ]]) end
-    }
+    },
+    { -- Theme inspired by Atom
+        'navarasu/onedark.nvim',
+        enabled=false,
+        priority = 1000,
+        config = function()
+          vim.cmd.colorscheme 'onedark'
+        end,
+    },
 })
