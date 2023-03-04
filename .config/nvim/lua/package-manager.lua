@@ -131,6 +131,9 @@ require 'lazy'.setup({
             vim.g.XkbSwitchLib = '/opt/local/lib/libInputSourceSwitcher.dylib'
         end
     },
+    { -- Detect tabstop and shiftwidth automatically
+        'tpope/vim-sleuth'
+    },
 
     -- *** Git
     { 'tpope/vim-fugitive' },
@@ -153,6 +156,10 @@ require 'lazy'.setup({
     {
         'famiu/feline.nvim',
         config=function() require 'plugins/feline' end
+    },
+    {
+        'folke/which-key.nvim',
+        config=true
     },
     { 'junegunn/vim-peekaboo' },
     {
