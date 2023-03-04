@@ -18,5 +18,21 @@ cmp.setup {
         { name = 'nvim_lsp' },
         { name = 'buffer' },
         { name = 'vsnip' }
+    },
+    -- lspkind-nvim: This tiny plugin adds vscode-like pictograms
+    formatting = {
+        format = require 'lspkind'.cmp_format {
+            mode = 'symbol',
+            preset = 'codicons',
+            maxwidth = 40,
+            ellipsis_char = '...'
+        }
     }
 }
+
+cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer' },
+    },
+})
