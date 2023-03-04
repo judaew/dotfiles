@@ -81,8 +81,15 @@ require 'lazy'.setup({
     -- { 'farmergreg/vim-lastplace' }
     { 'preservim/tagbar' },
     {
-        'junegunn/fzf.vim',
-        config=function() require 'plugins/fzf' end
+        'nvim-telescope/telescope.nvim',
+        version = '*',
+        dependencies = { 'nvim-lua/plenary.nvim' }
+    },
+    {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+        cond = function() return vim.fn.executable 'make' == 1 end,
+        config = function() require 'plugins/telescope' end
     },
     {
         'lambdalisue/fern.vim',
