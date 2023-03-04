@@ -83,8 +83,8 @@ local servers = {
     }
 }
 
--- nvim-cmp supports additional completion capabilities, so broadcast that 
--- to servers.See https://github.com/hrsh7th/cmp-nvim-lsp/tree/59224771f91b86d1de12570b4070fe4ad7cd1eeb#capabilities
+-- nvim-cmp supports additional completion capabilities, so broadcast that
+-- to servers. See https://github.com/hrsh7th/cmp-nvim-lsp/tree/59224771f91b86d1de12570b4070fe4ad7cd1eeb#capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 

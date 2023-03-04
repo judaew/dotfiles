@@ -6,7 +6,7 @@ local keymap = vim.keymap.set
 keymap('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 keymap('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 keymap('n', '<leader>/', function()
-    -- You can pass additional configuration to telescope to change theme, 
+    -- You can pass additional configuration to telescope to change theme,
     -- layout, etc.
     require('telescope.builtin').current_buffer_fuzzy_find(
         require('telescope.themes').get_dropdown {
