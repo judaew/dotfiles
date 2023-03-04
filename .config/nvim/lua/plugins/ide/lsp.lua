@@ -4,11 +4,13 @@ local on_attach = function(_, bufnr)
             desc = 'LSP: ' .. desc
         end
 
-        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+        vim.keymap.set('n', keys, func,
+            { noremap = true, silent = true, buffer = bufnr, desc = desc })
     end
 
     keymap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-    -- keymap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    -- `code_action_menu` plugin provides a handy pop-up menu for code action.
+    -- this plugin can be used instead by `vim.lsp.buf.code_action` func
     keymap('<leader>ca', require('code_action_menu').open_code_action_menu, '[C]ode [A]ction')
 
     keymap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
