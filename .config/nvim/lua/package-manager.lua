@@ -72,10 +72,17 @@ require 'lazy'.setup({
 
     -- *** Specific Language Support / Syntax Highlighting / Formatting
     { 'gpanders/editorconfig.nvim' },
-    { 'fatih/vim-nginx' },
-    { 'MTDL9/vim-log-highlighting' },
+    {
+        'fatih/vim-nginx',
+        enabled = false
+    },
+    {
+        'MTDL9/vim-log-highlighting',
+        ft = { "*.log", "*_log" }
+    },
     {
         dir = '~/Workspaces/github.com/judaew/macports.nvim',
+        ft = 'Portfile',
         config=function()
             -- Load snippets
             vim.g.macports_snippets = 1
