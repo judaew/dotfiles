@@ -23,7 +23,7 @@ require 'lazy'.setup({
             -- plugin for better action menu
             'weilbith/nvim-code-action-menu',
         },
-        config=function() require 'plugins/ide/lsp' end
+        config = function() require 'plugins/ide/lsp' end
     },
     {
         'mfussenegger/nvim-dap',
@@ -31,7 +31,7 @@ require 'lazy'.setup({
             -- plugin for UI
             'rcarriga/nvim-dap-ui'
         },
-        config=function() require 'plugins/ide/dap' end
+        config = function() require 'plugins/ide/dap' end
     },
     {
         'nvim-treesitter/nvim-treesitter',
@@ -40,7 +40,7 @@ require 'lazy'.setup({
             'nvim-treesitter/nvim-treesitter-textobjects'
         },
         build = ':TSUpdate',
-        config=function() require 'plugins/ide/treesitter' end
+        config = function() require 'plugins/ide/treesitter' end
     },
     {
         'hrsh7th/nvim-cmp',
@@ -49,7 +49,7 @@ require 'lazy'.setup({
             'hrsh7th/cmp-buffer',
             'onsails/lspkind.nvim',
         },
-        config=function() require 'plugins/ide/intellisense' end
+        config = function() require 'plugins/ide/intellisense' end
     },
     {
         'hrsh7th/vim-vsnip',
@@ -57,7 +57,7 @@ require 'lazy'.setup({
             'hrsh7th/nvim-cmp',
             'hrsh7th/cmp-vsnip'
         },
-        config=function() require 'plugins/vim-vsnip' end
+        config = function() require 'plugins/vim-vsnip' end
     },
     {
         'Dax89/automaton.nvim',
@@ -67,7 +67,7 @@ require 'lazy'.setup({
             -- Debug support for 'launch' configurations (Optional)
             "mfussenegger/nvim-dap"
         },
-        config=function() require 'plugins/ide/automaton' end
+        config = function() require 'plugins/ide/automaton' end
     },
 
     -- *** Specific Language Support / Syntax Highlighting / Formatting
@@ -83,7 +83,7 @@ require 'lazy'.setup({
     {
         dir = '~/Workspaces/github.com/judaew/macports.nvim',
         ft = 'Portfile',
-        config=function()
+        config = function()
             -- Load snippets
             vim.g.macports_snippets = 1
             -- Load completefunc
@@ -95,7 +95,7 @@ require 'lazy'.setup({
     { 'tpope/vim-dispatch' },
     {
         'lewis6991/impatient.nvim',
-        config=function() require('impatient') end
+        config = function() require('impatient') end
     },
 
     -- *** Movement
@@ -120,26 +120,26 @@ require 'lazy'.setup({
     },
     {
         'lambdalisue/fern.vim',
-        config=function()
+        config = function()
             keymap('n', '<Leader>n', ':Fern . -drawer<CR>', { desc = "fern (pwd)", noremap = true, silent = true })
             keymap('n', '<Leader>f', ':Fern . -reveal=% -drawer<CR>', { desc = "fern (current dir)", noremap = true, silent = true })
         end
     },
     {
         'justinmk/vim-gtfo',
-        config=function() vim.cmd([[
+        config = function() vim.cmd([[
             let g:gtfo#terminals = { 'mac': 'kitty' }
         ]]) end
     },
     {
         'simnalamburt/vim-mundo',
-        config=function()
+        config = function()
             keymap('n', '<Leader>u', ':MundoToggle<CR>', { desc = "MundoToggle", noremap = true, silent = true })
         end
     },
     {
         't9md/vim-choosewin',
-        config=function()
+        config = function()
             keymap('n', '-', '<Plug>(choosewin)', { desc = "Choosewin", noremap = true, silent = true })
         end
     },
@@ -153,7 +153,7 @@ require 'lazy'.setup({
     },
     {
         'lyokha/vim-xkbswitch',
-        init=function()
+        init = function()
             vim.g.XkbSwitchEnabled = 1
             vim.g.XkbSwitchLib = '/opt/local/lib/libInputSourceSwitcher.dylib'
         end
@@ -171,22 +171,22 @@ require 'lazy'.setup({
         dependencies = {
             'nvim-lua/plenary.nvim'
         },
-        config=function() require 'plugins/gitsigns' end
+        config = function() require 'plugins/gitsigns' end
     },
     {
         'TimUntersberger/neogit',
         dependencies = 'nvim-lua/plenary.nvim',
-        config=true
+        config = true
     },
 
     -- *** UI
     {
         'famiu/feline.nvim',
-        config=function() require 'plugins/feline' end
+        config = function() require 'plugins/feline' end
     },
     {
         'folke/which-key.nvim',
-        config=true
+        config = true
     },
     { 'junegunn/vim-peekaboo' },
     {
@@ -194,11 +194,11 @@ require 'lazy'.setup({
         depencies = {
             'nvim-lua/plenary.nvim'
         },
-        config=function() require 'plugins/todo-comments' end
+        config = function() require 'plugins/todo-comments' end
     },
     {
         'norcalli/nvim-colorizer.lua',
-        config=function() require 'plugins/nvim-colorizer' end
+        config = function() require 'plugins/nvim-colorizer' end
     },
     {
         'lukas-reineke/indent-blankline.nvim',
@@ -212,9 +212,9 @@ require 'lazy'.setup({
     -- *** Themes
     {
         'fatih/molokai',
-        enabled=true,
+        enabled = true,
         priority = 1000,
-        config=function() vim.cmd ([[
+        config = function() vim.cmd ([[
             set background=dark
             colorscheme molokai
             let g:molokai_origin=1
@@ -223,7 +223,7 @@ require 'lazy'.setup({
     },
     { -- Theme inspired by Atom
         'navarasu/onedark.nvim',
-        enabled=false,
+        enabled = false,
         priority = 1000,
         config = function()
           vim.cmd.colorscheme 'onedark'
