@@ -93,10 +93,6 @@ require 'lazy'.setup({
 
     -- *** Special Features
     { 'tpope/vim-dispatch' },
-    {
-        'lewis6991/impatient.nvim',
-        config = function() require('impatient') end
-    },
 
     -- *** Movement
     {
