@@ -38,9 +38,14 @@ local on_attach = function(_, bufnr)
     end, { desc = 'Format current buffer with LSP' })
 end
 
+-- nvim-cmp supports additional completion capabilities, so broadcast that
+-- to servers. See https://github.com/hrsh7th/cmp-nvim-lsp/tree/59224771f91b86d1de12570b4070fe4ad7cd1eeb#capabilities
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
 local servers = {
     clangd = {
-        cmd = { vim.fn.exepath('clangd-mp-15'),
+        cmd = { vim.fn.exepath('clangd-mp-16'),
             '--all-scopes-completion',
             '--suggest-missing-includes',
             '--background-index',
@@ -83,17 +88,28 @@ local servers = {
     }
 }
 
--- nvim-cmp supports additional completion capabilities, so broadcast that
--- to servers. See https://github.com/hrsh7th/cmp-nvim-lsp/tree/59224771f91b86d1de12570b4070fe4ad7cd1eeb#capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
 require 'neodev'.setup()
 
 for i in pairs(servers) do
-    require 'lspconfig'[i].setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = servers[i]
-    }
+    if i == "clangd" then
+        require 'clangd_extensions'.setup({
+            server = {
+                capabilities = capabilities,
+                on_attach = on_attach,
+                settings = servers[i]
+            },
+            extensions = {
+                inlay_hints = {
+                    only_current_line = true,
+                    only_current_line_autocmd = "CursorMoved"
+                }
+            }
+        })
+    else
+        require 'lspconfig'[i].setup {
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = servers[i]
+        }
+    end
 end
