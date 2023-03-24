@@ -1,11 +1,33 @@
--- HACK: #104 Invalid in command-line window
--- See https://github.com/folke/todo-comments.nvim/issues/97
-local hl = require("todo-comments.highlight")
-local highlight_win = hl.highlight_win
-hl.highlight_win = function(win, force)
-    pcall(highlight_win, win, force)
-end
-
 require('todo-comments').setup {
-    signs = false, highlight = { keyword = 'bg' }
+    signs = true,
+    sign_priority = 8,
+    keywords = {
+        TODO = { icon = " ", color = "info" },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" }},
+        FIX  = { icon = " ", color = "error", alt =
+            { "FIXME", "BUG", "FIXIT", "ISSUE" }},
+        HACK = { icon = " ", color = "warning" },
+        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" }},
+        PERF = { icon = " ", color = "perf", alt =
+            { "OPTIM", "PERFORMANCE", "OPTIMIZE" }},
+        TEST = { icon = " ", color = "test", alt =
+            { "TESTING", "PASSED", "FAILED" }},
+    },
+    colors = {
+        info = { "#84D6EC" },
+        hint = { "#D3D3D3" },
+        error = { "#EA3323" },
+        warning = { "#F2A93B" },
+        perf = { "#B3E053" },
+        default = { "Identifier", "#7C3AED" },
+        test = { "#768184" }
+    },
+    merge_keywords = true,
+    highlight = {
+        multiline = false,
+        before = "",
+        keyword = "bg",
+        after = "",
+        comments_only = true
+    },
 }
