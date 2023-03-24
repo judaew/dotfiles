@@ -80,8 +80,9 @@ require 'lazy'.setup({
     },
     {
         'MTDL9/vim-log-highlighting',
-        ft = { "*.log", "*_log" }
+        ft = { "log" }
     },
+
     {
         dir = '~/Workspaces/github.com/judaew/macports.nvim',
         ft = 'Portfile',
