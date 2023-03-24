@@ -62,3 +62,9 @@ map <delete> delete
 
 # preview in QuickLook
 map <tab> $qlmanage -p $f >& /dev/null
+
+# open in VLC
+cmd vlc ${{
+    test -L $f && f=$(readline -f $f)
+    open -a VLC "$f"
+}}
