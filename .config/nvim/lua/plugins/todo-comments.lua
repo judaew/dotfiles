@@ -1,4 +1,4 @@
-require('todo-comments').setup {
+require("todo-comments").setup {
     signs = true,
     sign_priority = 8,
     keywords = {

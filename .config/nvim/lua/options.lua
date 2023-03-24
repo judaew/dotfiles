@@ -28,7 +28,7 @@ end
 
 -- Fix netrw for macOS, see https://github.com/vim/vim/issues/4738
 vim.cmd ([[
-let g:netrw_http_cmd='open'
+let g:netrw_http_cmd="open"
 ]])
 
 -- Fix shada

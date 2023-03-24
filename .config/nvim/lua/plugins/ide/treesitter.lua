@@ -1,4 +1,4 @@
-require'nvim-treesitter.configs'.setup {
+require"nvim-treesitter.configs".setup {
     ensure_installed = {
             "bash",
             "c",
@@ -43,10 +43,10 @@ require'nvim-treesitter.configs'.setup {
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = '<Leader>v',
-            node_incremental = '<Leader>vi',
-            scope_incremental = '<Leader>vs',
-            node_decremental = '<Leader>vd',
+            init_selection = "<Leader>v",
+            node_incremental = "<Leader>vi",
+            scope_incremental = "<Leader>vs",
+            node_decremental = "<Leader>vd",
         },
     },
     textobjects = {
@@ -72,7 +72,7 @@ require'nvim-treesitter.configs'.setup {
         },
         lsp_interop = {
             enable = true,
-            border = 'none',
+            border = "none",
             floating_preview_opts = {},
             peek_definition_code = {
                 ["<leader>df"] = "@function.outer",

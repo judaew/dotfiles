@@ -12,80 +12,80 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local keymap = vim.keymap.set
-require 'lazy'.setup({
+require "lazy".setup({
     -- *** IDE section (LSP, DAP, linting, snippets)
     {
-        'neovim/nvim-lspconfig',
+        "neovim/nvim-lspconfig",
         dependencies = {
             -- plugin for automatically configures lua-language-server for
             -- Neovim config, Neovim runtime and plugin directories
-            'folke/neodev.nvim',
+            "folke/neodev.nvim",
             -- plugin for better action menu
-            'weilbith/nvim-code-action-menu',
+            "weilbith/nvim-code-action-menu",
             -- Clangd's off-spec features
-            'p00f/clangd_extensions.nvim',
+            "p00f/clangd_extensions.nvim",
         },
-        config = function() require 'plugins/ide/lsp' end
+        config = function() require "plugins/ide/lsp" end
     },
     {
-        'mfussenegger/nvim-dap',
+        "mfussenegger/nvim-dap",
         dependencies = {
             -- plugin for UI
-            'rcarriga/nvim-dap-ui'
+            "rcarriga/nvim-dap-ui"
         },
-        config = function() require 'plugins/ide/dap' end
+        config = function() require "plugins/ide/dap" end
     },
     {
-        'nvim-treesitter/nvim-treesitter',
+        "nvim-treesitter/nvim-treesitter",
         dependencies = {
             -- plugin for additional functions
-            'nvim-treesitter/nvim-treesitter-textobjects'
+            "nvim-treesitter/nvim-treesitter-textobjects"
         },
-        build = ':TSUpdate',
-        config = function() require 'plugins/ide/treesitter' end
+        build = ":TSUpdate",
+        config = function() require "plugins/ide/treesitter" end
     },
     {
-        'hrsh7th/nvim-cmp',
+        "hrsh7th/nvim-cmp",
         dependencies = {
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-buffer',
-            'onsails/lspkind.nvim',
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "onsails/lspkind.nvim",
         },
-        config = function() require 'plugins/ide/intellisense' end
+        config = function() require "plugins/ide/intellisense" end
     },
     {
-        'hrsh7th/vim-vsnip',
+        "hrsh7th/vim-vsnip",
         dependencies = {
-            'hrsh7th/nvim-cmp',
-            'hrsh7th/cmp-vsnip'
+            "hrsh7th/nvim-cmp",
+            "hrsh7th/cmp-vsnip"
         },
-        config = function() require 'plugins/vim-vsnip' end
+        config = function() require "plugins/vim-vsnip" end
     },
     {
-        'Dax89/automaton.nvim',
+        "Dax89/automaton.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim",
-            -- Debug support for 'launch' configurations (Optional)
+            -- Debug support for "launch" configurations (Optional)
             "mfussenegger/nvim-dap"
         },
-        config = function() require 'plugins/ide/automaton' end
+        config = function() require "plugins/ide/automaton" end
     },
 
     -- *** Specific Language Support / Syntax Highlighting / Formatting
-    { 'gpanders/editorconfig.nvim' },
+    { "gpanders/editorconfig.nvim" },
     {
-        'fatih/vim-nginx',
+        "fatih/vim-nginx",
         enabled = false
     },
     {
-        'MTDL9/vim-log-highlighting',
+        "MTDL9/vim-log-highlighting",
         ft = { "log" }
     },
 
     {
-        dir = '~/Workspaces/github.com/judaew/macports.nvim',
-        ft = 'Portfile',
+        dir = "~/Workspaces/github.com/judaew/macports.nvim",
+        ft = "Portfile",
         config = function()
             -- Load snippets
             vim.g.macports_snippets = 1
@@ -95,113 +95,113 @@ require 'lazy'.setup({
     },
 
     -- *** Special Features
-    { 'tpope/vim-dispatch' },
+    { "tpope/vim-dispatch" },
 
     -- *** Movement
     {
-        'ethanholz/nvim-lastplace',
+        "ethanholz/nvim-lastplace",
         opts = {
-            lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help' },
-            lastplace_ignore_filetype = { 'gitcommit', 'gitrebase' },
+            lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+            lastplace_ignore_filetype = { "gitcommit", "gitrebase" },
             lastplace_open_folds = true
         }
     },
-    { 'preservim/tagbar' },
+    { "preservim/tagbar" },
     {
-        'nvim-telescope/telescope.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' }
+        "nvim-telescope/telescope.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" }
     },
     {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = function() return vim.fn.executable 'make' == 1 end,
-        config = function() require 'plugins/telescope' end
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
+        cond = function() return vim.fn.executable "make" == 1 end,
+        config = function() require "plugins/telescope" end
     },
     {
-        'lambdalisue/fern.vim',
+        "lambdalisue/fern.vim",
         config = function()
-            keymap('n', '<Leader>n', ':Fern . -drawer<CR>', { desc = "fern (pwd)", noremap = true, silent = true })
-            keymap('n', '<Leader>f', ':Fern . -reveal=% -drawer<CR>', { desc = "fern (current dir)", noremap = true, silent = true })
+            keymap("n", "<Leader>n", ":Fern . -drawer<CR>", { desc = "fern (pwd)", noremap = true, silent = true })
+            keymap("n", "<Leader>f", ":Fern . -reveal=% -drawer<CR>", { desc = "fern (current dir)", noremap = true, silent = true })
         end
     },
     {
-        'justinmk/vim-gtfo',
+        "justinmk/vim-gtfo",
         config = function() vim.cmd([[
-            let g:gtfo#terminals = { 'mac': 'kitty' }
+            let g:gtfo#terminals = { "mac": "kitty" }
         ]]) end
     },
     {
-        'simnalamburt/vim-mundo',
+        "simnalamburt/vim-mundo",
         config = function()
-            keymap('n', '<Leader>u', ':MundoToggle<CR>', { desc = "MundoToggle", noremap = true, silent = true })
+            keymap("n", "<Leader>u", ":MundoToggle<CR>", { desc = "MundoToggle", noremap = true, silent = true })
         end
     },
     {
-        't9md/vim-choosewin',
+        "t9md/vim-choosewin",
         config = function()
-            keymap('n', '-', '<Plug>(choosewin)', { desc = "Choosewin", noremap = true, silent = true })
+            keymap("n", "-", "<Plug>(choosewin)", { desc = "Choosewin", noremap = true, silent = true })
         end
     },
-    { 'tpope/vim-eunuch' },
+    { "tpope/vim-eunuch" },
 
     -- *** Text Manipulation
-    { 'tpope/vim-repeat' },
+    { "tpope/vim-repeat" },
     {
-        'numToStr/Comment.nvim',
+        "numToStr/Comment.nvim",
         opts = { mappings = { basic = true, extra = false } }
     },
     {
-        'lyokha/vim-xkbswitch',
+        "lyokha/vim-xkbswitch",
         init = function()
             vim.g.XkbSwitchEnabled = 1
-            vim.g.XkbSwitchLib = '/opt/local/lib/libInputSourceSwitcher.dylib'
+            vim.g.XkbSwitchLib = "/opt/local/lib/libInputSourceSwitcher.dylib"
         end
     },
     { -- Detect tabstop and shiftwidth automatically
-        'tpope/vim-sleuth',
+        "tpope/vim-sleuth",
         enabled = false
     },
 
     -- *** Git
-    { 'tpope/vim-fugitive' },
-    { 'tpope/vim-rhubarb' }, -- For enable :Gbrowse
-    { 'junegunn/gv.vim' },
+    { "tpope/vim-fugitive" },
+    { "tpope/vim-rhubarb" }, -- For enable :Gbrowse
+    { "junegunn/gv.vim" },
     {
-        'lewis6991/gitsigns.nvim',
+        "lewis6991/gitsigns.nvim",
         dependencies = {
-            'nvim-lua/plenary.nvim'
+            "nvim-lua/plenary.nvim"
         },
-        config = function() require 'plugins/gitsigns' end
+        config = function() require "plugins/gitsigns" end
     },
     {
-        'TimUntersberger/neogit',
-        dependencies = 'nvim-lua/plenary.nvim',
+        "TimUntersberger/neogit",
+        dependencies = "nvim-lua/plenary.nvim",
         config = true
     },
 
     -- *** UI
     {
-        'famiu/feline.nvim',
-        config = function() require 'plugins/feline' end
+        "famiu/feline.nvim",
+        config = function() require "plugins/feline" end
     },
     {
-        'folke/which-key.nvim',
+        "folke/which-key.nvim",
         config = true
     },
-    { 'junegunn/vim-peekaboo' },
+    { "junegunn/vim-peekaboo" },
     {
-        'folke/todo-comments.nvim',
+        "folke/todo-comments.nvim",
         depencies = {
-            'nvim-lua/plenary.nvim'
+            "nvim-lua/plenary.nvim"
         },
-        config = function() require 'plugins/todo-comments' end
+        config = function() require "plugins/todo-comments" end
     },
     {
-        'norcalli/nvim-colorizer.lua',
-        config = function() require 'plugins/nvim-colorizer' end
+        "norcalli/nvim-colorizer.lua",
+        config = function() require "plugins/nvim-colorizer" end
     },
     {
-        'lukas-reineke/indent-blankline.nvim',
+        "lukas-reineke/indent-blankline.nvim",
         opts = {
             show_trailing_blankline_indent = false,
             show_current_context = true,
@@ -211,7 +211,7 @@ require 'lazy'.setup({
 
     -- *** Themes
     {
-        'fatih/molokai',
+        "fatih/molokai",
         enabled = true,
         priority = 1000,
         config = function() vim.cmd ([[
@@ -222,11 +222,11 @@ require 'lazy'.setup({
         ]]) end
     },
     { -- Theme inspired by Atom
-        'navarasu/onedark.nvim',
+        "navarasu/onedark.nvim",
         enabled = false,
         priority = 1000,
         config = function()
-          vim.cmd.colorscheme 'onedark'
+          vim.cmd.colorscheme "onedark"
         end,
     },
 }, {

@@ -41,7 +41,7 @@ keymap("n", "[b", ":bprev<CR>", opts)
 keymap("n", "]t", ":tabn<CR>", opts)
 keymap("n", "[t", ":tabp<CR>", opts)
 
--- Exit on 'jj'
+-- Exit on "jj"
 keymap("i", "jj", "<Esc>", opts)
 
 -- Map <C-l> (redraw screen) to also turn off search highlighting until the
@@ -63,7 +63,7 @@ keymap("", "<Leader>P", "\"P", opts)
 keymap("n", "<Leader>w", ":set wrap!<CR>", opts)
 
 -- Diagnostic keymaps
-keymap('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
-keymap('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
-keymap('n', '<leader>e', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+keymap("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
+keymap("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
+keymap("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
+keymap("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })

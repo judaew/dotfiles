@@ -5,17 +5,17 @@ local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 -- keymaps
-keymap('n', '<F5>', require 'dap'.continue, opts)
-keymap('n', '<F10>', require 'dap'.step_over, opts)
-keymap('n', '<F11>', require 'dap'.step_into, opts)
-keymap('n', '<F12>', require 'dap'.step_out, opts)
-keymap('n', '<leader>b', require 'dap'.toggle_breakpoint, opts)
+keymap("n", "<F5>", require "dap".continue, opts)
+keymap("n", "<F10>", require "dap".step_over, opts)
+keymap("n", "<F11>", require "dap".step_into, opts)
+keymap("n", "<F12>", require "dap".step_out, opts)
+keymap("n", "<leader>b", require "dap".toggle_breakpoint, opts)
 
 -- See https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#ccrust-via-lldb-vscode
 dap.adapters.lldb = {
-    type = 'executable',
-    command = vim.fn.exepath('lldb-vscode-mp-15'),
-    name = 'lldb'
+    type = "executable",
+    command = vim.fn.exepath("lldb-vscode-mp-15"),
+    name = "lldb"
 }
 
 dap.configurations.cpp = {
@@ -24,9 +24,9 @@ dap.configurations.cpp = {
         type = "lldb",
         request = "launch",
         program = function()
-          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
         end,
-        cwd = '${workspaceFolder}',
+        cwd = "${workspaceFolder}",
         stopOnEntry = false,
         args = {},
         runInTerminal = false,
@@ -46,12 +46,12 @@ dapui.setup({
                 { id = "watches", size = 0.30 },
             },
             size = 50,
-            position = 'right',
+            position = "right",
         },
         {
-            elements = { 'repl' },
+            elements = { "repl" },
             size = 10,
-            position = 'bottom',
+            position = "bottom",
         },
     },
     windows = { indent = 1 },
