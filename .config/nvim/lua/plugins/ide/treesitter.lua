@@ -9,7 +9,6 @@ require'nvim-treesitter.configs'.setup {
             "dockerfile",
             "gdscript",
             "git_rebase",
-            "gitattributes",
             "gitcommit",
             "go",
             "gomod",
