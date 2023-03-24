@@ -35,3 +35,9 @@ let g:netrw_http_cmd='open'
 vim.cmd ([[
 set shada+=n~/.local/share/nvim/shada/main.shada
 ]])
+
+-- Don't indent before html, head and body tags
+vim.cmd ([[
+let g:html_indent_autotags="html,head,body"
+let g:indent_inner_html=1
+]])
