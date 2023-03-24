@@ -158,7 +158,8 @@ require 'lazy'.setup({
         end
     },
     { -- Detect tabstop and shiftwidth automatically
-        'tpope/vim-sleuth'
+        'tpope/vim-sleuth',
+        enabled = false
     },
 
     -- *** Git
@@ -232,17 +233,17 @@ require 'lazy'.setup({
     ui = {
         icons = {
             cmd = "⌘",
-            config = "🛠",
-            event = "📅",
-            ft = "📂",
-            init = "⚙",
-            keys = "🗝",
-            plugin = "🔌",
-            runtime = "💻",
-            source = "📄",
-            start = "🚀",
-            task = "📌",
-            lazy = "💤 ",
+            config = " ",
+            event = " ",
+            ft = " ",
+            init = " ",
+            keys = " ",
+            plugin = " ",
+            runtime = " ",
+            source = " ",
+            start = " ",
+            task = " ",
+            lazy = " ",
         },
     },
 })

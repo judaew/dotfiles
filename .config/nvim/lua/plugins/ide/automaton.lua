@@ -3,10 +3,10 @@ require("automaton").setup({
     saveall = true,
 
     icons = {
-        buffer = "",
-        close = "",
-        launch = "",
-        task = "",
-        workspace = "",
+        buffer = " ",
+        close = " ",
+        launch = " ",
+        task = " ",
+        workspace = " ",
     },
 })
