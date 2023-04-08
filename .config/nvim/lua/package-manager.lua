@@ -37,12 +37,21 @@ require "lazy".setup({
     },
     {
         "nvim-treesitter/nvim-treesitter",
-        dependencies = {
-            -- plugin for additional functions
-            "nvim-treesitter/nvim-treesitter-textobjects"
-        },
         build = ":TSUpdate",
         config = function() require "plugins/ide/treesitter" end
+    },
+    {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        after = "nvim-treesitter",
+        requires = "nvim-treesitter/nvim-treesitter"
+    },
+    {
+        "m-demare/hlargs.nvim",
+        enabled = false,
+        requires = "nvim-treesitter/nvim-treesitter",
+        config = function()
+            require('hlargs').setup()
+        end
     },
     {
         "hrsh7th/nvim-cmp",
