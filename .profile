@@ -78,7 +78,7 @@ fi
 
 # Qt
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-    MY_QT_VERSION="6.4.1"
+    MY_QT_VERSION="6.5.0"
     export PATH="${PATH}:/opt/Qt/${MY_QT_VERSION}/macos/bin"
     export CPATH="${CPATH}:/opt/Qt/${MY_QT_VERSION}/macos/include"
 fi
