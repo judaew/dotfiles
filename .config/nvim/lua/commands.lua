@@ -3,7 +3,6 @@ vim.cmd ([[
     augroup local_general
         autocmd!
         autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
-        autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=750, on_visual=true}
     augroup end
 
     augroup local_git
@@ -21,6 +20,18 @@ vim.cmd ([[
         autocmd Filetype yaml setlocal expandtab tabstop=2 shiftwidth=2
     augroup end
 ]])
+
+-- Highlight on yank.
+-- See `:help vim.highlight.on_yank()`
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight',
+    { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+    group = highlight_group,
+    pattern = '*'
+})
 
 -- Custom Commands
 vim.cmd ([[
