@@ -21,7 +21,7 @@ set ifs "\n"
 set scrolloff 10
 
 # draw boxes around panes
-set drawbox on
+set drawbox true
 
 # previewing files
 # see https://github.com/gokcehan/lf/wiki/Previews
@@ -39,6 +39,11 @@ map X !$f
 # dedicated keys for file opener actions
 map o $open $f
 map O $open -n $f
+
+# set cursor colors
+set cursorparentfmt "\033[7m"
+set cursoractivefmt "\033[7m"
+set cursorpreviewfmt "\033[7m"
 
 # define a custom 'open' command
 # This command is called when current file is not a directory. You may want to
