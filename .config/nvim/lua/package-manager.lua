@@ -152,6 +152,7 @@ require "lazy".setup({
         end
     },
     { "tpope/vim-eunuch" },
+    { "mg979/vim-visual-multi" },
 
     -- *** Text Manipulation
     { "tpope/vim-repeat" },
