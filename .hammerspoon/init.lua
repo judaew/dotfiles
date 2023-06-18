@@ -8,7 +8,7 @@ hs.hotkey.bind({"option"}, "return", function()
     end
 end)
 
-function DropDownTerminal()
+local dropDownTerminal = function()
     local task = hs.task.new(
         "/Applications/MacPorts/kitty.app/Contents/MacOS/kitty",
         nil, function() return false end,
@@ -22,6 +22,7 @@ function DropDownTerminal()
     task:start()
 end
 
+
 -- Drop Down Terminal
 hs.hotkey.bind({"option"}, "d", function()
     local app = hs.application('Scratch')
@@ -33,6 +34,6 @@ hs.hotkey.bind({"option"}, "d", function()
             terminal:activate()
         end
     else
-        DropDownTerminal()
+        dropDownTerminal()
     end
 end)
