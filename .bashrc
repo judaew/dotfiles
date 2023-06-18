@@ -20,7 +20,7 @@ export MCFLY_FUZZY=true
 export MCFLY_RESULTS=50
 
 # settings colors for less
-export LESS_TERMCAP_mb=${HOME}'\e[1;32m'
+export LESS_TERMCAP_mb=$'\e[1;32m'
 export LESS_TERMCAP_md=$'\e[1;32m'
 export LESS_TERMCAP_me=$'\e[0m'
 export LESS_TERMCAP_se=$'\e[0m'
