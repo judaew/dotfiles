@@ -108,6 +108,11 @@ EOF
         printf "%b" "${GRAY}${USER}@${HOSTNAME%%.*} "
     fi
 
+    # if this is a subshell, print shell level
+    if [[ ${SHLVL} != 1 ]]; then
+        printf "%b" "${DARK_GRAY}#${SHLVL} "
+    fi
+
     # print current directory
     printf "%b" "${CYAN}${DIRTRIM}"
 
