@@ -56,7 +56,6 @@ elif [ -f "${HOME}/.config/git-prompt.sh" ]; then
 fi
 
 GIT_PS1_SHOWDIRTYSTATE='1'        # '*'=unstaged, '+'=staged
-GIT_PS1_SHOWSTASHSHATE='1'        # '$'=stashed
 GIT_PS1_SHOWUPSTREAM='verbose'    # 'u='=no difference, 'u+1'=ahead by 1 commit
 GIT_PS1_STATESEPARATOR=''         # no space between branch and index status
 GIT_PS1_DESCRIBE_STYLE='describe'
