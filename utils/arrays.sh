@@ -19,6 +19,6 @@ declare -A files=(
     [".local/bin"]=".local"
     [".local/share/bash-completion/get_completions.sh"]=".local/share/bash-completion"
     # ~/.hammerspoon
-    [".hammerspoon"]=".hammerspoon"
+    [".hammerspoon"]=""
 )
 
