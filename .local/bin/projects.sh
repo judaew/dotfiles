@@ -14,9 +14,11 @@ WORKSPACES_DIR="${HOME}/Workspaces"
 cd "${WORKSPACES_DIR}" || error_enter_dir
 
 PROJ_INSTANCES_LIST=( \
-    "gitlab.com" \
     "bitbucket.org" \
+    "codeberg.org" \
+    "git.code.sf.net" \
     "github.com" \
+    "gitlab.com" \
     "study" \
     "local" \
 )
