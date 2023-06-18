@@ -70,10 +70,9 @@ handle_mime() {
             jq --color-output . "${FILE_PATH}";;
 
         application/x-mach-binary)
-            OTOOL_OUTPUT="$(otool -L "${FILE_PATH}")"
-            basename "$(echo "${OTOOL_OUTPUT}" | head -n 1)"
+            echo "$(basename "${FILE_PATH}"): $(file -b "${FILE_PATH}")"
             echo
-            echo "${OTOOL_OUTPUT}" |\
+            otool -L "${FILE_PATH}" |\
                 tail -n +2 | sed "s/.*\t//g" | sed 's/(compatibility.*$//g'
             ;;
     esac
