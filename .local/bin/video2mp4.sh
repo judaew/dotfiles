@@ -10,8 +10,14 @@ if [ "${1}" = "" ]; then
     exit 1
 fi
 
-FILE="$(basename "${1}")"
-FILE_WITHOUT_EXTENSION="$(echo "${FILE}" | sed 's/\(.*\)\..*/\1/')"
+FILENAME="$(basename "${1}")"
+EXTENSION="${FILENAME##*.}"
+EXTENSIONLESS="${FILENAME%.*}"
 ARGS="-c:v copy -c:a aac -movflags +faststart"
 
-ffmpeg -i "${FILE}" "${ARGS}" "${FILE_WITHOUT_EXTENSION}.mp4"
+if [ "${EXTENSION}" != "mp4" ]; then
+    ffmpeg -i "${FILENAME}" ${ARGS} "${EXTENSIONLESS}.mp4"
+else
+    mv "${FILENAME}" "${EXTENSIONLESS}-orig.mp4"
+    ffmpeg -i "${EXTENSIONLESS}-orig.mp4" ${ARGS} "${EXTENSIONLESS}.mp4"
+fi
