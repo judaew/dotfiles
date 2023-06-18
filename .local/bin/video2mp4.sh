@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 if [ -z "$(which ffmpeg)" ]; then
     echo "Error: FFmpeg not found."
@@ -13,11 +13,11 @@ fi
 FILENAME="$(basename "${1}")"
 EXTENSION="${FILENAME##*.}"
 EXTENSIONLESS="${FILENAME%.*}"
-ARGS="-c:v copy -c:a aac -movflags +faststart"
+ARGS=(-c:v copy -c:a aac -movflags +faststart)
 
 if [ "${EXTENSION}" != "mp4" ]; then
-    ffmpeg -i "${FILENAME}" ${ARGS} "${EXTENSIONLESS}.mp4"
+    ffmpeg -i "${FILENAME}" "${ARGS[@]}" "${EXTENSIONLESS}.mp4"
 else
     mv "${FILENAME}" "${EXTENSIONLESS}-orig.mp4"
-    ffmpeg -i "${EXTENSIONLESS}-orig.mp4" ${ARGS} "${EXTENSIONLESS}.mp4"
+    ffmpeg -i "${EXTENSIONLESS}-orig.mp4" "${ARGS[@]}" "${EXTENSIONLESS}.mp4"
 fi
