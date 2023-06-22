@@ -6,8 +6,8 @@ if [[ "${OSTYPE}" != "darwin"* ]]; then
 fi
 
 # Adds all available keys to SSH agent
-for i in $(find "${HOME}"/.ssh/* -type f ! -name "*.*" | sed \
-    's!.*/!!' | sed '/config/,/known_hosts/d; /.pub/d')
+for i in $(find "${HOME}"/.ssh -maxdepth 1 -type f ! -name "*.*" | sed \
+    's!.*/!!' | sed '/config/d; /known_hosts/d; /archived/d')
 do
     ssh-add --apple-use-keychain ~/.ssh/"${i}"||echo "${i}" failed
 done
