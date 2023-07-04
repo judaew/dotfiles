@@ -108,10 +108,7 @@ for i in pairs(servers) do
                 settings = servers[i]
             },
             extensions = {
-                inlay_hints = {
-                    only_current_line = true,
-                    only_current_line_autocmd = "CursorMoved"
-                }
+                autoSetHints = true,
             }
         })
     else
