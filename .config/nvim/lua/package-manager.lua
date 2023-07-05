@@ -173,7 +173,7 @@ require "lazy".setup({
         config = function() require "plugins/gitsigns" end
     },
     {
-        "TimUntersberger/neogit",
+        "NeogitOrg/neogit",
         dependencies = "nvim-lua/plenary.nvim",
         config = true
     },
