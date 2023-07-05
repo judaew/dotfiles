@@ -7,6 +7,8 @@ declare -A files=(
     [".bashrc"]=""
     [".inputrc"]=""
     [".profile"]=""
+    [".clang-format"]=""
+    [".ctags"]=""
     # ~/.config
     [".config/git"]=".config"
     [".config/kitty"]=".config"
