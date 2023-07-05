@@ -39,7 +39,9 @@ fi
 
 linter="luacheck"
 if command -v luacheck &> /dev/null; then
-    if luacheck .config/nvim; then
+    if luacheck .config/nvim && \
+        # See https://stackoverflow.com/a/72911248
+        luacheck .hammerspoon --only 0; then
         passed
     else
         error
