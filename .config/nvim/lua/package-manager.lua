@@ -23,7 +23,7 @@ require "lazy".setup({
             -- plugin for better action menu
             "weilbith/nvim-code-action-menu",
             -- Clangd's off-spec features
-            "p00f/clangd_extensions.nvim",
+            "p00f/clangd_extensions.nvim"
         },
         config = function() require "plugins/ide/lsp" end
     },

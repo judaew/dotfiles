@@ -60,7 +60,8 @@ local servers = {
             "--enable-config",
 
             -- store PCHs in RAM
-            "--pch-storage=memory"}
+            "--pch-storage=memory"
+        },
     },
     gopls = {},
     lua_ls = {
