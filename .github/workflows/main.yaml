@@ -30,7 +30,7 @@ jobs:
         with:
           targets: ".config/nvim"
 
-  luacheck-lint-neovim:
+  luacheck-lint-hammerspoon:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
