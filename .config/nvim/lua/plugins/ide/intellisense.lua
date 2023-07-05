@@ -1,31 +1,28 @@
-local cmp = require"cmp"
-
-cmp.setup {
-    snippet = {
-        expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
-        end,
+-- local cmp = require"cmp"
+--
+vim.g.coq_settings = {
+    auto_start = true,
+    clients = {
+        lsp = { enabled = true },
+        tree_sitter = { enabled = true },
+        tabnine = { enabled = false },
     },
-    mapping = {
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({ select = false }),
+    display = {
+        icons = { mode = "none" }
     },
-    sources = {
-        { name = "nvim_lsp" },
-        { name = "buffer" },
-        { name = "vsnip" }
-    },
-    -- lspkind-nvim: This tiny plugin adds vscode-like pictograms
-    formatting = {
-        format = require "lspkind".cmp_format {
-            mode = "symbol",
-            preset = "codicons",
-            maxwidth = 40,
-            ellipsis_char = "..."
-        }
+    keymap = {
+        recommended = false,
+        manual_complete = '<c-n>'
     }
 }
+
+-- See https://github.com/ms-jpq/coq_nvim/blob/coq/docs/KEYBIND.md#custom-keybindings
+vim.cmd([[
+ino <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
+ino <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
+ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
+ino <silent><expr> <CR>    pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
+" ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
+]])
+

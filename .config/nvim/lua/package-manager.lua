@@ -54,21 +54,10 @@ require "lazy".setup({
         end
     },
     {
-        "hrsh7th/nvim-cmp",
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "onsails/lspkind.nvim",
-        },
-        config = function() require "plugins/ide/intellisense" end
-    },
-    {
-        "hrsh7th/vim-vsnip",
-        dependencies = {
-            "hrsh7th/nvim-cmp",
-            "hrsh7th/cmp-vsnip"
-        },
-        config = function() require "plugins/vim-vsnip" end
+        "ms-jpq/coq_nvim",
+        branch = "coq",
+        init = function() require "plugins/ide/intellisense" end,
+        build = ":COQdeps"
     },
     {
         "Dax89/automaton.nvim",
