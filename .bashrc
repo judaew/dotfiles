@@ -109,8 +109,28 @@ EOF
     fi
 
     # if this is a subshell, print shell level
+    # ignore Tmux and lf levels
     if [[ ${SHLVL} != 1 ]]; then
-        printf "%b" "${DARK_GRAY}#${SHLVL} "
+        local desc
+        local lvl=${SHLVL}
+
+        # by default, Tmux does not allow you to run itself in Tmux session
+        # therefore, extra "if" statements are not required
+        if [[ ${TMUX} != "" ]]; then
+            desc="${desc}tmux+"
+            lvl=$((lvl-1))
+        fi
+
+        if [[ ${LF_LEVEL} != "" ]]; then
+            if [[ ${LF_LEVEL} == "1" ]]; then
+                desc="${desc}lf+"
+            else
+                desc="${desc}lf(${LF_LEVEL})+"
+            fi
+            lvl=$((lvl-LF_LEVEL))
+        fi
+
+        printf "%b" "${DARK_GRAY}${desc}${lvl} "
     fi
 
     # print current directory
