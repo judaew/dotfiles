@@ -85,12 +85,6 @@ local servers = {
     pyright = {
         cmd = { vim.fn.exepath("pyright-langserver"), "--pythonversion 3.11", "--stdio", }
     },
-    cmake = {
-        cmd = { vim.fn.exepath("cmake-language-server") },
-        init_options = {
-            buildDirectory = {"build", "cmake-build-debug"}
-        }
-    },
     bashls = {
         cmd = { vim.fn.exepath("bash-language-server"), "start" }
     },
