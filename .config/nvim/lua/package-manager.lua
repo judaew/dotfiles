@@ -120,6 +120,10 @@ require "lazy".setup({
         dependencies = { "nvim-lua/plenary.nvim" }
     },
     {
+        "junegunn/fzf.vim",
+        dependencies = { "junegunn/fzf" }
+    },
+    {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
         cond = function() return vim.fn.executable "make" == 1 end,
