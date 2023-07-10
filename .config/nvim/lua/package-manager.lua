@@ -60,6 +60,13 @@ require "lazy".setup({
         build = ":COQdeps"
     },
     {
+        "Shatur/neovim-session-manager",
+        dependencies = {
+            "nvim-lua/plenary.nvim"
+        },
+        config = function() require "plugins/neovim-session-manager" end
+    },
+    {
         "Dax89/automaton.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim",
