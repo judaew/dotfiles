@@ -110,7 +110,11 @@ require "lazy".setup({
             lastplace_open_folds = true
         }
     },
-    { "preservim/tagbar" },
+    -- TODO:
+    -- * Show tag in the statusline, see:
+    --   https://github.com/liuchengxu/vista.vim#show-the-nearest-methodfunction-in-the-statusline
+    -- * Add hotkey, e. g. F8 key
+    { "liuchengxu/vista.vim" },
     {
         "nvim-telescope/telescope.nvim",
         dependencies = { "nvim-lua/plenary.nvim" }
