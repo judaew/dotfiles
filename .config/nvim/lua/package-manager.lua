@@ -57,7 +57,6 @@ require "lazy".setup({
         "ms-jpq/coq_nvim",
         branch = "coq",
         init = function() require "plugins/ide/intellisense" end,
-        build = ":COQdeps"
     },
     {
         "Shatur/neovim-session-manager",
