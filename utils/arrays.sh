@@ -8,7 +8,6 @@ declare -A files=(
     [".inputrc"]=""
     [".profile"]=""
     [".clang-format"]=""
-    [".ctags"]=""
     # ~/.config
     [".config/git"]=".config"
     [".config/kitty"]=".config"
@@ -22,5 +21,7 @@ declare -A files=(
     [".local/share/bash-completion/get_completions.sh"]=".local/share/bash-completion"
     # ~/.hammerspoon
     [".hammerspoon"]=""
+    # ~/.ctags.d
+    [".ctags.d"]=""
 )
 
