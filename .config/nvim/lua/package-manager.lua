@@ -194,6 +194,12 @@ require "lazy".setup({
 
     -- *** UI
     {
+        "goolord/alpha-nvim",
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        event = "VimEnter",
+        config = function () require "plugins/alpha-nvim" end
+    },
+    {
         "famiu/feline.nvim",
         config = function() require "plugins/feline" end
     },
