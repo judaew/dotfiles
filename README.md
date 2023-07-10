@@ -2,7 +2,7 @@
 
 ![GitHub License](https://badgen.net/github/license/judaew/dotfiles)
 
-![Terminal Preview](https://user-images.githubusercontent.com/41125715/179398062-3eb2d31d-fa80-4dc5-b465-4484898b6ec9.png)
+![Terminal Preview](https://github.com/judaew/dotfiles/assets/41125715/c3b752e7-8687-4aec-be1d-1720c1efb3ba)
 
 ## Usage
 
