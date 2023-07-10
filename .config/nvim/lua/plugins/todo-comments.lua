@@ -2,8 +2,8 @@ require("todo-comments").setup {
     signs = true,
     sign_priority = 8,
     keywords = {
-        TODO = { icon = " ", color = "info" },
-        NOTE = { icon = " ", color = "hint", alt = { "INFO" }},
+        TODO = { icon = " ", color = "info" },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" }},
         FIX  = { icon = " ", color = "error", alt =
             { "FIXME", "BUG", "FIXIT", "ISSUE" }},
         HACK = { icon = " ", color = "warning" },
