@@ -1,11 +1,23 @@
--- local cmp = require"cmp"
---
 vim.g.coq_settings = {
     auto_start = true,
+    -- Short names:
+    -- * LSP            | * REG  = registers  | * TAG = tags
+    -- * BUF  = buffers | * SNIP = snippets   | * TMUX
+    -- * PATH = paths   | * T9   = tabnine    | * TS = Tree Sitter
     clients = {
-        lsp = { enabled = true },
-        tree_sitter = { enabled = true },
+        lsp = {
+            enabled = true,
+            short_name = "LSP"
+        },
+        buffers = { enabled = true },
+        paths = { enabled = true },
+        registers = { enabled = true },
+        snippets = { enabled = true },
         tabnine = { enabled = false },
+        tags = { enabled = true },
+        third_party = { enabled = false },
+        tmux = { enabled = true },
+        tree_sitter = { enabled = true },
     },
     display = {
         icons = { mode = "none" }
