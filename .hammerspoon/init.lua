@@ -41,25 +41,27 @@ local screenCount = #hs.screen.allScreens()
 local internalDisplaySize = {x=0.0, y=0.0, w=1440.0, h=900.0}
 local externalDisplaySize = {x=-1920.0, y=-180.0, w=1920.0, h=1080.0}
 
-local function loadWidgets()
+require("widgets/Clock")
+require("widgets/HCalendar")
 
-    require("widgets/Clock")
-    require("widgets/HCalendar")
-
-    if screenCount == 2 then
-        HCalendarTopLeft = {
-                externalDisplaySize.x + 40,
-                externalDisplaySize.y + externalDisplaySize.h - 40
-        }
-        ShowHCalendar()
-
-        ClockTopLeft = {
-            externalDisplaySize.x + externalDisplaySize.w - 40,
+if screenCount == 2 then
+    HCalendarTopLeft = {
+            externalDisplaySize.x + 40,
             externalDisplaySize.y + externalDisplaySize.h - 40
-        }
-        ShowClock()
-    end
+    }
+    ShowHCalendar()
+
+    ClockTopLeft = {
+        externalDisplaySize.x + externalDisplaySize.w - 40,
+        externalDisplaySize.y + externalDisplaySize.h - 40
+    }
+    ShowClock()
 end
 
-loadWidgets()
 ScreenWatcher = hs.screen.watcher.new(hs.reload):start()
+
+--- # Menubar #
+--- ###########
+
+require("menubar/CPUTemp")
+ShowCPUTempMenu()
