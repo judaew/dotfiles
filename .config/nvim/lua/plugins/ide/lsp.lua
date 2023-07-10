@@ -114,12 +114,7 @@ for i in pairs(servers) do
     end
 end
 
--- To disable inline text, and do a diagnostic window on hover
--- See https://stackoverflow.com/a/70760302
+-- Disable inline text and instead open a diagnostic window by <Leader>e
 vim.diagnostic.config({
     virtual_text = false
 })
-vim.o.updatetime = 250
-vim.cmd ([[
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})
-]])
