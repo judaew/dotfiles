@@ -175,3 +175,27 @@ require"feline".setup {
     colors = { bg = colors.black, fg = colors.white },
     components = components
 }
+
+-- local winbar_components = {
+--     active = {
+--         { -- Left
+--         },
+--         { -- Middle
+--         },
+--         { -- Right
+--         }
+--     },
+--     inactive = {
+--         { -- Left
+--         },
+--         { -- Middle
+--         },
+--         { -- Right
+--         }
+--     }
+-- }
+--
+-- require"feline".winbar.setup {
+--     colors = { bg = colors.black, fg = colors.white },
+--     components = winbar_components
+-- }
