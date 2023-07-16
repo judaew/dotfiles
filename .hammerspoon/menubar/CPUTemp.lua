@@ -1,8 +1,6 @@
 --- CPU Temperature in menubar
 
-local isInit=false
 local function init()
-    isInit=true
     CPUTempMenu = hs.menubar.new()
 end
 
