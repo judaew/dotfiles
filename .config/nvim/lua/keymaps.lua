@@ -22,17 +22,15 @@ keymap("", "<Right>", "<Nop>", opts)
 -- Close all but the current one
 keymap("n", "<Leader>o", ":only<CR>", opts)
 
-
 -- Some useful shortcuts for quickfix
 keymap("n", "<C-n>", ":cn<CR>", opts)
 keymap("n", "<C-m>", ":cp<CR>", opts)
-keymap("n", "<Leader>a", ":cclose<CR>", opts)
 
 -- Better split switching
-keymap("", "<C-j>", "<C-W>j", opts)
-keymap("", "<C-k>", "<C-W>k", opts)
-keymap("", "<C-h>", "<C-W>h", opts)
-keymap("", "<C-l>", "<C-W>l", opts)
+keymap("", "<Leader>j", "<C-W>j", opts)
+keymap("", "<Leader>k", "<C-W>k", opts)
+keymap("", "<Leader>h", "<C-W>h", opts)
+keymap("", "<Leader>l", "<C-W>l", opts)
 
 -- Buffers
 keymap("n", "]b", ":bnext<CR>", opts)
@@ -49,21 +47,18 @@ keymap("i", "jj", "<Esc>", opts)
 keymap("n", "<C-l>", ":nohl<CR><C-l>", opts)
 
 -- Copy to clipoard
-keymap("v", "<Leader>y", "\"+y", opts)
 keymap("n", "<Leader>Y", "\"+yg_", opts)
-keymap("n", "<Leader>y", "\"+y", opts)
 keymap("n", "<Leader>yy", "\"+yy", opts)
+keymap("v", "<Leader>y", "\"+y", opts)
 -- Paste from clipboard
-keymap("", "<Leader>p", "\"p", opts)
-keymap("", "<Leader>P", "\"P", opts)
 keymap("", "<Leader>p", "\"p", opts)
 keymap("", "<Leader>P", "\"P", opts)
 
 -- Toggle for wrap options
-keymap("n", "<Leader>w", ":set wrap!<CR>", opts)
+keymap("n", "<Leader>ww", ":set wrap!<CR>", opts)
 
 -- Diagnostic keymaps
 keymap("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
 keymap("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
-keymap("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-keymap("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+keymap("n", "<Leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
+keymap("n", "<Leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
