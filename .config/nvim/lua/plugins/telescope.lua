@@ -20,3 +20,10 @@ keymap("n", "<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]e
 keymap("n", "<leader>sw", require("telescope.builtin").grep_string, { desc = "[S]earch current [W]ord" })
 keymap("n", "<leader>sg", require("telescope.builtin").live_grep, { desc = "[S]earch by [G]rep" })
 keymap("n", "<leader>sd", require("telescope.builtin").diagnostics, { desc = "[S]earch [D]iagnostics" })
+
+-- Function keys
+keymap("n", "<F3>", function()
+    require("telescope.builtin").find_files({hidden=true, no_ignore=true})
+    end, { desc = "Find file" })
+keymap("n", "<S-F3>",
+    require("telescope.builtin").oldfiles, { desc = "Recently opened files" })

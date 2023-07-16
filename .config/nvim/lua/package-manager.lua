@@ -22,6 +22,8 @@ require "lazy".setup({
             "folke/neodev.nvim",
             -- plugin for better action menu
             "weilbith/nvim-code-action-menu",
+            -- VSCode 💡 for neovim's built-in LSP
+            "kosayoda/nvim-lightbulb",
             -- Clangd's off-spec features
             "p00f/clangd_extensions.nvim"
         },
@@ -46,14 +48,6 @@ require "lazy".setup({
         requires = "nvim-treesitter/nvim-treesitter"
     },
     {
-        "m-demare/hlargs.nvim",
-        enabled = false,
-        requires = "nvim-treesitter/nvim-treesitter",
-        config = function()
-            require('hlargs').setup()
-        end
-    },
-    {
         "ms-jpq/coq_nvim",
         branch = "coq",
         init = function() require "plugins/ide/intellisense" end,
@@ -66,14 +60,15 @@ require "lazy".setup({
         config = function() require "plugins/neovim-session-manager" end
     },
     {
-        "Dax89/automaton.nvim",
+        "stevearc/overseer.nvim",
         dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
-            -- Debug support for "launch" configurations (Optional)
-            "mfussenegger/nvim-dap"
+            "stevearc/dressing.nvim"
         },
-        config = function() require "plugins/ide/automaton" end
+        config = function() require "plugins/task_runner" end
+    },
+    {
+        "michaelb/sniprun",
+        config = function() require "plugins/code_runner" end
     },
 
     -- *** Specific Language Support / Syntax Highlighting / Formatting
@@ -86,16 +81,9 @@ require "lazy".setup({
         "MTDL9/vim-log-highlighting",
         ft = { "log" }
     },
-
     {
         dir = "~/Workspaces/github.com/judaew/macports.nvim",
-        ft = "Portfile",
-        config = function()
-            -- Load snippets
-            vim.g.macports_snippets = 1
-            -- Load completefunc
-            vim.g.macports_completefunc = 1
-        end
+        ft = "Portfile"
     },
 
     -- *** Special Features
@@ -104,17 +92,15 @@ require "lazy".setup({
     -- *** Movement
     {
         "ethanholz/nvim-lastplace",
-        opts = {
-            lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-            lastplace_ignore_filetype = { "gitcommit", "gitrebase" },
-            lastplace_open_folds = true
-        }
+        config = function () require "plugins/nvim-lastplace" end
     },
-    -- TODO:
-    -- * Show tag in the statusline, see:
-    --   https://github.com/liuchengxu/vista.vim#show-the-nearest-methodfunction-in-the-statusline
-    -- * Add hotkey, e. g. F8 key
-    { "liuchengxu/vista.vim" },
+    {
+        -- TODO:
+        -- * Show tag in the statusline, see:
+        --   https://github.com/liuchengxu/vista.vim#show-the-nearest-methodfunction-in-the-statusline
+        "liuchengxu/vista.vim",
+        config = function() require "plugins/tagbar" end
+    },
     {
         "nvim-telescope/telescope.nvim",
         dependencies = { "nvim-lua/plenary.nvim" }
@@ -130,11 +116,10 @@ require "lazy".setup({
         config = function() require "plugins/telescope" end
     },
     {
-        "lambdalisue/fern.vim",
-        config = function()
-            keymap("n", "<Leader>n", ":Fern . -drawer<CR>", { desc = "fern (pwd)", noremap = true, silent = true })
-            keymap("n", "<Leader>f", ":Fern . -reveal=% -drawer<CR>", { desc = "fern (current dir)", noremap = true, silent = true })
-        end
+        "ms-jpq/chadtree",
+        branch = "chad",
+        build = ":CHADdeps",
+        config = function() require "plugins/file_manager" end
     },
     {
         "justinmk/vim-gtfo",
@@ -178,7 +163,7 @@ require "lazy".setup({
     -- *** Git
     { "tpope/vim-fugitive" },
     { "tpope/vim-rhubarb" }, -- For enable :Gbrowse
-    { "junegunn/gv.vim" },
+    { "junegunn/gv.vim", config = function() require "plugins/gv" end },
     {
         "lewis6991/gitsigns.nvim",
         dependencies = {
@@ -193,6 +178,7 @@ require "lazy".setup({
     },
 
     -- *** UI
+    { "stevearc/dressing.nvim", opts = {} },
     {
         "goolord/alpha-nvim",
         dependencies = { 'nvim-tree/nvim-web-devicons' },

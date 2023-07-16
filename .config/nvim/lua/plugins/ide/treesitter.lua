@@ -6,7 +6,6 @@ require"nvim-treesitter.configs".setup {
             "cpp",
             "css",
             "dockerfile",
-            "gdscript",
             "git_rebase",
             "gitcommit",
             "go",
@@ -28,6 +27,14 @@ require"nvim-treesitter.configs".setup {
             "yaml",
             "zig"
         },
+    -- Disable slow treesitter highlight for large files
+    disable = function(buf)
+        local max_filesize = 100 * 1024 -- 100 KB
+        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+            return true
+        end
+    end,
     highlight = {
         enable = true,
         disable = {},
@@ -80,5 +87,21 @@ require"nvim-treesitter.configs".setup {
                 ["<leader>dF"] = "@class.outer",
             },
         },
-    },
+        swap = {
+            enable = true,
+            swap_next = {
+                ["<leader>a"] = "@parameter.inner",
+            },
+            swap_previous = {
+                ["<leader>A"] = "@parameter.inner",
+            }
+        }
+    }
 }
+
+-- Tree-sitter based folding
+vim.cmd([[
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable
+]])
