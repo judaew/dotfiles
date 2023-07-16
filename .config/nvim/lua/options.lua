@@ -41,3 +41,12 @@ vim.cmd ([[
 let g:html_indent_autotags="html,head,body"
 let g:indent_inner_html=1
 ]])
+
+--
+vim.cmd ([[
+if has("mac")
+    let g:python3_host_prog = '/opt/local/bin/python3'
+else
+    let g:python3_host_prog = '/usr/bin/python3'
+endif
+]])
