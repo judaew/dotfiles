@@ -37,4 +37,3 @@ ino <silent><expr> <CR>    pumvisible() ? (complete_info().selected == -1 ? "\<C
 " ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 " ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
 ]])
-

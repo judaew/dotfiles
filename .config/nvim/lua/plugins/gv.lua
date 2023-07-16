@@ -1,5 +1,5 @@
-local keymap = vim.keymap.set
+local key = require("utils/keymap")
 
 -- Function keys
-keymap("n", "<F4>", "<cmd>GV<CR>", { desc = "Commit browser" })
-keymap("n", "<S-F4>", "<cmd>GV!<CR>", { desc = "Commit browser" })
+key.set("n", "<F4>", "<cmd>GV<CR>", "Commit browser")
+key.set("n", "<S-F4>", "<cmd>GV!<CR>", "Commit browser")

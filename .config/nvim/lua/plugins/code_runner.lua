@@ -1,11 +1,14 @@
+local key = require("utils/keymap")
+
 require('sniprun').setup({
     binary_path="/opt/local/sbin/sniprun",
 })
 
-local keymap = vim.keymap.set
-
 -- Function keys
-keymap({"n", "v"}, "<F7>", ":SnipRun<CR>", { desc = "Code runner: Run the lines" })
-keymap("n", "<S-F7>", ":%SnipRun<CR>", { desc = "Code runner: Run the buffer" })
-keymap("n", "<F8>", ":SnipClose<CR>", { desc = "Code runner: Close" })
-keymap("n", "<S-F8>", ":SnipReset<CR>", { desc = "Code runner: Reset" })
+local f_keymaps_table = {
+    { { "n", "v" }, "<F7>",   ":SnipRun<CR>",   "Run the lines" },
+    { "n",          "<S-F7>", ":%SnipRun<CR>",  "Run the buffer" },
+    { "n",          "<F8>",   ":SnipClose<CR>", "Close" },
+    { "n",          "<S-F8>", ":SnipReset<CR>", "Reset" }
+}
+key.bulk_set(f_keymaps_table, nil, "Code runner: ")

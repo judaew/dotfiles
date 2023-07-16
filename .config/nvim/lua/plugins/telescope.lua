@@ -1,29 +1,31 @@
+local key = require("utils/keymap")
+local telescope = require("telescope")
+local telescope_builtin = require("telescope.builtin")
+local telescope_themes = require("telescope.themes")
+
 -- Enable telescope fzf native, if installed
-pcall(require("telescope").load_extension, "fzf")
+pcall(telescope.load_extension, "fzf")
 
-local keymap = vim.keymap.set
-
-keymap("n", "<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
-keymap("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
-keymap("n", "<leader>/", function()
-    -- You can pass additional configuration to telescope to change theme,
-    -- layout, etc.
-    require("telescope.builtin").current_buffer_fuzzy_find(
-        require("telescope.themes").get_dropdown {
-            winblend = 10,
-            previewer = false,
-    })
-end, { desc = "[/] Fuzzily search in current buffer" })
-
-keymap("n", "<leader>sf", require("telescope.builtin").find_files, { desc = "[S]earch [F]iles" })
-keymap("n", "<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
-keymap("n", "<leader>sw", require("telescope.builtin").grep_string, { desc = "[S]earch current [W]ord" })
-keymap("n", "<leader>sg", require("telescope.builtin").live_grep, { desc = "[S]earch by [G]rep" })
-keymap("n", "<leader>sd", require("telescope.builtin").diagnostics, { desc = "[S]earch [D]iagnostics" })
+-- Keymaps
+local keymaps_table = {
+    { "<Leader>?", telescope_builtin.oldfiles, "[?] Find recently opened files" },
+    { "<Leader><space>", telescope_builtin.buffers, "[ ] Find existing buffers" },
+    { "<Leader>/", function()
+        -- You can pass additional configuration to telescope to change theme,
+        -- layout, etc.
+        telescope_builtin.current_buffer_fuzzy_find(
+            telescope_themes.get_dropdown {
+                winblend = 10,
+                previewer = false,
+        }) end, "[/] Fuzzily search in current buffer" },
+    { "<Leader>sf", telescope_builtin.find_files,  "[S]earch [F]iles" },
+    { "<Leader>sh", telescope_builtin.help_tags,   "[S]earch [H]elp" },
+    { "<Leader>sw", telescope_builtin.grep_string, "[S]earch current [W]ord" },
+    { "<Leader>sg", telescope_builtin.live_grep,   "[S]earch by [G]rep" },
+    { "<Leader>sd", telescope_builtin.diagnostics, "[S]earch [D]iagnostics" }
+}
+key.bulk_set(keymaps_table, "n")
 
 -- Function keys
-keymap("n", "<F3>", function()
-    require("telescope.builtin").find_files({hidden=true, no_ignore=true})
-    end, { desc = "Find file" })
-keymap("n", "<S-F3>",
-    require("telescope.builtin").oldfiles, { desc = "Recently opened files" })
+key.set("n", "<F3>", function() telescope_builtin.find_files({hidden=true, no_ignore=true}) end, "Find file")
+key.set("n", "<S-F3>", telescope_builtin.oldfiles, "Recently opened files")
