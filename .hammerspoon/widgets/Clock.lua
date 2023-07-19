@@ -1,67 +1,83 @@
 --- Clock Widget
----
---- Require:
----  * ClockTopLeft = {x, y}
 
-local clockBGColor = {red=0,blue=0,green=0,alpha=0.3}
-local clockW = 5 * 53 + 20
-local clockH =  100
-local isInit = false
+local BGColor = {red=0,blue=0,green=0,alpha=0.3}
+local clockWidth = 5 * 53 + 20
+local clockHeight =  100
 
-local function init()
-    isInit = true
+-- externalDisplay
+local displaySize = {x=-1920.0, y=-180.0, w=1920.0, h=1080.0}
+local topLeft = {
+    displaySize.x + displaySize.w - 40,
+    displaySize.y + displaySize.h - 40
+}
 
-    ClockWidgetCanvas = hs.canvas.new({
-        x = ClockTopLeft[1]-clockW,
-        y = ClockTopLeft[2]-clockH,
-        w = clockW,
-        h = clockH,
-    }):show()
+local canvas = hs.canvas.new({
+    x = topLeft[1]-clockWidth,
+    y = topLeft[2]-clockHeight,
+    w = clockWidth,
+    h = clockHeight,
+})
 
-    ClockWidgetCanvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
-    ClockWidgetCanvas:level(hs.canvas.windowLevels.desktopIcon)
+canvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
+canvas:level(hs.canvas.windowLevels.desktopIcon)
 
-    ClockWidgetCanvas[1] = {
-        id = "clockBG",
-        type = "rectangle",
-        action = "fill",
-        fillColor = clockBGColor,
-        roundedRectRadii = {xRadius = 10, yRadius = 10},
-    }
+canvas[1] = {
+    id = "clockBG",
+    type = "rectangle",
+    action = "fill",
+    fillColor = BGColor,
+    roundedRectRadii = {xRadius = 10, yRadius = 10},
+}
 
-    ClockWidgetCanvas[2] = {
-        id = "clockNumbers",
-        type = "text",
-        text = "",
-        textSize = 80,
-        textAlignment = "center",
-        textFont = "Courier-Bold",
-    }
-end
+canvas[2] = {
+    id = "clockNumbers",
+    type = "text",
+    text = "",
+    textSize = 80,
+    textAlignment = "center",
+    textFont = "Courier-Bold",
+}
 
-local function updateCanvas()
+local function updateWidget()
+    local currentTimestamp = os.time()
     local timeFormat = "%H:%M"
-    ClockWidgetCanvas[2].text = os.date(timeFormat)
+
+    canvas[2].text = os.date(timeFormat, currentTimestamp)
 end
 
+local initTimer = nil
 local timer = nil
-function ShowClock()
-    if not isInit then
-        init()
-    else
-        ClockWidgetCanvas:show()
-    end
+local function scheduleWidgetUpdate(status)
+    local delay = 60 - tonumber(os.date("%S")) + 1
 
-    if timer == nil then
-        timer = hs.timer.doEvery(30, function() updateCanvas() end)
-        timer:setNextTrigger(0)
+    -- Start timer
+    if status == "start" then
+        initTimer = hs.timer.doAfter(delay, function()
+            updateWidget()
+            initTimer:stop()
+            timer = hs.timer.doEvery(60, function() updateWidget() end):start()
+        end)
     else
-        timer:start()
+        if initTimer or timer then
+            initTimer:stop()
+            timer:stop()
+        end
+        initTimer = nil
+        timer = nil
     end
 end
 
-function  HideClock()
-    ClockWidgetCanvas:hide()
-    timer:stop()
-    timer = nil
+local M = {}
+
+function M.show()
+    canvas:show()
+    updateWidget()
+    scheduleWidgetUpdate("start")
 end
+
+function M.hide()
+    canvas:hide()
+    scheduleWidgetUpdate("stop")
+end
+
+return M

@@ -1,5 +1,7 @@
 --- CPU Temperature in menubar
 
+local M = {}
+
 local function init()
     CPUTempMenu = hs.menubar.new()
 end
@@ -11,7 +13,7 @@ local function updateTemp()
 end
 
 local timer = nil
-function ShowCPUTempMenu()
+function M.show()
     init()
 
     if timer == nil then
@@ -22,8 +24,10 @@ function ShowCPUTempMenu()
     end
 end
 
-function HideCPUTempMenu()
+function M.hide()
     CPUTempMenu:delete()
     timer:stop()
     timer = nil
 end
+
+return M

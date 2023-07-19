@@ -20,48 +20,22 @@ end)
 --- # Widgets #
 --- ###########
 
-local screenCount = #hs.screen.allScreens()
+local clock = require("widgets/Clock")
+local cal = require("widgets/Calendar")
 
--- function internalDisplay()
---     return hs.screen.find("1440x900")
--- end
--- local internalDisplaySize
--- if screenCount > 0 then
---     internalDisplaySize = internalDisplay():fullFrame()
--- end
+local screens = hs.screen.allScreens()
 
--- function externalDisplay()
---     return hs.screen.allScreens()[2]
--- end
--- local externalDisplaySize = nil
--- if screenCount > 1 then
---     externalDisplaySize = externalDisplay():fullFrame()
--- end
-
-local internalDisplaySize = {x=0.0, y=0.0, w=1440.0, h=900.0}
-local externalDisplaySize = {x=-1920.0, y=-180.0, w=1920.0, h=1080.0}
-
-require("widgets/Clock")
-require("widgets/HCalendar")
-
-if screenCount == 2 then
-    HCalendarTopLeft = {
-            externalDisplaySize.x + 40,
-            externalDisplaySize.y + externalDisplaySize.h - 40
-    }
-    ShowHCalendar()
-
-    ClockTopLeft = {
-        externalDisplaySize.x + externalDisplaySize.w - 40,
-        externalDisplaySize.y + externalDisplaySize.h - 40
-    }
-    ShowClock()
+if #screens > 1 then
+    cal.show()
+    clock.show()
+else
+    cal.hide()
+    clock.hide()
 end
 
-ScreenWatcher = hs.screen.watcher.new(hs.reload):start()
+hs.screen.watcher.new(function() hs.timer.doAfter(2, hs.reload) end):start()
 
 --- # Menubar #
 --- ###########
 
-require("menubar/CPUTemp")
-ShowCPUTempMenu()
+require("menubar/CPUTemp").show()
