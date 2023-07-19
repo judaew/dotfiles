@@ -20,7 +20,8 @@ vim.g.coq_settings = {
         tree_sitter = { enabled = true },
     },
     display = {
-        icons = { mode = "none" }
+        icons = { mode = "none" },
+        statusline = { helo = false }
     },
     keymap = {
         recommended = false,
