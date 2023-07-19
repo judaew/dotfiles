@@ -85,9 +85,7 @@ local servers = {
             }
         }
     },
-    pyright = {
-        cmd = { vim.fn.exepath("pyright-langserver"), "--pythonversion 3.11", "--stdio", }
-    },
+    pylsp = {},
     bashls = {
         cmd = { vim.fn.exepath("bash-language-server"), "start" }
     },
