@@ -1,8 +1,7 @@
 local key = require("utils/keymap")
 
 
-require "overseer".setup({
-})
+require "overseer".setup()
 
 -- Function keys
 -- See https://github.com/stevearc/overseer.nvim/blob/master/doc/reference.md#commands

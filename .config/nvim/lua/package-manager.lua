@@ -50,6 +50,7 @@ require "lazy".setup({
     {
         "ms-jpq/coq_nvim",
         branch = "coq",
+        build = ":COQdeps",
         init = function() require "plugins/ide/intellisense" end,
     },
     {
@@ -57,7 +58,7 @@ require "lazy".setup({
         dependencies = {
             "nvim-lua/plenary.nvim"
         },
-        config = function() require "plugins/neovim-session-manager" end
+        config = function() require "plugins/session_manager" end
     },
     {
         "stevearc/overseer.nvim",
@@ -87,7 +88,7 @@ require "lazy".setup({
     },
 
     -- *** Special Features
-    { "tpope/vim-dispatch" },
+    { "tpope/vim-eunuch" },
 
     -- *** Movement
     {
@@ -139,11 +140,8 @@ require "lazy".setup({
             keymap("n", "-", "<Plug>(choosewin)", { desc = "Choosewin", noremap = true, silent = true })
         end
     },
-    { "tpope/vim-eunuch" },
-    { "mg979/vim-visual-multi" },
 
     -- *** Text Manipulation
-    { "tpope/vim-repeat" },
     {
         "numToStr/Comment.nvim",
         opts = { mappings = { basic = true, extra = false } }
@@ -155,9 +153,8 @@ require "lazy".setup({
             vim.g.XkbSwitchLib = "/opt/local/lib/libInputSourceSwitcher.dylib"
         end
     },
-    { -- Detect tabstop and shiftwidth automatically
+    { -- Detect and adjusts tabstop and shiftwidth automatically
         "tpope/vim-sleuth",
-        enabled = false
     },
 
     -- *** Git
@@ -178,7 +175,6 @@ require "lazy".setup({
     },
 
     -- *** UI
-    { "stevearc/dressing.nvim", opts = {} },
     {
         "goolord/alpha-nvim",
         dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -189,6 +185,7 @@ require "lazy".setup({
         "famiu/feline.nvim",
         config = function() require "plugins/feline" end
     },
+    { "stevearc/dressing.nvim", opts = {} },
     {
         "folke/which-key.nvim",
         config = true
@@ -225,14 +222,6 @@ require "lazy".setup({
             let g:molokai_origin=1
             let g:rehash=1
         ]]) end
-    },
-    { -- Theme inspired by Atom
-        "navarasu/onedark.nvim",
-        enabled = false,
-        priority = 1000,
-        config = function()
-          vim.cmd.colorscheme "onedark"
-        end,
     },
 }, {
     ui = {
