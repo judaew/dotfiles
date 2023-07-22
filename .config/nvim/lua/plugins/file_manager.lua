@@ -8,8 +8,29 @@ function M.config()
     vim.g.loaded_netrwPlugin = 1
 
     require("nvim-tree").setup({
+        hijack_cursor = true,
         view = {
             width = 32,
+            side = "left",
+        },
+        renderer = {
+            indent_markers = {
+                enable = true
+            },
+        },
+        diagnostics = {
+            enable = true,
+            show_on_dirs = false,
+            show_on_open_dirs = true,
+            icons = {
+                hint = "H",
+                info = "I",
+                warning = "W",
+                error = "E",
+            }
+        },
+        git = {
+            enable = false
         }
     })
 end
