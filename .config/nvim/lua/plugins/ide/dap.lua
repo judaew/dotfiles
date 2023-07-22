@@ -2,83 +2,93 @@ local dap   = require("dap")
 local dapui = require("dapui")
 local key   = require("utils/keymap")
 
--- Keymaps
--- See https://stackoverflow.com/a/52368238
-local keymaps_table = {
-    { "<Leader>bb",  dap.toggle_breakpoint, "Creates or removes a [b]reakpoint" },
-    { "<Leader>bc",  dap.continue,          "Start/[C]ontinue debugging" },
-    { "<Leader>bsi", dap.step_into,         "[S]tep [i]nto a function or method" },
-    { "<Leader>bso", dap.step_over,         "[S]tep [o]ver for <count> steps" },
-    { "<Leader>bsq", dap.step_out,          "[S]tep out of a function or method" },
-    { "<Leader>bsb", dap.step_back,         "[S]tep one step [b]ack" },
-    { "<Leader>br",  dap.run_to_cursor,     "[R]un to the current cursor" },
-    { "<Leader>bq",  dap.terminate,         "Terminates the debug session" }
-}
-key.bulk_set(keymaps_table, "n", "DAP: ")
+local M = {}
 
--- Function keys
-local f_keymaps_table = {
-    { "<F10>",   dap.toggle_breakpoint, "Toggle breakpoint" },
-    { "<S-F10>", dap.terminate,         "Terminates the debug session" },
-    { "<F11>",   dap.continue,          "Start/Continue debugging" },
-    { "<S-F11>", dap.step_out,          "Step out of a function or method" },
-    { "<F12>",   dap.step_into,         "Step into a function or method" },
-    { "<S-F12>", dap.step_over,         "Step over for [count] steps" }
-}
-key.bulk_set(f_keymaps_table, "n", "DAP: ")
-
--- See https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#ccrust-via-lldb-vscode
-dap.adapters.lldb = {
-    type = "executable",
-    command = vim.fn.exepath("lldb-vscode-mp-16"),
-    name = "lldb"
-}
-
-dap.configurations.cpp = {
-    {
-        name = "Launch",
-        type = "lldb",
-        request = "launch",
-        program = function()
-            return vim.fn.input("Path to executable: " .. vim.fn.getcwd() .. "/")
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-        args = {},
-        runInTerminal = false,
+function M.keys()
+    -- Keymaps
+    -- See https://stackoverflow.com/a/52368238
+    local keymaps_table = {
+        { "<Leader>bb",  dap.toggle_breakpoint, "Creates or removes a [b]reakpoint" },
+        { "<Leader>bc",  dap.continue,          "Start/[C]ontinue debugging" },
+        { "<Leader>bsi", dap.step_into,         "[S]tep [i]nto a function or method" },
+        { "<Leader>bso", dap.step_over,         "[S]tep [o]ver for <count> steps" },
+        { "<Leader>bsq", dap.step_out,          "[S]tep out of a function or method" },
+        { "<Leader>bsb", dap.step_back,         "[S]tep one step [b]ack" },
+        { "<Leader>br",  dap.run_to_cursor,     "[R]un to the current cursor" },
+        { "<Leader>bq",  dap.terminate,         "Terminates the debug session" }
     }
-}
+    key.bulk_set(keymaps_table, "n", "DAP: ")
 
-dap.configurations.c = dap.configurations.cpp
-dap.configurations.rust = dap.configurations.cpp
+    -- Function keys
+    local f_keymaps_table = {
+        { "<F10>",   dap.toggle_breakpoint, "Toggle breakpoint" },
+        { "<S-F10>", dap.terminate,         "Terminates the debug session" },
+        { "<F11>",   dap.continue,          "Start/Continue debugging" },
+        { "<S-F11>", dap.step_out,          "Step out of a function or method" },
+        { "<F12>",   dap.step_into,         "Step into a function or method" },
+        { "<S-F12>", dap.step_over,         "Step over for [count] steps" }
+    }
+    key.bulk_set(f_keymaps_table, "n", "DAP: ")
+end
 
-dapui.setup({
-    layouts = {
+function M.dap()
+    -- See https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#ccrust-via-lldb-vscode
+    dap.adapters.lldb = {
+        type = "executable",
+        command = vim.fn.exepath("lldb-vscode-mp-16"),
+        name = "lldb"
+    }
+
+    dap.configurations.cpp = {
         {
-            elements = {
-                { id = "scopes",      size = 0.25 },
-                { id = "breakpoints", size = 0.20 },
-                { id = "stacks",      size = 0.25 },
-                { id = "watches",     size = 0.30 },
+            name = "Launch",
+            type = "lldb",
+            request = "launch",
+            program = function()
+                return vim.fn.input("Path to executable: " .. vim.fn.getcwd() .. "/")
+            end,
+            cwd = "${workspaceFolder}",
+            stopOnEntry = false,
+            args = {},
+            runInTerminal = false,
+        }
+    }
+
+    dap.configurations.c = dap.configurations.cpp
+    dap.configurations.rust = dap.configurations.cpp
+
+    dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+    end
+    dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+    end
+    dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+    end
+end
+
+function M.dapui()
+    dapui.setup({
+        layouts = {
+            {
+                elements = {
+                    { id = "scopes",      size = 0.25 },
+                    { id = "breakpoints", size = 0.20 },
+                    { id = "stacks",      size = 0.25 },
+                    { id = "watches",     size = 0.30 },
+                },
+                size = 50,
+                position = "right",
             },
-            size = 50,
-            position = "right",
+            {
+                elements = { "repl" },
+                size = 10,
+                position = "bottom",
+            },
         },
-        {
-            elements = { "repl" },
-            size = 10,
-            position = "bottom",
-        },
-    },
-    windows = { indent = 1 },
-})
+        windows = { indent = 1 },
+    })
+end
 
-dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open()
-end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close()
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close()
-end
+return M

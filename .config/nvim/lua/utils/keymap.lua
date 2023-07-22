@@ -6,7 +6,7 @@ local M = {}
 -- @param mode (string)   The mode for the key mapping
 -- @param key (string)    The key or key combination
 -- @param func (function) The function to be called when the key is pressed
--- @param desc (string)   The description of the key mapping (optional)
+-- @param desc (string)   The description of the key mapping
 -- @param opts (table)    Additional options for the key mapping (optional)
 --
 -- @usage
@@ -14,14 +14,10 @@ local M = {}
 -- M.set("n", "<F11>", dap.continue, "DAP: Start/Continue debugging", { silent = true })
 --
 function M.set(mode, key, func, desc, opts)
-    if desc ~= nil and opts ~= nil then
+    if opts ~= nil then
         vim.keymap.set(mode, key, func, { desc = desc, table.unpack(opts) })
-    elseif desc ~= nil then
-        vim.keymap.set(mode, key, func, { desc = desc })
-    elseif opts ~= nil then
-        vim.keymap.set(mode, key, func, { table.unpack(opts) })
     else
-        vim.keymap.set(mode, key, func)
+        vim.keymap.set(mode, key, func, { desc = desc })
     end
 end
 

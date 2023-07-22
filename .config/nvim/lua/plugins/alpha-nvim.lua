@@ -1,6 +1,8 @@
 local alpha     = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
 
+local M = {}
+
 dashboard.section.header.val = {
     [[ NVIM — Start Page ]]
 }
@@ -15,4 +17,8 @@ dashboard.section.buttons.val = {
     dashboard.button("q",   "󰅚  Quit NVIM", ":qa<CR>"),
 }
 
-alpha.setup(dashboard.config)
+function M.config()
+    alpha.setup(dashboard.config)
+end
+
+return M

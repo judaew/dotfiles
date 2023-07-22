@@ -1,13 +1,14 @@
 local key = require("utils/keymap")
+local telescope = require("telescope.builtin")
+local code_action = require("code_action_menu")
+
+local M = {}
 
 local on_attach = function(_, bufnr)
     -- Create a command `:Format` local to the LSP buffer
     vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
         vim.lsp.buf.format { async = true }
     end, { desc = "Format current buffer with LSP" })
-
-    local telescope = require("telescope.builtin")
-    local code_action = require("code_action_menu")
 
     local keymaps_table = {
         { "<Leader>rn", vim.lsp.buf.rename, "[R]e[n]ame" },
@@ -43,6 +44,9 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- See https://github.com/nvim-lua/completion-nvim/issues/258
 capabilities.textDocument.completion.completionItem.snippetSupport = false
+-- nvim-cmp supports additional completion capabilities, so broadcast that
+-- to servers. See https://github.com/hrsh7th/cmp-nvim-lsp/tree/59224771f91b86d1de12570b4070fe4ad7cd1eeb#capabilities
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local servers = {
     clangd = {
@@ -62,7 +66,7 @@ local servers = {
             "--enable-config",
 
             -- store PCHs in RAM
-            "--pch-storage=memory"
+            "--pch-storage=memory",
         },
     },
     gopls = {},
@@ -73,10 +77,6 @@ local servers = {
                 runtime = {
                     version = "LuaJIT",
                     path = vim.split(package.path, ";")
-                },
-                diagnostics = {
-                    -- Get the language server to recognize the `vim` global
-                    -- globals = {"vim", "use"},
                 },
                 workspace = { checkThirdParty = false },
                 telemetry = {
@@ -91,36 +91,35 @@ local servers = {
     },
 }
 
-require "neodev".setup()
-
-for i in pairs(servers) do
-    if i == "clangd" then
-        require "clangd_extensions".setup(require "coq".lsp_ensure_capabilities({
-            server = {
+function M.lsp()
+    for i in pairs(servers) do
+        if i == "clangd" then
+            require "clangd_extensions".setup({
+                server = {
+                    capabilities = capabilities,
+                    on_attach = on_attach,
+                    settings = servers[i]
+                },
+                extensions = {
+                    autoSetHints = true,
+                }
+            })
+        else
+            require "lspconfig"[i].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
                 settings = servers[i]
-            },
-            extensions = {
-                autoSetHints = true,
-            }
-        }))
-    else
-        require "lspconfig"[i].setup(require "coq".lsp_ensure_capabilities({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = servers[i]
-        }))
+            })
+        end
     end
 end
 
--- Disable inline text and instead open a diagnostic window by <Leader>e
-vim.diagnostic.config({
-    virtual_text = false
-})
-
 -- VSCode 💡 for neovim's built-in LSP
-require("nvim-lightbulb").setup({
-    autocmd = { enabled = true },
-    sign = { enabled = true },
-})
+function M.nvim_lightbulb()
+    require("nvim-lightbulb").setup({
+        autocmd = { enabled = true },
+        sign = { enabled = true },
+    })
+end
+
+return M

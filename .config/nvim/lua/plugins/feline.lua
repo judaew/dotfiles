@@ -1,3 +1,5 @@
+local M = {}
+
 local colors = {
     black   = "#232526",
     gray    = "#585858",
@@ -171,10 +173,12 @@ local components = {
     }
 }
 
-require"feline".setup {
-    colors = { bg = colors.black, fg = colors.white },
-    components = components
-}
+function M.config()
+    require"feline".setup {
+        colors = { bg = colors.black, fg = colors.white },
+        components = components
+    }
+end
 
 -- local winbar_components = {
 --     active = {
@@ -199,3 +203,5 @@ require"feline".setup {
 --     colors = { bg = colors.black, fg = colors.white },
 --     components = winbar_components
 -- }
+
+return M
