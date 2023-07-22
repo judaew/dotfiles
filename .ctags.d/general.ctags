@@ -15,6 +15,9 @@
 # --exclude=log/*
 # --exclude=db/*
 
+# ignore workspace-specific settings
+--exclude=.vscode
+
 # Ignore swap and backup files
 --exclude=*.swp
 --exclude=*.bak
