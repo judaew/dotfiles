@@ -41,12 +41,12 @@ local on_attach = function(_, bufnr)
     key.bulk_set(keymaps_table, "n", "LSP: ", "buffer = bufnr")
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
 -- See https://github.com/nvim-lua/completion-nvim/issues/258
-capabilities.textDocument.completion.completionItem.snippetSupport = false
+M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- nvim-cmp supports additional completion capabilities, so broadcast that
 -- to servers. See https://github.com/hrsh7th/cmp-nvim-lsp/tree/59224771f91b86d1de12570b4070fe4ad7cd1eeb#capabilities
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+M.capabilities = require("cmp_nvim_lsp").default_capabilities(M.capabilities)
 
 local servers = {
     clangd = {
@@ -76,12 +76,13 @@ local servers = {
             Lua = {
                 runtime = {
                     version = "LuaJIT",
-                    path = vim.split(package.path, ";")
                 },
-                workspace = { checkThirdParty = false },
+                workspace = { checkThirdParty = true },
                 telemetry = {
                     enable = false,
-                }
+                },
+                maxPreload = 500, -- 500 KB or ~10k lines per file
+                preloadFileSize = 500 -- 500 KB or ~10k lines per file
             }
         }
     },
@@ -96,7 +97,7 @@ function M.lsp()
         if i == "clangd" then
             require("clangd_extensions").setup({
                 server = {
-                    capabilities = capabilities,
+                    capabilities = M.capabilities,
                     on_attach = on_attach,
                     settings = servers[i]
                 },
@@ -106,7 +107,7 @@ function M.lsp()
             })
         else
             require("lspconfig")[i].setup({
-                capabilities = capabilities,
+                capabilities = M.capabilities,
                 on_attach = on_attach,
                 settings = servers[i]
             })
