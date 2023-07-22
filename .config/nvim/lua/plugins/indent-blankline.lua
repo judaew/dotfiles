@@ -1,7 +1,7 @@
 local M = {}
 
 function M.config()
-        require('indent_blankline').setup({
+        require("indent_blankline").setup({
         filetype_exclude = {
             "help",
             "terminal",

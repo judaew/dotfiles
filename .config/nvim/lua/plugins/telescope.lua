@@ -1,14 +1,14 @@
-local key = require("utils/keymap")
-local telescope = require("telescope")
-local builtin = require("telescope.builtin")
-local themes = require("telescope.themes")
-local actions = require("telescope.actions")
-local extensions = require('telescope').extensions
+local key        = require("utils.keymap")
+local telescope  = require("telescope")
+local builtin    = require("telescope.builtin")
+local themes     = require("telescope.themes")
+local actions    = require("telescope.actions")
+local extensions = require("telescope").extensions
 
 local M = {}
 
 function M.telescope()
-    telescope.setup {
+    telescope.setup({
         pickers = {
             buffers = {
                 show_all_buffers = true,
@@ -20,7 +20,7 @@ function M.telescope()
                 }
             }
         }
-    }
+    })
 end
 
 function M.telescope_keys()
@@ -55,7 +55,7 @@ function M.fzf_native()
 end
 
 function M.project()
-    local project = require('project_nvim')
+    local project = require("project_nvim")
 
     project.setup()
     -- Enable telescope projects, if installed

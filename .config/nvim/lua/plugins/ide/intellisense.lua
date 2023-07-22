@@ -76,8 +76,8 @@ local function complete_format(entry, vim_item)
     return function(entry, vim_item)
         local maxLength = 40
         vim_item.abbr = string.sub(vim_item.abbr, 1, maxLength)
-        vim_item.kind = string.format('%s%s', kind_icons[vim_item.kind], kind_names[vim_item.kind])
-        vim_item.menu = string.format('[%s]', menu_names[entry.source.name])
+        vim_item.kind = string.format("%s%s", kind_icons[vim_item.kind], kind_names[vim_item.kind])
+        vim_item.menu = string.format("[%s]", menu_names[entry.source.name])
         return vim_item
     end
 end
@@ -117,7 +117,7 @@ function M.config()
             { name = "vsnip",      priority = 1 },
             { name = "buffer",     priority = 2 },
             { name = "tmux",       priority = 2, option = { all_panes = true }},
-            { name = 'nvim_lsp_signature_help', priority = 1 },
+            { name = "nvim_lsp_signature_help", priority = 1 },
         },
         -- luacheck: push ignore entry
         -- luacheck: push ignore vim_item
@@ -128,26 +128,26 @@ function M.config()
         -- luacheck: pop
     })
 
-    cmp.setup.cmdline({ '/', '?' }, {
+    cmp.setup.cmdline({ "/", "?" }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
-            { name = 'buffer' }
+            { name = "buffer" }
         }
     })
 
-    cmp.setup.cmdline(':', {
+    cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
-            { name = 'cmdline' },
-            { name = 'path' }
+            { name = "cmdline" },
+            { name = "path" }
         }
     })
 
     -- TODO: See https://github.com/petertriho/cmp-git
-    -- cmp.setup.filetype('gitcommit', {
+    -- cmp.setup.filetype("gitcommit", {
     --     sources = {
-    --         { name = 'git' },
-    --         { name = 'buffer'}
+    --         { name = "git" },
+    --         { name = "buffer"}
     --     }
     -- })
 end

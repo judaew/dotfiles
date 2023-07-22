@@ -1,9 +1,9 @@
-local configs = require('nvim-treesitter.configs')
+local configs = require("nvim-treesitter.configs")
 
 local M = {}
 
 function M.config()
-    configs.setup {
+    configs.setup({
         ensure_installed = {
             "bash",
             "c",
@@ -102,7 +102,7 @@ function M.config()
                 }
             }
         }
-    }
+    })
 
     -- Tree-sitter based folding
     vim.cmd([[

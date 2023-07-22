@@ -1,9 +1,9 @@
-local key = require("utils/keymap")
+local key = require("utils.keymap")
 
 local M = {}
 
 function M.config()
-    require('sniprun').setup({
+    require("sniprun").setup({
         binary_path="/opt/local/sbin/sniprun",
     })
 end

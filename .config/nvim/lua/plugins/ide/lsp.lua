@@ -1,5 +1,5 @@
-local key = require("utils/keymap")
-local telescope = require("telescope.builtin")
+local key         = require("utils.keymap")
+local telescope   = require("telescope.builtin")
 local code_action = require("code_action_menu")
 
 local M = {}
@@ -94,7 +94,7 @@ local servers = {
 function M.lsp()
     for i in pairs(servers) do
         if i == "clangd" then
-            require "clangd_extensions".setup({
+            require("clangd_extensions").setup({
                 server = {
                     capabilities = capabilities,
                     on_attach = on_attach,
@@ -105,7 +105,7 @@ function M.lsp()
                 }
             })
         else
-            require "lspconfig"[i].setup({
+            require("lspconfig")[i].setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
                 settings = servers[i]

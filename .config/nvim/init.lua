@@ -3,9 +3,9 @@
 -- ######################
 
 -- Basic settings
-require "options"
-require "commands"
-require "keymaps"
+require("options")
+require("commands")
+require("keymaps")
 
 -- Plugins and their setup
-require "package-manager"
+require("package-manager")

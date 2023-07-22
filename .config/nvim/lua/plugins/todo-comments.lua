@@ -1,7 +1,7 @@
 local M = {}
 
 function M.config()
-    require("todo-comments").setup {
+    require("todo-comments").setup({
         signs = true,
         sign_priority = 8,
         keywords = {
@@ -33,7 +33,7 @@ function M.config()
             after = "",
             comments_only = true
         },
-    }
+    })
 end
 
 return M

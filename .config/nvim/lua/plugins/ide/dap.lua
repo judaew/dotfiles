@@ -1,6 +1,6 @@
 local dap   = require("dap")
 local dapui = require("dapui")
-local key   = require("utils/keymap")
+local key   = require("utils.keymap")
 
 local M = {}
 

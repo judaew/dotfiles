@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local keymap = vim.keymap.set
-require "lazy".setup({
+require("lazy").setup({
     --- *** IDE section (LSP, DAP, linting, snippets)
     --- #############################################
     {
@@ -23,27 +23,27 @@ require "lazy".setup({
             -- VSCode 💡 for neovim's built-in LSP
             {
                 "kosayoda/nvim-lightbulb",
-                config = function() require('plugins.ide.lsp').nvim_lightbulb() end
+                config = function() require("plugins.ide.lsp").nvim_lightbulb() end
             },
             -- Clangd's off-spec features
             { "p00f/clangd_extensions.nvim" }
         },
-        config = function() require('plugins.ide.lsp').lsp() end
+        config = function() require("plugins.ide.lsp").lsp() end
     },
     {
         "mfussenegger/nvim-dap",
         -- Load only for configured languages
         ft = {"c", "cpp", "rust"},
         cmd = { "DapToggleBreakpoint", "DapContinue"},
-        keys = function() require('plugins.ide.dap').keys() end,
+        keys = function() require("plugins.ide.dap").keys() end,
         dependencies = {
             -- plugin for UI
             {
                 "rcarriga/nvim-dap-ui",
-                config = function() require('plugins.ide.dap').dapui() end,
+                config = function() require("plugins.ide.dap").dapui() end,
             }
         },
-        config = function() require('plugins.ide.dap').dap() end
+        config = function() require("plugins.ide.dap").dap() end
     },
     -- Plugin for automatically configures `lua-language-server` for
     -- Neovim config, Neovim runtime and plugin directories
@@ -61,7 +61,7 @@ require "lazy".setup({
             }
         },
         build = ":TSUpdate",
-        config = function() require('plugins.ide.treesitter').config() end
+        config = function() require("plugins.ide.treesitter").config() end
     },
     -- Autocomplete/Intellisense
     {
@@ -79,7 +79,7 @@ require "lazy".setup({
                     })
 
                     -- setup cmp for autopairs
-                    local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+                    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
                     require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
                 end,
             },
@@ -99,20 +99,20 @@ require "lazy".setup({
                 dependencies = {
                     "hrsh7th/cmp-vsnip"
                 },
-                config = function() require('plugins.snippets').config() end
+                config = function() require("plugins.snippets").config() end
             }
             -- TODO: "paopaol/cmp-doxygen"
             -- TODO: "petertriho/cmp-git"
         },
-        config = function() require('plugins.ide.intellisense').config() end
+        config = function() require("plugins.ide.intellisense").config() end
     },
     {
         "ahmedkhalf/project.nvim",
-        keys = function() require('plugins.telescope').project_keys() end,
+        keys = function() require("plugins.telescope").project_keys() end,
         dependencies = {
             "nvim-telescope/telescope.nvim",
         },
-        config = function() require('plugins.telescope').project() end
+        config = function() require("plugins.telescope").project() end
     },
     {
         "Shatur/neovim-session-manager",
@@ -121,26 +121,26 @@ require "lazy".setup({
             "nvim-lua/plenary.nvim"
         },
         config = function()
-            require('plugins.session_manager').config()
-            require('plugins.session_manager').keys()
+            require("plugins.session_manager").config()
+            require("plugins.session_manager").keys()
         end
     },
     {
         "stevearc/overseer.nvim",
         -- Since `keys` calls a command (:), not a function, `cmd` is required.
         cmd = { "OverseerRun", "OverseerTaskAction", "OverseerToggle", "OverseerToggle" },
-        keys = function() require('plugins.task_runner').keys() end,
+        keys = function() require("plugins.task_runner").keys() end,
         dependencies = {
             "stevearc/dressing.nvim"
         },
-        config = function() require('overseer').setup() end
+        config = function() require("overseer").setup() end
     },
     {
         "michaelb/sniprun",
         -- Since `keys` calls a command (:), not a function, `cmd` is required.
         cmd = { "SnipRun", "SnipClose", "SnipReset" },
-        keys = function() require('plugins.code_runner').keys() end,
-        config = function() require('plugins.code_runner').config() end
+        keys = function() require("plugins.code_runner").keys() end,
+        config = function() require("plugins.code_runner").config() end
     },
 
     -- *** Specific Language Support / Syntax Highlighting / Formatting
@@ -171,7 +171,7 @@ require "lazy".setup({
     -- *** Movement
     {
         "ethanholz/nvim-lastplace",
-        config = function() require('plugins.nvim-lastplace').config() end
+        config = function() require("plugins.nvim-lastplace").config() end
     },
     {
         -- TODO:
@@ -179,7 +179,7 @@ require "lazy".setup({
         --   https://github.com/liuchengxu/vista.vim#show-the-nearest-methodfunction-in-the-statusline
         "liuchengxu/vista.vim",
         lazy = false,
-        config = function() require('plugins.tagbar').keys() end
+        config = function() require("plugins.tagbar").keys() end
     },
     {
         "nvim-telescope/telescope.nvim",
@@ -191,13 +191,13 @@ require "lazy".setup({
                 build = "make",
                 cond = function() return vim.fn.executable "make" == 1 end,
                 dependencies = { "nvim-telescope/telescope.nvim" },
-                config = function() require('plugins.telescope').fzf_native() end
+                config = function() require("plugins.telescope").fzf_native() end
             }
         },
         -- See also "plugins/ide/lsp.lua"
         config = function()
-            require('plugins.telescope').telescope()
-            require('plugins.telescope').telescope_keys()
+            require("plugins.telescope").telescope()
+            require("plugins.telescope").telescope_keys()
         end
     },
     {
@@ -209,8 +209,8 @@ require "lazy".setup({
         "nvim-tree/nvim-tree.lua",
         lazy = false,
         config = function()
-            require('plugins.file_manager').config()
-            require('plugins.file_manager').keys()
+            require("plugins.file_manager").config()
+            require("plugins.file_manager").keys()
         end
     },
     {
@@ -230,7 +230,7 @@ require "lazy".setup({
         -- Plugin can't be lazy loaded
         lazy = false,
         config = function()
-            keymap('n', '<Leader>u', ':MundoToggle<CR>', { desc="Toggle UndoTree (via Mundo)" })
+            keymap("n", "<Leader>u", ":MundoToggle<CR>", { desc="Toggle UndoTree (via Mundo)" })
         end
     },
     {
@@ -253,7 +253,7 @@ require "lazy".setup({
             { "gb",  mode = "x",          desc = "Comment blockwise (visual)" },
         },
         config = function()
-            require('Comment').setup({mappings={basic=true, extra=false}})
+            require("Comment").setup({mappings={basic=true, extra=false}})
         end
     },
     {
@@ -284,13 +284,13 @@ require "lazy".setup({
             {"<F4>", desc="Commit browser"},
             {"<S-F4>", desc="Commit browser"}
         },
-        init = function() require('utils.lazy').git_load('gv.vim') end,
-        config = function() require('plugins/gv').keys() end
+        init = function() require("utils.lazy").git_load("gv.vim") end,
+        config = function() require("plugins.gv").keys() end
     },
     {
         "lewis6991/gitsigns.nvim",
         lazy = true,
-        init = function() require('utils.lazy').git_load("gitsigns.nvim") end,
+        init = function() require("utils.lazy").git_load("gitsigns.nvim") end,
         dependencies = {
             "nvim-lua/plenary.nvim"
         },
@@ -306,14 +306,14 @@ require "lazy".setup({
     -- *** UI
     {
         "goolord/alpha-nvim",
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         event = "VimEnter",
-        config = function() require('plugins.alpha-nvim').config() end
+        config = function() require("plugins.alpha-nvim").config() end
     },
     {
         "famiu/feline.nvim",
         lazy = false,
-        config = function() require('plugins.feline').config() end
+        config = function() require("plugins.feline").config() end
     },
     { "stevearc/dressing.nvim", opts = {} },
     {
@@ -331,15 +331,15 @@ require "lazy".setup({
         depencies = {
             "nvim-lua/plenary.nvim"
         },
-        config = function() require('plugins/todo-comments').config() end
+        config = function() require("plugins.todo-comments").config() end
     },
     {
         "norcalli/nvim-colorizer.lua",
-        config = function() require('plugins.nvim-colorizer').config() end
+        config = function() require("plugins.nvim-colorizer").config() end
     },
     {
         "lukas-reineke/indent-blankline.nvim",
-        config = function() require('plugins.indent-blankline').config() end
+        config = function() require("plugins.indent-blankline").config() end
     },
 
     -- *** Themes

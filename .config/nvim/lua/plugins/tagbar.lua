@@ -1,6 +1,6 @@
 local api = vim.api
-local key = require("utils/keymap")
-local sb  = require("utils/searchBuffer")
+local key = require("utils.keymap")
+local sb  = require("utils.searchBuffer")
 
 local M = {}
 

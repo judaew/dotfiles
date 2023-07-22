@@ -1,7 +1,7 @@
 local M = {}
 
 function M.config()
-    require('gitsigns').setup({
+    require("gitsigns").setup({
         -- make gitsigns look like vim-signify
         signs = {
             add          = {hl = "DiffAdd"   , text = "+"},

@@ -174,10 +174,10 @@ local components = {
 }
 
 function M.config()
-    require"feline".setup {
+    require("feline").setup ({
         colors = { bg = colors.black, fg = colors.white },
         components = components
-    }
+    })
 end
 
 -- local winbar_components = {

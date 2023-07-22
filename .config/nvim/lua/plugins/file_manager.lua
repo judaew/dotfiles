@@ -1,4 +1,4 @@
-local key = require("utils/keymap")
+local key = require("utils.keymap")
 
 local M = {}
 
