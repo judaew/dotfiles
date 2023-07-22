@@ -17,6 +17,7 @@ local options = {
     completeopt = {"menu", "preview", "menuone" },
     list = true,
     listchars = { trail = "·", tab = "│ " },
+    pumheight=20,
     undofile = true,
     undodir = "/Users/judaew/.cache/nvim/undo",
     wrap = false
@@ -31,6 +32,11 @@ vim.cmd ([[
 let g:netrw_http_cmd="open"
 ]])
 
+-- Disable inline text and instead open a diagnostic window by <Leader>e
+vim.diagnostic.config({
+    virtual_text = false
+})
+
 -- Fix shada
 vim.cmd ([[
 set shada+=n~/.local/share/nvim/shada/main.shada
@@ -42,7 +48,7 @@ let g:html_indent_autotags="html,head,body"
 let g:indent_inner_html=1
 ]])
 
---
+-- Python path
 vim.cmd ([[
 if has("mac")
     let g:python3_host_prog = '/opt/local/bin/python3'
