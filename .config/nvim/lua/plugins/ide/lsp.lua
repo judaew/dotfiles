@@ -50,6 +50,9 @@ M.capabilities = require("cmp_nvim_lsp").default_capabilities(M.capabilities)
 
 local servers = {
     clangd = {
+        init_options = {
+            clangdFileStatus = true,
+        },
         cmd = { vim.fn.exepath("clangd-mp-16"),
             "--all-scopes-completion",
             "--suggest-missing-includes",
@@ -67,7 +70,7 @@ local servers = {
 
             -- store PCHs in RAM
             "--pch-storage=memory",
-        },
+        }
     },
     gopls = {},
     lua_ls = {
