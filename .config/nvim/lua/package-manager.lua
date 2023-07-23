@@ -322,8 +322,11 @@ require("lazy").setup({
         config = true
     },
     {
-        "junegunn/vim-peekaboo",
-        lazy = false
+        "gennaro-tedesco/nvim-peekup",
+        keys = {
+            { '""',  desc = "Open peekup window" },
+            { '"x',  desc = "Empty all registers" },
+        }
     },
     {
         "folke/todo-comments.nvim",
