@@ -36,7 +36,9 @@ function M.telescope_keys()
                     winblend = 10,
                     previewer = false,
             }) end, "[/] Fuzzily search in current buffer" },
-        { "<Leader>sf", builtin.find_files,  "[S]earch [F]iles" },
+        { "<Leader>sf", function()
+            builtin.find_files({hidden=true, no_ignore=true}) end,
+            "[S]earch [F]iles" },
         { "<Leader>sh", builtin.help_tags,   "[S]earch [H]elp" },
         { "<Leader>sw", builtin.grep_string, "[S]earch current [W]ord" },
         { "<Leader>sg", builtin.live_grep,   "[S]earch by [G]rep" },
