@@ -8,13 +8,14 @@ dashboard.section.header.val = {
 }
 
 dashboard.section.buttons.val = {
-    dashboard.button("e",   "󰈔  New file",  ":ene <BAR> startinsert <CR>"),
-    dashboard.button("f f", "  Find file", ":Telescope find_files hidden=true no_ignore=true<CR>"),
-    dashboard.button("f h", "󰈢  Recently opened files", "<cmd>Telescope oldfiles<CR>"),
-    dashboard.button("f g", "󰈬  Find word", "<cmd>Telescope live_grep<cr>"),
-    dashboard.button("f m", "󰃀  Jump to bookmarks", ":Marks<CR>"),
-    dashboard.button("s l", "󰁯  Open last session", "<cmd>SessionManager load_last_session<CR>"),
-    dashboard.button("q",   "󰅚  Quit NVIM", ":qa<CR>"),
+    dashboard.button("i",     "󰈔  New file", ":ene <BAR> startinsert<CR>"),
+    dashboard.button(", s f", "  Search file", ":lua require('telescope.builtin').find_files({hidden=true, no_ignore=true})<CR>"),
+    dashboard.button(", ?",   "󰈢  Find recently opened files", ":lua require('telescope.builtin').oldfiles()<CR>"),
+    dashboard.button(", s g", "󰈬  Search by Grep", ":lua require('telescope.builtin').live_grep()<CR>"),
+    dashboard.button(", f m", "󰪶  File manager", ":NvimTreeToggle<CR>"),
+    dashboard.button("m",     "󰃀  Jump to bookmarks", ":Marks<CR>"),
+    dashboard.button(", m l", "󰁯  Load session", "<cmd>SessionManager load_session<CR>"),
+    dashboard.button("q",     "󰅚  Quit NVIM", ":qa<CR>"),
 }
 
 function M.config()
