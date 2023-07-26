@@ -14,8 +14,9 @@ end
 
 function M.keys()
     -- Keymaps
-    key.set("n", "<Leader>sms", "<cmd>SessionManager save_current_session<CR>", "Session Manager: Save")
-    key.set("n", "<Leader>smd", "<cmd>SessionManager delete_session<CR>", "Session Manager: Delete")
+    key.set("n", "<Leader>ms", "<cmd>SessionManager save_current_session<CR>", "Session Manager: Save")
+    key.set("n", "<Leader>ml", "<cmd>SessionManager load_session<CR>", "Session Manager: Load")
+    key.set("n", "<Leader>md", "<cmd>SessionManager delete_session<CR>", "Session Manager: Delete")
 end
 
 return M
