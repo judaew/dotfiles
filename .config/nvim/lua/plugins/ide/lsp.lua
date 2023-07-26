@@ -3,8 +3,7 @@ local telescope   = require("telescope.builtin")
 local code_action = require("code_action_menu")
 
 local M = {}
-
-local on_attach = function(_, bufnr)
+M.on_attach = function(client, bufnr)
     -- Create a command `:Format` local to the LSP buffer
     vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
         vim.lsp.buf.format { async = true }
@@ -39,6 +38,25 @@ local on_attach = function(_, bufnr)
         { "<Leader>fo", ":Format<CR>", "[Fo]rmat current buffer with LSP" }
     }
     key.bulk_set(keymaps_table, "n", "LSP: ", "buffer = bufnr")
+
+    -- if client.server_capabilities.inlayHintProvider then
+    --     vim.lsp.inlay_hint(bufnr, true)
+    -- end
+
+    if client.server_capabilities.inlayHintProvider then
+        vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
+
+        vim.api.nvim_create_autocmd("InsertEnter", {
+            buffer = bufnr,
+            callback = function() vim.lsp.inlay_hint(bufnr, true) end,
+            group = "lsp_augroup",
+        })
+        vim.api.nvim_create_autocmd("InsertLeave", {
+            buffer = bufnr,
+            callback = function() vim.lsp.inlay_hint(bufnr, false) end,
+            group = "lsp_augroup",
+        })
+    end
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -48,7 +66,7 @@ M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- to servers. See https://github.com/hrsh7th/cmp-nvim-lsp/tree/59224771f91b86d1de12570b4070fe4ad7cd1eeb#capabilities
 M.capabilities = require("cmp_nvim_lsp").default_capabilities(M.capabilities)
 
-local servers = {
+M.servers = {
     clangd = {
         init_options = {
             clangdFileStatus = true,
@@ -69,7 +87,7 @@ local servers = {
             "--enable-config",
 
             -- store PCHs in RAM
-            "--pch-storage=memory",
+            "--pch-storage=memory"
         }
     },
     gopls = {},
@@ -79,6 +97,9 @@ local servers = {
             Lua = {
                 runtime = {
                     version = "LuaJIT",
+                },
+                hint = {
+                    enable = true
                 },
                 workspace = { checkThirdParty = true },
                 telemetry = {
@@ -96,25 +117,12 @@ local servers = {
 }
 
 function M.lsp()
-    for i in pairs(servers) do
-        if i == "clangd" then
-            require("clangd_extensions").setup({
-                server = {
-                    capabilities = M.capabilities,
-                    on_attach = on_attach,
-                    settings = servers[i]
-                },
-                extensions = {
-                    autoSetHints = true,
-                }
-            })
-        else
-            require("lspconfig")[i].setup({
-                capabilities = M.capabilities,
-                on_attach = on_attach,
-                settings = servers[i]
-            })
-        end
+    for i in pairs(M.servers) do
+        require("lspconfig")[i].setup({
+            capabilities = M.capabilities,
+            on_attach = M.on_attach,
+            settings = M.servers[i]
+        })
     end
 end
 
