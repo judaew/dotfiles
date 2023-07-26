@@ -24,9 +24,7 @@ require("lazy").setup({
             {
                 "kosayoda/nvim-lightbulb",
                 config = function() require("plugins.ide.lsp").nvim_lightbulb() end
-            },
-            -- Clangd's off-spec features
-            { "p00f/clangd_extensions.nvim" }
+            }
         },
         config = function() require("plugins.ide.lsp").lsp() end
     },
