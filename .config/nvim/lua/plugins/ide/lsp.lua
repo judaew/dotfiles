@@ -1,44 +1,61 @@
-local key         = require("utils.keymap")
+local key   = require("utils.keymap")
+
 local telescope   = require("telescope.builtin")
 local code_action = require("code_action_menu")
 
 local M = {}
+
+-- WARN: Unmap K to be able to set custom hover in M.on_attach
+-- vim.keymap.set("n", "K", "")
+
 M.on_attach = function(client, bufnr)
+
     -- Create a command `:Format` local to the LSP buffer
     vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
         vim.lsp.buf.format { async = true }
     end, { desc = "Format current buffer with LSP" })
 
+    vim.api.nvim_buf_create_user_command(bufnr, "WorkspaceListFolders", function(_)
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, { desc = "LSP: Workspace List Folders" })
+
     local keymaps_table = {
-        { "<Leader>rn", vim.lsp.buf.rename, "[R]e[n]ame" },
-        -- The `code_action_menu` plugin provides a handy pop-up menu for code
-        -- action. This plugin can be used instead by `vim.lsp.buf.code_action`
-        -- func.
-        { "<Leader>ca", code_action.open_code_action_menu, "[C]ode [A]ction" },
-        { "gD",         vim.lsp.buf.declaration,           "[G]oto [D]eclaration" },
-        { "gd",         vim.lsp.buf.definition,            "[G]oto [D]efinition" },
-        -- The `lsp_references` func from Telescope provides "Goto References"
-        -- func in a float window. This plugin  can be used insstead by
-        -- `vim.lsp.buf.references` func.
-        { "gr",         telescope.lsp_references,                "[G]oto [R]eferences" },
-        { "gI",         vim.lsp.buf.implementation,              "[G]oto [I]mplementation" },
-        { "<Leader>D",  vim.lsp.buf.type_definition,             "Type [D]efinition" },
-        { "<Leader>ds", telescope.lsp_document_symbols,          "[D]ocument [S]ymbols" },
-        { "<Leader>ws", telescope.lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols" },
-        { "<Leader>wa", vim.lsp.buf.add_workspace_folder,        "[W]orkspace [A]dd Folder" },
-        { "<Leader>wr", vim.lsp.buf.remove_workspace_folder,     "[W]orkspace [R]emove Folder" },
-        { "<Leader>wl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-            "[W]orkspace [L]ist Folders" },
+        { "<Leader>rn", vim.lsp.buf.rename,               "[R]e[n]ame" },
+        -- { "<Leader>ca", vim.lsp.buf.code_action,          "[C]ode [A]ction" },
+        { "gD",         vim.lsp.buf.declaration,          "[G]oto [D]eclaration" },
+        -- { "gd",         vim.lsp.buf.definition,           "[G]oto [D]efinition" },
+        -- { "gr",         vim.lsp.buf.references,           "[G]oto [R]eferences" },
+        -- { "gI",         vim.lsp.buf.implementation,       "[G]oto [I]mplementation" },
+        -- { "<Leader>D",  vim.lsp.buf.type_definition,      "Type [D]efinition" },
+        { "<Leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder" },
+        { "<Leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder" },
+        { "<Leader>wl", ":WorkspaceListFolders<CR>",         "[W]orkspace [L]ist Folders" },
 
         -- See `:help K` for why this keymap
         { "K",          vim.lsp.buf.hover,          "Hover Documentation" },
         { "<C-k>",      vim.lsp.buf.signature_help, "Signature Documentation" },
 
         -- See commnad :Format above
-        { "<Leader>fo", ":Format<CR>", "[Fo]rmat current buffer with LSP" }
+        { "<Leader>fo", ":Format<CR>", "[Fo]rmat current buffer with LSP" },
     }
-    key.bulk_set(keymaps_table, "n", "LSP: ", "buffer = bufnr")
+    key.bulk_set(keymaps_table, "n", "LSP: ", { buffer = bufnr, noremap = true })
 
+    --- Code Action Menu Plugin
+    key.set("n", "<Leader>ca", code_action.open_code_action_menu,
+        "LSP: [C]ode [A]ction", { buffer = bufnr })
+
+    --- Telescope Plugin
+    local keymaps_telescope_table = {
+        { "gd",         telescope.lsp_definitions, "[G]oto [D]efinition" },
+        { "gr",         telescope.lsp_references, "[G]oto [R]eferences" },
+        { "gI",         telescope.lsp_implementations, "[G]oto [I]mplementation" },
+        { "<Leader>D",  telescope.lsp_type_definitions, "Type [D]efinition" },
+        { "<Leader>ds", telescope.lsp_document_symbols, "[D]ocument [S]ymbols" },
+        { "<Leader>ws", telescope.lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols" }
+    }
+    key.bulk_set(keymaps_telescope_table, "n", "LSP: ", { buffer = bufnr })
+
+    --- Inlay Hints
     -- if client.server_capabilities.inlayHintProvider then
     --     vim.lsp.inlay_hint(bufnr, true)
     -- end
