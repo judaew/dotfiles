@@ -22,6 +22,7 @@ function M.config()
             "lua",
             "make",
             "markdown",
+            "markdown_inline",
             "ninja",
             "proto",
             "python",
