@@ -43,6 +43,7 @@ function M.telescope_keys()
         { "<Leader>sw", builtin.grep_string, "[S]earch current [W]ord" },
         { "<Leader>sg", builtin.live_grep,   "[S]earch by [G]rep" },
         { "<Leader>sd", builtin.diagnostics, "[S]earch [D]iagnostics" },
+        { "<Leader>sr", builtin.resume,      "[S]earch [R]esume/Continue" }
     }
     key.bulk_set(keymaps_table, "n")
 
