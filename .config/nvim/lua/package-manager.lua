@@ -255,6 +255,15 @@ require("lazy").setup({
         end
     },
     {
+        "AckslD/muren.nvim",
+        cmd = { "MurenToggle", "MurenOpen", "MurenUnique" },
+        keys = {
+            {"<Leader>rm", function() require('muren.api').toggle_ui() end,
+            desc="[M]ultiple [r]eplacements (toggle)"}
+        },
+        config = true
+    },
+    {
         "lyokha/vim-xkbswitch",
         lazy = false,
         init = function()
