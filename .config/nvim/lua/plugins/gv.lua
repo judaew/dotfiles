@@ -1,11 +1,13 @@
-local key = require("utils.keymap")
-
 local M = {}
+
+local map = function(keys, func, desc)
+    vim.keymap.set("n", keys, func, { desc=desc, noremap=true})
+end
 
 function M.keys()
     -- Function keys
-    key.set("n", "<F4>", "<cmd>GV<CR>", "Commit browser")
-    key.set("n", "<S-F4>", "<cmd>GV!<CR>", "Commit browser")
+    map("<F4>",   "<cmd>GV<CR>",  "Commit browser")
+    map("<S-F4>", "<cmd>GV!<CR>", "Commit browser")
 end
 
 return M

@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local keymap = vim.keymap.set
+local map = vim.keymap.set
 require("lazy").setup({
     --- *** IDE section (LSP, DAP, linting, snippets)
     --- #############################################
@@ -105,14 +105,6 @@ require("lazy").setup({
         config = function() require("plugins.ide.intellisense").config() end
     },
     {
-        "ahmedkhalf/project.nvim",
-        keys = function() require("plugins.telescope").project_keys() end,
-        dependencies = {
-            "nvim-telescope/telescope.nvim",
-        },
-        config = function() require("plugins.telescope").project() end
-    },
-    {
         "Shatur/neovim-session-manager",
         lazy = false,
         dependencies = {
@@ -190,7 +182,16 @@ require("lazy").setup({
                 cond = function() return vim.fn.executable "make" == 1 end,
                 dependencies = { "nvim-telescope/telescope.nvim" },
                 config = function() require("plugins.telescope").fzf_native() end
-            }
+            },
+            {
+                "natecraddock/workspaces.nvim",
+                after = "telescope.nvim",
+                config = function()
+                    require('plugins.telescope').workspaces()
+                    require('plugins.telescope').workspaces_keys()
+                end
+            },
+
         },
         -- See also "plugins/ide/lsp.lua"
         config = function()
@@ -228,14 +229,16 @@ require("lazy").setup({
         -- Plugin can't be lazy loaded
         lazy = false,
         config = function()
-            keymap("n", "<Leader>u", ":MundoToggle<CR>", { desc="Toggle UndoTree (via Mundo)" })
+            map("n", "<Leader>u", ":MundoToggle<CR>",
+                { desc="Toggle UndoTree (via Mundo)", noremap=true })
         end
     },
     {
         "t9md/vim-choosewin",
         lazy = false,
         config = function()
-            keymap("n", "-", "<Plug>(choosewin)", { desc = "Choosewin" })
+            map("n", "-", "<Plug>(choosewin)",
+                { desc = "Choosewin", noremap=true })
         end
     },
 

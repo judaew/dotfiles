@@ -1,5 +1,4 @@
 local api = vim.api
-local key = require("utils.keymap")
 local sb  = require("utils.searchBuffer")
 
 local M = {}
@@ -15,10 +14,17 @@ local function toggleTagBar(finder)
     end
 end
 
+local function toggleTagBar_lsp()   toggleTagBar("nvim_lsp") end
+local function toggleTagBar_ctags() toggleTagBar("ctags") end
+
+local map = function(keys, func, desc)
+    vim.keymap.set("n", keys, func, { desc=desc, noremap=true})
+end
+
 function M.keys()
     -- Function keys
-    key.set("n", "<F9>",   function() toggleTagBar("nvim_lsp") end, "Toggle Tagbar (finder: LSP)")
-    key.set("n", "<S-F9>", function() toggleTagBar("ctags") end,  "Toggle Tagbar (finder: Ctags)")
+    map("<F9>",   toggleTagBar_lsp,    "Toggle Tagbar (finder: LSP)")
+    map("<S-F9>", toggleTagBar_ctags,  "Toggle Tagbar (finder: Ctags)")
 end
 
 return M

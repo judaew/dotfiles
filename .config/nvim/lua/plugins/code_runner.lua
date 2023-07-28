@@ -1,5 +1,3 @@
-local key = require("utils.keymap")
-
 local M = {}
 
 function M.config()
@@ -8,15 +6,20 @@ function M.config()
     })
 end
 
+local map = function(mode, keys, func, desc)
+    if desc then
+            desc = "Code runner: " .. desc
+    end
+    vim.keymap.set(mode, keys, func, { desc=desc, noremap=true})
+end
+
 function M.keys()
     -- Function keys
-    local f_keymaps_table = {
-        { { "n", "v" }, "<F7>",   ":SnipRun<CR>",   "Run the lines" },
-        { "n",          "<S-F7>", ":%SnipRun<CR>",  "Run the buffer" },
-        { "n",          "<F8>",   ":SnipClose<CR>", "Close" },
-        { "n",          "<S-F8>", ":SnipReset<CR>", "Reset" }
-    }
-    key.bulk_set(f_keymaps_table, nil, "Code runner: ")
+    map("n", "<F7>",   ":SnipRun<CR>",   "Run the lines")
+    map("v", "<F7>",   ":SnipRun<CR>",   "Run the lines")
+    map("n", "<S-F7>", ":%SnipRun<CR>",  "Run the buffer")
+    map("n", "<F8>",   ":SnipClose<CR>", "Close")
+    map("n", "<S-F8>", ":SnipReset<CR>", "Reset")
 end
 
 return M

@@ -1,34 +1,34 @@
 local dap   = require("dap")
 local dapui = require("dapui")
-local key   = require("utils.keymap")
 
 local M = {}
 
 function M.keys()
     -- Keymaps
     -- See https://stackoverflow.com/a/52368238
-    local keymaps_table = {
-        { "<Leader>bb",  dap.toggle_breakpoint, "Creates or removes a [b]reakpoint" },
-        { "<Leader>bc",  dap.continue,          "Start/[C]ontinue debugging" },
-        { "<Leader>bsi", dap.step_into,         "[S]tep [i]nto a function or method" },
-        { "<Leader>bso", dap.step_over,         "[S]tep [o]ver for <count> steps" },
-        { "<Leader>bsq", dap.step_out,          "[S]tep out of a function or method" },
-        { "<Leader>bsb", dap.step_back,         "[S]tep one step [b]ack" },
-        { "<Leader>br",  dap.run_to_cursor,     "[R]un to the current cursor" },
-        { "<Leader>bq",  dap.terminate,         "Terminates the debug session" }
-    }
-    key.bulk_set(keymaps_table, "n", "DAP: ")
+    local map = function(keys, func, desc)
+        if desc then
+            desc = "DAP: " .. desc
+        end
+        vim.keymap.set("n", keys, func, { desc=desc, noremap=true})
+    end
+
+    map("<Leader>bb",  dap.toggle_breakpoint, "Creates or removes a [b]reakpoint")
+    map("<Leader>bc",  dap.continue,          "Start/[C]ontinue debugging")
+    map("<Leader>bsi", dap.step_into,         "[S]tep [i]nto a function or method")
+    map("<Leader>bso", dap.step_over,         "[S]tep [o]ver for <count> steps")
+    map("<Leader>bsq", dap.step_out,          "[S]tep out of a function or method")
+    map("<Leader>bsb", dap.step_back,         "[S]tep one step [b]ack")
+    map("<Leader>br",  dap.run_to_cursor,     "[R]un to the current cursor")
+    map("<Leader>bq",  dap.terminate,         "Terminates the debug session")
 
     -- Function keys
-    local f_keymaps_table = {
-        { "<F10>",   dap.toggle_breakpoint, "Toggle breakpoint" },
-        { "<S-F10>", dap.terminate,         "Terminates the debug session" },
-        { "<F11>",   dap.continue,          "Start/Continue debugging" },
-        { "<S-F11>", dap.step_out,          "Step out of a function or method" },
-        { "<F12>",   dap.step_into,         "Step into a function or method" },
-        { "<S-F12>", dap.step_over,         "Step over for [count] steps" }
-    }
-    key.bulk_set(f_keymaps_table, "n", "DAP: ")
+    map("<F10>",   dap.toggle_breakpoint, "Toggle breakpoint")
+    map("<S-F10>", dap.terminate,         "Terminates the debug session")
+    map("<F11>",   dap.continue,          "Start/Continue debugging")
+    map("<S-F11>", dap.step_out,          "Step out of a function or method")
+    map("<F12>",   dap.step_into,         "Step into a function or method")
+    map("<S-F12>", dap.step_over,         "Step over for [count] steps")
 end
 
 function M.dap()

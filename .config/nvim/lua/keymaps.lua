@@ -1,64 +1,69 @@
-local keymap = vim.keymap.set
-
-local opts = { noremap = true, silent = true }
+local map = function(mode, keys, func, desc)
+    if desc then
+        vim.keymap.set(mode, keys, func, { desc=desc, noremap=true})
+    else
+        vim.keymap.set(mode, keys, func, { noremap=true})
+    end
+end
 
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
 -- Modes
---   normal_mode = "n"
---   insert_mode = "i"
---   visual_mode = "v"
+--   normal_mode       = "n"
+--   insert_mode       = "i"
+--   visual_mode       = "v"
 --   visual_block_mode = "x"
---   term_mode = "t"
---   command_mode = "c"
+--   term_mode         = "t"
+--   command_mode      = "c"
 
 -- Remove newbie crutches
-keymap("", "<Up>", "<Nop>", opts)
-keymap("", "<Down>", "<Nop>", opts)
-keymap("", "<Left>", "<Nop>", opts)
-keymap("", "<Right>", "<Nop>", opts)
+map("", "<Up>", "<Nop>")
+map("", "<Down>", "<Nop>")
+map("", "<Left>", "<Nop>")
+map("", "<Right>", "<Nop>")
 
 -- Close all but the current one
-keymap("n", "<Leader>o", ":only<CR>", opts)
+map("n", "<Leader>o", ":only<CR>")
 
 -- Some useful shortcuts for quickfix
-keymap("n", "<C-n>", ":cn<CR>", opts)
-keymap("n", "<C-m>", ":cp<CR>", opts)
+map("n", "<C-n>", ":cn<CR>")
+map("n", "<C-m>", ":cp<CR>")
 
 -- Better split switching
-keymap("", "<Leader>j", "<C-W>j", opts)
-keymap("", "<Leader>k", "<C-W>k", opts)
-keymap("", "<Leader>h", "<C-W>h", opts)
-keymap("", "<Leader>l", "<C-W>l", opts)
+map("", "<Leader>j", "<C-W>j")
+map("", "<Leader>k", "<C-W>k")
+map("", "<Leader>h", "<C-W>h")
+map("", "<Leader>l", "<C-W>l")
 
 -- Buffers
-keymap("n", "]b", ":bnext<CR>", opts)
-keymap("n", "[b", ":bprev<CR>", opts)
+map("n", "]b", ":bnext<CR>")
+map("n", "[b", ":bprev<CR>")
 -- Tabs
-keymap("n", "]t", ":tabn<CR>", opts)
-keymap("n", "[t", ":tabp<CR>", opts)
+map("n", "]t", ":tabn<CR>")
+map("n", "[t", ":tabp<CR>")
 
 -- Exit on "jj"
-keymap("i", "jj", "<Esc>", opts)
+map("i", "jj", "<Esc>")
 
 -- Map <C-l> (redraw screen) to also turn off search highlighting until the
 -- next search
-keymap("n", "<C-l>", ":nohl<CR><C-l>", opts)
+map("n", "<C-l>", ":nohl<CR><C-l>")
 
 -- Copy to clipoard
-keymap("n", "<Leader>Y", "\"+yg_", opts)
-keymap("n", "<Leader>yy", "\"+yy", opts)
-keymap("v", "<Leader>y", "\"+y", opts)
+map("n", "<Leader>Y", "\"+yg_")
+map("n", "<Leader>yy", "\"+yy")
+map("v", "<Leader>y", "\"+y")
 -- Paste from clipboard
-keymap("", "<Leader>p", "\"p", opts)
-keymap("", "<Leader>P", "\"P", opts)
+map("", "<Leader>p", "\"p")
+map("", "<Leader>P", "\"P")
 
 -- Toggle for wrap options
-keymap("n", "<Leader>ww", ":set wrap!<CR>", opts)
+map("n", "<Leader>ww", ":set wrap!<CR>")
 
 -- Diagnostic keymaps
-keymap("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
-keymap("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
-keymap("n", "<Leader>e", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-keymap("n", "<Leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+local diag = vim.diagnostic
+map("n", "[d",        diag.goto_prev,  "Go to previous diagnostic message")
+map("n", "]d",        diag.goto_next,  "Go to next diagnostic message")
+map("n", "<Leader>e", diag.open_float, "Open floating diagnostic message")
+map("n", "<Leader>q", diag.setloclist, "Open diagnostics list")

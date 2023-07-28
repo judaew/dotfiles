@@ -1,9 +1,8 @@
-local key        = require("utils.keymap")
 local telescope  = require("telescope")
 local builtin    = require("telescope.builtin")
 local themes     = require("telescope.themes")
 local actions    = require("telescope.actions")
-local extensions = require("telescope").extensions
+-- local extensions = require("telescope").extensions
 
 local M = {}
 
@@ -23,33 +22,38 @@ function M.telescope()
     })
 end
 
+local map = function(keys, func, desc)
+    vim.keymap.set("n", keys, func, { desc=desc, noremap=true})
+end
+
 function M.telescope_keys()
+    local function current_buf_fuzzy_find()
+        -- You can pass additional configuration to telescope to change theme,
+        -- layout, etc.
+        builtin.current_buffer_fuzzy_find(
+            themes.get_dropdown {
+                winblend = 10,
+                previewer = false
+        })
+    end
+    local function find_files()
+        builtin.find_files({hidden=true, no_ignore=true})
+    end
+
     -- Keymaps main
-    local keymaps_table = {
-        { "<Leader>?", builtin.oldfiles, "[?] Find recently opened files" },
-        { "<Leader><space>", builtin.buffers, "[ ] Find existing buffers" },
-        { "<Leader>/", function()
-            -- You can pass additional configuration to telescope to change theme,
-            -- layout, etc.
-            builtin.current_buffer_fuzzy_find(
-                themes.get_dropdown {
-                    winblend = 10,
-                    previewer = false,
-            }) end, "[/] Fuzzily search in current buffer" },
-        { "<Leader>sf", function()
-            builtin.find_files({hidden=true, no_ignore=true}) end,
-            "[S]earch [F]iles" },
-        { "<Leader>sh", builtin.help_tags,   "[S]earch [H]elp" },
-        { "<Leader>sw", builtin.grep_string, "[S]earch current [W]ord" },
-        { "<Leader>sg", builtin.live_grep,   "[S]earch by [G]rep" },
-        { "<Leader>sd", builtin.diagnostics, "[S]earch [D]iagnostics" },
-        { "<Leader>sr", builtin.resume,      "[S]earch [R]esume/Continue" }
-    }
-    key.bulk_set(keymaps_table, "n")
+    map("<Leader>?", builtin.oldfiles,        "[?] Find recently opened files")
+    map("<Leader><space>", builtin.buffers,   "[ ] Find existing buffers")
+    map("<Leader>/",  current_buf_fuzzy_find, "[/] Fuzzily search in current buffer")
+    map("<Leader>sf", find_files,             "[S]earch [F]iles")
+    map("<Leader>sh", builtin.help_tags,      "[S]earch [H]elp")
+    map("<Leader>sw", builtin.grep_string,    "[S]earch current [W]ord")
+    map("<Leader>sg", builtin.live_grep,      "[S]earch by [G]rep")
+    map("<Leader>sd", builtin.diagnostics,    "[S]earch [D]iagnostics")
+    map("<Leader>sr", builtin.resume,         "[S]earch [R]esume/Continue")
 
     -- Function keys
-    key.set("n", "<F3>", function() builtin.find_files({hidden=true, no_ignore=true}) end, "Find file")
-    key.set("n", "<S-F3>", builtin.oldfiles, "Recently opened files")
+    map("<F3>",       find_files,             "Find file")
+    map("<S-F3>",     builtin.oldfiles,       "Recently opened files")
 end
 
 function M.fzf_native()
@@ -57,17 +61,19 @@ function M.fzf_native()
     pcall(telescope.load_extension, "fzf")
 end
 
-function M.project()
-    local project = require("project_nvim")
+function M.workspaces()
+    require("workspaces").setup({
+        hooks = {
+            open = { "Telescope find_files" },
+        }
+    })
 
-    project.setup()
-    -- Enable telescope projects, if installed
-    pcall(telescope.load_extension, "projects")
+    -- Enable telescope workspaces, if installed
+    pcall(telescope.load_extension, "workspaces")
 end
 
-function M.project_keys()
-    -- Picker from the project.nvim
-    key.set("n", "<Leader>sp", extensions.projects.projects, "[S]earch [P]roject")
+function M.workspaces_keys()
+    map("<Leader>sp", ":Telescope workspaces<CR>", "[S]earch [P]roject")
 end
 
 return M
