@@ -14,7 +14,8 @@ local colors = {
 
 local c = colors
 
--- see feline.nvim/lua/feline/providers/vi_mode.lua
+-- see feline.nvim/lua/feline/providers/vi_mode.lua and
+-- https://vi.stackexchange.com/a/22323
 local modes_table = {
     -- mode, name, foreground, background
     ["n"]     = {"NORMAL",     c.black,  c.cyan},
