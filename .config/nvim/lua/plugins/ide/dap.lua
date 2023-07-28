@@ -36,7 +36,10 @@ function M.dap()
     dap.adapters.lldb = {
         type = "executable",
         command = vim.fn.exepath("lldb-vscode-mp-16"),
-        name = "lldb"
+        name = "lldb",
+        env = {
+            LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES"
+        },
     }
 
     dap.configurations.cpp = {
@@ -49,8 +52,9 @@ function M.dap()
             end,
             cwd = "${workspaceFolder}",
             stopOnEntry = false,
-            args = {},
             runInTerminal = false,
+            externalTerminal = false,
+            args = {}
         }
     }
 
