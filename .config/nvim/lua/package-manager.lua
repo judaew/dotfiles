@@ -98,9 +98,10 @@ require("lazy").setup({
                     "hrsh7th/cmp-vsnip"
                 },
                 config = function() require("plugins.snippets").config() end
-            }
+            },
+            -- git
+            { "petertriho/cmp-git" }
             -- TODO: "paopaol/cmp-doxygen"
-            -- TODO: "petertriho/cmp-git"
         },
         config = function() require("plugins.ide.intellisense").config() end
     },

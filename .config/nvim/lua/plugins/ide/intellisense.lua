@@ -143,13 +143,14 @@ function M.config()
         }
     })
 
-    -- TODO: See https://github.com/petertriho/cmp-git
-    -- cmp.setup.filetype("gitcommit", {
-    --     sources = {
-    --         { name = "git" },
-    --         { name = "buffer"}
-    --     }
-    -- })
+    cmp.setup.filetype("gitcommit", {
+        sources = {
+            { name = "git" },
+            { name = "buffer" },
+            { name = "tmux" }
+        }
+    })
+    require("cmp_git").setup()
 end
 
 return M
