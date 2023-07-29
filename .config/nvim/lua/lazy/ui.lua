@@ -15,7 +15,11 @@ return {
     },
 
     -- Improve the default vim.ui interfaces
-    { "stevearc/dressing.nvim", opts = {} },
+    {
+        "stevearc/dressing.nvim",
+        event = "VeryLazy",
+        opts = {}
+    },
 
     -- Shows keybindings in popup
     {
@@ -37,12 +41,14 @@ return {
     -- The fastest colorizer, #a6e22e
     {
         "NvChad/nvim-colorizer.lua",
+        lazy = false,
         config = function() require("plugins.nvim-colorizer").config() end
     },
 
     -- Indent guides for Neovim
     {
         "lukas-reineke/indent-blankline.nvim",
+        lazy = false,
         config = function() require("plugins.indent-blankline").config() end
     }
 }

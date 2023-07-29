@@ -4,6 +4,7 @@ return {
     -- Dynamically interact with registers
     {
         "gennaro-tedesco/nvim-peekup",
+        lazy = false,
         keys = {
             { '""',  desc = "Open peekup window" },
             { '"x',  desc = "Empty all registers" },
@@ -13,13 +14,14 @@ return {
     -- Last edit position
     {
         "ethanholz/nvim-lastplace",
+        lazy = false,
         config = function() require("plugins.nvim-lastplace").config() end
     },
 
     -- Land on window you chose like tmux's 'display-pane'
     {
         "t9md/vim-choosewin",
-        lazy = false,
+        event = "VeryLazy",
         config = function()
             map("n", "-", "<Plug>(choosewin)",
                 { desc = "Choosewin", noremap=true })

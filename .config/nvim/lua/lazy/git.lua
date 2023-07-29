@@ -2,7 +2,8 @@ return {
     -- Git wrapper
     {
         "tpope/vim-fugitive",
-        lazy = false,
+        cmd = { "G", "Git" },
+        init = function() require("utils.lazy").git_load("gv.vim") end,
         dependencies = {
             "tpope/vim-rhubarb" -- For enable :Gbrowse
         }

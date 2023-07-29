@@ -1,6 +1,7 @@
 return {
     {
         "neovim/nvim-lspconfig",
+        lazy = false,
         dependencies = {
             { "weilbith/nvim-code-action-menu" },
             { "kosayoda/nvim-lightbulb" }
