@@ -1,13 +1,9 @@
-local telescope  = require("telescope")
-local builtin    = require("telescope.builtin")
-local themes     = require("telescope.themes")
-local actions    = require("telescope.actions")
--- local extensions = require("telescope").extensions
-
 local M = {}
 
 function M.telescope()
-    telescope.setup({
+    local actions    = require("telescope.actions")
+
+    require("telescope").setup({
         pickers = {
             buffers = {
                 show_all_buffers = true,
@@ -27,6 +23,9 @@ local map = function(keys, func, desc)
 end
 
 function M.telescope_keys()
+    local builtin    = require("telescope.builtin")
+    local themes     = require("telescope.themes")
+
     local function current_buf_fuzzy_find()
         -- You can pass additional configuration to telescope to change theme,
         -- layout, etc.
@@ -58,7 +57,7 @@ end
 
 function M.fzf_native()
     -- Enable telescope fzf native, if installed
-    pcall(telescope.load_extension, "fzf")
+    pcall(require("telescope").load_extension, "fzf")
 end
 
 function M.workspaces()
@@ -69,7 +68,7 @@ function M.workspaces()
     })
 
     -- Enable telescope workspaces, if installed
-    pcall(telescope.load_extension, "workspaces")
+    pcall(require("telescope").load_extension, "workspaces")
 end
 
 function M.workspaces_keys()
