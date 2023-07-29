@@ -2,10 +2,11 @@ local M = {}
 
 function M.config()
     require("colorizer").setup({
-        "*";
-    }, {
-        RGB = false;
-        names = false
+        filetypes = { "*"},
+        user_default_options = {
+            RGB = false,
+            names = false
+        }
     })
 end
 
