@@ -71,6 +71,14 @@ M.on_attach = function(client, bufnr)
             group = "lsp_augroup",
         })
     end
+
+    --- Highlight current symbol
+    -- vim.cmd([[hi! link LspReferenceText CursorColumn]])
+    -- vim.cmd([[hi! link LspReferenceRead CursorColumn]])
+    -- vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
+    -- vim.cmd([[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]])
+    -- vim.cmd([[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
+    -- vim.cmd([[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]])
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
