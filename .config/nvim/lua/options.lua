@@ -19,7 +19,7 @@ local options = {
     listchars = { trail = "·", tab = "│ " },
     pumheight=20,
     undofile = true,
-    undodir = "/Users/judaew/.cache/nvim/undo",
+    undodir = vim.fn.stdpath("cache") .. "/undo",
     wrap = false
 }
 
@@ -27,6 +27,11 @@ for k,v in pairs(options) do
     vim.opt[k] = v
 end
 
+-- Backup
+if vim.fn.has("nvim-0.8") == 1 then
+    vim.opt.backup = true
+    vim.opt.backupdir = vim.fn.stdpath("cache") .. "/backup"
+end
 -- Fix netrw for macOS, see https://github.com/vim/vim/issues/4738
 vim.cmd ([[
 let g:netrw_http_cmd="open"
