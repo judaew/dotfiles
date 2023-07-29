@@ -8,4 +8,4 @@ require("commands")
 require("keymaps")
 
 -- Plugins and their setup
-require("package-manager")
+require("plugin_manager")
