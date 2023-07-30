@@ -15,6 +15,13 @@ return {
         end
     },
 
+    -- Annotation generator
+    {
+        "danymat/neogen",
+        keys = function() require("plugins.neogen").keys() end,
+        dependencies = { "hrsh7th/vim-vsnip" },
+        config = function() require("plugins.neogen").config() end
+    },
     -- Multiple replacements
     {
         "AckslD/muren.nvim",
