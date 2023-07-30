@@ -17,11 +17,15 @@ vim.g.maplocalleader = ","
 --   term_mode         = "t"
 --   command_mode      = "c"
 
--- Remove newbie crutches
-map("", "<Up>", "<Nop>")
-map("", "<Down>", "<Nop>")
-map("", "<Left>", "<Nop>")
-map("", "<Right>", "<Nop>")
+-- Use arrows for move and resize (with shift) to windows
+map("n", "<Up>", "<C-w>k")
+map("n", "<Down>", "<C-w>j")
+map("n", "<Left>", "<C-w>h")
+map("n", "<Right>", "<C-w>l")
+map("n", "<S-Up>", "<C-w>+")
+map("n", "<S-Down>", "<C-w>-")
+map("n", "<S-Left>", "<C-w>>")
+map("n", "<S-Right>", "<C-w><")
 
 -- Close all but the current one
 map("n", "<Leader>o", ":only<CR>")
