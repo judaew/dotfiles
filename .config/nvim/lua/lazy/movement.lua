@@ -1,16 +1,6 @@
 local map = vim.keymap.set
 
 return {
-    -- Dynamically interact with registers
-    {
-        "gennaro-tedesco/nvim-peekup",
-        lazy = false,
-        keys = {
-            { '""',  desc = "Open peekup window" },
-            { '"x',  desc = "Empty all registers" },
-        }
-    },
-
     -- Last edit position
     {
         "ethanholz/nvim-lastplace",

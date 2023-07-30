@@ -22,6 +22,7 @@ return {
         dependencies = { "hrsh7th/vim-vsnip" },
         config = function() require("plugins.neogen").config() end
     },
+
     -- Multiple replacements
     {
         "AckslD/muren.nvim",
@@ -48,4 +49,20 @@ return {
         "tpope/vim-sleuth",
         lazy = false
     },
+
+    -- Refactoring
+    {
+        "ThePrimeagen/refactoring.nvim",
+        dependencies = {
+            { "nvim-lua/plenary.nvim" },
+            { "nvim-treesitter/nvim-treesitter" }
+        },
+        keys = {
+            {
+                "<Leader>r", function() require("refactoring").select_refactor() end,
+                mode="v", noremap=true, desc="Refactoring"
+            }
+        },
+        opts = {}
+    }
 }
