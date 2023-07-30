@@ -51,10 +51,6 @@ M.on_attach = function(client, bufnr)
     map("<Leader>D",  telescope.lsp_type_definitions, "Type [D]efinition")
 
     --- Inlay Hints
-    -- if client.server_capabilities.inlayHintProvider then
-    --     vim.lsp.inlay_hint(bufnr, true)
-    -- end
-
     if client.server_capabilities.inlayHintProvider then
         vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
 
