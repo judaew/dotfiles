@@ -64,5 +64,18 @@ return {
             }
         },
         opts = {}
+    },
+
+    -- Better increase/descrease
+    {
+        "monaqa/dial.nvim",
+        keys = {
+            { "<C-a>", desc = "Increment" },
+            { "<C-x>", desc = "Decrement" },
+        },
+        config = function()
+            require("plugins.dial").config()
+            require("plugins.dial").keys()
+        end
     }
 }
