@@ -3,23 +3,54 @@ local code_action = require("code_action_menu")
 
 local M = {}
 
--- WARN: Unmap K to be able to set custom hover in M.on_attach
--- vim.keymap.set("n", "K", "")
+function M.insert_inlay_hint(client, bufnr)
+    if client.server_capabilities.inlayHintProvider then
+        vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
+
+        vim.api.nvim_create_autocmd("InsertEnter", {
+            buffer = bufnr,
+            callback = function() vim.lsp.inlay_hint(bufnr, true) end,
+            group = "lsp_augroup",
+        })
+        vim.api.nvim_create_autocmd("InsertLeave", {
+            buffer = bufnr,
+            callback = function() vim.lsp.inlay_hint(bufnr, false) end,
+            group = "lsp_augroup",
+        })
+    end
+end
 
 M.on_attach = function(client, bufnr)
+    --- Inlay Hints
+    if client.name == "clangd" then
+        M.insert_inlay_hint(client, bufnr)
+    end
+
+    --- Highlight current symbol
+    -- vim.cmd([[hi! link LspReferenceText CursorColumn]])
+    -- vim.cmd([[hi! link LspReferenceRead CursorColumn]])
+    -- vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
+    -- vim.cmd([[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]])
+    -- vim.cmd([[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
+    -- vim.cmd([[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]])
+end
+
+-- WARN: Unmap K to be able to set custom hover in M.keys
+-- vim.keymap.set("n", "K", "")
+M.keys = function(ev)
     local map = function(keys, func, desc)
         if desc then
             desc = "LSP: " .. desc
         end
-        vim.keymap.set("n", keys, func, { desc=desc, buffer=bufnr, noremap=true})
+        vim.keymap.set("n", keys, func, {buffer=ev.buf, noremap=true, desc=desc})
     end
 
     -- Create a command `:Format` local to the LSP buffer
-    vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+    vim.api.nvim_buf_create_user_command(ev.buf, "Format", function(_)
         vim.lsp.buf.format { async = true }
     end, { desc = "Format current buffer with LSP" })
 
-    vim.api.nvim_buf_create_user_command(bufnr, "WorkspaceListFolders", function(_)
+    vim.api.nvim_buf_create_user_command(ev.buf, "WorkspaceListFolders", function(_)
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, { desc = "LSP: Workspace List Folders" })
 
@@ -49,30 +80,6 @@ M.on_attach = function(client, bufnr)
     map("gr",         telescope.lsp_references,       "[G]oto [R]eferences")
     map("gI",         telescope.lsp_implementations,  "[G]oto [I]mplementation")
     map("<Leader>D",  telescope.lsp_type_definitions, "Type [D]efinition")
-
-    --- Inlay Hints
-    if client.server_capabilities.inlayHintProvider then
-        vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
-
-        vim.api.nvim_create_autocmd("InsertEnter", {
-            buffer = bufnr,
-            callback = function() vim.lsp.inlay_hint(bufnr, true) end,
-            group = "lsp_augroup",
-        })
-        vim.api.nvim_create_autocmd("InsertLeave", {
-            buffer = bufnr,
-            callback = function() vim.lsp.inlay_hint(bufnr, false) end,
-            group = "lsp_augroup",
-        })
-    end
-
-    --- Highlight current symbol
-    -- vim.cmd([[hi! link LspReferenceText CursorColumn]])
-    -- vim.cmd([[hi! link LspReferenceRead CursorColumn]])
-    -- vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
-    -- vim.cmd([[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]])
-    -- vim.cmd([[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
-    -- vim.cmd([[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]])
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -140,6 +147,12 @@ function M.lsp()
             settings = M.servers[i]
         })
     end
+
+    -- Buffer local mappings.
+    vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = M.keys
+    })
 end
 
 -- VSCode 💡 for neovim's built-in LSP
