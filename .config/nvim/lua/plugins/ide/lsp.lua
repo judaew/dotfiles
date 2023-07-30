@@ -49,8 +49,6 @@ M.on_attach = function(client, bufnr)
     map("gr",         telescope.lsp_references,       "[G]oto [R]eferences")
     map("gI",         telescope.lsp_implementations,  "[G]oto [I]mplementation")
     map("<Leader>D",  telescope.lsp_type_definitions, "Type [D]efinition")
-    map("<Leader>ds", telescope.lsp_document_symbols, "[D]ocument [S]ymbols")
-    map("<Leader>ws", telescope.lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
     --- Inlay Hints
     -- if client.server_capabilities.inlayHintProvider then

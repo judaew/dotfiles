@@ -13,14 +13,14 @@ function M.keys()
         vim.keymap.set("n", keys, func, { desc=desc, noremap=true})
     end
 
-    map("<Leader>bb",  dap.toggle_breakpoint, "Creates or removes a [b]reakpoint")
-    map("<Leader>bc",  dap.continue,          "Start/[C]ontinue debugging")
-    map("<Leader>bsi", dap.step_into,         "[S]tep [i]nto a function or method")
-    map("<Leader>bso", dap.step_over,         "[S]tep [o]ver for <count> steps")
-    map("<Leader>bsq", dap.step_out,          "[S]tep out of a function or method")
-    map("<Leader>bsb", dap.step_back,         "[S]tep one step [b]ack")
-    map("<Leader>br",  dap.run_to_cursor,     "[R]un to the current cursor")
-    map("<Leader>bq",  dap.terminate,         "Terminates the debug session")
+    map("<Leader>db",  dap.toggle_breakpoint, "Creates or removes a [b]reakpoint")
+    map("<Leader>dc",  dap.continue,          "Start/[C]ontinue debugging")
+    map("<Leader>dsi", dap.step_into,         "[S]tep [i]nto a function or method")
+    map("<Leader>dso", dap.step_over,         "[S]tep [o]ver for <count> steps")
+    map("<Leader>dsq", dap.step_out,          "[S]tep out of a function or method")
+    map("<Leader>dsb", dap.step_back,         "[S]tep one step [b]ack")
+    map("<Leader>dr",  dap.run_to_cursor,     "[R]un to the current cursor")
+    map("<Leader>dq",  dap.terminate,         "Terminates the debug session")
 
     -- Function keys
     map("<F10>",   dap.toggle_breakpoint, "Toggle breakpoint")
