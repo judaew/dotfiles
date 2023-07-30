@@ -1,7 +1,8 @@
 # vim: set ft=gitconfig nomodeline:
 
 # git
-# [core]
+[core]
+    pager = delta
     # See https://github.blog/2022-06-27-highlights-from-git-2-37/#a-builtin-filesystem-monitor-for-windows-and-macos
     # fsmonitor = true
 
@@ -38,13 +39,8 @@
     prev = checkout -
     discard = checkout --
 
-# git.pager
-[pager]
-    diff = riff
-    show = riff
-
 [interactive]
-    diffFilter = riff
+    diffFilter = delta --color-only
 
 # git.diff
 [difftool]
@@ -66,3 +62,8 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+
+# delta
+[delta]
+    navigate = true
+    light = false
