@@ -92,15 +92,6 @@ function M.config()
                     ["<leader>df"] = "@function.outer",
                     ["<leader>dF"] = "@class.outer",
                 },
-            },
-            swap = {
-                enable = true,
-                swap_next = {
-                    ["<leader>a"] = "@parameter.inner",
-                },
-                swap_previous = {
-                    ["<leader>A"] = "@parameter.inner",
-                }
             }
         }
     })

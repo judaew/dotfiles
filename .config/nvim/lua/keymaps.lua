@@ -65,6 +65,12 @@ map("", "<Leader>P", "\"P")
 -- Toggle for wrap options
 map("n", "<Leader>ww", ":set wrap!<CR>")
 
+-- Swap lines, see https://vim.fandom.com/wiki/Moving_lines_up_or_down
+map("n", "<Leader>a", ":m .+1<CR>==")
+map("n", "<Leader>A", ":m .-2<CR>==")
+map("v", "<Leader>a", ":m '>+1<CR>gv=gv")
+map("v", "<Leader>A", ":m '<-2<CR>gv=gv")
+
 -- Diagnostic keymaps
 local diag = vim.diagnostic
 map("n", "[d",        diag.goto_prev,  "Go to previous diagnostic message")
