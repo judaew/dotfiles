@@ -105,6 +105,7 @@ M.servers = {
             "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*,modernize-*,-modernize-use-trailing-return-type",
             "--fallback-style=WebKit",
             "--header-insertion=never",
+            "-pretty",
 
             -- clangd 11+ supports reading from .clangd configuration file
             "--enable-config",
@@ -118,16 +119,13 @@ M.servers = {
         cmd = { vim.fn.exepath("lua-language-server") },
         settings = {
             Lua = {
-                runtime = {
-                    version = "LuaJIT",
+                runtime = { version = "LuaJIT" },
+                workspace = { checkThirdParty = false },
+                completion = {
+                    workspaceWord = true,
                 },
-                hint = {
-                    enable = true
-                },
-                workspace = { checkThirdParty = true },
-                telemetry = {
-                    enable = false,
-                },
+                hint = { enable = true },
+                telemetry = { enable = false },
                 maxPreload = 500, -- 500 KB or ~10k lines per file
                 preloadFileSize = 500 -- 500 KB or ~10k lines per file
             }
