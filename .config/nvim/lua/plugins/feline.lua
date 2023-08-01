@@ -62,6 +62,29 @@ local function get_vi_mode_name_or_color(str)
     end
 end
 
+local function get_diagnostic(str)
+    local line = vim.api.nvim_win_get_cursor(0)[1] - 1
+    local col = vim.api.nvim_win_get_cursor(0)[2]
+
+    local opts = { ['lnum'] = line }
+    local diagnostics = vim.diagnostic.get(0, opts)
+
+    for _, diagnostic in ipairs(diagnostics) do
+        local start_col = diagnostic.col
+        local end_col = diagnostic.end_col or start_col
+
+        if col >= start_col and col <= end_col then
+            if str == "message" then
+                return diagnostic.message
+            elseif str == "indicator" then
+                return diagnostic.severity
+            end
+        end
+    end
+
+    return ""
+end
+
 local comps = {
     vi_mode = {
         active = {
@@ -122,16 +145,58 @@ local comps = {
             right_sep = {str= " ", hl = {bg = colors.gray}}
         }
     },
-    git_branch = {
-        provider = "git_branch",
-        left_sep = " ",
-        icon = "",
-    },
+    -- git_branch = {
+    --     provider = "git_branch",
+    --     left_sep = " ",
+    --     icon = "",
+    -- },
     lsp = {
         errors = {provider = "diagnostic_errors"},
         warnings = {provider = "diagnostic_warnings"},
         info = {provider = "diagnostic_info"},
         hints = {provider = "diagnostic_hints"}
+    },
+    diagnostic = {
+        indicator = {
+            provider = function()
+                local severity = vim.diagnostic.severity
+                local str
+
+                if get_diagnostic("indicator") == severity.ERROR then
+                    str = " E: "
+                elseif get_diagnostic("indicator") == severity.WARN then
+                    str = " W: "
+                elseif get_diagnostic("indicator") == severity.INFO then
+                    str = " I:"
+                elseif get_diagnostic("indicator") == severity.HINT then
+                    str = " H: "
+                else
+                    str = ""
+                end
+
+                return str
+            end,
+            hl = function()
+                local severity = vim.diagnostic.severity
+                local val = {}
+
+                if get_diagnostic("indicator") == severity.ERROR then
+                    val.fg = c.red
+                elseif get_diagnostic("indicator") == severity.WARN then
+                    val.fg = c.yellow
+                elseif get_diagnostic("indicator") == severity.INFO then
+                    val.fg = c.white
+                elseif get_diagnostic("indicator") == severity.HINT then
+                    val.fg = c.white
+                end
+
+                val.style = "bold"
+                return val
+            end
+        },
+        message = {
+            provider = function() return get_diagnostic("message") end,
+        }
     }
 }
 
@@ -140,7 +205,8 @@ local components = {
         { -- Left
             comps.vi_mode.active,
             comps.file.info,
-            comps.git_branch
+            comps.diagnostic.indicator,
+            comps.diagnostic.message
         },
 
         { -- Middle
