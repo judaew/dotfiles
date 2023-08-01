@@ -163,13 +163,13 @@ local comps = {
                 local str
 
                 if get_diagnostic("indicator") == severity.ERROR then
-                    str = " E: "
+                    str = "  : "
                 elseif get_diagnostic("indicator") == severity.WARN then
-                    str = " W: "
+                    str = "  : "
                 elseif get_diagnostic("indicator") == severity.INFO then
-                    str = " I:"
+                    str = "  :"
                 elseif get_diagnostic("indicator") == severity.HINT then
-                    str = " H: "
+                    str = "  : "
                 else
                     str = ""
                 end
