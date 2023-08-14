@@ -63,3 +63,9 @@ else
     let g:python3_host_prog = "/usr/bin/python3"
 endif
 ]])
+
+-- Conceal links
+vim.cmd ([[
+set conceallevel=2
+set concealcursor=c
+]])
