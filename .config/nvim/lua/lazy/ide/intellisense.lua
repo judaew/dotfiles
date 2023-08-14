@@ -24,8 +24,7 @@ return {
                 "hrsh7th/cmp-buffer",
                 "hrsh7th/cmp-cmdline",
                 "hrsh7th/cmp-nvim-lua",
-                -- "hrsh7th/cmp-nvim-lsp-signature-help",
-                "delphinus/cmp-ctags",
+                "hrsh7th/cmp-nvim-lsp-signature-help",
                 "andersevenrud/cmp-tmux"
             },
             -- snippet plugin

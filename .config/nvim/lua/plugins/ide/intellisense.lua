@@ -113,7 +113,6 @@ function M.config()
         sources = {
             { name = "nvim_lsp",   priority = 1 },
             { name = "vsnip",      priority = 1 },
-            { name = "ctags",      priority = 1 },
             { name = "buffer",     priority = 2 },
             { name = "tmux",       priority = 2, option = { all_panes = true }},
             { name = "nvim_lua",   priority = 1 },
