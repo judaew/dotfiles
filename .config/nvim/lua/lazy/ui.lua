@@ -51,5 +51,10 @@ return {
         "lukas-reineke/indent-blankline.nvim",
         lazy = false,
         config = function() require("plugins.indent-blankline").config() end
+    },
+
+    -- Rename tabs
+    {
+        "gcmt/taboo.vim"
     }
 }
