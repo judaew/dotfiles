@@ -3,13 +3,14 @@ local M = {}
 function M.config()
         require("indent_blankline").setup({
         filetype_exclude = {
-            "help",
-            "terminal",
-            "lazy",
-            "lspinfo",
             "TelescopePrompt",
             "TelescopeResults",
             "alpha",
+            "help",
+            "lazy",
+            "lspinfo",
+            "org",
+            "terminal",
             "",
         },
         buftype_exclude = { "terminal" },
