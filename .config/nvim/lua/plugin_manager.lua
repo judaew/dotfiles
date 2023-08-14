@@ -25,6 +25,7 @@ require("lazy").setup({
 
     --- *** Specific Language Support/Syntax Highlighting
     { import = "lazy.special_language_support" },
+    { import = "lazy.orgmode" },
 
     --- *** Neovim Lua Development
     { import = "lazy.neovim_lua_development"},

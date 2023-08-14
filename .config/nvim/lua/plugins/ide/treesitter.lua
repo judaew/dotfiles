@@ -24,6 +24,7 @@ function M.config()
             "markdown",
             "markdown_inline",
             "ninja",
+            "org",
             "proto",
             "python",
             "rust",
@@ -44,6 +45,7 @@ function M.config()
         highlight = {
             enable = true,
             disable = {},
+            additional_vim_regex_highlighting = {'org'},
         },
         indent = {
             enable = true,

@@ -150,6 +150,15 @@ function M.config()
         }
     })
     require("cmp_git").setup()
+
+    cmp.setup.filetype("org", {
+        sources = {
+            { name = "vsnip" },
+            { name = "orgmode" },
+            { name = "buffer" },
+            { name = "tmux", option = { all_panes = true }},
+        }
+    })
 end
 
 return M
