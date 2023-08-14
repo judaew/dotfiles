@@ -21,6 +21,27 @@ vim.cmd ([[
     augroup end
 ]])
 
+vim.api.nvim_create_augroup("LocalViewStates", {})
+
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+    group = "LocalViewStates",
+    pattern = "*",
+    callback = function()
+        if vim.fn.expand("%") ~= "" then
+            vim.cmd("silent! loadview")
+        end
+    end,
+})
+vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
+    group = "LocalViewStates",
+    pattern = "*",
+    callback = function()
+        if vim.fn.expand("%") ~= "" then
+            vim.cmd("mkview")
+        end
+    end,
+})
+
 -- Highlight on yank.
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight",
