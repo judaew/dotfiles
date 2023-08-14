@@ -85,33 +85,21 @@ end
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 -- See https://github.com/nvim-lua/completion-nvim/issues/258
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- Tell the server the capability of foldingRange
+-- See https://github.com/kevinhwang91/nvim-ufo
+M.capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
 -- nvim-cmp supports additional completion capabilities, so broadcast that
 -- to servers. See https://github.com/hrsh7th/cmp-nvim-lsp/tree/59224771f91b86d1de12570b4070fe4ad7cd1eeb#capabilities
 M.capabilities = require("cmp_nvim_lsp").default_capabilities(M.capabilities)
 
 M.servers = {
     clangd = {
-        init_options = {
-            clangdFileStatus = true,
-        },
         cmd = { vim.fn.exepath("clangd-mp-16"),
-            "--all-scopes-completion",
-            "--suggest-missing-includes",
-            "--background-index",
-            "--cross-file-rename",
-            "--log=info",
-            "--completion-style=detailed",
-            "--clang-tidy",
-            "--clang-tidy-checks=-*,llvm-*,clang-analyzer-*,modernize-*,-modernize-use-trailing-return-type",
-            "--fallback-style=WebKit",
-            "--header-insertion=never",
-            "-pretty",
-
-            -- clangd 11+ supports reading from .clangd configuration file
-            "--enable-config",
-
-            -- store PCHs in RAM
-            "--pch-storage=memory"
+            -- See https://github.com/hrsh7th/nvim-cmp/blob/3b9f28061a67b19cadc13946de981426a6425e4a/doc/cmp.txt#L948C43-L948C72
+            "--header-insertion-decorators"
         }
     },
     gopls = {},
@@ -135,6 +123,7 @@ M.servers = {
     bashls = {
         cmd = { vim.fn.exepath("bash-language-server"), "start" }
     },
+    marksman = {}
 }
 
 function M.lsp()
