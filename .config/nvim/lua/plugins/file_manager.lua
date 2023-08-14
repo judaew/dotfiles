@@ -25,6 +25,13 @@ function M.config()
         },
         git = {
             enable = false
+        },
+        actions = {
+            change_dir = {
+                enable = true,
+                global = true,
+                restrict_above_cwd = false,
+            }
         }
     })
 end
