@@ -8,8 +8,9 @@ return {
     },
 
     -- Statusline
+    -- See https://www.reddit.com/r/neovim/comments/116av04/comment/j96fdjo
     {
-        "famiu/feline.nvim",
+        "freddiehaddad/feline.nvim",
         lazy = false,
         config = function() require("plugins.feline").config() end
     },
