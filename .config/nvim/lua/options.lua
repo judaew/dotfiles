@@ -27,12 +27,6 @@ for k,v in pairs(options) do
     vim.opt[k] = v
 end
 
--- Backup
-if vim.fn.has("nvim-0.8") == 1 then
-    vim.opt.backup = true
-    vim.opt.backupdir = vim.fn.stdpath("cache") .. "/backup"
-end
-
 if vim.g.neovide then
     vim.opt.guifont = { "JetBrains Mono:h14" }
     vim.g.neovide_refresh_rate = 60
