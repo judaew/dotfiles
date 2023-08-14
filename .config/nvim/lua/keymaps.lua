@@ -28,7 +28,7 @@ map("n", "<S-Left>", "<C-w>>")
 map("n", "<S-Right>", "<C-w><")
 
 -- Close all but the current one
-map("n", "<Leader>o", ":only<CR>")
+map("n", "<Leader>b", ":only<CR>")
 
 -- Some useful shortcuts for quickfix
 map("n", "<C-n>", ":cn<CR>")
