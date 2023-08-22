@@ -61,18 +61,11 @@ function M.fzf_native()
 end
 
 function M.workspaces()
-    require("workspaces").setup({
-        hooks = {
-            open = { "Telescope find_files" },
-        }
-    })
-
-    -- Enable telescope workspaces, if installed
-    pcall(require("telescope").load_extension, "workspaces")
+    pcall(require("telescope").load_extension, "ghq")
 end
 
 function M.workspaces_keys()
-    map("<Leader>sp", ":Telescope workspaces<CR>", "[S]earch [P]roject")
+    map("<Leader>sp", ":Telescope ghq list<CR>", "[S]earch [P]roject")
 end
 
 return M
