@@ -25,7 +25,7 @@ vim.api.nvim_create_augroup("LocalViewStates", {})
 
 vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
     group = "LocalViewStates",
-    pattern = "*",
+    pattern = "*.org",
     callback = function()
         if vim.fn.expand("%") ~= "" then
             vim.cmd("silent! loadview")
@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 })
 vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
     group = "LocalViewStates",
-    pattern = "*",
+    pattern = "*.org",
     callback = function()
         if vim.fn.expand("%") ~= "" then
             vim.cmd("mkview")
