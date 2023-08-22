@@ -30,18 +30,6 @@ jobs:
         with:
           targets: ".config/nvim"
 
-  luacheck-lint-hammerspoon:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Luacheck Linter (HammerSpoon)
-        uses: judaew/luacheck-action@v0.2.2
-        with:
-          targets: ".hammerspoon"
-          args: "--only 0"
-
   markdown-lint:
     runs-on: ubuntu-latest
     steps:
