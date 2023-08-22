@@ -67,3 +67,6 @@
 [delta]
     navigate = true
     light = false
+
+[ghq]
+    root = "~/Workspaces"
