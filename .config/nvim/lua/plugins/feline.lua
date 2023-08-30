@@ -197,6 +197,14 @@ local comps = {
         message = {
             provider = function() return get_diagnostic("message") end,
         }
+    },
+    utils = {
+        syntax_group = {
+            provider = function()
+                local s = vim.fn.synID(vim.fn.line("."), vim.fn.col("."), 1)
+                return vim.fn.synIDattr(s, 'name') .. ' -> ' .. vim.fn.synIDattr(vim.fn.synIDtrans(s), 'name')
+            end,
+        }
     }
 }
 
@@ -213,6 +221,7 @@ local components = {
         },
 
         { -- Right
+            -- comps.utils.syntax_group,
             comps.lsp.errors,
             comps.lsp.warnings,
             comps.lsp.info,
