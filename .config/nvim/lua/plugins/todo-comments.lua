@@ -17,13 +17,13 @@ function M.config()
                 { "TESTING", "PASSED", "FAILED" }},
         },
         colors = {
-            info = { "#84D6EC" },
-            hint = { "#D3D3D3" },
-            error = { "#EA3323" },
-            warning = { "#F2A93B" },
-            perf = { "#B3E053" },
-            default = { "Identifier", "#7C3AED" },
-            test = { "#768184" }
+            info = { "#66D9EF" },
+            hint = { "#CCCCCC" },
+            error = { "#F92672" },
+            warning = { "#FD971F" },
+            perf = { "#A6E22E" },
+            default = { "Identifier", "#AE81FF" },
+            test = { "#7E8E91" }
         },
         merge_keywords = true,
         highlight = {
