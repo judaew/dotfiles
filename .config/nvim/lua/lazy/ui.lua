@@ -7,14 +7,6 @@ return {
         config = function() require("plugins.alpha-nvim").config() end
     },
 
-    -- Statusline
-    -- See https://www.reddit.com/r/neovim/comments/116av04/comment/j96fdjo
-    {
-        "freddiehaddad/feline.nvim",
-        lazy = false,
-        config = function() require("plugins.feline").config() end
-    },
-
     -- Improve the default vim.ui interfaces
     {
         "stevearc/dressing.nvim",

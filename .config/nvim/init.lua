@@ -9,3 +9,4 @@ require("keymaps")
 
 -- Plugins and their setup
 require("plugin_manager")
+require("statusline")
