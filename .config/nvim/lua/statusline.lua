@@ -76,7 +76,6 @@ hl(0, "MyStatusLineDiagnosticMessageWarn",  { fg=c.yellow, bg="#343434" })
 hl(0, "MyStatusLineDiagnosticMessageInfo",  { fg=c.yellow, bg="#343434" })
 hl(0, "MyStatusLineDiagnosticMessageHint",  { fg=c.white,  bg="#343434" })
 hl(0, "MyStatusLineFileInfo", { fg=c.white, bg=c.gray })
-hl(0, "MyStatusLineFileType", { fg=c.black, bg=c.red })
 hl(0, "MyStatusLinePosition", { link="MyStatusLineFileInfo" })
 
 local severity_icons = {
@@ -185,9 +184,6 @@ function My.StatusLine()
     if focus then
         table.insert(statusline, diagnostic_status)
     end
-
-    --- filetype
-    table.insert(statusline, "%#MyStatusLineFileType#" .. " %Y " .. reset)
 
     --- position
     table.insert(statusline, "%>")
