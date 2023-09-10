@@ -77,7 +77,7 @@ local function complete_format(entry, vim_item)
         local maxLength = 40
         vim_item.abbr = string.sub(vim_item.abbr, 1, maxLength)
         vim_item.kind = string.format("%s%s", kind_icons[vim_item.kind], kind_names[vim_item.kind])
-        vim_item.menu = string.format("[%s]", menu_names[entry.source.name])
+        vim_item.menu = string.format("%s", menu_names[entry.source.name])
         return vim_item
     end
 end
