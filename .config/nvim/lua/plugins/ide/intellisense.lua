@@ -93,7 +93,7 @@ function M.config()
         },
         window = {
             completion = {
-                scrollbar = false,
+                scrollbar = true,
             },
             documentation = {
                 max_height = 20
