@@ -77,3 +77,7 @@ map("n", "[d",        diag.goto_prev,  "Go to previous diagnostic message")
 map("n", "]d",        diag.goto_next,  "Go to next diagnostic message")
 map("n", "<Leader>e", diag.open_float, "Open floating diagnostic message")
 map("n", "<Leader>q", diag.setloclist, "Open diagnostics list")
+
+-- Show all the items at a given buffer position
+-- (It's useful for debug colorscheme)
+map("n", "<Leader>i", vim.show_pos)
