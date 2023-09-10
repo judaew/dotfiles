@@ -18,16 +18,19 @@ return {
         end
     },
 
-    -- Better quickfix window
+    -- Pretty diagnostics, quickfix, location and LSP lists
+    -- TODO: conf
     {
-        "kevinhwang91/nvim-bqf",
-        ft = "qf",
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        },
         config = function()
-            require("bqf").setup({
-                preview = {
-                    winblend = 0
-                }
-            })
+            map("n", "<Leader>q", function() require("trouble").open("document_diagnostics") end)
+            map("n", "<Leader>Q", function() require("trouble").open("workspace_diagnostics") end)
         end
     },
 
