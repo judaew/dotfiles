@@ -27,12 +27,9 @@ M.on_attach = function(client, bufnr)
     end
 
     --- Highlight current symbol
-    -- vim.cmd([[hi! link LspReferenceText CursorColumn]])
-    -- vim.cmd([[hi! link LspReferenceRead CursorColumn]])
-    -- vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
-    -- vim.cmd([[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]])
-    -- vim.cmd([[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
-    -- vim.cmd([[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]])
+    vim.cmd([[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]])
+    vim.cmd([[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
+    vim.cmd([[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]])
 end
 
 -- WARN: Unmap K to be able to set custom hover in M.keys
@@ -123,7 +120,7 @@ M.servers = {
     bashls = {
         cmd = { vim.fn.exepath("bash-language-server"), "start" }
     },
-    marksman = {}
+    -- marksman = {}
 }
 
 function M.lsp()
