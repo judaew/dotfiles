@@ -10,7 +10,7 @@ local map = function(mode, keys, func, desc)
     if desc then
             desc = "Code runner: " .. desc
     end
-    vim.keymap.set(mode, keys, func, { desc=desc, noremap=true})
+    vim.keymap.set(mode, keys, func, { desc=desc, noremap=true })
 end
 
 function M.keys()
