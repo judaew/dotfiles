@@ -84,4 +84,11 @@ fi
 #     export CPATH="${CPATH}:/opt/Qt/${MY_QT_VERSION}/macos/include"
 # fi
 
+if [ ! -f "${XDG_DATA_HOME}/bash/tokens.sh" ]; then
+    mkdir -p "${XDG_DATA_HOME}/bash"
+    touch "${XDG_DATA_HOME}/bash/tokens.sh"
+fi
+# shellcheck source=/dev/null
+source "${XDG_DATA_HOME}/bash/tokens.sh"
+
 # vim:ft=sh

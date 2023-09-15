@@ -23,6 +23,9 @@ require("lazy").setup({
     { import = "lazy.ide.code_runner"},
     { import = "lazy.ide.workspaces" },
 
+    --- *** LLM
+    { import = "lazy.llm" },
+
     --- *** Specific Language Support/Syntax Highlighting
     { import = "lazy.special_language_support" },
     { import = "lazy.orgmode" },
