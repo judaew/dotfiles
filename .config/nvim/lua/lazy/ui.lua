@@ -25,7 +25,7 @@ return {
     {
         "folke/todo-comments.nvim",
         lazy = false,
-        depencies = {
+        dependencies = {
             "nvim-lua/plenary.nvim"
         },
         config = function() require("plugins.todo-comments").config() end
