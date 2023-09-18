@@ -49,6 +49,7 @@ require("lazy").setup({
 
     --- *** UI
     { import = "lazy.ui" },
+    { import = "lazy.statusline" },
 
     --- *** Themes
     { import = "lazy.themes" },
