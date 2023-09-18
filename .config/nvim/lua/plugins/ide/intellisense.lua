@@ -116,7 +116,6 @@ function M.config()
             { name = "buffer",     priority = 2 },
             { name = "tmux",       priority = 2, option = { all_panes = true }},
             { name = "nvim_lua",   priority = 1 },
-            { name = "nvim_lsp_signature_help", priority = 1 },
         },
         -- luacheck: push ignore entry
         -- luacheck: push ignore vim_item
