@@ -12,6 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    --- *** Neovim Lua Development
+    -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
+    { import = "lazy.neovim_lua_development"},
+
     --- *** IDE section: Language Server Protocol, Debug Adapter Protocol,
     ---     Treesitter, Autocomplete/Intellisense, Snippets, Linting
     { import = "lazy.ide.lsp" },
@@ -29,9 +33,6 @@ require("lazy").setup({
     --- *** Specific Language Support/Syntax Highlighting
     { import = "lazy.special_language_support" },
     { import = "lazy.orgmode" },
-
-    --- *** Neovim Lua Development
-    { import = "lazy.neovim_lua_development"},
 
     --- *** Utility/Special Features
     { import = "lazy.utility" },

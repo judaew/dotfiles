@@ -126,6 +126,8 @@ M.servers = {
 }
 
 function M.lsp()
+    require("neodev").setup()
+
     for i in pairs(M.servers) do
         require("lspconfig")[i].setup({
             capabilities = M.capabilities,
