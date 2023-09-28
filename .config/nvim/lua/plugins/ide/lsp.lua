@@ -122,6 +122,12 @@ M.servers = {
     bashls = {
         cmd = { vim.fn.exepath("bash-language-server"), "start" }
     },
+    -- efm = {},
+    -- ltex = {
+    --     ltex = {
+    --         language = "en-US"
+    --     }
+    -- }
     -- marksman = {}
 }
 
