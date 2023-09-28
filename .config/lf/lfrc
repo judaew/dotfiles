@@ -23,6 +23,9 @@ set scrolloff 10
 # draw boxes around panes
 set drawbox true
 
+# set gray color for border
+set borderfmt "\033[90m"
+
 # previewing files
 # see https://github.com/gokcehan/lf/wiki/Previews
 set previewer ~/.config/lf/preview.sh
