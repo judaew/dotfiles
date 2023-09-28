@@ -32,10 +32,10 @@ return {
                     },
                     j = {
                         description = "Journal",
-                        template = "* %<%Y-%m-%d> %?\n  %u",
+                        template = "* %<%Y/%m/%d> %?\n  %U",
                         target = "~/Org/Journal.org"
                     },
-                    e =  'Event',
+                    e =  "Event",
                     eo = {
                         description = "One-time",
                         template = "** %?\n   %T",
@@ -49,7 +49,8 @@ return {
                         target = "~/Org/Calendar.org",
                         headline = "Recurring"
                     }
-                }
+                },
+                org_blank_before_new_entry = { heading = true, plain_list_item = false }
             })
         end
     },
