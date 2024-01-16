@@ -20,11 +20,11 @@ function M.insert_inlay_hint(client, bufnr)
     end
 end
 
-M.on_attach = function(client, bufnr)
+M.on_attach = function(client)
     --- Inlay Hints
-    if client.name == "clangd" then
-        M.insert_inlay_hint(client, bufnr)
-    end
+    -- if client.name == "clangd" then
+    --     M.insert_inlay_hint(client, bufnr)
+    -- end
 
     --- Highlight current symbol
     if client.server_capabilities.documentHighlightProvider then
@@ -96,7 +96,7 @@ M.capabilities = require("cmp_nvim_lsp").default_capabilities(M.capabilities)
 
 M.servers = {
     clangd = {
-        cmd = { vim.fn.exepath("clangd-mp-16"),
+        cmd = { vim.fn.exepath("clangd"),
             -- See https://github.com/hrsh7th/nvim-cmp/blob/3b9f28061a67b19cadc13946de981426a6425e4a/doc/cmp.txt#L948C43-L948C72
             "--header-insertion-decorators"
         }
@@ -122,6 +122,7 @@ M.servers = {
     bashls = {
         cmd = { vim.fn.exepath("bash-language-server"), "start" }
     },
+    cmake = {}
     -- efm = {},
     -- ltex = {
     --     ltex = {

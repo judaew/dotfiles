@@ -10,7 +10,7 @@ return {
         config = function()
             require("plugins.ide.lsp").lsp()
             require("plugins.ide.lsp").nvim_lightbulb()
-        end
+        end,
     },
     {
         "ray-x/lsp_signature.nvim",
