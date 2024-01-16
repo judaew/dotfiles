@@ -12,7 +12,7 @@ return {
     -- Another git wrapper
     {
         "NeogitOrg/neogit",
-        enabled = false,
+        lazy = false,
         dependencies = "nvim-lua/plenary.nvim",
         config = true
     },
