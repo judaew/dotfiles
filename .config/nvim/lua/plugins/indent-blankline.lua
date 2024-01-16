@@ -1,21 +1,34 @@
 local M = {}
 
 function M.config()
-    require("indent_blankline").setup({
-        filetype_exclude = {
-            "TelescopePrompt",
-            "TelescopeResults",
-            "alpha",
-            "help",
-            "lazy",
-            "lspinfo",
-            "org",
-            "terminal",
-            "",
+    require("ibl").setup({
+        indent = {
+            char = "▏" -- or "│"
         },
-        buftype_exclude = { "terminal" },
-        show_first_indent_level = true,
-        show_current_context = true,
+        scope = {
+            show_start = false,
+            show_end = false,
+            injected_languages = true
+        },
+        exclude = {
+            filetypes = {
+                "TelescopePrompt",
+                "TelescopeResults",
+                "alpha",
+                "help",
+                "lazy",
+                "lspinfo",
+                "terminal",
+                "org",
+                ""
+            },
+            buftypes = {
+                "terminal",
+                "nofile",
+                "quickfix",
+                "prompt"
+            }
+        }
     })
 end
 
