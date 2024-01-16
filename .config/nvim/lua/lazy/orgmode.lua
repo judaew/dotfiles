@@ -50,7 +50,8 @@ return {
                         headline = "Recurring"
                     }
                 },
-                org_blank_before_new_entry = { heading = true, plain_list_item = false }
+                org_blank_before_new_entry = { heading = true, plain_list_item = false },
+                org_startup_folded = "showeverything"
             })
         end
     },
