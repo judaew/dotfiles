@@ -12,7 +12,7 @@
 [user]
     name = "Vadym-Valdis Yudaiev"
     email = "judaew@outlook.de"
-    signingkey = "AB1AE3383414A8AD"
+    signingkey = "E85EF1C4A188CE00"
 
 [commit]
     gpgsign = true
