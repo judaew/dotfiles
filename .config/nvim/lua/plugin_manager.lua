@@ -49,6 +49,7 @@ require("lazy").setup({
     { import = "lazy.git" },
 
     --- *** UI
+    { import = "lazy.startpage" },
     { import = "lazy.ui" },
     { import = "lazy.statusline" },
 

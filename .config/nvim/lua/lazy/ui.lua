@@ -1,12 +1,4 @@
 return {
-    -- Dashboard / Startpage
-    {
-        "goolord/alpha-nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        event = "VimEnter",
-        config = function() require("plugins.alpha-nvim").config() end
-    },
-
     -- Improve the default vim.ui interfaces
     {
         "stevearc/dressing.nvim",
