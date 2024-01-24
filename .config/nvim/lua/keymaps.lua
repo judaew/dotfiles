@@ -80,4 +80,4 @@ map("n", "<Leader>q", diag.setloclist, "Open diagnostics list")
 
 -- Show all the items at a given buffer position
 -- (It's useful for debug colorscheme)
--- map("n", "<Leader>i", vim.show_pos)
+map("n", "<Leader>i", vim.show_pos)
