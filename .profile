@@ -58,10 +58,18 @@ export DISPLAY=:0
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 export TERM="xterm-kitty"
+# it should start with a colon per the GNU manual, see
+# https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html
+export TZ=":/usr/share/zoneinfo/Europe/Kyiv"
 
+# XDG
+export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_DATA_HOME="${HOME}/.local/share"
-export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_STATE_HOME="${HOME}/.local/state"
+export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+
+# Pass
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/password-store"
 
 # GnuPG
@@ -74,7 +82,7 @@ export GOPATH="${HOME}/go"
 export GOBIN="${GOPATH}/bin"
 export PATH="${PATH}:${GOBIN}"
 
-# JAVA
+# Java
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk17/Contents/Home"
     PATH="${PATH}:${JAVA_HOME}/bin"
@@ -82,13 +90,7 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
     CPATH="${CPATH}:${JAVA_HOME}/include"
 fi
 
-# Qt
-# if [[ "${OSTYPE}" == "darwin"* ]]; then
-#     MY_QT_VERSION="6.5.0"
-#     export PATH="${PATH}:/opt/Qt/${MY_QT_VERSION}/macos/bin"
-#     export CPATH="${CPATH}:/opt/Qt/${MY_QT_VERSION}/macos/include"
-# fi
-
+# Tokens
 if [ ! -f "${XDG_DATA_HOME}/bash/tokens.sh" ]; then
     mkdir -p "${XDG_DATA_HOME}/bash"
     touch "${XDG_DATA_HOME}/bash/tokens.sh"
