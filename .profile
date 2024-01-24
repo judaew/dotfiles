@@ -4,11 +4,9 @@
 # --- | paths |
 #     +-------+
 
-# Unix defaults paths
 PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:${PATH}"
 MANPATH="/usr/local/share/man:/usr/share/man:${MANPATH}"
 INFOPATH="/usr/local/share/info:${INFOPATH}"
-CPATH=""
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     # --- PATH
@@ -22,11 +20,12 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
     OS_SPEC_MANPATH="/opt/local/share/man"
     OS_SPEC_MANPATH="${OS_SPEC_MANPATH}:/Library/Apple/usr/share/man"
 
-    # --- INFOPATH (MacPorts)
+    # --- INFOPATH
+    # MacPorts
     OS_SPEC_INFOPATH="/opt/local/share/info"
 
     # --- CPATH
-    # MacPorts -> Xcode CLT (disabled) ->
+    # MacPorts -> Xcode CLT (disabled)
     OS_SPEC_CPATH="/opt/local/include"
     # OS_SPEC_CPATH="${OS_SPEC_CPATH}:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/"
 else
@@ -35,6 +34,12 @@ else
     OS_SPEC_INFOPATH=""
     OS_SPEC_CPATH=""
 fi
+# The variable values for nix package manager:
+# * OS_SPEC_PATH="${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin"
+# * OS_SPEC_MANPATH="${HOME}/.nix-profile/share/man"
+# * OS_SPEC_INFOPATH="${HOME}/.nix-profile/share/info"
+# * OS_SPEC_CPATH="${HOME}/.nix-profile/include"
+
 
 export PATH="${OS_SPEC_PATH}:${PATH}"
 export MANPATH="${OS_SPEC_MANPATH}:${MANPATH}"
