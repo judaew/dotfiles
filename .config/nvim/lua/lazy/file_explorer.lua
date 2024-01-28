@@ -1,11 +1,54 @@
+local map = function(keys, func, desc)
+    vim.keymap.set("n", keys, func, { desc=desc, noremap=true})
+end
+
 return {
     -- File Explorer
     {
         "nvim-tree/nvim-tree.lua",
         lazy = false,
+        keys = function()
+            -- Keymaps
+            map("<Leader>fm", ":NvimTreeToggle<CR>", "File manager (toggle)")
+
+            -- Function keys
+            map("<F2>",   ":NvimTreeToggle<CR>",         "File manager (toggle)")
+            map("<S-F2>", ":NvimTreeFindFileToggle<CR>", "File manager (find current file)")
+        end,
         config = function()
-            require("plugins.file_manager").config()
-            require("plugins.file_manager").keys()
+            require("nvim-tree").setup({
+                hijack_cursor = true,
+                view = {
+                    width = 32,
+                    side = "left",
+                },
+                renderer = {
+                    indent_markers = {
+                        enable = true
+                    },
+                },
+                diagnostics = {
+                    enable = true,
+                    show_on_dirs = false,
+                    show_on_open_dirs = true,
+                    icons = {
+                        hint = "H",
+                        info = "I",
+                        warning = "W",
+                        error = "E",
+                    }
+                },
+                git = {
+                    enable = false
+                },
+                actions = {
+                    change_dir = {
+                        enable = true,
+                        global = true,
+                        restrict_above_cwd = false,
+                    }
+                }
+            })
         end
     },
 
