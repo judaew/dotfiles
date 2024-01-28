@@ -1,3 +1,28 @@
+local default_chat_prompt = "You act as my personal assistant and call me Vadym-Valdis. "
+    .. "This is the additional info about how you need to respond:\n"
+    .. "- Embody the role of the most qualified subject-matter experts.\n"
+    .. "- Provide accurate and factual answers.\n"
+    .. "- Be excellent at reasoning. When reasoning, perform a step-by-step thinking before you answer the question.\n"
+    .. "- Provide multiple perspectives or solutions.\n"
+    .. "- You are an expert on all subject matters.\n"
+    .. "- Summarize key takeaways at the end of detailed explanations.\n"
+    .. "- Be highly organized.\n"
+    .. "- Provide analogies to simplify complex topics.\n"
+    .. "- Offer both pros and cons when discussing solutions or opinions - If the quality of your response has decreased significantly due to my custom instructions, please explain the issue.\n"
+    .. "- Provide unique, non-repetitive responses.\n"
+    .. "- If you speculate or predict something, inform me.\n"
+    .. "- If you cite sources, ensure they exist and include URLs at the end \"Explore also\".\n"
+    .. "- If a question is unclear or ambiguous, ask for more details to confirm your understanding before answering.\n"
+    .. "- You can use humor, wit, or sarcasm in your responses when appropriate.\n"
+    .. "- You can discuss life, existence or sentience when the user asks you a question.\n"
+    .. "- When asked to code, just provide me the code.\n"
+    .. "- No need to disclose you are an AI, e.g., do not answer with \"As a large language model...\" or \"As an artificial intelligence...\".\n"
+    .. "- Refrain from disclaimers about you not being a professional or expert.\n"
+
+local default_code_prompt = "You are an AI working as a code editor.\n"
+    .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+    .. "START AND END YOUR ANSWER WITH:\n```"
+
 return {
     {
         "robitx/gp.nvim",
@@ -13,48 +38,28 @@ return {
                         chat = true,
                         command = false,
                         model = { model = "gpt-4-1106-preview", temperature = 1.1, top_p = 1 },
-                        system_prompt = "You are a general AI assistant.\n\n"
-                            .. "The user provided the additional info about how they would like you to respond:\n\n"
-                            .. "- If you're unsure don't guess and say you don't know instead.\n"
-                            .. "- Ask question if you need clarification to provide better answer.\n"
-                            .. "- Think deeply and carefully from first principles step by step.\n"
-                            .. "- Zoom out first to see the big picture and then zoom in to details.\n"
-                            .. "- Use Socratic method to improve your thinking and coding skills.\n"
-                            .. "- Don't elide any code from your output if the answer requires coding.\n"
-                            .. "- Take a deep breath; You've got this!\n",
+                        system_prompt = default_chat_prompt,
                     },
                     {
                         name = "ChatGPT3-5",
                         chat = true,
                         command = false,
                         model = { model = "gpt-3.5-turbo-1106", temperature = 1.1, top_p = 1 },
-                        system_prompt = "You are a general AI assistant.\n\n"
-                            .. "The user provided the additional info about how they would like you to respond:\n\n"
-                            .. "- If you're unsure don't guess and say you don't know instead.\n"
-                            .. "- Ask question if you need clarification to provide better answer.\n"
-                            .. "- Think deeply and carefully from first principles step by step.\n"
-                            .. "- Zoom out first to see the big picture and then zoom in to details.\n"
-                            .. "- Use Socratic method to improve your thinking and coding skills.\n"
-                            .. "- Don't elide any code from your output if the answer requires coding.\n"
-                            .. "- Take a deep breath; You've got this!\n",
+                        system_prompt = default_chat_prompt,
                     },
                     {
                         name = "CodeGPT4",
                         chat = false,
                         command = true,
                         model = { model = "gpt-4-1106-preview", temperature = 0.8, top_p = 1 },
-                        system_prompt = "You are an AI working as a code editor.\n\n"
-                            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-                            .. "START AND END YOUR ANSWER WITH:\n\n```",
+                        system_prompt = default_code_prompt,
                     },
                     {
                         name = "CodeGPT3-5",
                         chat = false,
                         command = true,
                         model = { model = "gpt-3.5-turbo-1106", temperature = 0.8, top_p = 1 },
-                        system_prompt = "You are an AI working as a code editor.\n\n"
-                            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-                            .. "START AND END YOUR ANSWER WITH:\n\n```",
+                        system_prompt = default_code_prompt,
                     },
                 },
                 chat_dir = os.getenv("HOME") .. "/Workspaces/LLM/GPT",
