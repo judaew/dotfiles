@@ -87,8 +87,12 @@ return {
         keys = { ":", "/", "?" },
         dependencies = {
             -- autopairing of (){}[] etc
+            -- TODO: see: "altermo/ultimate-autopair.nvim",
             {
                 "windwp/nvim-autopairs",
+                -- The upstream is unstable
+                commit = "eac31b4797ce4fa9dd546f7b98ec32305527b19e",
+                event = "InsertEnter",
                 config = function()
                     require("nvim-autopairs").setup({
                         fast_wrap = {},
