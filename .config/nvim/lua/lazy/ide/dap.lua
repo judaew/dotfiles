@@ -94,7 +94,6 @@ return {
             dap.listeners.before.event_exited["dapui_config"] = function()
                 dapui.close()
             end
-            require("plugins.ide.dap").dap()
 
             -- Keymaps
             -- See https://stackoverflow.com/a/52368238
