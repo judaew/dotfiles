@@ -34,7 +34,7 @@ return {
                     PERF = { icon = " ", color = "perf", alt =
                         { "OPTIM", "PERFORMANCE", "OPTIMIZE" }},
                     TEST = { icon = " ", color = "test", alt =
-                        { "TESTING", "PASSED", "FAILED" }},
+                        { "TESTING", "PASSED", "FAILED", "DEBUG" }},
                 },
                 colors = {
                     info = { "#66D9EF" },
