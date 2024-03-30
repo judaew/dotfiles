@@ -47,22 +47,22 @@ return {
         config = function()
             require("neodev").setup()
 
-            local function insert_inlay_hint(client, bufnr)
-                if client.server_capabilities.inlayHintProvider then
-                    vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
-
-                    vim.api.nvim_create_autocmd("InsertEnter", {
-                        buffer = bufnr,
-                        callback = function() vim.lsp.inlay_hint(bufnr, true) end,
-                        group = "lsp_augroup",
-                    })
-                    vim.api.nvim_create_autocmd("InsertLeave", {
-                        buffer = bufnr,
-                        callback = function() vim.lsp.inlay_hint(bufnr, false) end,
-                        group = "lsp_augroup",
-                    })
-                end
-            end
+            -- local function insert_inlay_hint(client, bufnr)
+            --     if client.server_capabilities.inlayHintProvider then
+            --         vim.api.nvim_create_augroup("lsp_augroup", { clear = true })
+            --
+            --         vim.api.nvim_create_autocmd("InsertEnter", {
+            --             buffer = bufnr,
+            --             callback = function() vim.lsp.inlay_hint(bufnr, true) end,
+            --             group = "lsp_augroup",
+            --         })
+            --         vim.api.nvim_create_autocmd("InsertLeave", {
+            --             buffer = bufnr,
+            --             callback = function() vim.lsp.inlay_hint(bufnr, false) end,
+            --             group = "lsp_augroup",
+            --         })
+            --     end
+            -- end
 
             local on_attach = function(client)
                 --- Inlay Hints
