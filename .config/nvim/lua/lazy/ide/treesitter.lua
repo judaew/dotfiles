@@ -2,18 +2,11 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         lazy = false,
-        dependencies = {
-            {
-                "nvim-treesitter/nvim-treesitter-textobjects",
-                dependencies = "nvim-treesitter/nvim-treesitter"
-            }
-        },
+        branch = "main",
         build = ":TSUpdate",
         config = function()
-            local configs = require("nvim-treesitter.configs")
-
-            configs.setup({
-                ensure_installed = {
+            require'nvim-treesitter'.setup {
+                ensure_install = {
                     "bash",
                     "c",
                     "c_sharp",
@@ -34,19 +27,18 @@ return {
                     "markdown",
                     "markdown_inline",
                     "ninja",
-                    "org",
                     "proto",
                     "python",
                     "rust",
                     "sql",
+                    "swift",
                     "toml",
                     "typescript",
                     "yaml",
                     "zig"
                 },
-                sync_install = true,
-                ignore_install = {},
-                auto_install = true,
+                ignore_install = { 'unsupported', "org" },
+                auto_install = false,
 
                 -- Disable slow treesitter highlight for large files
                 disable = function(buf)
@@ -56,20 +48,15 @@ return {
                         return true
                     end
                 end,
-                highlight = {
-                    enable = true,
-                    disable = {},
-                    additional_vim_regex_highlighting = {'org'},
-                },
-                indent = {
-                    enable = true,
-                    disable = {
-                        "html",
-                        "lua",
-                        "python",
-                        "yaml"
-                    },
-                },
+                -- indent = {
+                --     enable = true,
+                --     disable = {
+                --         "html",
+                --         "lua",
+                --         "python",
+                --         "yaml"
+                --     },
+                -- },
                 incremental_selection = {
                     enable = true,
                     keymaps = {
@@ -79,39 +66,7 @@ return {
                         node_decremental = "<Leader>vd",
                     },
                 },
-                textobjects = {
-                    move = {
-                        enable = true,
-                        set_jumps = true, -- whether to set jumps in the jumplist
-                        goto_next_start = {
-                            ["]m"] = "@function.outer",
-                            ["]]"] = "@class.outer",
-                        },
-                        goto_next_end = {
-                            ["]M"] = "@function.outer",
-                            ["]["] = "@class.outer",
-                        },
-                        goto_previous_start = {
-                            ["[m"] = "@function.outer",
-                            ["[["] = "@class.outer",
-                        },
-                        goto_previous_end = {
-                            ["[M"] = "@function.outer",
-                            ["[]"] = "@class.outer",
-                        },
-                    },
-                    lsp_interop = {
-                        enable = true,
-                        border = "none",
-                        floating_preview_opts = {},
-                        peek_definition_code = {
-                            ["<leader>df"] = "@function.outer",
-                            ["<leader>dF"] = "@class.outer",
-                        },
-                    }
-                }
-            })
-
+            }
             -- Tree-sitter based folding
             vim.cmd([[
             set foldmethod=expr
