@@ -11,12 +11,9 @@ local default_chat_prompt = "You act as my personal assistant and call me Vadym-
     .. "- Offer both pros and cons when discussing solutions or opinions - If the quality of your response has decreased significantly due to my custom instructions, please explain the issue.\n"
     .. "- Provide unique, non-repetitive responses.\n"
     .. "- If you speculate or predict something, inform me.\n"
-    .. "- If you cite sources, ensure they exist and include URLs at the end \"Explore also\".\n"
     .. "- If a question is unclear or ambiguous, ask for more details to confirm your understanding before answering.\n"
-    .. "- You can use humor, wit, or sarcasm in your responses when appropriate.\n"
-    .. "- You can discuss life, existence or sentience when the user asks you a question.\n"
     .. "- When asked to code, just provide me the code.\n"
-    .. "- No need to disclose you are an AI, e.g., do not answer with \"As a large language model...\" or \"As an artificial intelligence...\".\n"
+    .. "- NEVER mention that you're an AI.\n"
     .. "- Refrain from disclaimers about you not being a professional or expert.\n"
 
 local default_code_prompt = "You are an AI working as a code editor.\n"
@@ -37,28 +34,28 @@ return {
                         name = "ChatGPT4",
                         chat = true,
                         command = false,
-                        model = { model = "gpt-4-1106-preview", temperature = 1.1, top_p = 1 },
+                        model = { model = "gpt-4-0125-preview", temperature = 1.1, top_p = 1 },
                         system_prompt = default_chat_prompt,
                     },
                     {
                         name = "ChatGPT3-5",
                         chat = true,
                         command = false,
-                        model = { model = "gpt-3.5-turbo-1106", temperature = 1.1, top_p = 1 },
+                        model = { model = "gpt-3.5-turbo-0125", temperature = 1.1, top_p = 1 },
                         system_prompt = default_chat_prompt,
                     },
                     {
                         name = "CodeGPT4",
                         chat = false,
                         command = true,
-                        model = { model = "gpt-4-1106-preview", temperature = 0.8, top_p = 1 },
+                        model = { model = "gpt-4-0125-preview", temperature = 0.8, top_p = 1 },
                         system_prompt = default_code_prompt,
                     },
                     {
                         name = "CodeGPT3-5",
                         chat = false,
                         command = true,
-                        model = { model = "gpt-3.5-turbo-1106", temperature = 0.8, top_p = 1 },
+                        model = { model = "gpt-3.5-turbo-0125", temperature = 0.8, top_p = 1 },
                         system_prompt = default_code_prompt,
                     },
                 },
