@@ -20,3 +20,5 @@ for i in "${!urls[@]}"; do
         echo "${i} downloaded" || \
         echo "${i} failed"
 done
+
+warp-cli generate-completions bash > ${COMPLETION_PATH}/warp-cli
