@@ -1,6 +1,6 @@
 return {
     {
-        dir = "~/Workspaces/github.com/judaew/ronny.nvim",
+        "judaew/ronny.nvim",
         priority = 1000,
         config = function()
             vim.cmd.colorscheme("ronny")
