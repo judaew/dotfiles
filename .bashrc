@@ -5,14 +5,16 @@
 
 # --- plugins and third party
 
+# TODO: for macos
 # source bash-completion
-if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
-    source /opt/local/etc/profile.d/bash_completion.sh
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    source /usr/share/bash-completion/bash_completion
 fi
 
-if [ -f /opt/local/share/bash-completion/completions/pass ]; then
-    source /opt/local/share/bash-completion/completions/pass-otp
-fi
+# FIXME: fix for archlinux
+# if [ -f /opt/local/share/bash-completion/completions/pass ]; then
+#     source /opt/local/share/bash-completion/completions/pass-otp
+# fi
 
 # settings mcfly
 export MCFLY_KEY_SCHEME=vim
@@ -47,6 +49,7 @@ export HISTCONTROL=ignoredups
 
 # --- colors and prompt
 
+# TODO: LGTM, but need add ${OSTYPE} check
 if [ -f "/opt/local/share/git/contrib/completion/git-prompt.sh" ]; then
     source /opt/local/share/git/contrib/completion/git-prompt.sh
 elif [ -f "/usr/share/git/completion/git-prompt.sh" ]; then
@@ -199,6 +202,10 @@ set -o vi
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     if [[ -r "/opt/local/share/mcfly/mcfly.bash" ]]; then
         source /opt/local/share/mcfly/mcfly.bash
+    fi
+elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+    if [[ -r "/usr/share/doc/mcfly/mcfly.bash" ]]; then
+        source /usr/share/doc/mcfly/mcfly.bash
     fi
 fi
 
