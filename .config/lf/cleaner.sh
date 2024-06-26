@@ -13,7 +13,8 @@ handle_mime() {
     _mimetype="${1}"
     case "${MIMETYPE}" in
         */jpg | */jpeg | */png)
-            kitty +kitten icat --clear --silent --transfer-mode file
+            kitten icat \
+                --clear --stdin no --silent --transfer-mode file < /dev/null > /dev/tty
     esac
 }
 

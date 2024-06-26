@@ -55,13 +55,14 @@ handle_mime() {
             env COLORTERM=8bit bat --color="always" --style="plain" \
                 --pager="never" -- "${FILE_PATH}";;
 
-        # */jpg | */jpeg | */png)
-        #     printf "size: "
-        #     kitty +kitten icat --print-window-size "${FILE_PATH}" &
-        #     kitty +kitten icat --transfer-mode file \
-        #         --place "${WIDTH}x${HEIGHT}@${X_POS}x${Y_POS}" "${FILE_PATH}"
-        #     exit 1
-        #     ;;
+        */jpg | */jpeg | */png)
+            printf "size: "
+            kitten icat --print-window-size "${FILE_PATH}" &
+            kitten icat \
+                --silent --stdin no --transfer-mode file \
+                --place "${WIDTH}x${HEIGHT}@${X_POS}x${Y_POS}" "${FILE_PATH}" < /dev/null > /dev/tty
+            exit 1
+            ;;
 
         image/* | video/*)
             exiftool "${FILE_PATH}";;
