@@ -31,7 +31,6 @@ return {
                     "python",
                     "rust",
                     "sql",
-                    "swift",
                     "toml",
                     "typescript",
                     "yaml",
