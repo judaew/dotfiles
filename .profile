@@ -53,7 +53,6 @@ export PATH="${PATH}:${HOME}/.local/bin"
 # --- | general variables |
 #     +-------------------+
 
-export DISPLAY=:0
 # fix locale
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
@@ -99,5 +98,9 @@ if [ ! -f "${XDG_DATA_HOME}/bash/tokens.sh" ]; then
 fi
 # shellcheck source=/dev/null
 source "${XDG_DATA_HOME}/bash/tokens.sh"
+
+# TODO: todos after install Arch Linux
+# Select Intel driver for the VDPAU
+export VDPAU_DRIVER=va_gl
 
 # vim:ft=sh
