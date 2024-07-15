@@ -111,14 +111,18 @@ return {
     },
 
     -- Paste image from clipboard
-    -- {
-    --     "TobinPalmer/pastify.nvim",
-    --     cmd = { "Pastify" },
-    --     config = function()
-    --         require("pastify").setup({})
-    --     end
-    -- }
-    -- {
-    --     "TobinPalmer/pastify.nvim"
-    -- }
+    {
+        "TobinPalmer/pastify.nvim",
+        cmd = { "Pastify" },
+        config = function()
+            require("pastify").setup({
+                opts = {
+                    local_path = "/assets/img/"
+                },
+                ft = {
+                    org = "[[$IMG$][]]"
+                }
+            })
+        end
+    }
 }
