@@ -174,6 +174,10 @@ alias rg="rg --colors 'match:fg:black' --colors 'match:bg:yellow'\
 
 alias proj="source projects.sh"
 
+alias yt480p="yt-dlp -f 'bestvideo[height<=480]+bestaudio'"
+alias yt720p="yt-dlp -f 'bestvideo[height<=720]+bestaudio'"
+alias yt1080p="yt-dlp -f 'bestvideo[height<=1080]+bestaudio'"
+
 # darwin specific
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
