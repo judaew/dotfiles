@@ -5,8 +5,8 @@ return {
         branch = "main",
         build = ":TSUpdate",
         config = function()
-            require'nvim-treesitter'.setup {
-                ensure_install = {
+            require'nvim-treesitter'.setup({
+                 ensure_install = {
                     "bash",
                     "c",
                     "c_sharp",
@@ -48,25 +48,22 @@ return {
                         return true
                     end
                 end,
-                -- indent = {
-                --     enable = true,
-                --     disable = {
-                --         "html",
-                --         "lua",
-                --         "python",
-                --         "yaml"
-                --     },
-                -- },
-                incremental_selection = {
+                highlight = {
+                     enable = true,
+                     disable = {},
+                     additional_vim_regex_highlighting = {"org"},
+                 },
+                indent = {
                     enable = true,
-                    keymaps = {
-                        init_selection = "<Leader>v",
-                        node_incremental = "<Leader>vi",
-                        scope_incremental = "<Leader>vs",
-                        node_decremental = "<Leader>vd",
+                    disable = {
+                        -- "html",
+                        -- "lua",
+                        -- "python",
+                        -- "yaml"
                     },
                 },
-            }
+            })
+
             -- Tree-sitter based folding
             vim.cmd([[
             set foldmethod=expr
