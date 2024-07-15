@@ -49,13 +49,20 @@ return {
             require("gitsigns").setup({
                 -- make gitsigns look like vim-signify
                 signs = {
-                    add          = {hl = "DiffAdd"   , text = "+"},
-                    change       = {hl = "DiffChange", text = "!"},
-                    delete       = {hl = "DiffDelete", text = "_", show_count=true},
-                    topdelete    = {hl = "DiffDelete", text = "‾", show_count=true},
-                    changedelete = {hl = "DiffChange", text = "~", show_count=true},
-                },
+                    add          = { text = "+" },
+                    change       = { text = "!" },
+                    delete       = { text = "_", show_count=true },
+                    topdelete    = { text = "‾", show_count=true },
+                    changedelete = { text = "~", show_count=true },
+                }
             })
+            -- Highlight signs, see:
+            -- https://github.com/lewis6991/gitsigns.nvim/commit/3d7e49c201537ee0293a1a3abe67b67f8e7648a5
+            vim.api.nvim_set_hl(0, 'GitSignsAdd', { link = 'DiffAdd' })
+            vim.api.nvim_set_hl(0, 'GitSignsChange', { link = 'DiffChange' })
+            vim.api.nvim_set_hl(0, 'GitSignsChangedelete', { link = 'DiffChange' })
+            vim.api.nvim_set_hl(0, 'GitSignsDelete', { link = 'DiffDelete' })
+            vim.api.nvim_set_hl(0, 'GitSignsTopdelete', { link = 'DiffDelete' })
         end
     },
 }
