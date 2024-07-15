@@ -26,8 +26,8 @@ local servers = {
     bashls = {
         cmd = { vim.fn.exepath("bash-language-server"), "start" }
     },
-    cmake = {}
-    -- efm = {},
+    neocmake = {},
+    efm = {},
     -- ltex = {
     --     ltex = {
     --         language = "en-US"
