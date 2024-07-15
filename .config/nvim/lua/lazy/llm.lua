@@ -16,9 +16,9 @@ local default_chat_prompt = "You act as my personal assistant and call me Vadym-
     .. "- NEVER mention that you're an AI.\n"
     .. "- Refrain from disclaimers about you not being a professional or expert.\n"
 
-local default_code_prompt = "You are an AI working as a code editor.\n"
-    .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-    .. "START AND END YOUR ANSWER WITH:\n```"
+-- local default_code_prompt = "You are an AI working as a code editor.\n"
+--     .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+--     .. "START AND END YOUR ANSWER WITH:\n```"
 
 return {
     {
@@ -30,33 +30,64 @@ return {
                 cmd_prefix = "Gp",
 
                 agents = {
+                    -- Chat
                     {
-                        name = "ChatGPT4",
+                        name = "GPT-4o",
                         chat = true,
                         command = false,
-                        model = { model = "gpt-4-0125-preview", temperature = 1.1, top_p = 1 },
+                        model = { model = "gpt-4o", temperature = 1.1, top_p = 1 },
                         system_prompt = default_chat_prompt,
                     },
                     {
-                        name = "ChatGPT3-5",
+                        name = "GPT-4-Turbo",
+                        chat = true,
+                        command = false,
+                        model = { model = "gpt-4-turbo", temperature = 1.1, top_p = 1 },
+                        system_prompt = default_chat_prompt,
+                    },
+                    {
+                        name = "GPT-4",
+                        chat = true,
+                        command = false,
+                        model = { model = "gpt-4", temperature = 1.1, top_p = 1 },
+                        system_prompt = default_chat_prompt,
+                    },
+                    {
+                        name = "GPT-3.5-Turbo",
                         chat = true,
                         command = false,
                         model = { model = "gpt-3.5-turbo-0125", temperature = 1.1, top_p = 1 },
                         system_prompt = default_chat_prompt,
                     },
+
+                    -- Code
                     {
-                        name = "CodeGPT4",
+                        name = "CodeGPT-4o",
                         chat = false,
                         command = true,
-                        model = { model = "gpt-4-0125-preview", temperature = 0.8, top_p = 1 },
-                        system_prompt = default_code_prompt,
+                        model = { model = "gpt-4o", temperature = 0.8, top_p = 1 },
+                        system_prompt = default_chat_prompt,
                     },
                     {
-                        name = "CodeGPT3-5",
+                        name = "CodeGPT-4-Turbo",
+                        chat = false,
+                        command = true,
+                        model = { model = "gpt-4-turbo", temperature = 0.8, top_p = 1 },
+                        system_prompt = default_chat_prompt,
+                    },
+                    {
+                        name = "CodeGPT-4",
+                        chat = false,
+                        command = true,
+                        model = { model = "gpt-4", temperature = 0.8, top_p = 1 },
+                        system_prompt = default_chat_prompt,
+                    },
+                    {
+                        name = "CodeGPT-3.5-Turbo",
                         chat = false,
                         command = true,
                         model = { model = "gpt-3.5-turbo-0125", temperature = 0.8, top_p = 1 },
-                        system_prompt = default_code_prompt,
+                        system_prompt = default_chat_prompt,
                     },
                 },
                 chat_dir = os.getenv("HOME") .. "/Workspaces/LLM/GPT",
