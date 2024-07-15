@@ -58,6 +58,8 @@ export DISPLAY=:0
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 export TERM="xterm-kitty"
+# FIXME: add check for Arch Linux
+export BROWSER="open"
 # it should start with a colon per the GNU manual, see
 # https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html
 export TZ=":/usr/share/zoneinfo/Europe/Kyiv"
