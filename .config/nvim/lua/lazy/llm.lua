@@ -25,9 +25,13 @@ return {
         "robitx/gp.nvim",
         config = function()
             require("gp").setup({
-                openai_api_key = os.getenv("OPENAI_API_KEY"),
-                openai_api_endpoint = "https://api.openai.com/v1/chat/completions",
                 cmd_prefix = "Gp",
+
+                providers = {
+                    openai = {
+                        secret = os.getenv("OPENAI_API_KEY")
+                    }
+                },
 
                 agents = {
                     -- Chat
