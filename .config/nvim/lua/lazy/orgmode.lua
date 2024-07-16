@@ -36,11 +36,6 @@ return {
                         template = "* TODO %?\n  %u",
                         target = "~/Org/Todo.org"
                     },
-                    j = {
-                        description = "Journal",
-                        template = "* %<%Y/%m/%d> %?\n  %U",
-                        target = "~/Org/Journal.org"
-                    },
                     e =  "Event",
                     eo = {
                         description = "One-time",
@@ -62,11 +57,17 @@ return {
         end
     },
 
-    -- Multipurpose key to do various action in org files
+    -- Wiki and diary extension to orgmode filetype
     {
-        "andreadev-it/orgmode-multi-key",
+        "judaew/orgWiki.nvim",
         config = function()
-            require("orgmode-multi-key").setup()
+            require("orgWiki").setup {
+                -- TODO:
+                wiki_path = { "~/Org/" },
+                diary_path = "~/Org/Journal/",
+            }
+        end,
+    },
         end
     }
 }
