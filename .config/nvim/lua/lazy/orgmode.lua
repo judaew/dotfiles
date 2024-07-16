@@ -68,6 +68,45 @@ return {
             }
         end,
     },
+
+    -- Background highlighting for headlines
+    {
+        "lukas-reineke/headlines.nvim",
+        enabled = false,
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        config = function()
+            require("headlines").setup {
+                org = {
+                    -- headline_highlights = {
+                    --     -- "Headline",
+                    --     "@org.headline.level1",
+                    --     "@org.headline.level2",
+                    --     "@org.headline.level3",
+                    --     "@org.headline.level4",
+                    --     "@org.headline.level5",
+                    --     "@org.headline.level6",
+                    --     "@org.headline.level7",
+                    --     "@org.headline.level8",
+                    -- },
+                    bullet_highlights = {
+                        "@org.headline.level1",
+                        "@org.headline.level2",
+                        "@org.headline.level3",
+                        "@org.headline.level4",
+                        "@org.headline.level5",
+                        "@org.headline.level6",
+                        "@org.headline.level7",
+                        "@org.headline.level8",
+                    },
+                    bullets = { "◉", "○", "✸", "✿" },
+                    -- codeblock_highlight = "CodeBlock",
+                    -- dash_highlight = "Dash",
+                    -- dash_string = "-",
+                    -- quote_highlight = "Quote",
+                    -- quote_string = "┃",
+                    fat_headlines = true,
+                },
+            }
         end
     }
 }
