@@ -15,8 +15,7 @@
     signingkey = "E85EF1C4A188CE00"
 
 [commit]
-    # FIXME: [wip] archlinux installation
-    gpgsign = false
+    gpgsign = true
 
 [push]
     default = current
