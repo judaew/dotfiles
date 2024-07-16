@@ -61,7 +61,7 @@ export TERM="xterm-kitty"
 export BROWSER="open"
 # it should start with a colon per the GNU manual, see
 # https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html
-export TZ=":/usr/share/zoneinfo/Europe/Kyiv"
+export TZ="/usr/share/zoneinfo/Europe/Kyiv"
 
 # XDG
 export XDG_CACHE_HOME="${HOME}/.cache"
@@ -92,12 +92,12 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
 fi
 
 # Tokens
-if [ ! -f "${XDG_DATA_HOME}/bash/tokens.sh" ]; then
-    mkdir -p "${XDG_DATA_HOME}/bash"
-    touch "${XDG_DATA_HOME}/bash/tokens.sh"
+if [ ! -f "${XDG_DATA_HOME}/env/tokens.sh" ]; then
+    mkdir -p "${XDG_DATA_HOME}/env"
+    touch "${XDG_DATA_HOME}/env/tokens.sh"
 fi
 # shellcheck source=/dev/null
-source "${XDG_DATA_HOME}/bash/tokens.sh"
+source "${XDG_DATA_HOME}/env/tokens.sh"
 
 # TODO: todos after install Arch Linux
 # Select Intel driver for the VDPAU
