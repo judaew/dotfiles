@@ -45,8 +45,6 @@ shopt -s dotglob
 shopt -s histappend
 shopt -s nocaseglob
 
-export HISTCONTROL=ignoredups
-
 # --- colors and prompt
 
 # TODO: LGTM, but need add ${OSTYPE} check
@@ -150,6 +148,8 @@ EOF
     fi
 }
 PROMPT_COMMAND="__prompt_cmd"
+# write, load and read history
+PROMPT_COMMAND="${PROMPT_COMMAND}; history -a; history -n; history -r"
 
 # --- aliases
 if [[ "${OSTYPE}" == "darwin"* && ! -f /opt/local/libexec/gnubin/ls ]] ; then
@@ -192,7 +192,7 @@ fi
 
 # --- variables
 # Most environment variables have been moved to ~/.profile
-HISTCONTROL=ignoreboth:erasedups
+HISTCONTROL=ignoreboth:erasedups:ignoredups
 HISTSIZE=100000
 HISTFILESIZE=100000
 
