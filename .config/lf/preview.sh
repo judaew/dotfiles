@@ -67,15 +67,14 @@ handle_mime() {
         image/* | video/*)
             exiftool "${FILE_PATH}";;
 
-        application/json)
-            jq --color-output . "${FILE_PATH}";;
-
-        application/x-mach-binary)
+        application/x-mach-binary | application/x-pie-executable | application/x-object | application/x-sharedlib)
             echo "$(basename "${FILE_PATH}"): $(file -b "${FILE_PATH}")"
-            echo
-            otool -L "${FILE_PATH}" |\
-                tail -n +2 | sed "s/.*\t//g" | sed 's/(compatibility.*$//g'
-            ;;
+            if [[ "${OSTYPE}" == "darwin"* ]]; then
+                otool -L "${FILE_PATH}" |\
+                    tail -n +2 | sed "s/.*\t//g" | sed 's/(compatibility.*$//g'
+            elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+                objdump -f "${FILE_PATH}"
+            fi;;
     esac
 }
 
