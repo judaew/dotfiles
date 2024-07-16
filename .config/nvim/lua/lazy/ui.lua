@@ -10,7 +10,14 @@ return {
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
-        config = true
+        -- config = true
+        opts = {
+            icons = {
+                breadcrumb = ">>",
+                separator = "->",
+                group = "+"
+            },
+        }
     },
 
     -- Highlight, list and search todo comments in your projects
