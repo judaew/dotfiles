@@ -3,18 +3,24 @@ return {
     {
         "nvim-orgmode/orgmode",
         config = function()
-            require("orgmode").setup_ts_grammar()
             require("orgmode").setup({
                 org_agenda_files = "~/Org/**/*",
                 org_default_notes_file = "~/Org/Notes.org",
                 org_todo_keywords = {
-                    "TODO", "WAITING", "|", "DONE", "DELEGATED"
+                    "IDEA(i)",    -- maye someay
+                    "TODO(t)",    -- doing later
+                    "NEXT(n)",    -- doing now or soon
+                    "|",
+                    "DONE(d)",    -- done
+                    "CANCELED(c)" -- canceled task
+                    -- {"TODO", "WAITING", "|", "DONE", "DELEGATED"},
                 },
                 org_todo_keyword_faces = {
+                    IDEA = ":foreground #CCCCCC :weight bold",
                     TODO = ":foreground #65D9EF :weight bold",
-                    WAITING = ":foreground #E2DB74 :weight bold",
+                    NEXT = ":foreground #E2DB74 :weight bold",
                     DONE = ":foreground #A7E22E :weight bold",
-                    DELEGATED = ":foreground #F92572 :weight bold"
+                    CANCELED = ":foreground #F92572 :weight bold"
                 },
                 -- Conceal bold/italic/underline/code/verbatim markers
                 org_hide_emphasis_markers = true,
