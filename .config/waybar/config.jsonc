@@ -1,0 +1,155 @@
+// -*- mode: jsonc -*-
+{
+    "layer": "top",
+    "position": "top",
+
+    "modules-left": [
+        "custom/menu",
+        "hyprland/workspaces",
+        "hyprland/submap"
+    ],
+    "modules-right": [
+        "cpu",
+        "power-profiles-daemon",
+        "memory",
+        "disk",
+        "temperature",
+        "wireplumber",
+        "network",
+        "bluetooth",
+        "tray",
+        "hyprland/language",
+        "clock",
+        "custom/notification"
+    ],
+
+    // Modules configuration
+    // LEFT MODULES
+    "custom/menu": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "rofi -show drun"
+    },
+
+    "hyprland/workspaces": {
+        "persistent-workspaces": { "1": [], "2": [], "3": [], "4": [] },
+        "format": "{icon}",
+        "format-icons": {
+            "10": "0"
+        }
+    },
+    "hyprland/submap": {
+        "on-click": "hyprctl dispatch submap reset"
+    },
+
+    // RIGHT MODULES
+    "cpu": {
+        "format": "{usage}% CPU",
+        "on-click": "xfce4-taskmanager"
+    },
+    "power-profiles-daemon": {
+        "format": "<span font='17' rise='-3000'>{icon}</span>",
+        "tooltip": true,
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+    "memory": {
+        "format": "{percentage}% RAM",
+        "tooltip-format": "RAM:\t{used} GiB / {total} GiB \nSWAP:\t{swapUsed} GiB / {swapTotal} GiB"
+    },
+    "disk": {
+        "format": "{percentage_used}% NMVe",
+        "path": "/"
+    },
+    "temperature": {
+        // temperature from `Package id 0`
+        "input-filename": "temp1_input",
+        "format-critical": "{temperatureC}°C <span color='#ff0044'>{icon}</span>",
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""],
+        "critical-threshold": 80
+    },
+    "wireplumber": {
+        "max-volume": 150.0,
+        "format": "{volume}% <span font='17' rise='-3000'>{icon}</span>",
+        "format-muted": "mute <span font='17' rise='-3000'></span>",
+        "format-icons": ["", "", ""],
+        "on-click": "pavucontrol",
+        "on-click-right": "helvum",
+        "on-click-middle": "~/.config/waybar/scripts/volume-mute.sh"
+    },
+    "network": {
+        "format": "{ifname}",
+        "format-wifi": "{signalStrength}% <span font='17' rise='-3000'></span>",
+        "format-ethernet": "{ipaddr}/{cidr} <span font='17' rise='-3000'>󰊗</span>",
+        "format-disconnected": "OFF <span font='17' rise='-3000'>󰖪</span>",
+        "max-length": 25,
+        "tooltip-format": "{ifname} via {gwaddr} <span font='17' rise='-3000'>󰊗</span>",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) <span font='17' rise='-3000'></span>",
+        "tooltip-format-ethernet": "{ifname} <span font='17' rise='-3000'></span>",
+        "tooltip-format-disconnected": "Disconnected",
+        // "on-click": "kitty -T nmtui -e nmtui",
+        "on-click": "networkmanager_dmenu",
+        "on-click-right": "nm-connection-editor"
+    },
+    "bluetooth": {
+        "format": "ON ",
+        "format-disabled": "OFF 󰂲",
+        "format-connected": " {num_connections}x  ",
+        "tooltip-format": "{controller_address}\t{controller_alias}",
+        "tooltip-format-connected": "{controller_address}\t{controller_alias}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_address}\t{device_alias}",
+        "on-click": "blueman-manager",
+        "on-click-right": "blueman-sendto"
+    },
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    },
+    "hyprland/language": {
+        "format-en": "en",
+        "format-ua": "ua",
+        "format-ru": "ru"
+    },
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%Y-%m-%d}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos" : "right",
+            "format": {
+                "months":   "<span color='#FD971F'><b>{}</b></span>",
+                "days":     "<span color='#F8F8F8'><b>{}</b></span>",
+                "weeks":    "<span color='#E6DB74'><b>W{}</b></span>",
+                "weekdays": "<span color='#E6DB74'><b>{}</b></span>",
+                "today":    "<span color='#D63AE1'><b>{}</b></span>"
+            }
+        }
+    },
+    "custom/notification": {
+        "format": "<span font='17' rise='-3000'>{icon}</span>",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "tooltip": false,
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    }
+}
