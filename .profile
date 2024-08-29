@@ -61,7 +61,7 @@ export TERM="xterm-kitty"
 export BROWSER="open"
 # it should start with a colon per the GNU manual, see
 # https://www.gnu.org/software/libc/manual/html_node/TZ-Variable.html
-export TZ="/usr/share/zoneinfo/Europe/Kyiv"
+# export TZ="/usr/share/zoneinfo/Europe/Kyiv"
 
 # XDG
 export XDG_CACHE_HOME="${HOME}/.cache"
