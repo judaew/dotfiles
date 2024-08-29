@@ -163,6 +163,7 @@ alias cp="cp -i"
 alias df="df -h"
 alias du="du -h"
 
+alias today="date +%Y-%m-%d"
 alias week="date +%V"
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
@@ -186,6 +187,12 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
     alias vscode="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
     alias smerge="/Applications/Sublime\ Merge.app/Contents/SharedSupport/bin/smerge"
     alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+    if [[ "${DESKTOP_SESSION}" == "plasma" ]]; then
+        alias open="kioclient exec"
+    else
+        alias open="xdg-open"
+    fi
 fi
 
 # --- variables
