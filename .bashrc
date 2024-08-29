@@ -148,8 +148,6 @@ EOF
     fi
 }
 PROMPT_COMMAND="__prompt_cmd"
-# write, load and read history
-PROMPT_COMMAND="${PROMPT_COMMAND}; history -a; history -n; history -r"
 
 # --- aliases
 if [[ "${OSTYPE}" == "darwin"* && ! -f /opt/local/libexec/gnubin/ls ]] ; then
