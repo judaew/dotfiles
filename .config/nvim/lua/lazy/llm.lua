@@ -43,6 +43,13 @@ return {
                         system_prompt = default_chat_prompt,
                     },
                     {
+                        name = "GPT-4o-mini",
+                        chat = true,
+                        command = false,
+                        model = { model = "gpt-4o-mini", temperature = 1.1, top_p = 1 },
+                        system_prompt = default_chat_prompt,
+                    },
+                    {
                         name = "GPT-4-Turbo",
                         chat = true,
                         command = false,
@@ -56,20 +63,19 @@ return {
                         model = { model = "gpt-4", temperature = 1.1, top_p = 1 },
                         system_prompt = default_chat_prompt,
                     },
-                    {
-                        name = "GPT-3.5-Turbo",
-                        chat = true,
-                        command = false,
-                        model = { model = "gpt-3.5-turbo-0125", temperature = 1.1, top_p = 1 },
-                        system_prompt = default_chat_prompt,
-                    },
-
                     -- Code
                     {
                         name = "CodeGPT-4o",
                         chat = false,
                         command = true,
                         model = { model = "gpt-4o", temperature = 0.8, top_p = 1 },
+                        system_prompt = default_chat_prompt,
+                    },
+                    {
+                        name = "CodeGPT-4o-mini",
+                        chat = false,
+                        command = true,
+                        model = { model = "gpt-4o-mini", temperature = 0.8, top_p = 1 },
                         system_prompt = default_chat_prompt,
                     },
                     {
@@ -84,13 +90,6 @@ return {
                         chat = false,
                         command = true,
                         model = { model = "gpt-4", temperature = 0.8, top_p = 1 },
-                        system_prompt = default_chat_prompt,
-                    },
-                    {
-                        name = "CodeGPT-3.5-Turbo",
-                        chat = false,
-                        command = true,
-                        model = { model = "gpt-3.5-turbo-0125", temperature = 0.8, top_p = 1 },
                         system_prompt = default_chat_prompt,
                     },
                 },
