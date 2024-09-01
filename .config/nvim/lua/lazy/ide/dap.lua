@@ -2,6 +2,8 @@ return {
     -- Debug Adapter Protocol
     {
         "mfussenegger/nvim-dap",
+        -- FIXME: broken
+        enabled = false,
         -- Load only for configured languages
         ft = {"c", "cpp", "rust"},
         cmd = { "DapToggleBreakpoint", "DapContinue"},
