@@ -3,37 +3,6 @@
 # If not running interactively, don't do anything
 [[ ${-} != *i* ]] && return
 
-# --- plugins and third party
-
-# TODO: for macos
-# source bash-completion
-if [ -f /usr/share/bash-completion/bash_completion ]; then
-    source /usr/share/bash-completion/bash_completion
-fi
-
-# FIXME: fix for archlinux
-# if [ -f /opt/local/share/bash-completion/completions/pass ]; then
-#     source /opt/local/share/bash-completion/completions/pass-otp
-# fi
-
-# settings mcfly
-export MCFLY_KEY_SCHEME=vim
-export MCFLY_FUZZY=true
-export MCFLY_RESULTS=50
-
-# settings colors for less
-export LESS_TERMCAP_mb=$'\e[1;32m'
-export LESS_TERMCAP_md=$'\e[1;32m'
-export LESS_TERMCAP_me=$'\e[0m'
-export LESS_TERMCAP_se=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[01;33m'
-export LESS_TERMCAP_ue=$'\e[0m'
-export LESS_TERMCAP_us=$'\e[1;4;31m'
-
-# speed-up fzf
-export FZF_DEFAULT_COMMAND='fd --type f --color=never'
-export FZF_ALT_C_COMMAND='fd --type d . --color=never'
-
 # --- options
 
 shopt -s cdable_vars
@@ -249,5 +218,41 @@ function title() {
 function bash-private() {
     PROMPT_PRIVATE_SESSION="TRUE" HISTFILE=/dev/null bash
 }
+
+# --- plugins and third party
+
+# run direnv hook
+if command -v direnv &> /dev/null; then
+    eval "$(direnv hook bash)"
+fi
+
+# TODO: for macos
+# source bash-completion
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    source /usr/share/bash-completion/bash_completion
+fi
+
+# FIXME: fix for archlinux
+# if [ -f /opt/local/share/bash-completion/completions/pass ]; then
+#     source /opt/local/share/bash-completion/completions/pass-otp
+# fi
+
+# settings mcfly
+export MCFLY_KEY_SCHEME=vim
+export MCFLY_FUZZY=true
+export MCFLY_RESULTS=50
+
+# settings colors for less
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# speed-up fzf
+export FZF_DEFAULT_COMMAND='fd --type f --color=never'
+export FZF_ALT_C_COMMAND='fd --type d . --color=never'
 
 # vim:ft=sh
