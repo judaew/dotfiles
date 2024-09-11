@@ -1,6 +1,7 @@
 local servers = {
     clangd = {
         cmd = { vim.fn.exepath("clangd"),
+            "--compile-commands-dir=build",
             -- See https://github.com/hrsh7th/nvim-cmp/blob/3b9f28061a67b19cadc13946de981426a6425e4a/doc/cmp.txt#L948C43-L948C72
             "--header-insertion-decorators"
         }
