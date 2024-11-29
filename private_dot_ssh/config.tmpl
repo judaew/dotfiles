@@ -4,15 +4,14 @@ Host judaew-Bitbucket
     HostName bitbucket.org
     User judaew
     PreferredAuthentications publickey
-    IdentityFile ~/.ssh/rsa_@@HOSTNAME@@_bitbucket@judaew
+    IdentityFile ~/.ssh/ed25519_{{.chezmoi.hostname}}_bitbucket@judaew
 
 Host judaew-Github
     HostName github.com
     User judaew
     PreferredAuthentications publickey
-    IdentityFile ~/.ssh/rsa_@@HOSTNAME@@_github@judaew
+    IdentityFile ~/.ssh/ed25519_{{.chezmoi.hostname}}_github@judaew
 
 Host *
     Compression yes
     AddKeysToAgent yes
-    UseKeychain yes
