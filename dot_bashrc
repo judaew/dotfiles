@@ -173,13 +173,11 @@ HISTFILESIZE=100000
 set -o vi
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-    if [[ -r "/opt/local/share/mcfly/mcfly.bash" ]]; then
+    [[ -r "/opt/local/share/mcfly/mcfly.bash" ]] && \
         source /opt/local/share/mcfly/mcfly.bash
-    fi
 elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
-    if [[ -r "/usr/share/doc/mcfly/mcfly.bash" ]]; then
+    [[ -r "/usr/share/doc/mcfly/mcfly.bash" ]] && \
         source /usr/share/doc/mcfly/mcfly.bash
-    fi
 fi
 
 # --- functions
@@ -227,13 +225,11 @@ fi
 
 # source bash-completion
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-    if [ -f /opt/local/share/bash-completion/bash_completion ]; then
+    [[ -f /opt/local/share/bash-completion/bash_completion ]] && \
         source /opt/local/share/bash-completion/bash_completion
-    fi
-elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
+elif [[ "${OSTYPE}" == "linux-gnu"* ]] && \
+    [[ -f /usr/share/bash-completion/bash_completion ]] && \
         source /usr/share/bash-completion/bash_completion
-    fi
 fi
 
 # settings mcfly
