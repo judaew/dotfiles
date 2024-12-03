@@ -1,0 +1,7 @@
+# vim:ft=gitignore
+
+# Repo files
+LICENSE
+README.md
+Makefile
+utils
