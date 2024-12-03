@@ -16,13 +16,12 @@ shopt -s nocaseglob
 
 # --- colors and prompt
 
-# TODO: LGTM, but need add ${OSTYPE} check
-if [ -f "/opt/local/share/git/contrib/completion/git-prompt.sh" ]; then
-    source /opt/local/share/git/contrib/completion/git-prompt.sh
-elif [ -f "/usr/share/git/completion/git-prompt.sh" ]; then
-    source /usr/share/git/completion/git-prompt.sh
-elif [ -f "${HOME}/.config/git-prompt.sh" ]; then
-    source "${HOME}"/.config/git-prompt.sh
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+    [[ -f "/opt/local/share/git/contrib/completion/git-prompt.sh" ]] && \
+        source /opt/local/share/git/contrib/completion/git-prompt.sh
+elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+    [[ -f "/usr/share/git/completion/git-prompt.sh" ]] && \
+        source /usr/share/git/completion/git-prompt.sh
 fi
 
 GIT_PS1_SHOWDIRTYSTATE='1'        # '*'=unstaged, '+'=staged
