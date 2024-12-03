@@ -226,16 +226,16 @@ if command -v direnv &> /dev/null; then
     eval "$(direnv hook bash)"
 fi
 
-# TODO: for macos
 # source bash-completion
-if [ -f /usr/share/bash-completion/bash_completion ]; then
-    source /usr/share/bash-completion/bash_completion
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+    if [ -f /opt/local/share/bash-completion/bash_completion ]; then
+        source /opt/local/share/bash-completion/bash_completion
+    fi
+elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        source /usr/share/bash-completion/bash_completion
+    fi
 fi
-
-# FIXME: fix for archlinux
-# if [ -f /opt/local/share/bash-completion/completions/pass ]; then
-#     source /opt/local/share/bash-completion/completions/pass-otp
-# fi
 
 # settings mcfly
 export MCFLY_KEY_SCHEME=vim
