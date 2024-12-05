@@ -2,6 +2,7 @@
 
 [Unit]
 Description=SSH key agent
+After=network.target
  
 [Service]
 Type=simple

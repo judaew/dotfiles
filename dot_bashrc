@@ -218,11 +218,6 @@ function bash-private() {
 
 # --- plugins and third party
 
-# keychain
-if command -v keychain &> /dev/null; then
-    eval "$(keychain --eval --agents ssh)"
-fi
-
 # run direnv hook
 if command -v direnv &> /dev/null; then
     eval "$(direnv hook bash)"
