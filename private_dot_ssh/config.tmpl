@@ -1,13 +1,11 @@
 # vim: set ft=sshconfig:
 
-Host judaew-Bitbucket
-    HostName bitbucket.org
+Host bitbucket.org
     User git
     PreferredAuthentications publickey
     IdentityFile ~/.ssh/ed25519_{{.chezmoi.hostname}}_bitbucket@judaew
 
-Host judaew-Github
-    HostName github.com
+Host github.com
     User git
     PreferredAuthentications publickey
     IdentityFile ~/.ssh/ed25519_{{.chezmoi.hostname}}_github@judaew
