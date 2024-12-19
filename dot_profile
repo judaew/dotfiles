@@ -40,7 +40,6 @@ fi
 # * OS_SPEC_INFOPATH="${HOME}/.nix-profile/share/info"
 # * OS_SPEC_CPATH="${HOME}/.nix-profile/include"
 
-
 export PATH="${OS_SPEC_PATH}:${PATH}"
 export MANPATH="${OS_SPEC_MANPATH}:${MANPATH}"
 export INFOPATH="${OS_SPEC_INFOPATH}:${INFOPATH}"
@@ -48,6 +47,17 @@ export CPATH="${OS_SPEC_CPATH}"
 
 # Local PATH
 export PATH="${PATH}:${HOME}/.local/bin"
+
+#      +--------+
+# --- | Drivers |
+#     +--------+
+
+# Select NVIDIA driver for the VDPAU
+export VDPAU_DRIVER=nvidia
+export LIBVA_DRIVER_NAME=nvidia
+# See https://github.com/elFarto/nvidia-vaapi-driver#upstream-regressions
+export NVD_BACKEND=direct
+
 
 #     +-------------------+
 # --- | general variables |
@@ -102,9 +112,5 @@ if [ ! -f "${XDG_DATA_HOME}/env/tokens.sh" ]; then
 fi
 # shellcheck source=/dev/null
 source "${XDG_DATA_HOME}/env/tokens.sh"
-
-# TODO: todos after install Arch Linux
-# Select Intel driver for the VDPAU
-export VDPAU_DRIVER=va_gl
 
 # vim:ft=sh
