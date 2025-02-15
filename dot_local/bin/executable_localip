@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for cmd in ip awk cut; do
+    if ! command -v "$cmd" &>/dev/null; then
+        echo "Error: $cmd not found."
+        exit 1
+    fi
+done
+
+# See https://archlinux.org/news/deprecation-of-net-tools/
+ip -o -4 addr show | awk '{print $2 ": " $4}' | cut -d/ -f1

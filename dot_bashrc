@@ -134,7 +134,6 @@ alias du="du -h"
 alias today="date +%Y-%m-%d"
 alias week="date +%V"
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias localip="ipconfig getifaddr en0"
 alias random-mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 
 # Make colors in ripgrep as in The Silver Searcher
