@@ -37,4 +37,7 @@
 (use-package saveplace
   :hook (after-init . save-place-mode))
 
+(use-package editorconfig
+  :hook (after-init . editorconfig-mode))
+
 ;;; setup-editing-support.el ends here.
