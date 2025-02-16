@@ -15,7 +15,8 @@ echo
 echo "${green}[pacman-reclaim.sh]${reset_color} getting a list of unclaimed pkgs..."
 echo "-----------------------------------------------------------------------------"
 
-pacman -Qdtq
+mapfile -t unclaimed_pkgs < <(pacman -Qdtq)
+printf "%s\n" "${unclaimed_pkgs[@]}"
 
 while true; do
     echo
@@ -24,7 +25,11 @@ while true; do
 
     case ${answer} in
         [Yy]*)
-            sudo pacman -Rns $(pacman -Qdtq)
+            if [[ ${#unclaimed_pkgs[@]} -gt 0 ]]; then
+                sudo pacman -Rsn "${unclaimed_pkgs[@]}"
+            else
+                echo "No unclaimed packages to remove."
+            fi
             break;;
         [Nn]*|*)
             break;;
