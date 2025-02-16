@@ -64,11 +64,6 @@
   :after org
   :hook (dired-mode . org-download-enable))
 
-(use-package org-roam
-  :disabled
-  :after org
-  :config (setq org-roam-directory "~/org/roam"))
-
 (use-package org-modern
   :after org
   :hook (org-mode . org-modern-mode)

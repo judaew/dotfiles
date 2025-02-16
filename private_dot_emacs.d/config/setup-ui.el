@@ -26,13 +26,6 @@
 (use-package hl-todo
   :hook (after-init . global-hl-todo-mode))
 
-(use-package highlight-indent-guides
-  :disabled
-  :diminish highlight-indent-guides-mode
-  :hook (prog-mode . highlight-indent-guides-mode)
-  :custom
-  (highlight-indent-guides-method 'character))
-
 (use-package ligature
   :hook (after-init . global-ligature-mode)
   :config
@@ -50,10 +43,5 @@
 (use-package highlight-parentheses
   :diminish highlight-parentheses-mode
   :hook (emacs-lisp-mode . highlight-parentheses-mode))
-
-(use-package prism
-  :disabled
-  :straight (:host github :repo "alphapapa/prism.el")
-  :hook (after-init . prism-mode))
 
 ;;; setup-ui.el ends here

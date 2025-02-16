@@ -66,27 +66,8 @@
 ;;; Packages
 
 (setq package-enable-at-startup nil)
-;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;;(package-initialize)
-
-;;(unless (package-installed-p 'use-package)
-;;  (package-refresh-contents)
-;;  (package-install 'use-package))
-
-;;(eval-when-compile
-;;  (require 'use-package))
-
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
-
-;(use-package auto-package-update
-;  :ensure t
-;  :config
-;  (setq auto-package-update-interval 14
-;        auto-package-update-prompt-before-update t)
-;  (auto-package-update-maybe))
-
-(add-to-list 'load-path (expand-file-name "straight/build/" straight-base-dir))
 
 ;; Load modular configuration files
 (add-to-list 'load-path "~/.emacs.d/config")
