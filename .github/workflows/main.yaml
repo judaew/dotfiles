@@ -17,7 +17,8 @@ jobs:
         run: |
           export SHELLCHECK_OPTS="-e SC1090 -e SC1091 -e SC2034"
           shellcheck \
-            .bash_profile .bashrc .profile .config/lf/*.sh utils/*.sh .local/bin/*
+            dot_bash_profile dot_bashrc dot_profile \
+            dot_config/lf/*.sh utils/*.sh dot_local/bin/*
 
   luacheck-lint-neovim:
     runs-on: ubuntu-latest
@@ -28,7 +29,7 @@ jobs:
       - name: Luacheck Linter (Neovim)
         uses: judaew/luacheck-action@v0.2.2
         with:
-          targets: ".config/nvim"
+          targets: "dot_config/nvim"
 
   markdown-lint:
     runs-on: ubuntu-latest

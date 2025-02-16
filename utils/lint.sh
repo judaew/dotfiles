@@ -28,7 +28,9 @@ linter="shellcheck"
 if command -v shellcheck &> /dev/null; then
     if SHELLCHECK_OPTS="-e SC1090 -e SC1091 -e SC2034" \
         shellcheck \
-        .bash_profile .bashrc .profile .config/lf/*.sh utils/*.sh; then
+        dot_bash_profile dot_bashrc \
+        dot_profile dot_config/lf/*.sh \
+        utils/*.sh; then
     passed
     else
         error
@@ -39,7 +41,7 @@ fi
 
 linter="luacheck"
 if command -v luacheck &> /dev/null; then
-    if luacheck .config/nvim; then
+    if luacheck dot_config/nvim; then
         passed
     else
         error
