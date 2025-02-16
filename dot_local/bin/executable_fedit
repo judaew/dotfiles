@@ -2,15 +2,12 @@
 
 # find and edit
 
-if [ -z "$(which fzf)" ]; then
-    echo "Error: FZF not found."
-    exit 1
-fi
-
-if [ -z "$(which bat)" ]; then
-    echo "Error: bat not found."
-    exit 1
-fi
+for cmd in fzf bat; do
+    if ! command -v "$cmd" &>/dev/null; then
+        echo "Error: $cmd not found."
+        exit 1
+    fi
+done
 
 if FILEPATH=$(env COLORTERM=8bit fzf --preview 'bat --color=always \
     --style=numbers --line-range=:500 {}');
