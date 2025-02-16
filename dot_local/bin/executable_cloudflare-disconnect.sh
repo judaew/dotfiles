@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Prompted password immediately after startup
 sudo echo > /dev/null 2>&1
