@@ -13,16 +13,22 @@
 (use-package eldoc
   :custom (eldoc-minor-mode-string nil))
 
-(use-package cmake-mode)
+(use-package cmake-mode
+  :defer t)
 
 ;; TODO: set :bind ("C-c d" . docker)
-(use-package docker)
-(use-package dockerfile-mode)
-(use-package docker-compose-mode)
+(use-package docker
+  :defer t)
+(use-package dockerfile-mode
+  :defer t)
+(use-package docker-compose-mode
+  :defer t)
 
-(use-package go-mode)
+(use-package go-mode
+  :defer t)
 
 (use-package pyvenv
+  :defer t
   :config
   (add-hook 'python-mode-hook
             (lambda ()

@@ -5,7 +5,6 @@
 ;;; Code:
 
 (use-package treemacs
-  :defer t
   :bind
   (("M-0" . treemacs-select-window)
    ("C-x t 1" . treemacs-no-delete-other-windows)
@@ -35,7 +34,6 @@
   (dired-listing-switches "-alh"))
 
 (use-package undo-fu
-  :demand t
   :bind
   (("C-/" . undo-fu-only-undo)
    ("C-?" . undo-fu-only-redo))

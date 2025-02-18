@@ -10,7 +10,6 @@
   (search-default-mode #'char-fold-to-regexp))
 
 (use-package reverse-im
-  :demand t
   :after char-fold
   :bind ("M-T" . reverse-im-translate-word)
   :hook (after-init . reverse-im-mode)
@@ -31,8 +30,7 @@
    ("M-g c" . avy-goto-char)
    ("M-g t" . avy-goto-char-timer)))
 
-(use-package iedit
-  :demand t)
+(use-package iedit)
 
 (use-package saveplace
   :hook (after-init . save-place-mode))
