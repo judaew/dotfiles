@@ -9,6 +9,12 @@
 
 ;;; General config
 
+;; Set window size
+(if (display-graphic-p)
+    (progn
+      (add-to-list 'default-frame-alist (cons 'width 88))
+      (add-to-list 'default-frame-alist (cons 'height 36))))
+
 ;; Adjust gc-cons-threshold and increase the amount of data which
 ;; Emacs reads from the process
 (setq gc-cons-threshold (* 100 1024 1024)    ;; 100mb
