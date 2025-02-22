@@ -14,6 +14,9 @@
     email = "judaew@outlook.de"
     signingkey = "E85EF1C4A188CE00"
 
+[credential]
+    helper = libsecret
+
 [commit]
     gpgsign = true
 
