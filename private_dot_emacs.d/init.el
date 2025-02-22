@@ -78,20 +78,20 @@
 ;; Load modular configuration files
 (add-to-list 'load-path "~/.emacs.d/config")
 
-(load "setup-org.el")             ;; Org-mode enhancement
-(load "setup-term.el")            ;; Terminal integration
-(load "setup-search.el")          ;; Search enhancement
-(load "setup-completion.el")      ;; Auto-completion
-(load "setup-snippets.el")        ;; Snippet management
-(load "setup-git.el")             ;; Git integration
-(load "setup-projects.el")        ;; Project management
-(load "setup-lang-support.el")    ;; Misc language support
-(load "setup-lsp.el")             ;; LSP (Language Server Protocol)
-(load "setup-dap.el")             ;; DAP (Debug Adapter Protocol)
-(load "setup-editing-support.el") ;; Editing utilities
-(load "setup-movement.el")        ;; Different navigation enhancement
-(load "setup-ui.el")              ;; UI tweaks
-(load "setup-themes.el")          ;; Theme configuration
+(load "setup-org")             ;; Org-mode enhancement
+(load "setup-term")            ;; Terminal integration
+(load "setup-search")          ;; Search enhancement
+(load "setup-completion")      ;; Auto-completion
+(load "setup-snippets")        ;; Snippet management
+(load "setup-git")             ;; Git integration
+(load "setup-projects")        ;; Project management
+(load "setup-lang-support")    ;; Misc language support
+(load "setup-lsp")             ;; LSP (Language Server Protocol)
+(load "setup-dap")             ;; DAP (Debug Adapter Protocol)
+(load "setup-editing-support") ;; Editing utilities
+(load "setup-movement")        ;; Different navigation enhancement
+(load "setup-ui")              ;; UI tweaks
+(load "setup-themes")          ;; Theme configuration
 
 ;; Set custom-file location
 (setq custom-file (locate-user-emacs-file "custom.el"))
