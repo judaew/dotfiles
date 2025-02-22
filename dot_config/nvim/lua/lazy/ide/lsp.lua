@@ -23,7 +23,7 @@ local servers = {
             }
         }
     },
-    pylsp = {},
+    pyright = {},
     bashls = {
         cmd = { vim.fn.exepath("bash-language-server"), "start" }
     },
