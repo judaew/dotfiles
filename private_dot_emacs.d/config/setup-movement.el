@@ -4,28 +4,28 @@
 
 ;;; Code:
 
-(use-package treemacs
+(use-package neotree
   :bind
-  (("M-0" . treemacs-select-window)
-   ("C-x t 1" . treemacs-no-delete-other-windows)
-   ("C-x t t" . treemacs)
-   ("C-x t d" . treemacs-select-directory)
-   ("C-x t B" . treemacs-bookmark)
-   ("C-x t C-t" . treemacs-find-file)
-   ("C-x t M-t" . treemacs-find-tag))
-  :init
+  (("C-x t" . neotree-toggle)
+   ("M-0" . my/neotree-select-window))
+  :custom
+  (neo-smart-open t)
+  (neo-window-width 25)
+  (neo-show-hidden-files t)
+  (neo-auto-indent-point t)
+  (neo-theme (if (display-graphic-p) 'icons 'arrow))
+  :config
+  (defun my/neotree-select-window ()
+    "Switch to NeoTree window if it is visible."
+    (interactive)
+    (if (neo-global--window-exists-p)
+	(if (eq major-mode 'neotree-mode)
+	    (other-window 1)
+	  (select-window (neo-global--get-window)))
+      (neo-global--open)))
+
   (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window)))
-
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :bind ("C-x t p" . treemacs-projectile))
-
-(use-package treemacs-icons-dired
-  :hook (dired-mode . treemacs-icons-dired-enable-once))
-
-(use-package treemacs-magit
-  :after (treemacs magit))
+    (define-key winum-keymap (kbd "M-0") #'my/neotree-select-window)))
 
 (use-package dired
   :straight nil
@@ -56,6 +56,19 @@
   :bind ("C-x u" . vundo))
 
 (use-package winum
-  :hook (after-init . winum-mode))
+  :hook (after-init . winum-mode)
+  :config
+  (define-key winum-keymap (kbd "C-`") 'winum-select-window-by-number)
+  (define-key winum-keymap (kbd "C-²") 'winum-select-window-by-number)
+  ;; (define-key winum-keymap (kbd "M-0") 'winum-select-window-0-or-10)
+  (define-key winum-keymap (kbd "M-1") 'winum-select-window-1)
+  (define-key winum-keymap (kbd "M-2") 'winum-select-window-2)
+  (define-key winum-keymap (kbd "M-3") 'winum-select-window-3)
+  (define-key winum-keymap (kbd "M-4") 'winum-select-window-4)
+  (define-key winum-keymap (kbd "M-5") 'winum-select-window-5)
+  (define-key winum-keymap (kbd "M-6") 'winum-select-window-6)
+  (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
+  (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
+  (define-key winum-keymap (kbd "M-9") 'winum-select-window-9))
 
 ;;; setup-movement.el ends here

@@ -29,12 +29,7 @@
 (use-package lsp-ivy
   :after lsp-mode)
 
-(use-package lsp-treemacs
-  :after treemacs lsp-mode
-  :custom (lsp-treemacs-sync-mode 1))
-
 (use-package lsp-pyright
-  :ensure t
   :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
