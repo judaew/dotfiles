@@ -39,9 +39,10 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Set font
-(set-frame-font "VictorMono Nerd Font Mono-10" nil t)
-(unless (find-font (font-spec :name "VictorMono Nerd Font"))
-  (message "VictorMono Nerd Font not found!"))
+(if (display-graphic-p)
+    (set-frame-font "VictorMono Nerd Font Mono-10" nil t)
+  (unless (find-font (font-spec :name "VictorMono Nerd Font"))
+    (message "VictorMono Nerd Font not found!")))
 
 ;; Enable line numbers
 (global-display-line-numbers-mode t)
