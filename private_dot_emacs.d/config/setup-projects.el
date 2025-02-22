@@ -9,7 +9,10 @@
   :bind-keymap ("C-c p" . projectile-command-map)
   :hook (after-init . projectile-mode)
   :custom
-  (projectile-project-search-path '("~/Workspaces/"))
+  (projectile-switch-project-action #'projectile-dired)
+  (projectile-project-search-path '(
+				    "~/Workspaces/local"
+				    "~/Workspaces/github.com/judaew"))
   (projectile-completion-system 'ivy))
 
 ;;; setup-projects.el ends here
