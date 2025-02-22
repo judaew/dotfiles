@@ -4,6 +4,14 @@
 
 ;;; Code:
 
+(defun my/copy-to-clipboard (begin end)
+  "Copy to system clipboard (Wayland)."
+  (interactive "r")
+  (call-process-region begin end "wl-copy")
+  (message "Copied to clipboard"))
+
+(global-set-key (kbd "C-c C-w") 'my/copy-to-clipboard)
+
 (use-package char-fold
   :custom
   (char-fold-symmetric t)
