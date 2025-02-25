@@ -4,7 +4,7 @@
 [[ -f ${HOME}/.bashrc ]] && source "${HOME}"/.bashrc
 
 if command -v emacs &> /dev/null; then
-    export EDITOR="$(command -v emacs) -nw"
+    export EDITOR="emacs -nw"
 elif command -v nvim &> /dev/null; then
     export EDITOR="nvim"
 elif command -v vim &> /dev/null; then
@@ -17,3 +17,6 @@ export SSH_ASKPASS=/usr/bin/ksshaskpass
 export SSH_ASKPASS_REQUIRE=prefer
 
 # vim:ft=sh
+# Local Variables:
+# mode: sh
+# End:
