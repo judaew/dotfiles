@@ -7,13 +7,13 @@
 (use-package lsp-mode
   :hook
   (((c-mode
-    c++-mode
-    go-mode
-    rust-mode
-    lua-mode
-    python-mode
-    sh-mode
-    cmake-mode) . lsp-deferred)
+     c++-mode
+     go-mode
+     rust-mode
+     lua-mode
+     python-mode
+     sh-mode
+     cmake-mode) . lsp-deferred)
    (lsp-mode . lsp-enable-which-key-integration))
   :bind (("C-c l" . lsp))
   :custom
@@ -32,8 +32,8 @@
 (use-package lsp-pyright
   :custom (lsp-pyright-langserver-command "pyright") ;; or basedpyright
   :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp-deferred))))
+                         (require 'lsp-pyright)
+                         (lsp-deferred))))
 
 (use-package lsp-ltex
   :after lsp-mode

@@ -11,8 +11,8 @@
   :custom
   (projectile-switch-project-action #'projectile-dired)
   (projectile-project-search-path '(
-				    "~/Workspaces/local"
-				    "~/Workspaces/github.com/judaew"))
+                                    "~/Workspaces/local"
+                                    "~/Workspaces/github.com/judaew"))
   (projectile-completion-system 'ivy))
 
 ;;; setup-projects.el ends here

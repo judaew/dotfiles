@@ -35,13 +35,13 @@
   (org-hide-emphasis-markers t)
 
   (org-todo-keywords
-        '((sequence "IDEA(i)" "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELED(c)")))
+   '((sequence "IDEA(i)" "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELED(c)")))
   (org-todo-keyword-faces
-        '(("IDEA" . (:foreground "#CCCCCC" :weight bold))
-          ("TODO" . (:foreground "#65D9EF" :weight bold))
-          ("NEXT" . (:foreground "#E2DB74" :weight bold))
-          ("DONE" . (:foreground "#A7E22E" :weight bold))
-          ("CANCELED" . (:foreground "#F92572" :weight bold))))
+   '(("IDEA" . (:foreground "#CCCCCC" :weight bold))
+     ("TODO" . (:foreground "#65D9EF" :weight bold))
+     ("NEXT" . (:foreground "#E2DB74" :weight bold))
+     ("DONE" . (:foreground "#A7E22E" :weight bold))
+     ("CANCELED" . (:foreground "#F92572" :weight bold))))
 
   (org-directory "~/org/")
   (org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
@@ -50,15 +50,15 @@
   ;; - https://orgmode.org/manual/Capture-templates.html
   ;; - https://howardism.org/Technical/Emacs/capturing-intro.html
   (org-capture-templates
-        '(("t" "Tasks" entry
-          (file+headline "~/org/tasks.org" "Inbox")
-           "* TODO %?\n%U")
-          ("e" "Event" entry
-           (file+headline  "~/org/calendar.org" "Events")
-           "** %?\n%T")
-          ("r" "Recurring Event" entry
-           (file+headline "~/org/calendar.org" "Recurring")
-           "** %?\n%T"))))
+   '(("t" "Tasks" entry
+      (file+headline "~/org/tasks.org" "Inbox")
+      "* TODO %?\n%U")
+     ("e" "Event" entry
+      (file+headline  "~/org/calendar.org" "Events")
+      "** %?\n%T")
+     ("r" "Recurring Event" entry
+      (file+headline "~/org/calendar.org" "Recurring")
+      "** %?\n%T"))))
 
 (use-package org-download
   :after org
