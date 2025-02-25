@@ -121,7 +121,7 @@ PROMPT_COMMAND="__prompt_cmd"
 
 # --- aliases
 
-alias emacs="emacs -nw"
+alias e="emacs -nw"
 
 if [[ "${OSTYPE}" == "darwin"* && ! -f /opt/local/libexec/gnubin/ls ]] ; then
     alias ls="ls -G"
@@ -174,7 +174,7 @@ HISTSIZE=100000
 HISTFILESIZE=100000
 
 # --- keybindings
-# set -o vi
+set -o emacs
 
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     [[ -r "/opt/local/share/mcfly/mcfly.bash" ]] && \
@@ -220,6 +220,10 @@ function bash-private() {
     PROMPT_PRIVATE_SESSION="TRUE" HISTFILE=/dev/null bash
 }
 
+function ed() {
+    chezmoi edit --apply "${1}"
+}
+
 # --- plugins and third party
 
 # run direnv hook
@@ -255,3 +259,6 @@ export FZF_DEFAULT_COMMAND='fd --type f --color=never'
 export FZF_ALT_C_COMMAND='fd --type d . --color=never'
 
 # vim:ft=sh
+# Local Variables:
+# mode: sh
+# End:
