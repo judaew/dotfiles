@@ -1,5 +1,5 @@
 -- Auto Commands
-vim.cmd ([[
+vim.cmd([[
     augroup local_general
         autocmd!
         autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
@@ -24,38 +24,38 @@ vim.cmd ([[
 vim.api.nvim_create_augroup("LocalViewStates", {})
 
 vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
-    group = "LocalViewStates",
-    pattern = "*.org",
-    callback = function()
-        if vim.fn.expand("%") ~= "" then
-            vim.cmd("silent! loadview")
-        end
-    end,
+  group = "LocalViewStates",
+  pattern = "*.org",
+  callback = function()
+    if vim.fn.expand("%") ~= "" then
+      vim.cmd("silent! loadview")
+    end
+  end,
 })
 vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
-    group = "LocalViewStates",
-    pattern = "*.org",
-    callback = function()
-        if vim.fn.expand("%") ~= "" then
-            vim.cmd("mkview")
-        end
-    end,
+  group = "LocalViewStates",
+  pattern = "*.org",
+  callback = function()
+    if vim.fn.expand("%") ~= "" then
+      vim.cmd("mkview")
+    end
+  end,
 })
 
 -- Highlight on yank.
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight",
-    { clear = true })
+  { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-    group = highlight_group,
-    pattern = '*'
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*'
 })
 
 -- Custom Commands
-vim.cmd ([[
+vim.cmd([[
 command! -bar SpellEn set spell spelllang=en spellfile=${HOME}/.local/share/nvim/site/spell/en.utf-8.add
 command! -bar SpellUk set spell spelllang=uk spellfile=${HOME}/.local/share/nvim/site/spell/uk.utf-8.add
 command! -bar SpellRu set spell spelllang=ru_yo spellfile=${HOME}/.local/share/nvim/site/spell/ru.utf-8.add

@@ -1,6 +1,6 @@
 return {
-    {
-        "tpope/vim-eunuch",
-        lazy = false
-    }
+  {
+    "tpope/vim-eunuch",
+    lazy = false
+  }
 }

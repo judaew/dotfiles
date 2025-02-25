@@ -1,9 +1,9 @@
 local map = function(mode, keys, func, desc)
-    if desc then
-        vim.keymap.set(mode, keys, func, { desc=desc, noremap=true})
-    else
-        vim.keymap.set(mode, keys, func, { noremap=true})
-    end
+  if desc then
+    vim.keymap.set(mode, keys, func, { desc = desc, noremap = true })
+  else
+    vim.keymap.set(mode, keys, func, { noremap = true })
+  end
 end
 
 vim.g.mapleader = ","
@@ -73,8 +73,8 @@ map("v", "<Leader>A", ":m '<-2<CR>gv=gv")
 
 -- Diagnostic keymaps
 local diag = vim.diagnostic
-map("n", "[d",        diag.goto_prev,  "Go to previous diagnostic message")
-map("n", "]d",        diag.goto_next,  "Go to next diagnostic message")
+map("n", "[d", diag.goto_prev, "Go to previous diagnostic message")
+map("n", "]d", diag.goto_next, "Go to next diagnostic message")
 map("n", "<Leader>e", diag.open_float, "Open floating diagnostic message")
 map("n", "<Leader>q", diag.setloclist, "Open diagnostics list")
 
