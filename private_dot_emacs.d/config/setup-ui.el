@@ -6,6 +6,7 @@
 ;; - hydra
 ;; - posframe
 ;; - popup-el
+;; - casual https://github.com/kickingvegas/casual
 
 ;;; Code:
 

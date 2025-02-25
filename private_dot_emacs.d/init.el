@@ -88,7 +88,7 @@
 (load "setup-projects")        ;; Project management
 (load "setup-lang-support")    ;; Misc language support
 (load "setup-lsp")             ;; LSP (Language Server Protocol)
-(load "setup-dap")             ;; DAP (Debug Adapter Protocol)
+;; (load "setup-dap")             ;; DAP (Debug Adapter Protocol)
 (load "setup-editing-support") ;; Editing utilities
 (load "setup-movement")        ;; Different navigation enhancement
 (load "setup-ui")              ;; UI tweaks
