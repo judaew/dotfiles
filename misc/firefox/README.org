@@ -1,0 +1,6 @@
+* Install custom UI for Firefox
+
+1. Go to =about:config= (in the URL bar) and set =toolkit.legacyUserProfileCustomizations.stylesheets = true=.
+2. Go to =about:support= > Search for "Profile Directory" > Open > Copy the "chrome" directory to this location.
+3. Restart Firefox
+4. Install the [[https://addons.mozilla.org/en-US/firefox/addon/sidebery/][Sidebery extension]].
