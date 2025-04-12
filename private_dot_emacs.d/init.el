@@ -1,4 +1,4 @@
-;;; package --- Summary
+;;; package --- Summary -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -10,10 +10,9 @@
 ;;; General config
 
 ;; Set window size
-(if (display-graphic-p)
-    (progn
-      (add-to-list 'default-frame-alist (cons 'width 88))
-      (add-to-list 'default-frame-alist (cons 'height 36))))
+(when (display-graphic-p)
+  (add-to-list 'default-frame-alist '(width . 88))
+  (add-to-list 'default-frame-alist '(height . 36)))
 
 ;; Adjust gc-cons-threshold and increase the amount of data which
 ;; Emacs reads from the process
@@ -33,7 +32,7 @@
 (setq initial-scratch-message "#+TITLE: Scratch Buffer\n\n")
 
 ;; Minimal UI
-(menu-bar-mode -1)
+(menu-bar-mode 1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -44,11 +43,18 @@
   (unless (find-font (font-spec :name "VictorMono Nerd Font"))
     (message "VictorMono Nerd Font not found!")))
 
+;; Show current project on the default mode-line
+(setq project-mode-line t)
+
 ;; Enable line numbers
 (global-display-line-numbers-mode t)
 
 ;; Enable smart parens
 (electric-pair-mode t)
+
+;; The output of Grep is split into sections
+;; It is equivalent to the '--heading' option of some tools such as 'git grep' and 'rg'.
+(setq grep-use-headings t)
 
 (add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
 
@@ -86,9 +92,11 @@
 (load "setup-snippets")        ;; Snippet management
 (load "setup-git")             ;; Git integration
 (load "setup-projects")        ;; Project management
+;; (load "setup-tree-sitter")     ;; Tree-sitter support
 (load "setup-lang-support")    ;; Misc language support
 (load "setup-lsp")             ;; LSP (Language Server Protocol)
 ;; (load "setup-dap")             ;; DAP (Debug Adapter Protocol)
+(load "setup-llm")             ;; Large language model
 (load "setup-editing-support") ;; Editing utilities
 (load "setup-movement")        ;; Different navigation enhancement
 (load "setup-ui")              ;; UI tweaks
