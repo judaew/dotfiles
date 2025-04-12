@@ -121,7 +121,8 @@ PROMPT_COMMAND="__prompt_cmd"
 
 # --- aliases
 
-alias e="emacs -nw"
+alias e="emacsclient -a 'mg' -t"
+export EDITOR="emacsclient -a 'mg' -t"
 
 if [[ "${OSTYPE}" == "darwin"* && ! -f /opt/local/libexec/gnubin/ls ]] ; then
     alias ls="ls -G"
