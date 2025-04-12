@@ -23,6 +23,7 @@
 (add-hook 'org-mode-hook #'org-visual-mode)
 
 (use-package org
+  :straight nil
   :bind
   (("C-c o i" . open-index-org-file)
    ("C-c c" . org-capture))
