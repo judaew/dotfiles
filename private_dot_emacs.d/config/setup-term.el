@@ -1,4 +1,4 @@
-;;; Package --- Summary
+;;; Package --- Summary -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -11,9 +11,21 @@
     (exec-path-from-shell-initialize)))
 
 (use-package vterm
-  :bind ("C-c t" . vterm)
+  :bind
+  (("C-~" . vterm)
+   ("C-c t" . vterm))
   :custom
   (vterm-max-scrollback 10000))
+
+(straight-use-package
+ '(eat :type git
+       :host codeberg
+       :repo "akib/emacs-eat"
+       :files ("*.el" ("term" "term/*.el") "*.texi"
+               "*.ti" ("terminfo/e" "terminfo/e/*")
+               ("terminfo/65" "terminfo/65/*")
+               ("integration" "integration/*")
+               (:exclude ".dir-locals.el" "*-tests.el"))))
 
 (use-package direnv
   :hook (after-init . direnv-mode))
