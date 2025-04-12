@@ -1,52 +1,79 @@
-;;; Package --- Summary
+;;; Package --- Summary -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
-;; See
+;; See more
+;;
 ;; - https://git.savannah.gnu.org/cgit/emacs.git/tree/admin/notes/tree-sitter/starter-guide?h=feature/tree-sitter
 ;; - https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
-;; - https://robbmann.io/posts/emacs-treesit-auto/
+;; - https://www.masteringemacs.org/article/whats-new-in-emacs-301
 ;; - https://github.com/renzmann/treesit-auto/issues/128
+;;
 ;; Golang: https://github.com/dominikh/go-mode.el/issues/440
 
 ;;; Code:
 
 ;;; Tree-sitter
 (setq treesit-language-source-alist
-      '((c "https://github.com/tree-sitter/tree-sitter-c")
-        (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
-        (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
-        (go "https://github.com/tree-sitter/tree-sitter-go")
-        (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
-        (rust "https://github.com/tree-sitter/tree-sitter-rust")
-        (python "https://github.com/tree-sitter/tree-sitter-python")
-        (lua "https://github.com/tree-sitter-grammars/tree-sitter-lua")
+      '(;; Languages
         (bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (c "https://github.com/tree-sitter/tree-sitter-c")
+        (c++ "https://github.com/tree-sitter/tree-sitter-cpp")
+        (csharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (go-mod "https://github.com/camdencheek/tree-sitter-go-mod")
+        (java "https://github.com/tree-sitter/tree-sitter-java")
+        (lua "https://github.com/tree-sitter-grammars/tree-sitter-lua")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
+        (rust "https://github.com/tree-sitter/tree-sitter-rust")
 
-        (sql "https://github.com/derekstride/tree-sitter-sql")
+        ;; Data serialization languages
         (json "https://github.com/tree-sitter/tree-sitter-json")
-        (proto "https://github.com/treywood/tree-sitter-proto")
         (toml "https://github.com/tree-sitter-grammars/tree-sitter-toml")
         (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml")
 
-        ;; (markdown "")
-
+        ;; Web languages
         (html "https://github.com/tree-sitter/tree-sitter-html")
         (css "https://github.com/tree-sitter/tree-sitter-css")
-        (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+        (js "https://github.com/tree-sitter/tree-sitter-javascript")
+        (php "https://github.com/tree-sitter/tree-sitter-php")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript")
 
-        (make "https://github.com/alemuller/tree-sitter-make")
+        ;; Tools
         (cmake "https://github.com/uyha/tree-sitter-cmake")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")))
 
 ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 
-;; (setq major-mode-remap-alist
-;;       '((c-mode . c-ts-mode)
-;;        (go-mode . go-ts-mode)))
+(setq major-mode-remap-alist
+      '(;; Languages
+        (bash-mode . bash-ts-mode)
+        (c-mode . c-ts-mode)
+        (c++-mode . c++-ts-mode)
+        (csharp-mode . csharp-ts-mode)
+        (go-mode . go-ts-mode)
+        (go-mod-mode . go-mod-ts-mode)
+        (java-mode . java-ts-mode)
+        (lua-mode . lua-ts-mode)
+        (python-mode . python-ts-mode)
+        (ruby-mode . ruby-ts-mode)
+        (rust-mode . rust-ts-mode)
 
-;;(add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
-;;(add-to-list 'interpreter-mode-alist '("lua" . lua-ts-mode))
+        ;; Data serialization languages
+        (json-mode . json-ts-mode)
+        (toml-mode . toml-ts-mode)
+        (yaml-mode . yaml-ts-mode)
+
+        ;; Web languages
+        (html-mode . html-ts-mode)
+        (css-mode . css-ts-mode)
+        (js-mode . js-ts-mode)
+        (php-mode . php-ts-mode)
+        (typescript-mode . typescript-ts-mode)
+
+        ;; Tools
+        (cmake-mode . cmake-ts-mode)
+        (dockerfile-mode . dockerfile-ts-mode)))
 
 ;;; setup-tree-sitter.el ends here
