@@ -75,4 +75,4 @@
     light = false
 
 [ghq]
-    root = "~/Workspaces"
+    root = "~/workspaces"
