@@ -10,6 +10,7 @@
   (termclip-clipboard-tool 'wayland))
 
 (use-package char-fold
+  :straight nil
   :custom
   (char-fold-symmetric t)
   (search-default-mode #'char-fold-to-regexp))
@@ -38,9 +39,12 @@
 (use-package iedit)
 
 (use-package saveplace
+  :straight nil
   :hook (after-init . save-place-mode))
 
+;; Build-in from Emacs 30 (#emacs30)
 (use-package editorconfig
+  :straight nil
   :hook (after-init . editorconfig-mode))
 
 ;;; setup-editing-support.el ends here.

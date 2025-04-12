@@ -71,4 +71,7 @@
   (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
   (define-key winum-keymap (kbd "M-9") 'winum-select-window-9))
 
+(use-package winner
+  :straight nil)
+
 ;;; setup-movement.el ends here

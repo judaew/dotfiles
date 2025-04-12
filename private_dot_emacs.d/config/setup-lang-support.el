@@ -27,7 +27,11 @@
   :custom (eldoc-minor-mode-string nil))
 
 (use-package cmake-mode
+  :straight nil
   :defer t)
+(use-package ninja-mode
+  :straight nil
+  :defer)
 
 ;; TODO: set :bind ("C-c d" . docker)
 (use-package docker
@@ -40,10 +44,12 @@
 (use-package go-mode
   :defer t)
 
-
 (use-package lua-mode
   :defer t)
 
+(use-package protobuf-mode
+  :straight nil
+  :defer t)
 (use-package pyvenv
   :defer t
   :config
