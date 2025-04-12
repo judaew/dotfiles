@@ -141,6 +141,7 @@ alias today="date +%Y-%m-%d"
 alias week="date +%V"
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias random-mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
+alias pwgen20="pwgen -cnysB1 20"
 
 # Make colors in ripgrep as in The Silver Searcher
 alias rg="rg --colors 'match:fg:black' --colors 'match:bg:yellow'\
@@ -173,6 +174,9 @@ fi
 HISTCONTROL=ignoreboth:erasedups:ignoredups
 HISTSIZE=100000
 HISTFILESIZE=100000
+
+export __GL_SHADER_DISK_CACHE=1
+export __GL_SHADER_DISK_CACHE_PATH=~/.wine/shader_cache
 
 # --- keybindings
 set -o emacs
