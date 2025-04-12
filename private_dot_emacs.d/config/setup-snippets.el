@@ -1,14 +1,16 @@
-;;; Package --- Summary
+;;; Package --- Summary -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;;; Code:
 
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :hook (after-init . yas-global-mode))
-
-(use-package yasnippet-snippets
-  :defer t)
+(use-package tempel
+  :bind
+  (("M-+" . tempel-complete)
+   (:map tempel-map
+	 ("TAB" . tempel-next)
+	 ("[tab]" . tempel-next)
+	 ("S-TAB" . tempel-prev)
+	 ("[backtab]" . tempel-prev))))
 
 ;;; setup-snippets.el ends here
