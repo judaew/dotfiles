@@ -9,11 +9,6 @@
 
 ;;; General config
 
-;; Set window size
-(when (display-graphic-p)
-  (add-to-list 'default-frame-alist '(width . 88))
-  (add-to-list 'default-frame-alist '(height . 36)))
-
 ;; Adjust gc-cons-threshold and increase the amount of data which
 ;; Emacs reads from the process
 (setq gc-cons-threshold (* 100 1024 1024)    ;; 100mb
@@ -26,6 +21,15 @@
 ;; Disabel auto-save
 (setq auto-save-default nil)
 
+;; Set window size
+(add-to-list 'default-frame-alist '(width . 88))
+(add-to-list 'default-frame-alist '(height . 36))
+
+;; Set font
+(set-frame-font "VictorMono Nerd Font Mono-10" nil t)
+(unless (find-font (font-spec :name "VictorMono Nerd Font"))
+  (message "VictorMono Nerd Font not found!"))
+
 ;; Create empty buffer *scratch* in org-mode
 (setq inhibit-startup-screen t)
 (setq initial-major-mode 'org-mode)
@@ -36,12 +40,6 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
-
-;; Set font
-(if (display-graphic-p)
-    (set-frame-font "VictorMono Nerd Font Mono-10" nil t)
-  (unless (find-font (font-spec :name "VictorMono Nerd Font"))
-    (message "VictorMono Nerd Font not found!")))
 
 ;; Show current project on the default mode-line
 (setq project-mode-line t)
