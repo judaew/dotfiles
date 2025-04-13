@@ -50,6 +50,16 @@
 (use-package protobuf-mode
   :straight nil
   :defer t)
+
+(use-package dhall-mode
+  :defer t
+  :custom
+  ;; header-line is obsoleted by lsp-mode
+  (dhall-use-header-line nil))
+
+(use-package nginx-mode
+  :defer t)
+
 (use-package pyvenv
   :defer t
   :config
