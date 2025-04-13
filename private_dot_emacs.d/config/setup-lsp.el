@@ -48,27 +48,4 @@
                          (require 'lsp-pyright)
                          (lsp-deferred))))
 
-(use-package lsp-ltex
-  :after lsp-mode
-  :hook
-  ((org-mode markdown-mode) . (lambda ()
-                                (require 'lsp-ltex)
-                                (lsp-deferred)))
-  :custom (lsp-ltex-version "16.0.0")
-  :config
-  (defvar my-ltex-languages '("en-US" "ru-RU")
-    "List of languages for toggling in lsp-ltex.")
-
-  (defun my-ltex-toggle-language ()
-    "Cyclically toggle languages for lsp-ltex."
-    (interactive)
-    (let* ((current-language lsp-ltex-language)
-           (next-language (or (cadr (member current-language my-ltex-languages))
-                              (car my-ltex-languages)))
-           (workspace (lsp--read-workspace))) ;; get WORKSPACE
-      (setq lsp-ltex-language next-language)
-      (lsp-workspace-restart workspace)))
-
-  (global-set-key (kbd "C-c o l") 'my-ltex-toggle-language))
-
 ;;; setup-lsp.el ends here
