@@ -12,10 +12,10 @@
      rust-mode
      lua-mode
      python-mode
-     sh-mode
-     cmake-mode) . lsp-deferred)
-   (lsp-mode . lsp-enable-which-key-integration))
-  :bind (("C-c l" . lsp))
+     cmake-mode
+     dhall-mode
+     dockerfile-mode) . lsp-deferred)
+   (lsp-mode . lsp-enable-which-key-integration)
   :custom
   (lsp-keymap-prefix "C-l")
   (lsp-auto-guess-root t)
