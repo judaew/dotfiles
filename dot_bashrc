@@ -146,8 +146,8 @@ else
     alias ls="ls --color=auto"
 fi
 
-alias la="ls -a"
-alias ll="ls -al"
+alias la="ls -a --group-directories-first"
+alias ll="ls -alh --group-directories-first"
 alias ldot="ls -ld .*"
 alias cp="cp -i"
 alias df="df -h"
@@ -169,6 +169,7 @@ alias proj="source projects.sh"
 alias yt480p="yt-dlp -f 'bestvideo[height<=480]+bestaudio'"
 alias yt720p="yt-dlp -f 'bestvideo[height<=720]+bestaudio'"
 alias yt1080p="yt-dlp -f 'bestvideo[height<=1080]+bestaudio'"
+alias yt_audio="yt-dlp -x --audio-format m4a --embed-thumbnail"
 
 # darwin specific
 if [[ "${OSTYPE}" == "darwin"* ]]; then
