@@ -1,0 +1,101 @@
+# -*- mode: sh; sh-shell: zsh -*-
+
+# --- paths ---
+###############
+
+# Ensure path has unique entries
+typeset -U path
+
+function append_path() {
+    [[ -d "${1}" ]] || return
+    path+=("${1}")
+}
+
+# setup default paths
+path=(/usr/local/sbin /usr/local/bin /usr/bin "${path}")
+
+# load scripts from /etc/profile.d/*.sh if directory exists
+if [[ -d /etc/profile.d ]]; then
+  for profile in /etc/profile.d/*.sh; do
+    [[ -r "${profile}" ]] && source "${profile}"
+  done
+  unset profile
+fi
+
+[[ "${OSTYPE}" == "darwin"* ]] && {
+    # macOS-specific paths (MacPorts, gnubin, Apple, etc)
+    append_path "/opt/local/bin"
+    append_path "/opt/local/sbin"
+    append_path "/opt/local/libexec/gnubin"
+    append_path "/Library/Apple/usr/bin"
+
+    export CPATH="/opt/local/include"
+}
+
+# Uncomment if using Nix (optional)
+# The variable values for nix package manager:
+# * PATH="${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin"
+# * OS_SPEC_CPATH="${HOME}/.nix-profile/include"
+
+# --- Drivers ---
+#################
+
+# Select NVIDIA driver for the VDPAU
+export VDPAU_DRIVER="nvidia"
+export LIBVA_DRIVER_NAME="nvidia"
+# See https://github.com/elFarto/nvidia-vaapi-driver#upstream-regressions
+export NVD_BACKEND="direct"
+
+# --- General variables ---
+###########################
+
+# Fix locale if needed
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+
+# Default browser
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+    export BROWSER="open"
+elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+    export BROWSER="xdg-open"
+fi
+
+# Wayland hint for Electron
+export ELECTRON_OZONE_PLATFORM_HINT="wayland"
+
+# XDG
+# See https://wiki.archlinux.org/title/XDG_Base_Directory
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
+export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+
+# Pass
+export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/password-store"
+
+# --- Other paths ---
+#####################
+
+# Golang
+export GOPATH="${HOME}/go"
+export GOBIN="${GOPATH}/bin"
+append_path "${GOBIN}"
+
+[[ "${OSTYPE}" == "darwin"* ]] && {
+    JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-21-oracle-java-se.jdk/Contents/Home"
+    append_path "${JAVA_HOME/bin}"
+    CPATH="${CPATH}:${JAVA_HOME}/include"
+}
+
+# Local PATH
+append_path "${HOME}/.local/bin"
+
+# Tokens
+local tokens="${XDG_DATA_HOME}/env/tokens.sh"
+
+[[ ! -f "${tokens}" ]] && {
+    mkdir -p "${tokens:h}"
+    touch "${tokens}"
+}
+source "${tokens}"

@@ -1,119 +1,337 @@
-# shellcheck shell=bash
+# -*- mode: sh; sh-shell: zsh -*-
 
-#     +-------+
-# --- | paths |
-#     +-------+
+# Non-interactive check
+[[ $- != *i* ]] && return
 
-PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:${PATH}"
-MANPATH="/usr/local/share/man:/usr/share/man:${MANPATH}"
-INFOPATH="/usr/local/share/info:${INFOPATH}"
+# Guard against double-loading
+[[ ${ZSHRC_LOADED:-} == 1 ]] && return || ZSHRC_LOADED=1
 
+# --- Options ---
+#################
+
+# navigation
+setopt auto_cd           # cd by dir name
+setopt auto_pushd        # pushd every cd (useful for `dirs` and `popd`)
+setopt pushd_ignore_dups # no dupes on stack
+setopt cdable_vars
+
+# history
+setopt append_history
+setopt inc_append_history
+setopt extended_history
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt share_history      # share hist between sessions
+
+# autocomplete
+setopt always_to_end
+setopt auto_menu
+setopt complete_in_word
+setopt menu_complete
+
+# input
+setopt correct
+setopt interactive_comments
+# setopt no_beep
+
+# misc
+setopt no_match
+setopt extended_glob
+setopt glob_dots
+setopt numeric_glob_sort
+
+# --- Colors and prompt ---
+###########################
+
+autoload -Uz colors && colors
+autoload -Uz vcs_info
+autoload -Uz add-zsh-hook
+
+# See https://github.com/ohmyzsh/ohmyzsh/issues/9694
+[[ "${INSIDE_EMACS}" == "vterm" ]] && unsetopt promptsp
+
+# Git prompt helpers
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-    # --- PATH
-    # Macports -> MacPorts GnuBin -> MacOS
-    OS_SPEC_PATH="/opt/local/bin:/opt/local/sbin"
-    OS_SPEC_PATH="${OS_SPEC_PATH}:/opt/local/libexec/gnubin"
-    OS_SPEC_PATH="${OS_SPEC_PATH}:/Library/Apple/usr/bin"
-
-    # --- MANPATH
-    # MacPorts -> MacOS
-    OS_SPEC_MANPATH="/opt/local/share/man"
-    OS_SPEC_MANPATH="${OS_SPEC_MANPATH}:/Library/Apple/usr/share/man"
-
-    # --- INFOPATH
-    # MacPorts
-    OS_SPEC_INFOPATH="/opt/local/share/info"
-
-    # --- CPATH
-    # MacPorts -> Xcode CLT (disabled)
-    OS_SPEC_CPATH="/opt/local/include"
-    # OS_SPEC_CPATH="${OS_SPEC_CPATH}:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/"
-else
-    OS_SPEC_PATH=""
-    OS_SPEC_MANPATH=""
-    OS_SPEC_INFOPATH=""
-    OS_SPEC_CPATH=""
-fi
-# The variable values for nix package manager:
-# * OS_SPEC_PATH="${HOME}/.nix-profile/bin:/nix/var/nix/profiles/default/bin"
-# * OS_SPEC_MANPATH="${HOME}/.nix-profile/share/man"
-# * OS_SPEC_INFOPATH="${HOME}/.nix-profile/share/info"
-# * OS_SPEC_CPATH="${HOME}/.nix-profile/include"
-
-export PATH="${OS_SPEC_PATH}:${PATH}"
-export MANPATH="${OS_SPEC_MANPATH}:${MANPATH}"
-export INFOPATH="${OS_SPEC_INFOPATH}:${INFOPATH}"
-export CPATH="${OS_SPEC_CPATH}"
-
-# Local PATH
-export PATH="${PATH}:${HOME}/.local/bin"
-
-#      +--------+
-# --- | Drivers |
-#     +--------+
-
-# Select NVIDIA driver for the VDPAU
-export VDPAU_DRIVER=nvidia
-export LIBVA_DRIVER_NAME=nvidia
-# See https://github.com/elFarto/nvidia-vaapi-driver#upstream-regressions
-export NVD_BACKEND=direct
-
-
-#     +-------------------+
-# --- | general variables |
-#     +-------------------+
-
-# fix locale if needed
-export LC_ALL="en_US.UTF-8"
-export LANG="en_US.UTF-8"
-export TERM="xterm-kitty"
-if [[ "${OSTYPE}" == "darwin"* ]]; then
-    export BROWSER="open"
+    [[ -f "/opt/local/share/git/contrib/completion/git-prompt.sh" ]] && \
+        source /opt/local/share/git/contrib/completion/git-prompt.sh
 elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
-    export BROWSER="xdg-open"
+    [[ -f "/usr/share/git/completion/git-prompt.sh" ]] && \
+        source /usr/share/git/completion/git-prompt.sh
 fi
+
+GIT_PS1_SHOWDIRTYSTATE="1"        # '*'=unstaged, '+'=staged
+GIT_PS1_SHOWUPSTREAM="verbose"    # 'u='=no difference, 'u+1'=ahead by 1 commit
+GIT_PS1_STATESEPARATOR=""         # no space between branch and index status
+GIT_PS1_DESCRIBE_STYLE="describe"
+
+function dir_trim() {
+  local home_no_slash="${HOME%/}"
+  local dir="${PWD}"
+
+  if [[ "${dir}" == "${home_no_slash}" ]]; then
+    dir="~"
+  elif [[ "${dir}" == "${home_no_slash}/"* ]]; then
+    dir="~/${dir#${home_no_slash}/}"
+  fi
+
+  local -a parts
+  parts=("${(@s:/:)dir}")
+
+  if (( "${#dir}" > 35 && "${#parts}" > 4 )); then
+    local hidden_count=$(( "${#parts}" - 4 ))
+    dir="${parts[1]}/${parts[2]}/..${hidden_count}../${parts[-2]}/${parts[-1]}"
+  fi
+
+  print -r -- "${dir}"
+}
+
+function osc7-pwd() {
+    emulate -L zsh # also sets localoptions for us
+    setopt extendedglob
+    local LC_ALL=C
+    printf '\e]7;file://%s%s\e\' "${HOST}" "${PWD//(#m)([^@-Za-z&-;_~])/%${(l:2::0:)$(([##16]#MATCH))}}"
+}
+
+function chpwd-osc7-pwd() {
+    (( ZSH_SUBSHELL )) || osc7-pwd
+}
+add-zsh-hook -Uz chpwd chpwd-osc7-pwd
+
+precmd() {
+    local dir_trim="$(dir_trim)"
+    local title="%n@%m:${dir_trim}"
+
+    # set window title bar
+    print -Pn "\e]0;${title}\a"
+
+    # empty line before the prompt
+    print
+
+    # check for ssh session
+    [[ -n "${SSH_TTY}" || -n "${SSH_CONNECTION}" ]] && {
+	print -Pn "%F{242}${USER}@${HOST%%.*}%f "
+    }
+
+    # shell-level indicator (ignore tmux/lf)
+    local lvl="${SHLVL}"
+    local desc=
+
+    [[ -n "${TMUX}" ]] && { desc="${desc}tmux+"; (( lvl-- )) }
+    [[ -n "${LF_LEVEL}" ]] && {
+	desc="${desc}lf(${LF_LEVEL})+"
+	(( lvl -= "${LF_LEVEL}" ))
+    }
+    [[ "${SHLVL}" -ne 1 ]] && print -Pn "%F{8}${desc}${lvl}%f "
+
+    # print current directory
+    print -Pn "%F{cyan}${dir_trim}%f"
+
+    # print git prompt
+    # cache the value in a variable before using pringf to avoid delay
+    local GIT_PS1=
+    (( $+functions[__git_ps1] )) && {
+	GIT_PS1="$(__git_ps1)"
+    }
+    print -Pn "%F{8}${GIT_PS1}%f"
+
+    # Jump between prompts
+    # See https://codeberg.org/dnkl/foot/wiki#jumping-between-prompts
+    print -n "\e]133;A\e\\"
+
+    # new line ("\n")
+    print
+
+    # setup main prompt
+    PROMPT="%(?.%F{magenta}.%F{red})❯%f "
+    #RPROMPT='%F{245}%*%f' # time
+
+    PS2="%F{cyan}> %f"
+    #RPS2="%F{cyan}<%f"
+}
+
+# --- Aliases ---
+#################
+
+alias e="emacsclient -a 'mg' -t"
+export EDITOR="emacsclient -a 'mg' -t"
+
+alias ls="ls --color=auto"
+alias la="ls -a --group-directories-first"
+alias ll="ls -alh --group-directories-first"
+alias ldot="ls -ld .*"
+alias cp="cp -i"
+alias df="df -h"
+alias du="du -h"
+alias grep="grep --color=auto"
+
+(( $+commands[trash-put] )) && {
+    alias trash="trash-put"
+}
+
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
+alias pwgen20="pwgen -cnysB1 20"
+
+# Make colors in ripgrep as in The Silver Searcher
+alias rg="rg --colors 'match:fg:black' --colors 'match:bg:yellow'\
+             --colors 'match:style:nobold' --colors 'path:fg:green'\
+             --colors 'path:style:bold' --colors 'line:fg:yellow'"
+
+alias proj="source projects.sh"
+
+alias yt480p="yt-dlp -f 'bestvideo[height<=480]+bestaudio'"
+alias yt720p="yt-dlp -f 'bestvideo[height<=720]+bestaudio'"
+alias yt1080p="yt-dlp -f 'bestvideo[height<=1080]+bestaudio'"
+alias ytaudio="yt-dlp -x --audio-format m4a --embed-thumbnail"
+
+# darwin specific
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+    if [[ ! -f /opt/local/libexec/gnubin/ls ]]; then
+	alias ls="ls -G"
+    fi
+    alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+    alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+    alias vscode="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+    alias smerge="/Applications/Sublime\ Merge.app/Contents/SharedSupport/bin/smerge"
+    alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
+elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+    if [[ "${DESKTOP_SESSION}" == "plasma" ]]; then
+        alias open="kioclient exec"
+    else
+        alias open="xdg-open"
+    fi
+fi
+
+# --- Variables ---
+###################
+# Most environment variables have been moved to ~/.zprofile
+HISTSIZE=100000
+HISTFILE="${HOME}/.zsh_history"
+SAVEHIST=100000
 
 # Generated with `vivid generate molokai | wl-copy`
 export LS_COLORS="*~=0;38;2;122;112;112:bd=0;38;2;102;217;239;48;2;51;51;51:ca=0:cd=0;38;2;249;38;114;48;2;51;51;51:di=0;38;2;102;217;239:do=0;38;2;0;0;0;48;2;249;38;114:ex=1;38;2;249;38;114:fi=0:ln=0;38;2;249;38;114:mh=0:mi=0;38;2;0;0;0;48;2;255;74;68:no=0:or=0;38;2;0;0;0;48;2;255;74;68:ow=0:pi=0;38;2;0;0;0;48;2;102;217;239:rs=0:sg=0:so=0;38;2;0;0;0;48;2;249;38;114:st=0:su=0:tw=0:*.1=0;38;2;226;209;57:*.a=1;38;2;249;38;114:*.c=0;38;2;0;255;135:*.d=0;38;2;0;255;135:*.h=0;38;2;0;255;135:*.m=0;38;2;0;255;135:*.o=0;38;2;122;112;112:*.p=0;38;2;0;255;135:*.r=0;38;2;0;255;135:*.t=0;38;2;0;255;135:*.v=0;38;2;0;255;135:*.z=4;38;2;249;38;114:*.7z=4;38;2;249;38;114:*.ai=0;38;2;253;151;31:*.as=0;38;2;0;255;135:*.bc=0;38;2;122;112;112:*.bz=4;38;2;249;38;114:*.cc=0;38;2;0;255;135:*.cp=0;38;2;0;255;135:*.cr=0;38;2;0;255;135:*.cs=0;38;2;0;255;135:*.db=4;38;2;249;38;114:*.di=0;38;2;0;255;135:*.el=0;38;2;0;255;135:*.ex=0;38;2;0;255;135:*.fs=0;38;2;0;255;135:*.go=0;38;2;0;255;135:*.gv=0;38;2;0;255;135:*.gz=4;38;2;249;38;114:*.ha=0;38;2;0;255;135:*.hh=0;38;2;0;255;135:*.hi=0;38;2;122;112;112:*.hs=0;38;2;0;255;135:*.jl=0;38;2;0;255;135:*.js=0;38;2;0;255;135:*.ko=1;38;2;249;38;114:*.kt=0;38;2;0;255;135:*.la=0;38;2;122;112;112:*.ll=0;38;2;0;255;135:*.lo=0;38;2;122;112;112:*.ma=0;38;2;253;151;31:*.mb=0;38;2;253;151;31:*.md=0;38;2;226;209;57:*.mk=0;38;2;166;226;46:*.ml=0;38;2;0;255;135:*.mn=0;38;2;0;255;135:*.nb=0;38;2;0;255;135:*.nu=0;38;2;0;255;135:*.pl=0;38;2;0;255;135:*.pm=0;38;2;0;255;135:*.pp=0;38;2;0;255;135:*.ps=0;38;2;230;219;116:*.py=0;38;2;0;255;135:*.rb=0;38;2;0;255;135:*.rm=0;38;2;253;151;31:*.rs=0;38;2;0;255;135:*.sh=0;38;2;0;255;135:*.so=1;38;2;249;38;114:*.td=0;38;2;0;255;135:*.ts=0;38;2;0;255;135:*.ui=0;38;2;166;226;46:*.vb=0;38;2;0;255;135:*.wv=0;38;2;253;151;31:*.xz=4;38;2;249;38;114:*FAQ=0;38;2;0;0;0;48;2;230;219;116:*.3ds=0;38;2;253;151;31:*.3fr=0;38;2;253;151;31:*.3mf=0;38;2;253;151;31:*.adb=0;38;2;0;255;135:*.ads=0;38;2;0;255;135:*.aif=0;38;2;253;151;31:*.amf=0;38;2;253;151;31:*.ape=0;38;2;253;151;31:*.apk=4;38;2;249;38;114:*.ari=0;38;2;253;151;31:*.arj=4;38;2;249;38;114:*.arw=0;38;2;253;151;31:*.asa=0;38;2;0;255;135:*.asm=0;38;2;0;255;135:*.aux=0;38;2;122;112;112:*.avi=0;38;2;253;151;31:*.awk=0;38;2;0;255;135:*.bag=4;38;2;249;38;114:*.bak=0;38;2;122;112;112:*.bat=1;38;2;249;38;114:*.bay=0;38;2;253;151;31:*.bbl=0;38;2;122;112;112:*.bcf=0;38;2;122;112;112:*.bib=0;38;2;166;226;46:*.bin=4;38;2;249;38;114:*.blg=0;38;2;122;112;112:*.bmp=0;38;2;253;151;31:*.bsh=0;38;2;0;255;135:*.bst=0;38;2;166;226;46:*.bz2=4;38;2;249;38;114:*.c++=0;38;2;0;255;135:*.cap=0;38;2;253;151;31:*.cfg=0;38;2;166;226;46:*.cgi=0;38;2;0;255;135:*.clj=0;38;2;0;255;135:*.com=1;38;2;249;38;114:*.cpp=0;38;2;0;255;135:*.cr2=0;38;2;253;151;31:*.cr3=0;38;2;253;151;31:*.crw=0;38;2;253;151;31:*.css=0;38;2;0;255;135:*.csv=0;38;2;226;209;57:*.csx=0;38;2;0;255;135:*.cxx=0;38;2;0;255;135:*.dae=0;38;2;253;151;31:*.dcr=0;38;2;253;151;31:*.dcs=0;38;2;253;151;31:*.deb=4;38;2;249;38;114:*.def=0;38;2;0;255;135:*.dll=1;38;2;249;38;114:*.dmg=4;38;2;249;38;114:*.dng=0;38;2;253;151;31:*.doc=0;38;2;230;219;116:*.dot=0;38;2;0;255;135:*.dox=0;38;2;166;226;46:*.dpr=0;38;2;0;255;135:*.drf=0;38;2;253;151;31:*.dxf=0;38;2;253;151;31:*.eip=0;38;2;253;151;31:*.elc=0;38;2;0;255;135:*.elm=0;38;2;0;255;135:*.epp=0;38;2;0;255;135:*.eps=0;38;2;253;151;31:*.erf=0;38;2;253;151;31:*.erl=0;38;2;0;255;135:*.exe=1;38;2;249;38;114:*.exr=0;38;2;253;151;31:*.exs=0;38;2;0;255;135:*.fbx=0;38;2;253;151;31:*.fff=0;38;2;253;151;31:*.fls=0;38;2;122;112;112:*.flv=0;38;2;253;151;31:*.fnt=0;38;2;253;151;31:*.fon=0;38;2;253;151;31:*.fsi=0;38;2;0;255;135:*.fsx=0;38;2;0;255;135:*.gif=0;38;2;253;151;31:*.git=0;38;2;122;112;112:*.gpr=0;38;2;253;151;31:*.gvy=0;38;2;0;255;135:*.h++=0;38;2;0;255;135:*.hda=0;38;2;253;151;31:*.hip=0;38;2;253;151;31:*.hpp=0;38;2;0;255;135:*.htc=0;38;2;0;255;135:*.htm=0;38;2;226;209;57:*.hxx=0;38;2;0;255;135:*.ico=0;38;2;253;151;31:*.ics=0;38;2;230;219;116:*.idx=0;38;2;122;112;112:*.igs=0;38;2;253;151;31:*.iiq=0;38;2;253;151;31:*.ilg=0;38;2;122;112;112:*.img=4;38;2;249;38;114:*.inc=0;38;2;0;255;135:*.ind=0;38;2;122;112;112:*.ini=0;38;2;166;226;46:*.inl=0;38;2;0;255;135:*.ino=0;38;2;0;255;135:*.ipp=0;38;2;0;255;135:*.iso=4;38;2;249;38;114:*.jar=4;38;2;249;38;114:*.jpg=0;38;2;253;151;31:*.jsx=0;38;2;0;255;135:*.jxl=0;38;2;253;151;31:*.k25=0;38;2;253;151;31:*.kdc=0;38;2;253;151;31:*.kex=0;38;2;230;219;116:*.kra=0;38;2;253;151;31:*.kts=0;38;2;0;255;135:*.log=0;38;2;122;112;112:*.ltx=0;38;2;0;255;135:*.lua=0;38;2;0;255;135:*.m3u=0;38;2;253;151;31:*.m4a=0;38;2;253;151;31:*.m4v=0;38;2;253;151;31:*.mdc=0;38;2;253;151;31:*.mef=0;38;2;253;151;31:*.mid=0;38;2;253;151;31:*.mir=0;38;2;0;255;135:*.mkv=0;38;2;253;151;31:*.mli=0;38;2;0;255;135:*.mos=0;38;2;253;151;31:*.mov=0;38;2;253;151;31:*.mp3=0;38;2;253;151;31:*.mp4=0;38;2;253;151;31:*.mpg=0;38;2;253;151;31:*.mrw=0;38;2;253;151;31:*.msi=4;38;2;249;38;114:*.mtl=0;38;2;253;151;31:*.nef=0;38;2;253;151;31:*.nim=0;38;2;0;255;135:*.nix=0;38;2;166;226;46:*.nrw=0;38;2;253;151;31:*.obj=0;38;2;253;151;31:*.obm=0;38;2;253;151;31:*.odp=0;38;2;230;219;116:*.ods=0;38;2;230;219;116:*.odt=0;38;2;230;219;116:*.ogg=0;38;2;253;151;31:*.ogv=0;38;2;253;151;31:*.orf=0;38;2;253;151;31:*.org=0;38;2;226;209;57:*.otf=0;38;2;253;151;31:*.otl=0;38;2;253;151;31:*.out=0;38;2;122;112;112:*.pas=0;38;2;0;255;135:*.pbm=0;38;2;253;151;31:*.pcx=0;38;2;253;151;31:*.pdf=0;38;2;230;219;116:*.pef=0;38;2;253;151;31:*.pgm=0;38;2;253;151;31:*.php=0;38;2;0;255;135:*.pid=0;38;2;122;112;112:*.pkg=4;38;2;249;38;114:*.png=0;38;2;253;151;31:*.pod=0;38;2;0;255;135:*.ppm=0;38;2;253;151;31:*.pps=0;38;2;230;219;116:*.ppt=0;38;2;230;219;116:*.pro=0;38;2;166;226;46:*.ps1=0;38;2;0;255;135:*.psd=0;38;2;253;151;31:*.ptx=0;38;2;253;151;31:*.pxn=0;38;2;253;151;31:*.pyc=0;38;2;122;112;112:*.pyd=0;38;2;122;112;112:*.pyo=0;38;2;122;112;112:*.qoi=0;38;2;253;151;31:*.r3d=0;38;2;253;151;31:*.raf=0;38;2;253;151;31:*.rar=4;38;2;249;38;114:*.raw=0;38;2;253;151;31:*.rpm=4;38;2;249;38;114:*.rst=0;38;2;226;209;57:*.rtf=0;38;2;230;219;116:*.rw2=0;38;2;253;151;31:*.rwl=0;38;2;253;151;31:*.rwz=0;38;2;253;151;31:*.sbt=0;38;2;0;255;135:*.sql=0;38;2;0;255;135:*.sr2=0;38;2;253;151;31:*.srf=0;38;2;253;151;31:*.srw=0;38;2;253;151;31:*.stl=0;38;2;253;151;31:*.stp=0;38;2;253;151;31:*.sty=0;38;2;122;112;112:*.svg=0;38;2;253;151;31:*.swf=0;38;2;253;151;31:*.swp=0;38;2;122;112;112:*.sxi=0;38;2;230;219;116:*.sxw=0;38;2;230;219;116:*.tar=4;38;2;249;38;114:*.tbz=4;38;2;249;38;114:*.tcl=0;38;2;0;255;135:*.tex=0;38;2;0;255;135:*.tga=0;38;2;253;151;31:*.tgz=4;38;2;249;38;114:*.tif=0;38;2;253;151;31:*.tml=0;38;2;166;226;46:*.tmp=0;38;2;122;112;112:*.toc=0;38;2;122;112;112:*.tsx=0;38;2;0;255;135:*.ttf=0;38;2;253;151;31:*.txt=0;38;2;226;209;57:*.typ=0;38;2;226;209;57:*.usd=0;38;2;253;151;31:*.vcd=4;38;2;249;38;114:*.vim=0;38;2;0;255;135:*.vob=0;38;2;253;151;31:*.vsh=0;38;2;0;255;135:*.wav=0;38;2;253;151;31:*.wma=0;38;2;253;151;31:*.wmv=0;38;2;253;151;31:*.wrl=0;38;2;253;151;31:*.x3d=0;38;2;253;151;31:*.x3f=0;38;2;253;151;31:*.xlr=0;38;2;230;219;116:*.xls=0;38;2;230;219;116:*.xml=0;38;2;226;209;57:*.xmp=0;38;2;166;226;46:*.xpm=0;38;2;253;151;31:*.xvf=0;38;2;253;151;31:*.yml=0;38;2;166;226;46:*.zig=0;38;2;0;255;135:*.zip=4;38;2;249;38;114:*.zsh=0;38;2;0;255;135:*.zst=4;38;2;249;38;114:*TODO=1:*hgrc=0;38;2;166;226;46:*.avif=0;38;2;253;151;31:*.bash=0;38;2;0;255;135:*.braw=0;38;2;253;151;31:*.conf=0;38;2;166;226;46:*.dart=0;38;2;0;255;135:*.data=0;38;2;253;151;31:*.diff=0;38;2;0;255;135:*.docx=0;38;2;230;219;116:*.epub=0;38;2;230;219;116:*.fish=0;38;2;0;255;135:*.flac=0;38;2;253;151;31:*.h264=0;38;2;253;151;31:*.hack=0;38;2;0;255;135:*.heif=0;38;2;253;151;31:*.hgrc=0;38;2;166;226;46:*.html=0;38;2;226;209;57:*.iges=0;38;2;253;151;31:*.info=0;38;2;226;209;57:*.java=0;38;2;0;255;135:*.jpeg=0;38;2;253;151;31:*.json=0;38;2;166;226;46:*.less=0;38;2;0;255;135:*.lisp=0;38;2;0;255;135:*.lock=0;38;2;122;112;112:*.make=0;38;2;166;226;46:*.mojo=0;38;2;0;255;135:*.mpeg=0;38;2;253;151;31:*.nims=0;38;2;0;255;135:*.opus=0;38;2;253;151;31:*.orig=0;38;2;122;112;112:*.pptx=0;38;2;230;219;116:*.prql=0;38;2;0;255;135:*.psd1=0;38;2;0;255;135:*.psm1=0;38;2;0;255;135:*.purs=0;38;2;0;255;135:*.raku=0;38;2;0;255;135:*.rlib=0;38;2;122;112;112:*.sass=0;38;2;0;255;135:*.scad=0;38;2;0;255;135:*.scss=0;38;2;0;255;135:*.step=0;38;2;253;151;31:*.tbz2=4;38;2;249;38;114:*.tiff=0;38;2;253;151;31:*.toml=0;38;2;166;226;46:*.usda=0;38;2;253;151;31:*.usdc=0;38;2;253;151;31:*.usdz=0;38;2;253;151;31:*.webm=0;38;2;253;151;31:*.webp=0;38;2;253;151;31:*.woff=0;38;2;253;151;31:*.xbps=4;38;2;249;38;114:*.xlsx=0;38;2;230;219;116:*.yaml=0;38;2;166;226;46:*stdin=0;38;2;122;112;112:*v.mod=0;38;2;166;226;46:*.blend=0;38;2;253;151;31:*.cabal=0;38;2;0;255;135:*.cache=0;38;2;122;112;112:*.class=0;38;2;122;112;112:*.cmake=0;38;2;166;226;46:*.ctags=0;38;2;122;112;112:*.dylib=1;38;2;249;38;114:*.dyn_o=0;38;2;122;112;112:*.gcode=0;38;2;0;255;135:*.ipynb=0;38;2;0;255;135:*.mdown=0;38;2;226;209;57:*.patch=0;38;2;0;255;135:*.rmeta=0;38;2;122;112;112:*.scala=0;38;2;0;255;135:*.shtml=0;38;2;226;209;57:*.swift=0;38;2;0;255;135:*.toast=4;38;2;249;38;114:*.woff2=0;38;2;253;151;31:*.xhtml=0;38;2;226;209;57:*Icon\r=0;38;2;122;112;112:*LEGACY=0;38;2;0;0;0;48;2;230;219;116:*NOTICE=0;38;2;0;0;0;48;2;230;219;116:*README=0;38;2;0;0;0;48;2;230;219;116:*go.mod=0;38;2;166;226;46:*go.sum=0;38;2;122;112;112:*passwd=0;38;2;166;226;46:*shadow=0;38;2;166;226;46:*stderr=0;38;2;122;112;112:*stdout=0;38;2;122;112;112:*.bashrc=0;38;2;0;255;135:*.config=0;38;2;166;226;46:*.dyn_hi=0;38;2;122;112;112:*.flake8=0;38;2;166;226;46:*.gradle=0;38;2;0;255;135:*.groovy=0;38;2;0;255;135:*.ignore=0;38;2;166;226;46:*.matlab=0;38;2;0;255;135:*.nimble=0;38;2;0;255;135:*COPYING=0;38;2;182;182;182:*INSTALL=0;38;2;0;0;0;48;2;230;219;116:*LICENCE=0;38;2;182;182;182:*LICENSE=0;38;2;182;182;182:*TODO.md=1:*VERSION=0;38;2;0;0;0;48;2;230;219;116:*.alembic=0;38;2;253;151;31:*.desktop=0;38;2;166;226;46:*.gemspec=0;38;2;166;226;46:*.mailmap=0;38;2;166;226;46:*Doxyfile=0;38;2;166;226;46:*Makefile=0;38;2;166;226;46:*TODO.txt=1:*setup.py=0;38;2;166;226;46:*.DS_Store=0;38;2;122;112;112:*.cmake.in=0;38;2;166;226;46:*.fdignore=0;38;2;166;226;46:*.kdevelop=0;38;2;166;226;46:*.markdown=0;38;2;226;209;57:*.rgignore=0;38;2;166;226;46:*.tfignore=0;38;2;166;226;46:*CHANGELOG=0;38;2;0;0;0;48;2;230;219;116:*COPYRIGHT=0;38;2;182;182;182:*README.md=0;38;2;0;0;0;48;2;230;219;116:*bun.lockb=0;38;2;122;112;112:*configure=0;38;2;166;226;46:*.gitconfig=0;38;2;166;226;46:*.gitignore=0;38;2;166;226;46:*.localized=0;38;2;122;112;112:*.scons_opt=0;38;2;122;112;112:*.timestamp=0;38;2;122;112;112:*CODEOWNERS=0;38;2;166;226;46:*Dockerfile=0;38;2;166;226;46:*INSTALL.md=0;38;2;0;0;0;48;2;230;219;116:*README.txt=0;38;2;0;0;0;48;2;230;219;116:*SConscript=0;38;2;166;226;46:*SConstruct=0;38;2;166;226;46:*.cirrus.yml=0;38;2;230;219;116:*.gitmodules=0;38;2;166;226;46:*.synctex.gz=0;38;2;122;112;112:*.travis.yml=0;38;2;230;219;116:*INSTALL.txt=0;38;2;0;0;0;48;2;230;219;116:*LICENSE-MIT=0;38;2;182;182;182:*MANIFEST.in=0;38;2;166;226;46:*Makefile.am=0;38;2;166;226;46:*Makefile.in=0;38;2;122;112;112:*.applescript=0;38;2;0;255;135:*.fdb_latexmk=0;38;2;122;112;112:*.webmanifest=0;38;2;166;226;46:*CHANGELOG.md=0;38;2;0;0;0;48;2;230;219;116:*CONTRIBUTING=0;38;2;0;0;0;48;2;230;219;116:*CONTRIBUTORS=0;38;2;0;0;0;48;2;230;219;116:*appveyor.yml=0;38;2;230;219;116:*configure.ac=0;38;2;166;226;46:*.bash_profile=0;38;2;0;255;135:*.clang-format=0;38;2;166;226;46:*.editorconfig=0;38;2;166;226;46:*CHANGELOG.txt=0;38;2;0;0;0;48;2;230;219;116:*.gitattributes=0;38;2;166;226;46:*.gitlab-ci.yml=0;38;2;230;219;116:*CMakeCache.txt=0;38;2;122;112;112:*CMakeLists.txt=0;38;2;166;226;46:*LICENSE-APACHE=0;38;2;182;182;182:*pyproject.toml=0;38;2;166;226;46:*CODE_OF_CONDUCT=0;38;2;0;0;0;48;2;230;219;116:*CONTRIBUTING.md=0;38;2;0;0;0;48;2;230;219;116:*CONTRIBUTORS.md=0;38;2;0;0;0;48;2;230;219;116:*.sconsign.dblite=0;38;2;122;112;112:*CONTRIBUTING.txt=0;38;2;0;0;0;48;2;230;219;116:*CONTRIBUTORS.txt=0;38;2;0;0;0;48;2;230;219;116:*requirements.txt=0;38;2;166;226;46:*package-lock.json=0;38;2;122;112;112:*CODE_OF_CONDUCT.md=0;38;2;0;0;0;48;2;230;219;116:*.CFUserTextEncoding=0;38;2;122;112;112:*CODE_OF_CONDUCT.txt=0;38;2;0;0;0;48;2;230;219;116:*azure-pipelines.yml=0;38;2;230;219;116"
 
-# XDG
-# See https://wiki.archlinux.org/title/XDG_Base_Directory
-export XDG_CACHE_HOME="${HOME}/.cache"
-export XDG_CONFIG_HOME="${HOME}/.config"
-export XDG_DATA_HOME="${HOME}/.local/share"
-export XDG_STATE_HOME="${HOME}/.local/state"
-export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
-
-# Pass
-export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/password-store"
-
 # GnuPG
 # https://www.gnupg.org/documentation/manuals/gnupg/Invoking-GPG_002dAGENT.html
-GPG_TTY=$(tty)
+GPG_TTY="$(tty)"
 export GPG_TTY
 
-# Golang
-export GOPATH="${HOME}/go"
-export GOBIN="${GOPATH}/bin"
-export PATH="${PATH}:${GOBIN}"
+## Wine
+export WINEDEBUG="-all"
+export WINEESYNC=1
+export WINEFSYNC=1
+export WINEDLLOVERRIDES="winemenubuilder.exe=;${WINEDLLOVERRIDES}"
+# vkd3d
+export VKD3D_DEBUG=none
+export VKD3D_SHADER_DEBUG=none
+# wine-staging var
+export STAGING_SHARED_MEMORY=1
+# dxvk
+export DXVK_LOG_LEVEL=none
+export DXVK_HUD=0
+# dxvk-gplasync
+export DXVK_ASYNC=1
+export DXVK_GPLASYNCCACHE=1
+# dxvk-nvapi
+export DXVK_ENABLE_NVAPI=1
+export VK_ADD_IMPLICIT_LAYER_PATH="${XDG_DATA_HOME}/vulkan/implicit_layer.d"
+# caches
+export __GL_SHADER_DISK_CACHE=1
+export __GL_SHADER_DISK_CACHE_PATH="${XDG_CACHE_HOME}/shader_cache"
+export DXVK_STATE_CACHE=1
+export DXVK_STATE_CACHE_PATH="${XDG_CACHE_HOME}/dxvk_cache"
 
-# Java
+# --- Keybindings ---
+#####################
+bindkey -e
+
 if [[ "${OSTYPE}" == "darwin"* ]]; then
-    JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-21-oracle-java-se.jdk/Contents/Home"
-    PATH="${PATH}:${JAVA_HOME}/bin"
-    MANPATH="${MANPATH}:${JAVA_HOME}/man"
-    CPATH="${CPATH}:${JAVA_HOME}/include"
+    [[ -r "/opt/local/share/mcfly/mcfly.zsh" ]] && \
+        source /opt/local/share/mcfly/mcfly.zsh
+elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+    [[ -r "/usr/share/doc/mcfly/mcfly.zsh" ]] && \
+        source /usr/share/doc/mcfly/mcfly.zsh
 fi
 
-# Tokens
-if [ ! -f "${XDG_DATA_HOME}/env/tokens.sh" ]; then
-    mkdir -p "${XDG_DATA_HOME}/env"
-    touch "${XDG_DATA_HOME}/env/tokens.sh"
-fi
-# shellcheck source=/dev/null
-source "${XDG_DATA_HOME}/env/tokens.sh"
+# --- Functions ---
+###################
 
-# vim:ft=sh
-# Local Variables:
-# mode: sh
-# End:
+function git-latest-branch() {
+    local rev_list latest_tag
+    rev_list=$(git rev-list --tags --max-count=1)
+    latest_tag=$(git describe --tags "${rev_list}")
+    git fetch --tags
+    git checkout "${latest_tag}"
+}
+
+function ed() {
+    chezmoi edit --apply "${1}"
+}
+
+# --- Complete ---
+##################
+autoload -Uz compinit && compinit
+
+# --- Zstyles ---
+#################
+
+# ignore case for completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# enable color output for the entire completion menu
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# search results by groups for autocomplete
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
+
+# --- plugins and third party ---
+#################################
+
+# run direnv hook
+(( $+commands[direnv] )) && {
+    eval "$(direnv hook zsh)"
+}
+
+# Fish-like syntax highlighting and autosuggestions
+# TODO: darwin check
+local f
+f=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f "${f}" ]] && source "${f}"
+f=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f "${f}" ]] && source "${f}"
+unset f
+
+# Use history substring search
+# TODO: darwin check
+local f
+f=/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+[[ -f ${f} ]] && source ${f}
+unset f
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# TODO:
+#source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+# settings Mcfly
+export MCFLY_KEY_SCHEME="emacs"
+export MCFLY_FUZZY=2
+export MCFLY_RESULTS=50
+
+# settings colors for less
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# speed-up fzf
+export FZF_DEFAULT_COMMAND="fd --type f --color=never"
+export FZF_ALT_C_COMMAND="fd --type d . --color=never"
+
+# lazydocker
+# exec `systemctl --user enable --now podman.socket`
+export DOCKER_HOST=unix:///run/user/1000/podman/podman.sock
+alias docker="podman"
