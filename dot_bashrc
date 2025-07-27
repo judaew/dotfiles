@@ -309,6 +309,12 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 export FZF_DEFAULT_COMMAND='fd --type f --color=never'
 export FZF_ALT_C_COMMAND='fd --type d . --color=never'
 
+# lazydocker
+# exec `systemctl --user enable --now podman.socket`
+export DOCKER_HOST=
+export DOCKER_HOST=unix:///run/user/1000/podman/podman.sock
+alias docker="podman"
+
 # vim:ft=sh
 # Local Variables:
 # mode: sh
