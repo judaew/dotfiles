@@ -94,7 +94,7 @@ return {
             system_prompt = default_chat_prompt,
           },
         },
-        chat_dir = os.getenv("HOME") .. "/workspaces/LLM/GPT",
+        chat_dir = os.getenv("HOME") .. "/wrk/llm/gpt",
 
         chat_user_prefix = "## >> (You):",
         chat_assistant_prefix = { "## << (AI: ", "[{{agent}}]):" },

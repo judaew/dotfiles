@@ -14,5 +14,5 @@ error_enter_dir() {
 PROJECT_DIR="$(ghq list | fzf)"
 
 if [ -n "${PROJECT_DIR}" ]; then
-    cd "${HOME}/workspaces/${PROJECT_DIR}" || error_enter_dir
+    cd "${HOME}/wrk/${PROJECT_DIR}" || error_enter_dir
 fi

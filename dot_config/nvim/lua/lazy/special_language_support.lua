@@ -13,7 +13,7 @@ return {
 
   -- Syntax highlighting for the Portfile files
   {
-    dir = "~/workspaces/github.com/judaew/macports.nvim",
+    dir = "~/wrk/github.com/judaew/macports.nvim",
     config = function()
       vim.g.macports_completefunc = 1
       vim.g.macports_snippets = 1
