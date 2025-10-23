@@ -152,8 +152,12 @@ precmd() {
 # --- Aliases ---
 #################
 
-alias e="emacsclient -a 'mg' -t"
-export EDITOR="emacsclient -a 'mg' -t"
+export EDITOR="emacsclient --tty --alternate-editor=''"
+alias e="emacsclient --tty --alternate-editor=''"
+alias eg="emacsclient --create-frame --alternate-editor=''"
+alias emacsd="emacs --daemon" # start Emacs server
+alias emacsd-stop="emacsclient -e '(kill-emacs)'"
+alias emacsd-restart="emacsd-stop; emacsd"
 
 alias ls="ls --color=auto"
 alias la="ls -a --group-directories-first"
@@ -183,6 +187,8 @@ alias yt480p="yt-dlp -f 'bestvideo[height<=480]+bestaudio'"
 alias yt720p="yt-dlp -f 'bestvideo[height<=720]+bestaudio'"
 alias yt1080p="yt-dlp -f 'bestvideo[height<=1080]+bestaudio'"
 alias ytaudio="yt-dlp -x --audio-format m4a --embed-thumbnail"
+
+alias fixkde="killall -s KILL plasmashell"
 
 # darwin specific
 if [[ "${OSTYPE}" == "darwin"* ]]; then
@@ -269,6 +275,17 @@ function ed() {
     chezmoi edit --apply "${1}"
 }
 
+function mkvenv() {
+    if command -v uv >/dev/null 2>&1; then
+        uv venv .venv
+    else
+        python -m venv .venv
+    fi
+
+    echo "source .venv/bin/activate" > .envrc
+    direnv allow
+}
+
 # --- Complete ---
 ##################
 autoload -Uz compinit && compinit
@@ -284,6 +301,10 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 
+# don't insert the first match completely -- only the common part
+# (it's completion behave like Bash completion)
+unsetopt menucomplete
+
 # --- plugins and third party ---
 #################################
 
@@ -294,6 +315,8 @@ zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 
 # Fish-like syntax highlighting and autosuggestions
 # TODO: darwin check
+# f=/opt/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# f=/opt/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 local f
 f=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -f "${f}" ]] && source "${f}"
@@ -303,6 +326,7 @@ unset f
 
 # Use history substring search
 # TODO: darwin check
+# f=/opt/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 local f
 f=/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 [[ -f ${f} ]] && source ${f}
