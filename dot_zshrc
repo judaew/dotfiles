@@ -314,28 +314,32 @@ unsetopt menucomplete
 }
 
 # Fish-like syntax highlighting and autosuggestions
-# TODO: darwin check
-# f=/opt/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# f=/opt/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 local f
-f=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    f=/opt/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+    f=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 [[ -f "${f}" ]] && source "${f}"
-f=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    f=/opt/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+else
+    f=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 [[ -f "${f}" ]] && source "${f}"
 unset f
 
 # Use history substring search
-# TODO: darwin check
-# f=/opt/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 local f
-f=/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    f=/opt/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+else
+    f=/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+fi
 [[ -f ${f} ]] && source ${f}
 unset f
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-
-# TODO:
-#source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # settings Mcfly
 export MCFLY_KEY_SCHEME="emacs"
