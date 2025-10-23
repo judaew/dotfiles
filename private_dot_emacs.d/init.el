@@ -4,15 +4,10 @@
 
 ;;; Code:
 
-;;; Early Init
-(setenv "LSP_USE_PLISTS" "true")
-
 ;;; General config
 
-;; Adjust gc-cons-threshold and increase the amount of data which
-;; Emacs reads from the process
-(setq gc-cons-threshold (* 100 1024 1024)    ;; 100mb
-      read-process-output-max (* 1024 1024)) ;; 1mb
+;; Suppress native-comp warnings
+(setq native-comp-async-report-warnings-errors nil)
 
 ;; Disable creating backup and lock files
 (setq make-backup-files nil)
@@ -21,25 +16,8 @@
 ;; Disabel auto-save
 (setq auto-save-default nil)
 
-;; Set window size
-(add-to-list 'default-frame-alist '(width . 88))
-(add-to-list 'default-frame-alist '(height . 36))
-
-;; Set font
-(set-frame-font "VictorMono Nerd Font Mono-10" nil t)
-(unless (find-font (font-spec :name "VictorMono Nerd Font"))
-  (message "VictorMono Nerd Font not found!"))
-
-;; Create empty buffer *scratch* in org-mode
-(setq inhibit-startup-screen t)
-(setq initial-major-mode 'org-mode)
-(setq initial-scratch-message "#+TITLE: Scratch Buffer\n\n")
-
-;; Minimal UI
-(menu-bar-mode 1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(fset 'yes-or-no-p 'y-or-n-p)
+;; Shortened yes-or-no-p to y-or-n-p
+(setopt use-short-answers t)
 
 ;; Show current project on the default mode-line
 (setq project-mode-line t)
@@ -56,9 +34,17 @@
 
 (add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
 
+;; Tab-bar
+(setq tab-bar-show 1) ;; auto-hide
+(global-set-key (kbd "C-<next>") 'tab-next)
+(global-set-key (kbd "C-<prior>") 'tab-previous)
+
 ;;; straight.el
 
+;; Bootstrap Straight
 (defvar bootstrap-version)
+(setq straight-repository-branch "develop")
+
 (let ((bootstrap-file
        (expand-file-name
         "straight/repos/straight.el/bootstrap.el"
@@ -68,37 +54,55 @@
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         (concat "https://raw.githubusercontent.com/"
+                 "radian-software/straight.el/"
+                 "develop/install.el")
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
 ;;; Packages
-
-(setq package-enable-at-startup nil)
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
+(setq straight-vc-git-default-clone-depth 3)
+
+;; Re-checks every repo only when is really change something
+(setq straight-cache-autoloads t
+      straight-check-for-modifications '(find-watching))
+
+(use-package server
+  :straight nil
+  :config
+  (unless (server-running-p)
+    (server-start)))
 
 ;; Load modular configuration files
 (add-to-list 'load-path "~/.emacs.d/config")
 
-(load "setup-org")             ;; Org-mode enhancement
-(load "setup-term")            ;; Terminal integration
-(load "setup-search")          ;; Search enhancement
-(load "setup-completion")      ;; Auto-completion
-(load "setup-snippets")        ;; Snippet management
-(load "setup-git")             ;; Git integration
-(load "setup-projects")        ;; Project management
-;; (load "setup-tree-sitter")     ;; Tree-sitter support
-(load "setup-lang-support")    ;; Misc language support
-(load "setup-lsp")             ;; LSP (Language Server Protocol)
-;; (load "setup-dap")             ;; DAP (Debug Adapter Protocol)
-(load "setup-llm")             ;; Large language model
-(load "setup-editing-support") ;; Editing utilities
-(load "setup-movement")        ;; Different navigation enhancement
-(load "setup-ui")              ;; UI tweaks
-(load "setup-themes")          ;; Theme configuration
+(load "setup-org")               ;; Org-mode enhancement
+(load "setup-term")              ;; Terminal integration
+
+;; (load "setup-completion-engine") ;; Auto-completion and search enhancement
+(load "setup-minibuffer-ui")
+(load "setup-completion-backend")
+(load "setup-completion-ui")
+
+(load "setup-git")               ;; Git integration
+(load "setup-project")          ;; Project management
+(load "setup-lang")      ;; Misc language support
+(load "setup-docker")
+(load "setup-flycheck")
+(load "setup-spellcheck")
+
+(load "setup-lsp")               ;; LSP (Language Server Protocol)
+(load "setup-llm")               ;; Large language model
+(load "setup-editing")   ;; Editing utilities
+(load "setup-undo")
+(load "setup-dired")
+(load "setup-movement")          ;; Different navigation enhancement
+(load "setup-ui")                ;; UI tweaks
+(load "setup-themes")            ;; Theme configuration
 
 ;; Set custom-file location
 (setq custom-file (locate-user-emacs-file "custom.el"))
