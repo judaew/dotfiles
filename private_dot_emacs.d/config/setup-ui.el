@@ -1,31 +1,49 @@
-;;; Package --- Summary -*- lexical-binding: t; -*-
+;;; setup-ui.el --- UI enhancements -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
+;; Packages:
+;; `all-the-icons'         ~ file and buffer icons
+;; `nerd-the-icons'        ~ alternative icon set
+;; `doom-modeline'         ~ fancy modeline
+;; `diminish'              ~ hide minor modes in modeline
+;; `hl-todo'               ~ highlight TODO/FIXME comments
+;; `highlight-parentheses' ~ highlight matching parentheses
+;; `goggles'               ~ show changes inline
+;; `indent-bars'           ~ display indentation bars
+;; `colorful-mode'         ~ add color to buffers
+;; `posframe'             ~ pop a posframe at point
+
 ;; TODOs UI pkg:
 ;; - hydra
-;; - posframe
 ;; - popup-el
 ;; - casual https://github.com/kickingvegas/casual
 
 ;;; Code:
 
-(use-package all-the-icons
-  :if (display-graphic-p)
+(use-package emacs
+  :straight nil
   :config
-  (unless (find-font (font-spec :name "all-the-icons"))
-    (all-the-icons-install-fonts t)))
+  (add-hook 'after-make-frame-functions
+	    (lambda (frame)
+	      (with-selected-frame frame
+		(if (display-graphic-p frame)
+		    (pixel-scroll-precision-mode 1)
+		  (pixel-scroll-precision-mode 0))))))
+
+;; Use M-x `all-the-icons-install-fonts' for install fonts.
+;; The `window-system' and `display-graphic-p' are bad checks for
+;; Emacs with multiples frames or in `daemonp' mode.
+(use-package all-the-icons
+  :defer t)
+(use-package nerd-icons
+  :defer t)
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   :config
+  (setq doom-modeline-icon t)
   (setq doom-modeline-bar-color "#2D2E2E"))
-
-;; Build-in from Emacs 30 (#emacs30)
-(use-package which-key
-  :straight nil
-  :diminish which-key-mode
-  :hook (after-init . which-key-mode))
 
 (use-package diminish)
 
@@ -36,7 +54,7 @@
   :hook (after-init . global-ligature-mode)
   :config
   (defvar ligatures-VictorMono
-    '("</" "</" "/>" "~-" "-~" "~@" "<~" "<~>" "<~~" "~>" "~~" "~~>"
+    '("</" "/>" "~-" "-~" "~@" "<~" "<~>" "<~~" "~>" "~~" "~~>"
       ">=" "<=" "<!--" "##" "###" "####" "|-" "-|" "|->" "<-|" ">-|"
       "|-<" "|=" "|=>" ">-" "<-" "<--" "-->" "->" "-<" ">->" ">>-"
       "<<-" "<->" "->>" "-<<" "<-<" "==>" "=>" "=/=" "!==" "!=" "<=="
@@ -48,7 +66,7 @@
 
 (use-package highlight-parentheses
   :diminish highlight-parentheses-mode
-  :hook (emacs-lisp-mode . highlight-parentheses-mode))
+  :hook (prog-mode . highlight-parentheses-mode))
 
 (use-package goggles
   :hook ((prog-mode text-mode) . goggles-mode)
@@ -76,9 +94,7 @@
 	 json-mode
 	 yaml-mode))
 
-(use-package emacs
-  :straight nil
-  :if (display-graphic-p)
-  :hook (after-init . pixel-scroll-precision-mode))
+(use-package posframe)
 
+(provide 'setup-ui)
 ;;; setup-ui.el ends here

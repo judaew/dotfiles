@@ -1,6 +1,12 @@
-;;; Package --- Summary -*- lexical-binding: t; -*-
+;;; setup-org.el --- Org mode enhancements -*- lexical-binding: t; -*-
 
 ;;; Commentary:
+
+;; Packages:
+;; - `org'          ~ organize notes, tasks, and documents
+;; - `org-download' ~ drag-and-drop images into Org
+;; - `org-modern'   ~ modern visual style for Org
+;; - `org-appear'   ~ reveal Org elements contextually
 
 ;;; Code:
 
@@ -23,10 +29,9 @@
 (add-hook 'org-mode-hook #'org-visual-mode)
 
 (use-package org
-  :straight nil
   :bind
   (("C-c o i" . open-index-org-file)
-   ("C-c c" . org-capture))
+   ("C-c o c" . org-capture))
   :custom
   (org-log-done 'time)
   (org-startup-indented t)
@@ -59,7 +64,14 @@
       "** %?\n%T")
      ("r" "Recurring Event" entry
       (file+headline "~/org/calendar.org" "Recurring")
-      "** %?\n%T"))))
+      "** %?\n%T")))
+
+  ;; TODO: 2025 август
+  (org-startup-with-inline-images t)
+  (org-image-actual-width '(300))
+  (org-agenda-start-with-log-mode t)
+  (org-log-into-drawer t)
+  )
 
 (use-package org-download
   :after org
@@ -80,4 +92,5 @@
 ;; (use-package org-crypt
 ;;   :autoload org-crypt-use-before-save-magic)
 
+(provide 'setup-org)
 ;;; setup-org.el ends here
