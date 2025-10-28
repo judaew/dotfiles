@@ -25,6 +25,10 @@
 ;; Enable line numbers
 (global-display-line-numbers-mode t)
 
+;; Add line and column to modeline
+(line-number-mode)
+(column-number-mode)
+
 ;; Enable smart parens
 (electric-pair-mode t)
 
@@ -80,33 +84,60 @@
 ;; Load modular configuration files
 (add-to-list 'load-path "~/.emacs.d/config")
 
-(load "setup-org")               ;; Org-mode enhancement
-(load "setup-term")              ;; Terminal integration
+;; -----------------------------------
+;; Core system & foundational behavior
+;; -----------------------------------
+(load "setup-editing")  ;; Editing utilities
+(load "setup-movement") ;; Different navigation enhancement
+(load "setup-dired")    ;; File manager improvements
+(load "setup-undo")     ;; Undo/redo system and undo navigation
 
-;; (load "setup-completion-engine") ;; Auto-completion and search enhancement
-(load "setup-minibuffer-ui")
-(load "setup-completion-backend")
-(load "setup-completion-ui")
+;; -----------------
+;; UI tweaks & theme
+;; -----------------
+(load "setup-ui")     ;; UI tweaks
+(load "setup-themes") ;; Theme configuration
 
-(load "setup-git")               ;; Git integration
-(load "setup-project")          ;; Project management
-(load "setup-lang")      ;; Misc language support
-(load "setup-docker")
-(load "setup-flycheck")
-(load "setup-spellcheck")
+;; ------------------------
+;; Completion & UI feedback
+;; ------------------------
+(load "setup-completion-backend") ;; cape & other capf completion providers
+(load "setup-completion-ui")      ;; corfu as completion UI
+(load "setup-minibuffer-ui")      ;; vertico/consult and other minibuffer tweaks
 
-(load "setup-lsp")               ;; LSP (Language Server Protocol)
-(load "setup-llm")               ;; Large language model
-(load "setup-editing")   ;; Editing utilities
-(load "setup-undo")
-(load "setup-dired")
-(load "setup-movement")          ;; Different navigation enhancement
-(load "setup-ui")                ;; UI tweaks
-(load "setup-themes")            ;; Theme configuration
+;; ---------------------------
+;; Spelling or syntax checking
+;; ---------------------------
+(load "setup-flymake")    ;; syntax/linting via Flymake integration
+(load "setup-spellcheck") ;; spell-checker setup
+
+;; ----------------------------------
+;; Language support, TreeSitter & LSP
+;; ----------------------------------
+(load "setup-project")    ;; project management
+(load "setup-treesitter") ;; treesitter integration
+(load "setup-lang")       ;; misc language support
+(load "setup-lsp")        ;; LSP (Language Server Protocol)
+
+;; -----------------
+;; Tools & ecosystem
+;; -----------------
+(load "setup-git")    ;; git integration
+(load "setup-docker") ;; docker integration
+(load "setup-term")   ;; terminal integration
+(load "setup-llm")    ;; large language model integration
+
+;; --------------------
+;; Knowledge management
+;; --------------------
+(load "setup-org") ;; org-mode enhancement
 
 ;; Set custom-file location
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (when (file-exists-p custom-file)
   (load custom-file nil 'noerror))
+
+;; Make Flymake see packages from current load-path
+(setopt elisp-flymake-byte-compile-load-path load-path)
 
 ;;; init.el ends here
