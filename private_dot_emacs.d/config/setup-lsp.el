@@ -4,26 +4,31 @@
 
 ;; Packages:
 ;; - eglot     ~ LSP client
-;; - eldoc-box ~ display documentation in popup
-;;
-;; TODOs:
-;; - emacs-lsp-booster (https://github.com/blahgeek/emacs-lsp-booster)
-;; - eglot-booster (https://github.com/jdtsmith/eglot-booster)
 
 ;;; Code:
+
+(defun my/eglot-ensure ()
+  "Start eglot for the current buffer only if it is inside a project.
+Or passes other checks that determine whether eglot should run."
+  (when (and buffer-file-name
+	     (project-current)
+	     ;; This is useful for me as a MacPorts maintainer
+	     (not buffer-read-only))
+    (eglot-ensure)))
 
 (use-package eglot
   :after cape which-key marginalia
   :hook
-  (((c-mode
-    c++-mode
-    go-mode
-    rust-mode
-    java-mode
-    lua-mode
-    python-mode
-    cmake-mode
-    dockerfile-mode) . eglot-ensure)
+  (((bash-ts-mode
+     c-ts-mode
+     c++-ts-mode
+     go-ts-mode
+     rust-ts-mode
+     java-ts-mode
+     lua-ts-mode
+     python-ts-mode
+     cmake-ts-mode
+     dockerfile-ts-mode) . my/eglot-ensure)
    (eglot-managed-mode . eglot-inlay-hints-mode)
    ;; Integrate with `cape'
    (eglot-managed-mode . my/setup-capf-eglot))
@@ -69,15 +74,6 @@
   ;; Integrate with `marginalia'
   (add-to-list 'marginalia-command-categories
 	       '(eglot-code-actions . eglot)))
-
-;; Floating documentation (like lsp-ui-doc)
-(use-package eldoc-box
-  :after eglot
-  :hook (eglot-managed-mode . eldoc-box-hover-mode)
-  :custom
-  (eldoc-box-clear-with-C-g t)
-  (eldoc-box-only-multi-line t)
-  (eldoc-box-fringe-use-same-bg t))
 
 (provide 'setup-lsp)
 ;;; setup-lsp.el ends here
