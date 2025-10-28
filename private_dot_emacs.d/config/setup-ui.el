@@ -12,12 +12,15 @@
 ;; `goggles'               ~ show changes inline
 ;; `indent-bars'           ~ display indentation bars
 ;; `colorful-mode'         ~ add color to buffers
-;; `posframe'             ~ pop a posframe at point
+;; `posframe'              ~ pop a posframe at point
 
 ;; TODOs UI pkg:
+;; - enlight https://github.com/ichernyshovvv/enlight
+;; - sideline
 ;; - hydra
 ;; - popup-el
 ;; - casual https://github.com/kickingvegas/casual
+;; - helpful
 
 ;;; Code:
 
@@ -74,13 +77,20 @@
   (setq-default goggles-pulse t))
 
 (use-package indent-bars
-  :hook ((c-mode
-	  c++-mode
-	  go-mode
-	  rust-mode
-	  python-mode
-	  lua-mode
-	  yaml-mode) . indent-bars-mode)
+  :hook ((c-ts-mode
+	  c++-ts-mode
+	  csharp-ts-mode
+	  css-ts-mode
+	  go-ts-mode
+	  java-ts-mode
+	  javascript-ts-mode
+	  lua-ts-mode
+	  rust-ts-mode
+	  python-ts-mode
+	  ruby-ts-mode
+	  tsx-ts-mode
+	  typescript-ts-mode
+	  yaml-ts-mode) . indent-bars-mode)
   :custom
   (indent-bars-no-descend-lists t) ; no extra bars in continued func arg lists
   (indent-bars-treesit-support t)
@@ -88,11 +98,11 @@
 
 (use-package colorful-mode
   :defer t
-  :hook (css-mode
-	 html-mode
+  :hook (css-ts-mode
+	 html-ts-mode
 	 dhall-mode
-	 json-mode
-	 yaml-mode))
+	 json-ts-mode
+	 yaml-ts-mode))
 
 (use-package posframe)
 
