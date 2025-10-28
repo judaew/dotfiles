@@ -12,6 +12,7 @@
 ;; - `marginalia',      ~ rich annotations for M-x completion
 ;; - `embark'           ~ contextual action framework
 ;; - `embark-consult'   ~ embark integration for consult
+;; - `nerd-icons-completion' ~ icons completion in vertico + marginalia
 
 ;;; Code:
 
@@ -174,6 +175,12 @@
 (use-package embark-consult
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package nerd-icons-completion
+  :after marginalia
+  :config
+  (nerd-icons-completion-mode)
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
 (provide 'setup-minibuffer-ui)
 ;;; setup-minibuffer-ui.el ends here
