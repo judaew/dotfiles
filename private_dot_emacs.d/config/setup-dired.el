@@ -3,10 +3,10 @@
 ;;; Commentary:
 
 ;; Packages:
-;; - `dired'
-;; - `dired-x'
-;; - `dired-launch'
-;; - `dirvish'
+;; - `dired'        ~ build-in file manager core
+;; - `dired-x'      ~ extra Dired commands
+;; - `dired-launch' ~ open files by external apps (like xdg-open)
+;; - `dirvish'      ~ modern Dired UI with preview panel, icons, async ops
 ;; - `diredfl'      ~ nicer faces for Dired entries
 
 ;;; Code:
@@ -89,7 +89,7 @@
      ("m" "/mnt/" "mnt")
      ("t" "~/.local/share/Trash/files/" "trash")))
   :config
-  ;;(dirvish-side-follow-mode t)
+  (dirvish-side-follow-mode t)
   (setq dirvish-attributes
       (append
        ;; The order of these attributes is insignificant, they are always
@@ -99,13 +99,15 @@
        ;; Other attributes are displayed in the order they appear in this list.
        ;; '(git-msg file-size)))
        ))
+  ;; Also FAIL: see prev comment
+  (setq dirvish-side-attributes
+	(append
+	 '(vc-state subtree-state nerd-icons collapse)))
 
   (setq dirvish-header-line-format
 	'(:left (path) :right (free-space))
 	dirvish-mode-line-format
-        '(:left (sort file-time " " file-size symlink) :right (omit yank index)))
-
-  (dirvish-side-follow-mode))
+        '(:left (sort file-time " " file-size symlink) :right (omit yank index))))
 
 (use-package diredfl
   :hook
