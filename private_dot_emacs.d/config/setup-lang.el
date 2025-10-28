@@ -3,17 +3,32 @@
 ;;; Commentary:
 
 ;; Packages:
+;; - `citre'         ~ advanced Ctags frontend
 ;; - `go-mode'       ~ major mode for Go
-;; - `python-mode'  ~ major mode for Python
-;; - `pyvenv'       ~ manage Python virtual environment
-;; - `python-blcak' ~ reformat Python code using black
-;; - `lua-mode'      ~ major mode for Lua
-;; - `cmake-mode'    ~ major mode for CMake
+;; - `pyvenv'        ~ manage Python virtual environment
+;; - `python-black'  ~ reformat Python code using black
 ;; - `ninja-mode'    ~ major mode for Ninja build files
 ;; - `protobuf-mode' ~ major mode for Protocol Buffers
 ;; - `nginx-mode'    ~ major mode for Nginx config
 
 ;;; Code:
+
+(use-package citre
+  :defer t
+  :bind (("C-x c j" . citre-jump)
+	 ("C-x c J" . citre-jump-back)
+         ("C-x c p" . citre-peek)
+         ("C-x c u" . citre-update-database)
+	 ("C-x c U" . citre-update-tags-file))
+
+  ;; Avoid using citre-config because it automatically enables `citre-mode'
+  ;; in all buffers, adding tags to `completion-at-point' which I want to prevent.
+  ;; `citre-peek' and `citre-jump' work perfectly fine without citre-mode.
+  ;;
+  ;;:init (require 'citre-config)
+  :config
+  (setq citre-peek-fill-fringe nil)
+  (setq citre-peek-use-dashes-as-horizontal-border t))
 
 ;; Go block
 ;; ##############################
