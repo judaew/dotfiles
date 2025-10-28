@@ -30,8 +30,11 @@
 	   docker-compose-command "podman-compose"
 	   docker-container-tramp-method "podman"))))
 
+;; NOTE: Keep the package for `dockerfile-build-buffer' and
+;; `dockerfile-build-no-cache-buffer', but leave syntax highlighting to Tree-Sitter.
 (use-package dockerfile-mode
-  :mode ("Dockerfile\\'" "Containerfile\\'")
+  :mode (("Dockerfile\\'" . dockerfile-ts-mode)
+	 ("Containerfile\\'" . dockerfile-ts-mode))
   :config
   (pcase my/emacs-docker-executable
     ('docker
