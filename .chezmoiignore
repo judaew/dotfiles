@@ -9,3 +9,20 @@ misc
 
 # System conf
 etc
+
+{{- if ne .chezmoi.os "darwin" }}
+.local/bin/port-livecheck.sh
+.local/bin/port-update.sh
+.local/bin/portlist.sh
+{{- end }}
+
+{{- if ne .chezmoi.os "linux" }}
+.config/environment.d
+.config/foot
+.config/pacman
+.config/systemd
+.config/user-dirs.dirs
+
+.local/bin/pacman-reclaim.sh
+.local/bin/_systemd-reclaim.sh
+{{- end }}
