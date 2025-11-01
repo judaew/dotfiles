@@ -43,7 +43,7 @@ while true; do
 
     case ${answer} in
         [Yy]*)
-            yay -Sc
+            paru -Sc
             break;;
         [Nn]*|*)
             break;;
