@@ -248,6 +248,33 @@ export __GL_SHADER_DISK_CACHE_PATH="${XDG_CACHE_HOME}/shader_cache"
 export DXVK_STATE_CACHE=1
 export DXVK_STATE_CACHE_PATH="${XDG_CACHE_HOME}/dxvk_cache"
 
+# settings Mcfly
+export MCFLY_KEY_SCHEME="emacs"
+export MCFLY_FUZZY=2
+export MCFLY_RESULTS=50
+
+# settings colors for less
+export LESS_TERMCAP_mb=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+# speed-up fzf
+export FZF_DEFAULT_COMMAND="fd --type f --color=never"
+export FZF_ALT_C_COMMAND="fd --type d . --color=never"
+
+# lazydocker
+# exec `systemctl --user enable --now podman.socket`
+export DOCKER_HOST=unix:///run/user/1000/podman/podman.sock
+alias docker="podman"
+
+# OpenSSH
+export SSH_ASKPASS=/usr/bin/ksshaskpass
+export SSH_ASKPASS_REQUIRE=prefer
+
 # --- Keybindings ---
 #####################
 bindkey -e
@@ -340,26 +367,3 @@ fi
 unset f
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-
-# settings Mcfly
-export MCFLY_KEY_SCHEME="emacs"
-export MCFLY_FUZZY=2
-export MCFLY_RESULTS=50
-
-# settings colors for less
-export LESS_TERMCAP_mb=$'\e[1;32m'
-export LESS_TERMCAP_md=$'\e[1;32m'
-export LESS_TERMCAP_me=$'\e[0m'
-export LESS_TERMCAP_se=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[01;33m'
-export LESS_TERMCAP_ue=$'\e[0m'
-export LESS_TERMCAP_us=$'\e[1;4;31m'
-
-# speed-up fzf
-export FZF_DEFAULT_COMMAND="fd --type f --color=never"
-export FZF_ALT_C_COMMAND="fd --type d . --color=never"
-
-# lazydocker
-# exec `systemctl --user enable --now podman.socket`
-export DOCKER_HOST=unix:///run/user/1000/podman/podman.sock
-alias docker="podman"
