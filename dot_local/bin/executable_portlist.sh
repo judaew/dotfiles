@@ -2,7 +2,7 @@
 
 if [ -z "$(which port)" ]; then
     echo "MacPorts not found, this script is primarily for use with MacPorts."
-    exit 1
+    return 1
 fi
 
 true portlist-requested.txt

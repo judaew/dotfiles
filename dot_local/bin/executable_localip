@@ -3,7 +3,7 @@
 for cmd in ip awk cut; do
     if ! command -v "$cmd" &>/dev/null; then
         echo "Error: $cmd not found."
-        exit 1
+        return 1
     fi
 done
 

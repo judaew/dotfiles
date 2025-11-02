@@ -2,7 +2,7 @@
 
 if [ -z "$(which pacman)" ]; then
     echo "pacman not found, this script is primarily for use with Arch Linux."
-    exit 1
+    return 1
 fi
 
 green=$(tput setaf 2)

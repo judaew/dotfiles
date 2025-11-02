@@ -2,12 +2,12 @@
 
 if [ -z "$(which lf)" ]; then
     echo "Error: lf not found."
-    exit 1
+    return 1
 fi
 
 if [ "${1}" = "" ]; then
     echo 'Error: Enter the port you want to see'
-    exit 0
+    return 0
 fi
 
 lf "$(port dir "${1}")"

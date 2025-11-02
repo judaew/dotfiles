@@ -2,7 +2,7 @@
 
 if [ -z "$(which journalctl)" ]; then
     echo "journalctl not found, this script is primarily for use with systemd."
-    exit 1
+    return 1
 fi
 
 green=$(tput setaf 2)

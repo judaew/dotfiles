@@ -2,12 +2,12 @@
 
 if [ -z "$(which ffmpeg)" ]; then
     echo "Error: FFmpeg not found."
-    exit 1
+    return 1
 fi
 
 if [ "${1}" = "" ]; then
     echo 'Error: Enter the file you want to convert'
-    exit 1
+    return 1
 fi
 
 FILENAME="$(basename "${1}")"
