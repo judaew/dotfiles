@@ -26,6 +26,7 @@ path=()
 
 path+=(
     /usr/bin
+    /usr/sbin
     /usr/local/bin
     /usr/local/sbin
 )
@@ -84,7 +85,7 @@ export GOBIN="${GOPATH}/bin"
 path+=(${GOBIN})
 
 [[ "${OSTYPE}" == "darwin"* ]] && {
-    JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-21-oracle-java-se.jdk/Contents/Home"
+    JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-25-macports.jdk/Contents/Home"
     path+=(${JAVA_HOME/bin})
     CPATH="${CPATH}:${JAVA_HOME}/include"
 }
