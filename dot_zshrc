@@ -317,7 +317,7 @@ function mkvenv() {
 ##################
 [[ "${OSTYPE}" == "darwin"* ]] && {
     # MacPorts
-    fpath=("/opt/local/share/zsh/site-functions")
+    fpath+=(/opt/local/share/zsh/site-functions)
 }
 autoload -Uz compinit && compinit
 
