@@ -2,7 +2,6 @@
 
 # git
 [core]
-    pager = delta
     # See https://github.blog/2022-06-27-highlights-from-git-2-37/#a-builtin-filesystem-monitor-for-windows-and-macos
     # fsmonitor = true
 
@@ -45,22 +44,13 @@
     prev = checkout -
     discard = checkout --
 
-[interactive]
-    diffFilter = delta --color-only
-
 # git.diff
 [difftool]
     thustExitCode = true
 
-[difftool "nvimdiff"]
-    cmd = nvim -d $LOCAL $REMOTE
-
 # git.merge
 [merge]
-    conflictstyle = diff3
-
-[mergetool "nvimdiff"]
-    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    conflictstyle = zdiff3
 
 # git-lfs
 [filter "lfs"]
