@@ -4,7 +4,6 @@
 
 ;; Packages:
 ;; - `exec-path-from-shell' ~ sync shell environment with Emacs
-;; - `eat'                  ~ emulate a terminal
 ;; - `vterm'                ~ libvterm integration
 ;; - `direnv'               ~ direnv integration
 ;; - `termclip'             ~ clipboard support in terminal
@@ -18,20 +17,9 @@
   (when (memq window-system '(mac ns x pgtk))
     (exec-path-from-shell-initialize)))
 
-(use-package eat
-  :straight (eat :type git
-                 :host codeberg
-                 :repo "akib/emacs-eat"
-                 :files ("*.el" ("term" "term/*.el") "*.texi"
-                         "*.ti" ("terminfo/e" "terminfo/e/*")
-                         ("terminfo/65" "terminfo/65/*")
-                         ("integration" "integration/*")
-                         (:exclude ".dir-locals.el" "*-tests.el")))
-  :bind
-  (("C-~" . eat)
-   ("C-c t" . eat)))
-
 (use-package vterm
+  :bind
+  (("C-~" . vterm))
   :custom
   (vterm-max-scrollback 10000))
 
