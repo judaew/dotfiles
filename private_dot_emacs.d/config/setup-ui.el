@@ -42,11 +42,11 @@
 (use-package nerd-icons
   :defer t)
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
+(use-package mood-line
+  :hook (after-init . mood-line-mode)
   :config
-  (setq doom-modeline-icon t)
-  (setq doom-modeline-bar-color "#2D2E2E"))
+  (setq mood-line-format mood-line-format-default)
+  (setq mood-line-glyph-alist mood-line-glyphs-fira-code))
 
 (use-package diminish)
 
