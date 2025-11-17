@@ -5,7 +5,6 @@
 ;; Packages:
 ;; - `project'               ~ project management core
 ;; - `consult-project-extra' ~ enhanced project navigation
-;; - `ottp'                  ~ organize projects in tab groups
 
 ;;; Code:
 
@@ -34,12 +33,6 @@
   :bind
   (("C-x p f" . consult-project-extra-find)
    ("C-x p o" . consult-project-extra-find-other-window)))
-
-(use-package otpp ; one-tab-per-project
-  :after project
-  :config
-  (otpp-mode 1)
-  (otpp-override-mode 1))
 
 (provide 'setup-project)
 ;;; setup-project.el ends here
