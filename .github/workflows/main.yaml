@@ -2,11 +2,30 @@ name: "lint changes files"
 on: push
 
 jobs:
+  emacs-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Emacs
+        uses: purcell/setup-emacs@master
+        with:
+          version: snapshot
+
+      - name: Setup "emacs-lisp-check"
+        uses: leotaku/elisp-check@master
+        with:
+          check: byte-compile
+          file: "private_dot_emacs.d/**/*.el"
+          ignore_warnings: false
+          warnings_as_errors: false
+
   shellcheck-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: Setup "shellcheck"
         run: |
@@ -17,25 +36,13 @@ jobs:
         run: |
           export SHELLCHECK_OPTS="-e SC1090 -e SC1091 -e SC2034"
           shellcheck \
-            dot_bash_profile dot_bashrc dot_profile \
             dot_config/lf/*.sh utils/*.sh dot_local/bin/*
-
-  luacheck-lint-neovim:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Luacheck Linter (Neovim)
-        uses: judaew/luacheck-action@v0.2.2
-        with:
-          targets: "dot_config/nvim"
 
   markdown-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: Setup "ruby"
         uses: ruby/setup-ruby@v1
