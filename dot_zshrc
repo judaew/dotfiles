@@ -109,7 +109,7 @@ precmd() {
 
     # check for ssh session
     [[ -n "${SSH_TTY}" || -n "${SSH_CONNECTION}" ]] && {
-	print -Pn "%F{242}${USER}@${HOST%%.*}%f "
+        print -Pn "%F{242}${USER}@${HOST%%.*}%f "
     }
 
     # shell-level indicator (ignore tmux/lf)
@@ -118,8 +118,8 @@ precmd() {
 
     [[ -n "${TMUX}" ]] && { desc="${desc}tmux+"; (( lvl-- )) }
     [[ -n "${LF_LEVEL}" ]] && {
-	desc="${desc}lf(${LF_LEVEL})+"
-	(( lvl -= "${LF_LEVEL}" ))
+        desc="${desc}lf(${LF_LEVEL})+"
+        (( lvl -= "${LF_LEVEL}" ))
     }
     [[ "${SHLVL}" -ne 1 ]] && print -Pn "%F{8}${desc}${lvl}%f "
 
@@ -130,7 +130,7 @@ precmd() {
     # cache the value in a variable before using pringf to avoid delay
     local GIT_PS1=
     (( $+functions[__git_ps1] )) && {
-	GIT_PS1="$(__git_ps1)"
+        GIT_PS1="$(__git_ps1)"
     }
     print -Pn "%F{8}${GIT_PS1}%f"
 
@@ -193,7 +193,7 @@ alias fixkde="killall -s KILL plasmashell"
 # darwin specific
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     if [[ ! -f /opt/local/libexec/gnubin/ls ]]; then
-	alias ls="ls -G"
+        alias ls="ls -G"
     fi
     alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
     alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"

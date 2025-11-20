@@ -37,8 +37,8 @@
   (defun my/setup-capf (functions)
     "Setup completion-at-point-functions with given FUNCTIONS list."
     (setq-local completion-at-point-functions
-		(mapcar (lambda (f) (if (function f) f (symbol-function f)))
-			functions)))
+                (mapcar (lambda (f) (if (function f) f (symbol-function f)))
+                        functions)))
 
   (defconst my/capf-common-prog
     (list
@@ -88,9 +88,9 @@
 
   :hook
   ((prog-mode . my/setup-capf-common-prog)
-  (emacs-lisp-mode . my/setup-capf-elisp)
-  (text-mode . my/setup-capf-common-text)
-  (org-mode . my/setup-capf-org)))
+   (emacs-lisp-mode . my/setup-capf-elisp)
+   (text-mode . my/setup-capf-common-text)
+   (org-mode . my/setup-capf-org)))
 
 (use-package dabbrev
   :straight nil
@@ -122,18 +122,18 @@
   ;; like "test2.go" even if "test.go" exists.
   ;; See https://www.reddit.com/r/emacs/comments/109ryp7/comment/j4excag
   (setf vertico-prescient-completion-category-overrides
-	(assoc-delete-all 'file
-                        vertico-prescient-completion-category-overrides)))
+        (assoc-delete-all 'file
+                          vertico-prescient-completion-category-overrides)))
 
 (use-package tempel
   :after cape
   :bind
   (("M-+" . tempel-complete)
    (:map tempel-map
-	 ("TAB" . tempel-next)
-	 ("[tab]" . tempel-next)
-	 ("S-TAB" . tempel-prev)
-	 ("[backtab]" . tempel-prev))))
+         ("TAB" . tempel-next)
+         ("[tab]" . tempel-next)
+         ("S-TAB" . tempel-prev)
+         ("[backtab]" . tempel-prev))))
 
 (provide 'setup-completion-backend)
 ;;; setup-completion-backend.el ends here

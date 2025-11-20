@@ -12,8 +12,8 @@
 (defcustom my/emacs-docker-executable 'podman
   "The executable to be used with docker-mode."
   :type '(choice
-	  (const :tag "docker" docker)
-	  (const :tag "podman" podman))
+          (const :tag "docker" docker)
+          (const :tag "podman" podman))
   :group 'my/emacs)
 
 (use-package docker
@@ -23,18 +23,18 @@
   (pcase my/emacs-docker-executable
     ('docker
      (setq docker-command "docker"
-	   docker-compose-command "docker-compose"
-	   docker-container-tramp-method "docker"))
+           docker-compose-command "docker-compose"
+           docker-container-tramp-method "docker"))
     ('podman
      (setq docker-command "podman"
-	   docker-compose-command "podman-compose"
-	   docker-container-tramp-method "podman"))))
+           docker-compose-command "podman-compose"
+           docker-container-tramp-method "podman"))))
 
 ;; NOTE: Keep the package for `dockerfile-build-buffer' and
 ;; `dockerfile-build-no-cache-buffer', but leave syntax highlighting to Tree-Sitter.
 (use-package dockerfile-mode
   :mode (("Dockerfile\\'" . dockerfile-ts-mode)
-	 ("Containerfile\\'" . dockerfile-ts-mode))
+         ("Containerfile\\'" . dockerfile-ts-mode))
   :config
   (pcase my/emacs-docker-executable
     ('docker

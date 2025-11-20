@@ -16,10 +16,10 @@
 (use-package citre
   :defer t
   :bind (("C-x c j" . citre-jump)
-	 ("C-x c J" . citre-jump-back)
+         ("C-x c J" . citre-jump-back)
          ("C-x c p" . citre-peek)
          ("C-x c u" . citre-update-database)
-	 ("C-x c U" . citre-update-tags-file))
+         ("C-x c U" . citre-update-tags-file))
 
   ;; Avoid using citre-config because it automatically enables `citre-mode'
   ;; in all buffers, adding tags to `completion-at-point' which I want to prevent.
@@ -41,7 +41,7 @@
 
 (use-package go-mode
   :mode (("\\.go$" . go-ts-mode)
-	 ("go.mod\\'" . go-mod-ts-mode))
+         ("go.mod\\'" . go-mod-ts-mode))
   :hook ((go-mode go-ts-mode) . my/go-mode-setup)
   :custom (gofmt-command "goimports"))
 

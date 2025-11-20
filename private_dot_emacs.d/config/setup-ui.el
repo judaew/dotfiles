@@ -28,11 +28,11 @@
   :straight nil
   :config
   (add-hook 'after-make-frame-functions
-	    (lambda (frame)
-	      (with-selected-frame frame
-		(if (display-graphic-p frame)
-		    (pixel-scroll-precision-mode 1)
-		  (pixel-scroll-precision-mode 0))))))
+            (lambda (frame)
+              (with-selected-frame frame
+                (if (display-graphic-p frame)
+                    (pixel-scroll-precision-mode 1)
+                  (pixel-scroll-precision-mode 0))))))
 
 ;; Use M-x `all-the-icons-install-fonts' for install fonts.
 ;; The `window-system' and `display-graphic-p' are bad checks for
@@ -78,19 +78,19 @@
 
 (use-package indent-bars
   :hook ((c-ts-mode
-	  c++-ts-mode
-	  csharp-ts-mode
-	  css-ts-mode
-	  go-ts-mode
-	  java-ts-mode
-	  javascript-ts-mode
-	  lua-ts-mode
-	  rust-ts-mode
-	  python-ts-mode
-	  ruby-ts-mode
-	  tsx-ts-mode
-	  typescript-ts-mode
-	  yaml-ts-mode) . indent-bars-mode)
+          c++-ts-mode
+          csharp-ts-mode
+          css-ts-mode
+          go-ts-mode
+          java-ts-mode
+          javascript-ts-mode
+          lua-ts-mode
+          rust-ts-mode
+          python-ts-mode
+          ruby-ts-mode
+          tsx-ts-mode
+          typescript-ts-mode
+          yaml-ts-mode) . indent-bars-mode)
   :custom
   (indent-bars-no-descend-lists t) ; no extra bars in continued func arg lists
   (indent-bars-treesit-support t)
@@ -99,10 +99,10 @@
 (use-package colorful-mode
   :defer t
   :hook (css-ts-mode
-	 html-ts-mode
-	 dhall-mode
-	 json-ts-mode
-	 yaml-ts-mode))
+         html-ts-mode
+         dhall-mode
+         json-ts-mode
+         yaml-ts-mode))
 
 (use-package posframe)
 

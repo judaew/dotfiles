@@ -11,9 +11,9 @@
   "Start eglot for the current buffer only if it is inside a project.
 Or passes other checks that determine whether eglot should run."
   (when (and buffer-file-name
-	     (project-current)
-	     ;; This is useful for me as a MacPorts maintainer
-	     (not buffer-read-only))
+             (project-current)
+             ;; This is useful for me as a MacPorts maintainer
+             (not buffer-read-only))
     (eglot-ensure)))
 
 (use-package eglot
@@ -34,18 +34,18 @@ Or passes other checks that determine whether eglot should run."
    (eglot-managed-mode . my/setup-capf-eglot))
   :bind
   (:map eglot-mode-map
-	("C-c l r" . eglot-rename)
-	("C-c l f" . eglot-format)
-	("C-c l F" . eglot-format-buffer)
-	("C-c l a" . eglot-code-actions)
-	("C-c l o" . eglot-code-action-organize-imports)
-	("C-c l d" . eglot-find-declaration)
-	("C-c l i" . eglot-find-implementation)
-	("C-c l t" . eglot-find-typeDefinition)
-	("C-c l C" . eglot-show-call-hierarchy)
-	("C-c l T" . eglot-show-type-hierarchy)
-	("C-c l R" . eglot-reconnect)
-	("C-c l S" . eglot-shutdown))
+        ("C-c l r" . eglot-rename)
+        ("C-c l f" . eglot-format)
+        ("C-c l F" . eglot-format-buffer)
+        ("C-c l a" . eglot-code-actions)
+        ("C-c l o" . eglot-code-action-organize-imports)
+        ("C-c l d" . eglot-find-declaration)
+        ("C-c l i" . eglot-find-implementation)
+        ("C-c l t" . eglot-find-typeDefinition)
+        ("C-c l C" . eglot-show-call-hierarchy)
+        ("C-c l T" . eglot-show-type-hierarchy)
+        ("C-c l R" . eglot-reconnect)
+        ("C-c l S" . eglot-shutdown))
   :custom
   (eglot-autoshutdown t)       ;; kill server when last managed buffer is closed
   (eglot-events-buffer-size 0) ;; disable noisy logs
@@ -73,7 +73,7 @@ Or passes other checks that determine whether eglot should run."
 
   ;; Integrate with `marginalia'
   (add-to-list 'marginalia-command-categories
-	       '(eglot-code-actions . eglot)))
+               '(eglot-code-actions . eglot)))
 
 (provide 'setup-lsp)
 ;;; setup-lsp.el ends here

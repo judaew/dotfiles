@@ -46,12 +46,12 @@
     :host "dashscope-intl.aliyuncs.com"
     :endpoint "/compatible-mode/v1/chat/completions"
     :models '(;; coding
-	      "qwen3-coder-plus" "qwen3-coder-flash"
-	      ;; general
-	      "qwen3-max" "qwen3-plus" "qwen-flash"
-	      ;; translate
-	      "qwen-mt-plus"
-	      "qwen-mt-turbo"))
+              "qwen3-coder-plus" "qwen3-coder-flash"
+              ;; general
+              "qwen3-max" "qwen3-plus" "qwen-flash"
+              ;; translate
+              "qwen-mt-plus"
+              "qwen-mt-turbo"))
 
   (gptel-make-ollama "Local"
     :host "localhost:11434"

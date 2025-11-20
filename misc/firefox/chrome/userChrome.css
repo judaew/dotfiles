@@ -6,7 +6,7 @@
 /*
   Relocate window controls (minimize/maximize/close) to the navigation bar
 */
-#nav-bar .titlebar-buttonbox-container { 
-  display: flex !important; 
-  margin-right: 8px !important;
+#nav-bar .titlebar-buttonbox-container {
+    display: flex !important;
+    margin-right: 8px !important;
 }

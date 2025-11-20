@@ -9,7 +9,7 @@
 
 (use-package jinx
   :bind (("M-$" . jinx-correct)
-	 ("C-M-$" . jinx-languages))
+         ("C-M-$" . jinx-languages))
   :custom
   (jinx-languages "en_US-large uk_UA"))
 

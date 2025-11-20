@@ -50,24 +50,24 @@
  :name "create_file"
  :function (lambda (path filename content)
              (with-temp-message (format "Creating file: %s in %s" filename path)
-	       (condition-case err
+               (condition-case err
                    (let ((full-path (expand-file-name filename path)))
                      (with-temp-buffer
-		       (insert content)
-		       (write-file full-path))
+                       (insert content)
+                       (write-file full-path))
                      (format "Created file %s in %s" filename path))
                  (error (format "Error creating file %s in %s: %s"
                                 filename path (error-message-string err))))))
  :description "Create a new file with the specified content"
  :args (list '(:name "path"
-		     :type string
-		     :description "The directory where to create the file")
+                     :type string
+                     :description "The directory where to create the file")
              '(:name "filename"
-		     :type string
-		     :description "The name of the file to create")
+                     :type string
+                     :description "The name of the file to create")
              '(:name "content"
-		     :type string
-		     :description "The content to write to the file"))
+                     :type string
+                     :description "The content to write to the file"))
  :category "filesystem"
  :confirm t)
 
@@ -79,7 +79,7 @@
  :name "make_directory"
  :function (lambda (parent name)
              (with-temp-message (format "Creating directory: %s in %s" name parent)
-	       (condition-case err
+               (condition-case err
                    (progn
                      (make-directory (expand-file-name name parent) t)
                      (format "Directory %s created/verified in %s" name parent))
@@ -103,23 +103,23 @@
  :name "tree_dir"
  :description "Display directory structure as tree with optional depth limit"
  :args (list '(:name "path"
-		     :type string
-		     :description "Directory path to display")
-	     '(:name "max_depth"
-		     :type number
-		     :optional t
-		     :description "Maximum recursion depth (default: 2)"))
+                     :type string
+                     :description "Directory path to display")
+             '(:name "max_depth"
+                     :type number
+                     :optional t
+                     :description "Maximum recursion depth (default: 2)"))
  :function (lambda (path &optional max-depth)
-	     (let* ((depth (or max-depth 2))
-		    (cmd (format "tree --charset=ascii -L %d '%s'"
-				 depth (expand-file-name path))))
-	       (condition-case err
-		   (let ((result (shell-command-to-string cmd)))
-		     (if (string-empty-p (string-trim result))
-			 (format "Directory is empty or invalid: %s" path)
-		       (string-trim result)))
-		 (error (format "Error displaying tree for %s: %s"
-				path (error-message-string err))))))
+             (let* ((depth (or max-depth 2))
+                    (cmd (format "tree --charset=ascii -L %d '%s'"
+                                 depth (expand-file-name path))))
+               (condition-case err
+                   (let ((result (shell-command-to-string cmd)))
+                     (if (string-empty-p (string-trim result))
+                         (format "Directory is empty or invalid: %s" path)
+                       (string-trim result)))
+                 (error (format "Error displaying tree for %s: %s"
+                                path (error-message-string err))))))
  :category "filesystem"
  :confirm t)
 
@@ -131,21 +131,21 @@
  :name "search_in_files"
  :description "Search for text patterns inside file contents (using ripgrep)"
  :args (list '(:name "pattern"
-		     :type string
-		     :description "Text pattern to search for in file contents")
-	     '(:name "directory"
-		     :type string
-		     :optional t
-		     :description "Directory to search in"))
+                     :type string
+                     :description "Text pattern to search for in file contents")
+             '(:name "directory"
+                     :type string
+                     :optional t
+                     :description "Directory to search in"))
  :function (lambda (pattern &optional directory)
-	     (let ((dir (or directory default-directory)))
-	       (condition-case err
-		   (let ((result (shell-command-to-string
-				  (format "rg -n -H '%s' %s" pattern dir))))
-		     (if (string-empty-p (string-trim result))
-			 (format "No text matches found for '%s' in %s" pattern dir)
-		       (string-trim result)))
-		 (error (format "Search error: %s" (error-message-string err))))))
+             (let ((dir (or directory default-directory)))
+               (condition-case err
+                   (let ((result (shell-command-to-string
+                                  (format "rg -n -H '%s' %s" pattern dir))))
+                     (if (string-empty-p (string-trim result))
+                         (format "No text matches found for '%s' in %s" pattern dir)
+                       (string-trim result)))
+                 (error (format "Search error: %s" (error-message-string err))))))
  :category "search"
  :confirm t)
 
@@ -157,21 +157,21 @@
  :name "find_files"
  :description "Find files by filename patterns (using fd)"
  :args (list '(:name "pattern"
-		     :type string
-		     :description "Filename pattern to search for")
-	     '(:name "directory"
-		     :type string
-		     :optional t
-		     :description "Directory to search in"))
+                     :type string
+                     :description "Filename pattern to search for")
+             '(:name "directory"
+                     :type string
+                     :optional t
+                     :description "Directory to search in"))
  :function (lambda (pattern &optional directory)
-	     (let ((dir (or directory default-directory)))
-	       (condition-case err
-		   (let ((result (shell-command-to-string
-				  (format "fd -t f --glob '%s' %s" pattern dir))))
-		     (if (string-empty-p (string-trim result))
-			 (format "No files found matching '%s' in %s" pattern dir)
-		       (string-trim result)))
-		 (error (format "Search error: %s" (error-message-string err))))))
+             (let ((dir (or directory default-directory)))
+               (condition-case err
+                   (let ((result (shell-command-to-string
+                                  (format "fd -t f --glob '%s' %s" pattern dir))))
+                     (if (string-empty-p (string-trim result))
+                         (format "No files found matching '%s' in %s" pattern dir)
+                       (string-trim result)))
+                 (error (format "Search error: %s" (error-message-string err))))))
  :category "search"
  :confirm t)
 
@@ -183,18 +183,18 @@
  :name "open_file_or_dir"
  :description "Open a file or directory in the current Emacs session"
  :args (list '(:name "path"
-		     :type string
-		     :description "Path to file or directory to open"))
+                     :type string
+                     :description "Path to file or directory to open"))
  :function (lambda (path)
-	     (condition-case err
-		 (let ((expanded-path (expand-file-name path)))
-		   (if (file-exists-p expanded-path)
-		       (progn
-			 (find-file expanded-path)
-			 (format "Opened: %s" path))
-		   (format "File/Directory not found: %s" path)))
-	     (error (format "Error opening %s: %s"
-			    path (error-message-string err)))))
+             (condition-case err
+                 (let ((expanded-path (expand-file-name path)))
+                   (if (file-exists-p expanded-path)
+                       (progn
+                         (find-file expanded-path)
+                         (format "Opened: %s" path))
+                     (format "File/Directory not found: %s" path)))
+               (error (format "Error opening %s: %s"
+                              path (error-message-string err)))))
  :category "emacs")
 
 ;; `list_buffers' tool
@@ -206,13 +206,13 @@
  :description "List all open Emacs buffers with their names and modes"
  :args nil
  :function (lambda ()
-	     (string-join
-	      (mapcar (lambda (buffer)
-			(format "%s (%s)"
-				(buffer-name buffer)
-				(with-current-buffer buffer major-mode)))
-		      (buffer-list))
-	      "\n"))
+             (string-join
+              (mapcar (lambda (buffer)
+                        (format "%s (%s)"
+                                (buffer-name buffer)
+                                (with-current-buffer buffer major-mode)))
+                      (buffer-list))
+              "\n"))
  :category "emacs"
  :confirm t)
 
@@ -224,17 +224,17 @@
  :name "read_buffer"
  :description "Return the contents of an Emacs buffer"
  :args (list '(:name "buffer_name"
-		     :type string
-		     :description "Name of the buffer to read"))
+                     :type string
+                     :description "Name of the buffer to read"))
  :function (lambda (buffer-name)
-	     (condition-case err
-		 (let ((buffer (get-buffer buffer-name)))
-		   (if buffer
-		       (with-current-buffer buffer
-			 (buffer-substring-no-properties (point-min) (point-max)))
-		     (format "Bufer not found: %s" buffer-name)))
-	       (error (format "Error reading buffer %s: %s"
-			      buffer-name (error-message-string err)))))
+             (condition-case err
+                 (let ((buffer (get-buffer buffer-name)))
+                   (if buffer
+                       (with-current-buffer buffer
+                         (buffer-substring-no-properties (point-min) (point-max)))
+                     (format "Bufer not found: %s" buffer-name)))
+               (error (format "Error reading buffer %s: %s"
+                              buffer-name (error-message-string err)))))
  :category "emacs"
  :confirm t)
 
@@ -246,16 +246,16 @@
  :name "execute_command"
  :description "Execute a shell command and return its output"
  :args (list '(:name "command"
-		     :type string
-		     :description "Shell command to execute"))
+                     :type string
+                     :description "Shell command to execute"))
  :function (lambda (command)
-	     (condition-case err
-		 (let ((output (shell-command-to-string command)))
-		   (if (string-empty-p (string-trim output))
-		       "Command executed successfully (no output)"
-		     (string-trim output)))
-	       (error (format "Error executing command '%s': %s"
-			      command (error-message-string err)))))
+             (condition-case err
+                 (let ((output (shell-command-to-string command)))
+                   (if (string-empty-p (string-trim output))
+                       "Command executed successfully (no output)"
+                     (string-trim output)))
+               (error (format "Error executing command '%s': %s"
+                              command (error-message-string err)))))
  :category "system"
  :confirm t
  :include t)
@@ -268,18 +268,18 @@
  :name "duckduckgo_search"
  :description "Search the web using DuckDuckGo. Return search result with links and descriptions"
  :args (list '(:name "query"
-		     :type string
-		     :description "Search query string"))
+                     :type string
+                     :description "Search query string"))
  :function (lambda (query)
-	     (condition-case err
-		 (let ((result (shell-command-to-string
-				(format "ddgr --noua --noprompt --expand --nocolor -- '%s'"
-					(shell-quote-argument query)))))
-		   (if (string-empty-p (string-trim result))
-		       (format "No results found for query: %s" query)
-		     (string-trim result)))
-	       (error (format "Search error for '%s': %s"
-			      query (error-message-string err)))))
+             (condition-case err
+                 (let ((result (shell-command-to-string
+                                (format "ddgr --noua --noprompt --expand --nocolor -- '%s'"
+                                        (shell-quote-argument query)))))
+                   (if (string-empty-p (string-trim result))
+                       (format "No results found for query: %s" query)
+                     (string-trim result)))
+               (error (format "Search error for '%s': %s"
+                              query (error-message-string err)))))
  :category "web")
 
 (provide 'setup-llm-tools)

@@ -14,10 +14,10 @@
 ;; Adjust gc-cons-threshold and increase the amount of data which
 ;; Emacs reads from the process
 (add-hook 'emacs-startup-hook
-	  (lambda ()
-	    (setq gc-cons-threshold (* 100 1024 1024) ;; 100 mb
-		  gc-cons-percentage 0.1
-		  read-process-output-max (* 1024 1024)))) ;; 1 mb
+          (lambda ()
+            (setq gc-cons-threshold (* 100 1024 1024) ;; 100 mb
+                  gc-cons-percentage 0.1
+                  read-process-output-max (* 1024 1024)))) ;; 1 mb
 
 ;; Set a minimal frame size early
 (add-to-list 'default-frame-alist '(width . 88))

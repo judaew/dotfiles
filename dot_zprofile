@@ -10,15 +10,15 @@ path=()
 [[ "${OSTYPE}" == "darwin"* ]] && {
     # macOS-specific paths
     path+=(
-	# MacPorts and gnubin
-	/opt/local/bin
-	/opt/local/sbin
-	/opt/local/libexec/gnubin
-	# Apple and etc
-	/bin
-	/Library/Apple/usr/bin
-	# Emacs
-	/Applications/Emacs.app/Contents/MacOS/bin
+        # MacPorts and gnubin
+        /opt/local/bin
+        /opt/local/sbin
+        /opt/local/libexec/gnubin
+        # Apple and etc
+        /bin
+        /Library/Apple/usr/bin
+        # Emacs
+        /Applications/Emacs.app/Contents/MacOS/bin
     )
 
     export CPATH="/opt/local/include"

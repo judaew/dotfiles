@@ -35,11 +35,11 @@
   :straight nil
   :config
   (add-hook 'after-make-frame-functions
-	    (lambda (frame)
-	      (with-selected-frame frame
-		(if (display-graphic-p frame)
-		    (xterm-mouse-mode 0)
-		  (xterm-mouse-mode 1))))))
+            (lambda (frame)
+              (with-selected-frame frame
+                (if (display-graphic-p frame)
+                    (xterm-mouse-mode 0)
+                  (xterm-mouse-mode 1))))))
 
 (provide 'setup-term)
 ;;; setup-term.el ends here
