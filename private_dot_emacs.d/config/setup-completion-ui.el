@@ -35,20 +35,6 @@
   :config
   (define-key corfu-map (kbd "RET") nil))
 
-
-(use-package corfu-terminal
-  :straight (corfu-terminal
-             :type git
-             :repo "https://codeberg.org/akib/emacs-corfu-terminal.git")
-  :after corfu
-  :config
-  (add-hook 'after-make-frame-functions
-            (lambda (frame)
-              (with-selected-frame frame
-                (if (display-graphic-p frame)
-                    (corfu-terminal-mode 0)
-                  (corfu-terminal-mode +1))))))
-
 (use-package kind-icon
   :after corfu
   :config
