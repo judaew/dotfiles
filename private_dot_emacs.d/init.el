@@ -13,8 +13,15 @@
 (setq make-backup-files nil)
 (setq create-lockfiles nil)
 
-;; Disabel auto-save
-(setq auto-save-default nil)
+;; Auto-save
+(setq auto-save-default t)
+
+(let ((autosaves-dir "~/.emacs.d/autosaves/"))
+  (unless (file-directory-p autosaves-dir)
+    (make-directory autosaves-dir t)))
+
+(setq auto-save-file-name-transforms
+      `((".*" "~/.emacs.d/autosaves/" t)))
 
 ;; Shortened yes-or-no-p to y-or-n-p
 (setopt use-short-answers t)
@@ -31,6 +38,9 @@
 
 ;; Enable smart parens
 (electric-pair-mode t)
+
+;; Don't use /anywhere/ tabs
+(setq-default indent-tabs-mode nil)
 
 ;; The output of Grep is split into sections
 ;; It is equivalent to the '--heading' option of some tools such as 'git grep' and 'rg'.
