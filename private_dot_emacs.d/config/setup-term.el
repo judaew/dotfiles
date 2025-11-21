@@ -28,8 +28,10 @@
 
 (use-package termclip
   :straight (termclip :type git :local-repo "~/wrk/github.com/judaew/termclip.el")
-  :custom
-  (termclip-clipboard-tool 'wayland))
+  :config
+  (if (eq system-type 'darwin)
+      (setq termclip-clipboard-tool 'macos)
+    (setq termclip-clipboard-tool 'wayland)))
 
 (use-package mouse
   :straight nil
