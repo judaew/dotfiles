@@ -22,11 +22,11 @@
 (use-package undo-fu-session
   :hook (after-init . undo-fu-session-global-mode)
   :init
-  (setq undo-fu-session-directory (expand-file-name "undo-fu-session/" user-emacs-directory))
+  (setopt undo-fu-session-directory (expand-file-name "undo-fu-session/" user-emacs-directory))
   (unless (file-directory-p undo-fu-session-directory)
     (make-directory undo-fu-session-directory))
 
-  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
+  (setopt undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
 (use-package vundo
   :bind ("C-x u" . vundo))

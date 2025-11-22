@@ -45,8 +45,8 @@
 (use-package mood-line
   :hook (after-init . mood-line-mode)
   :config
-  (setq mood-line-format mood-line-format-default)
-  (setq mood-line-glyph-alist mood-line-glyphs-fira-code))
+  (setopt mood-line-format mood-line-format-default)
+  (setopt mood-line-glyph-alist mood-line-glyphs-fira-code))
 
 (use-package diminish)
 

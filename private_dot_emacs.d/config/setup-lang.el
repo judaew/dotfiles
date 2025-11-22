@@ -27,8 +27,8 @@
   ;;
   ;;:init (require 'citre-config)
   :config
-  (setq citre-peek-fill-fringe nil)
-  (setq citre-peek-use-dashes-as-horizontal-border t))
+  (setopt citre-peek-fill-fringe nil)
+  (setopt citre-peek-use-dashes-as-horizontal-border t))
 
 ;; Go block
 ;; ##############################

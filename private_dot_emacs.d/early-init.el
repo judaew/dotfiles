@@ -35,11 +35,11 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 
 ;; Create empty buffer *scratch* in org-mode
-(setq inhibit-startup-screen t)
-(setq initial-major-mode 'org-mode)
-(setq initial-scratch-message "#+TITLE: Scratch Buffer\n\n")
+(setopt inhibit-startup-screen t)
+(setopt initial-major-mode 'org-mode)
+(setopt initial-scratch-message "#+TITLE: Scratch Buffer\n\n")
 
 ;;; Disable package.el
-(setq package-enable-at-startup nil)
+(setopt package-enable-at-startup nil)
 
 ;;; early-init.el ends here

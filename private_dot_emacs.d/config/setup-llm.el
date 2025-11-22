@@ -27,8 +27,8 @@
    ("C-c g f" . gptel-add-file)
    ("C-c g r" . gptel-context-remove-all))
   :config
-  (setq gptel-default-mode 'org-mode)
-  (setq gptel-track-media t)
+  (setopt gptel-default-mode 'org-mode)
+  (setopt gptel-track-media t)
 
   (gptel-make-deepseek "DeepSeek"
     :stream t
@@ -36,8 +36,8 @@
 
   ;; Set default model
   ;; See https://github.com/karthink/gptel/issues/704#issuecomment-2759390992
-  (setq gptel-backend (gptel-get-backend "DeepSeek"))
-  (setq gptel-model 'deepseek-chat)
+  (setopt gptel-backend (gptel-get-backend "DeepSeek"))
+  (setopt gptel-model 'deepseek-chat)
 
   (gptel-make-openai "Alibaba"
     :stream t

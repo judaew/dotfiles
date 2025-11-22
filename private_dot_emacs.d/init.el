@@ -10,24 +10,24 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 ;; Disable creating backup and lock files
-(setq make-backup-files nil)
-(setq create-lockfiles nil)
+(setopt make-backup-files nil)
+(setopt create-lockfiles nil)
 
 ;; Auto-save
-(setq auto-save-default t)
+(setopt auto-save-default t)
 
 (let ((autosaves-dir "~/.emacs.d/autosaves/"))
   (unless (file-directory-p autosaves-dir)
     (make-directory autosaves-dir t)))
 
-(setq auto-save-file-name-transforms
+(setopt auto-save-file-name-transforms
       `((".*" "~/.emacs.d/autosaves/" t)))
 
 ;; Shortened yes-or-no-p to y-or-n-p
 (setopt use-short-answers t)
 
 ;; Show current project on the default mode-line
-(setq project-mode-line t)
+(setopt project-mode-line t)
 
 ;; Enable line numbers
 (global-display-line-numbers-mode t)
@@ -49,7 +49,7 @@
 (add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
 
 ;; Tab-bar
-(setq tab-bar-show 1) ;; auto-hide
+(setopt tab-bar-show 1) ;; auto-hide
 (global-set-key (kbd "C-<next>") 'tab-next)
 (global-set-key (kbd "C-<prior>") 'tab-previous)
 
@@ -78,8 +78,8 @@
 
 ;;; Packages
 (straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-(setq straight-vc-git-default-clone-depth 3)
+(setopt straight-use-package-by-default t)
+(setopt straight-vc-git-default-clone-depth 3)
 
 ;; Re-checks every repo only when is really change something
 (setq straight-cache-autoloads t
@@ -143,7 +143,7 @@
 (load "setup-org") ;; org-mode enhancement
 
 ;; Set custom-file location
-(setq custom-file (locate-user-emacs-file "custom.el"))
+(setopt custom-file (locate-user-emacs-file "custom.el"))
 (when (file-exists-p custom-file)
   (load custom-file nil 'noerror))
 

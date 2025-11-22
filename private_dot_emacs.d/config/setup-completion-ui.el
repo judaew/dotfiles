@@ -42,7 +42,7 @@
   (plist-put kind-icon-default-style :height 0.8)
 
   ;; Using VS Code icons
-  (setq kind-icon-mapping
+  (setopt kind-icon-mapping
         '((array          "a"   :icon "symbol-array"       :face font-lock-type-face              :collection "vscode")
           (boolean        "b"   :icon "symbol-boolean"     :face font-lock-builtin-face           :collection "vscode")
           (color          "#"   :icon "symbol-color"       :face success                          :collection "vscode")

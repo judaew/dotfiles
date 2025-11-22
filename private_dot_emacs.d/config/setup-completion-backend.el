@@ -105,7 +105,7 @@
 (use-package prescient
   :config
   (prescient-persist-mode 1)
-  (setq prescient-aggressive-file-save t))
+  (setopt prescient-aggressive-file-save t))
 
 (use-package corfu-prescient
   :after corfu prescient

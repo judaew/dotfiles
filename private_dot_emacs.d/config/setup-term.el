@@ -13,7 +13,7 @@
 
 (use-package exec-path-from-shell
   :config
-  (setq exec-path-from-shell-arguments (list "-l"))
+  (setopt exec-path-from-shell-arguments (list "-l"))
   (when (memq window-system '(mac ns x pgtk))
     (exec-path-from-shell-initialize)))
 
@@ -30,8 +30,8 @@
   :straight (termclip :type git :local-repo "~/wrk/github.com/judaew/termclip.el")
   :config
   (if (eq system-type 'darwin)
-      (setq termclip-clipboard-tool 'macos)
-    (setq termclip-clipboard-tool 'wayland)))
+      (setopt termclip-clipboard-tool 'macos)
+    (setopt termclip-clipboard-tool 'wayland)))
 
 (use-package mouse
   :straight nil

@@ -38,7 +38,7 @@
   ((magit-post-refresh . diff-hl-magit-post-refresh)
    (after-init . global-diff-hl-mode))
   :config
-  (setq diff-hl-side 'right)
+  (setopt diff-hl-side 'right)
   ;; highlighting changes on the fly
   (diff-hl-flydiff-mode 1))
 

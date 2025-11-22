@@ -45,8 +45,8 @@
   :after dired
   :config
   (dired-launch-enable)
-  (setq dired-launch-default-launcher '("xdg-open"))
-  (setq dired-launch-extensions-map
+  (setopt dired-launch-default-launcher '("xdg-open"))
+  (setopt dired-launch-extensions-map
         '(;; fix for png extensions
           ("png" ("gwenview")))))
 
@@ -90,7 +90,7 @@
      ("t" "~/.local/share/Trash/files/" "trash")))
   :config
   (dirvish-side-follow-mode t)
-  (setq dirvish-attributes
+  (setopt dirvish-attributes
         (append
          ;; The order of these attributes is insignificant, they are always
          ;; displayed in the same position.
@@ -100,11 +100,11 @@
          ;; '(git-msg file-size)))
          ))
   ;; Also FAIL: see prev comment
-  (setq dirvish-side-attributes
+  (setopt dirvish-side-attributes
         (append
          '(vc-state subtree-state nerd-icons collapse)))
 
-  (setq dirvish-header-line-format
+  (setopt dirvish-header-line-format
         '(:left (path) :right (free-space))
         dirvish-mode-line-format
         '(:left (sort file-time " " file-size symlink) :right (omit yank index))))

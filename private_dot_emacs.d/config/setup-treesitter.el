@@ -6,7 +6,7 @@
 
 ;;; Code:
 
-(setq major-mode-remap-alist
+(setopt major-mode-remap-alist
       '((sh-mode . bash-ts-mode)
         (c-mode . c-ts-mode)
         (c++-mode . c++-ts-mode)

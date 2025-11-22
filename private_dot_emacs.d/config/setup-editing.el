@@ -21,7 +21,7 @@
 (use-package ws-butler
   :hook (prog-mode . ws-butler-mode)
   :config
-  (setq ws-butler-keep-whitespace-before-point t))
+  (setopt ws-butler-keep-whitespace-before-point t))
 
 (use-package iedit)
 

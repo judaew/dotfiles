@@ -22,11 +22,11 @@
   :config
   (pcase my/emacs-docker-executable
     ('docker
-     (setq docker-command "docker"
+     (setopt docker-command "docker"
            docker-compose-command "docker-compose"
            docker-container-tramp-method "docker"))
     ('podman
-     (setq docker-command "podman"
+     (setopt docker-command "podman"
            docker-compose-command "podman-compose"
            docker-container-tramp-method "podman"))))
 
@@ -38,9 +38,9 @@
   :config
   (pcase my/emacs-docker-executable
     ('docker
-     (setq dockerfile-mode-command "docker"))
+     (setopt dockerfile-mode-command "docker"))
     ('podman
-     (setq dockerfile-mode-command "podman"))))
+     (setopt dockerfile-mode-command "podman"))))
 
 (use-package docker-compose-mode
   :mode ("docker-compose.*\\.yml\\'" "compose.*\\.yml\\'"))

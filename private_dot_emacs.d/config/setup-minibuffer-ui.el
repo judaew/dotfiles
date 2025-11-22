@@ -114,9 +114,9 @@
   :config
   ;; Better register preview
   (advice-add #'register-preview :override #'consult-register-window)
-  (setq register-preview-delay 0.5)
+  (setopt register-preview-delay 0.5)
   ;; Xref integration
-  (setq xref-show-xrefs-function #'consult-xref
+  (setopt xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
   ;; preview customizations
@@ -128,7 +128,7 @@
    consult--source-recent-file consult--source-project-recent-file
    :preview-key '(:debounce 0.4 any))
 
-  (setq consult-narrow-key "<")
+  (setopt consult-narrow-key "<")
 
   (defun my/consult-buffer-list ()
     "Return list of buffers excluding system and temporary buffers."
@@ -137,7 +137,7 @@
                                     (buffer-name buf)))
                   (buffer-list)))
 
-  (setq consult-buffer-list-function #'my/consult-buffer-list))
+  (setopt consult-buffer-list-function #'my/consult-buffer-list))
 
 (use-package consult-flycheck
   :after (consult flycheck)
@@ -154,7 +154,7 @@
 
   :init
   ;; Optionally replace the key help with a completing-read interface
-  (setq prefix-help-command #'embark-prefix-help-command)
+  (setopt prefix-help-command #'embark-prefix-help-command)
 
   ;; TODO: It's cool to show hints in Eldoc, but I think it's better
   ;; to display in the modeline. However, firsth I need move away from
@@ -162,7 +162,7 @@
   ;; Act: 1 or with icon.
   ;;
   ;;(add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
-  ;;(setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+  ;;(setopt eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
 
   :config
   ;; Hide the mode line of the Embark live/completions buffers
