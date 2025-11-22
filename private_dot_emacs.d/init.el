@@ -6,9 +6,6 @@
 
 ;;; General config
 
-;; Suppress native-comp warnings
-(setq native-comp-async-report-warnings-errors nil)
-
 ;; Disable creating backup and lock files
 (setopt make-backup-files nil)
 (setopt create-lockfiles nil)
@@ -42,10 +39,6 @@
 ;; Don't use /anywhere/ tabs
 (setq-default indent-tabs-mode nil)
 
-;; The output of Grep is split into sections
-;; It is equivalent to the '--heading' option of some tools such as 'git grep' and 'rg'.
-(setq grep-use-headings t)
-
 (add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
 
 ;; Tab-bar
@@ -53,12 +46,13 @@
 (global-set-key (kbd "C-<next>") 'tab-next)
 (global-set-key (kbd "C-<prior>") 'tab-previous)
 
+;; GnuPG pinentry via the Emacs minibuffer
+(setopt epg-pinentry-mode 'loopback)
+
 ;;; straight.el
 
 ;; Bootstrap Straight
 (defvar bootstrap-version)
-(setq straight-repository-branch "develop")
-
 (let ((bootstrap-file
        (expand-file-name
         "straight/repos/straight.el/bootstrap.el"
@@ -68,22 +62,19 @@
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
-         (concat "https://raw.githubusercontent.com/"
-                 "radian-software/straight.el/"
-                 "develop/install.el")
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;;; Packages
+;; Packages
 (straight-use-package 'use-package)
 (setopt straight-use-package-by-default t)
 (setopt straight-vc-git-default-clone-depth 3)
 
 ;; Re-checks every repo only when is really change something
-(setq straight-cache-autoloads t
-      straight-check-for-modifications '(find-watching))
+(setopt straight-cache-autoloads t)
 
 (use-package server
   :straight nil
