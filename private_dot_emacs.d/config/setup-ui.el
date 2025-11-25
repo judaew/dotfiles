@@ -42,53 +42,6 @@
 (use-package nerd-icons
   :defer t)
 
-;; (use-package mood-line
-;;   :hook (after-init . mood-line-mode)
-;;   :config
-;;   (setopt mood-line-format mood-line-format-default)
-;;   (setopt mood-line-glyph-alist mood-line-glyphs-fira-code))
-
-(defun my/mood-line-segment-window-number ()
-  "Show the window number if winum or ace-window is present."
-  (cond
-   ((and (featurep 'winum) (fboundp 'winum-get-number-string))
-    (winum-get-number-string))
-   ((and (fboundp 'aw-update) (boundp 'aw-scope-global) aw-scope-global
-         (fboundp 'ace-window))
-    ;; ace-window does not expose per-window number easily, fallback:
-    (format "W%d" (1+ (cl-position (selected-window) (window-list) :test #'eq))))
-   (t nil)))
-
-(use-package mood-line
-  :hook (after-init . mood-line-mode)
-  :config
-  (setopt mood-line-glyph-alist mood-line-glyphs-fira-code)
-  (setq mood-line-format
-        ;; Value:
-        ;; ((#1=" " (mood-line-segment-modal) " "
-        ;;      (or (mood-line-segment-buffer-status) " ") " "
-        ;;      (mood-line-segment-buffer-name) "  " (mood-line-segment-anzu)
-        ;;      "  " (mood-line-segment-multiple-cursors) "  "
-        ;;      (mood-line-segment-cursor-position) " "
-        ;;      (mood-line-segment-scroll) "")
-        ;;  ((mood-line-segment-vc) "  " (mood-line-segment-major-mode) "  "
-        ;;   (mood-line-segment-misc-info) "  " (mood-line-segment-checker) "  "
-        ;;   (mood-line-segment-process) "  " #1#))
-
-        (mood-line-defformat
-         :left
-         (((my/mood-line-segment-window-number) . " ")
-          ((mood-line-segment-buffer-status) . " ")
-          ((mood-line-segment-buffer-name)   . "  ")
-          ((mood-line-segment-cursor-position) . "  ")
-          (mood-line-segment-scroll))
-         :right
-         (((mood-line-segment-major-mode) . " " )
-          ;;((when (mood-line-segment-checker) "|") . "  ")
-          ((mood-line-segment-checker) . "  "))))
-
-  )
-
 (use-package diminish)
 
 (use-package hl-todo

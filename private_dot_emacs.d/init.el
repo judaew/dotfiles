@@ -97,8 +97,9 @@
 ;; -----------------
 ;; UI tweaks & theme
 ;; -----------------
-(load "setup-ui")     ;; UI tweaks
-(load "setup-themes") ;; Theme configuration
+(load "setup-ui")       ;; UI tweaks
+(load "setup-modeline") ;; Modeline enhancements
+(load "setup-themes")   ;; Theme configuration
 
 ;; ------------------------
 ;; Completion & UI feedback
