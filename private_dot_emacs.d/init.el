@@ -48,6 +48,7 @@
 
 ;; GnuPG pinentry via the Emacs minibuffer
 (setopt epg-pinentry-mode 'loopback)
+(setopt epa-pinentry-mode 'loopback)
 
 ;;; straight.el
 
