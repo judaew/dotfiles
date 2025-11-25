@@ -12,7 +12,12 @@
 (use-package windresize
   :bind ("C-c r" . windresize))
 
+(use-package ace-window
+  :demand t ;; for modeline
+  :bind ("M-o" . ace-window))
+
 (use-package winum
+  :disabled
   :hook (after-init . winum-mode)
   :config
   (define-key winum-keymap (kbd "C-`") 'winum-select-window-by-number)
@@ -29,7 +34,6 @@
   (define-key winum-keymap (kbd "M-9") 'winum-select-window-9)
   ;; `winum-auto-setup-mode-line' breaks mode-line.el package
   (setopt winum-auto-setup-mode-line nil))
-
 
 (use-package avy
   :bind
