@@ -9,6 +9,7 @@
 ;;; Code:
 
 (use-package project
+  :straight (:type built-in)
   :config
   (add-hook 'project-find-functions #'project-try-vc)
   (setopt project-vc-extra-root-markers
