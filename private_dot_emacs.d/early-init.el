@@ -24,7 +24,7 @@
 ;;(add-to-list 'default-frame-alist '(height . 36))
 (add-to-list 'default-frame-alist '(height . 33))
 (if (eq system-type 'darwin)
-    (add-to-list 'default-frame-alist '(font . "VictorMono Nerd Font Mono-12"))
+    (add-to-list 'default-frame-alist '(font . "VictorMono Nerd Font Mono-13"))
   (add-to-list 'default-frame-alist '(font . "VictorMono Nerd Font Mono-11")))
 ;; Fix background-color on startup before theme loads
 (add-to-list 'default-frame-alist '(background-color . "#1c1e1f"))
