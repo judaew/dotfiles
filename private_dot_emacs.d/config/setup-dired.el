@@ -90,11 +90,12 @@
      ("t" "~/.local/share/Trash/files/" "trash")))
   :config
   (dirvish-side-follow-mode t)
+  ;; FIXME: `vc-state' is VERY HEAVY in big repo
   (setopt dirvish-attributes
           (append
            ;; The order of these attributes is insignificant, they are always
            ;; displayed in the same position.
-           '(vc-state subtree-state nerd-icons collapse)
+           '(subtree-state nerd-icons collapse)
            ;; FAIL: See https://github.com/alexluigit/dirvish/issues/356
            ;; Other attributes are displayed in the order they appear in this list.
            ;; '(git-msg file-size)))
@@ -102,7 +103,7 @@
   ;; Also FAIL: see prev comment
   (setopt dirvish-side-attributes
           (append
-           '(vc-state subtree-state nerd-icons collapse)))
+           '(subtree-state nerd-icons collapse)))
 
   (setopt dirvish-header-line-format
           '(:left (path) :right (free-space))
