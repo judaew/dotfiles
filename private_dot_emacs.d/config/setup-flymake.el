@@ -7,9 +7,9 @@
 
 ;;; Code:
 
-(use-package emacs
+(use-package flymake
   :defer 1
-  :straight nil
+  :straight (:type built-in)
   :hook (prog-mode . flymake-mode)
   :config
   (setopt elisp-flymake-byte-compile-load-path load-path)
