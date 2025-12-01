@@ -69,6 +69,11 @@
   :config
   (push `(emacs-lisp-mode
           ("emacs:checkdoc" . ,#'checkdoc))
+        compile-multi-config)
+
+  (push `(go-ts-mode
+          ("go:lint:vet" . "go vet ./...")
+          ("go:lint:golangci-lint" . "golangci-lint run ./..."))
         compile-multi-config))
 
 (use-package consult-compile-multi
