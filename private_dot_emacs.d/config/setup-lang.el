@@ -4,9 +4,8 @@
 
 ;; Packages:
 ;; - `citre'         ~ advanced Ctags frontend
-;; - `go-mode'       ~ major mode for Go
+;; - `apheleia'      ~ run code formatter on buffer contents
 ;; - `pyvenv'        ~ manage Python virtual environment
-;; - `python-black'  ~ reformat Python code using black
 ;; - `ninja-mode'    ~ major mode for Ninja build files
 ;; - `protobuf-mode' ~ major mode for Protocol Buffers
 ;; - `nginx-mode'    ~ major mode for Nginx config
@@ -30,20 +29,14 @@
   (setopt citre-peek-fill-fringe nil)
   (setopt citre-peek-use-dashes-as-horizontal-border t))
 
-
-;; Python block
-;; ##############################
+(use-package apheleia
+  :hook (after-init . apheleia-global-mode)
+  :config
+  (setf (alist-get 'go-ts-mode apheleia-mode-alist)
+        '(goimports)))
 
 (use-package pyvenv
   :defer t)
-
-(use-package python-black
-  :demand t
-  :after python
-  :hook (python-ts-mode . python-black-on-save-mode-enable-dwim))
-
-;; Misc block
-;; ##############################
 
 (use-package ninja-mode
   :defer t)
