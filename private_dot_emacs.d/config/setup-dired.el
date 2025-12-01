@@ -47,8 +47,8 @@
   (dired-launch-enable)
   (setopt dired-launch-default-launcher '("xdg-open"))
   (setopt dired-launch-extensions-map
-        '(;; fix for png extensions
-          ("png" ("gwenview")))))
+          '(;; fix for png extensions
+            ("png" ("gwenview")))))
 
 ;; Unset F2 from 2C-mode for `dirvish-side'
 (when (keymapp (lookup-key global-map (kbd "<f2>")))
@@ -91,23 +91,23 @@
   :config
   (dirvish-side-follow-mode t)
   (setopt dirvish-attributes
-        (append
-         ;; The order of these attributes is insignificant, they are always
-         ;; displayed in the same position.
-         '(vc-state subtree-state nerd-icons collapse)
-         ;; FAIL: See https://github.com/alexluigit/dirvish/issues/356
-         ;; Other attributes are displayed in the order they appear in this list.
-         ;; '(git-msg file-size)))
-         ))
+          (append
+           ;; The order of these attributes is insignificant, they are always
+           ;; displayed in the same position.
+           '(vc-state subtree-state nerd-icons collapse)
+           ;; FAIL: See https://github.com/alexluigit/dirvish/issues/356
+           ;; Other attributes are displayed in the order they appear in this list.
+           ;; '(git-msg file-size)))
+           ))
   ;; Also FAIL: see prev comment
   (setopt dirvish-side-attributes
-        (append
-         '(vc-state subtree-state nerd-icons collapse)))
+          (append
+           '(vc-state subtree-state nerd-icons collapse)))
 
   (setopt dirvish-header-line-format
-        '(:left (path) :right (free-space))
-        dirvish-mode-line-format
-        '(:left (sort file-time " " file-size symlink) :right (omit yank index))))
+          '(:left (path) :right (free-space))
+          dirvish-mode-line-format
+          '(:left (sort file-time " " file-size symlink) :right (omit yank index))))
 
 (use-package diredfl
   :hook

@@ -117,7 +117,7 @@
   (setopt register-preview-delay 0.5)
   ;; Xref integration
   (setopt xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
+          xref-show-definitions-function #'consult-xref)
 
   ;; preview customizations
   (consult-customize

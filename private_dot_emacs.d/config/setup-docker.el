@@ -23,12 +23,12 @@
   (pcase my/emacs-docker-executable
     ('docker
      (setopt docker-command "docker"
-           docker-compose-command "docker-compose"
-           docker-container-tramp-method "docker"))
+             docker-compose-command "docker-compose"
+             docker-container-tramp-method "docker"))
     ('podman
      (setopt docker-command "podman"
-           docker-compose-command "podman-compose"
-           docker-container-tramp-method "podman"))))
+             docker-compose-command "podman-compose"
+             docker-container-tramp-method "podman"))))
 
 ;; NOTE: Keep the package for `dockerfile-build-buffer' and
 ;; `dockerfile-build-no-cache-buffer', but leave syntax highlighting to Tree-Sitter.

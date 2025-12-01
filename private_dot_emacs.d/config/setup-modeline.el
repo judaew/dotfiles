@@ -89,9 +89,9 @@
       (setq my/project--cached-name
             (let ((proj (project-current)))
               (if proj (format "[%s]"
-                          (file-name-nondirectory
-                           (directory-file-name
-                            (car (project-roots proj))))) "")))))
+                               (file-name-nondirectory
+                                (directory-file-name
+                                 (car (project-roots proj))))) "")))))
 
 (defun my/mood-line-segment-project ()
   "Mood-line segment: project name."

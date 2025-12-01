@@ -18,7 +18,7 @@
     (make-directory autosaves-dir t)))
 
 (setopt auto-save-file-name-transforms
-      `((".*" "~/.emacs.d/autosaves/" t)))
+        `((".*" "~/.emacs.d/autosaves/" t)))
 
 ;; Shortened yes-or-no-p to y-or-n-p
 (setopt use-short-answers t)

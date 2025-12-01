@@ -20,22 +20,22 @@
   :config
   (add-hook 'project-find-functions #'project-try-vc)
   (setopt project-vc-extra-root-markers
-        '(".project"         ;; project.el (default)
-          "Cargo.toml"       ;; Rust
-          "package.json"     ;; Node.js
-          "pyproject.toml"   ;; Python
-          "requirements.txt"
-          "go.mod"           ;; Go
-          "composer.json"    ;; PHP
-          "Makefile"
-          "CMakeLists.txt"))
+          '(".project"         ;; project.el (default)
+            "Cargo.toml"       ;; Rust
+            "package.json"     ;; Node.js
+            "pyproject.toml"   ;; Python
+            "requirements.txt"
+            "go.mod"           ;; Go
+            "composer.json"    ;; PHP
+            "Makefile"
+            "CMakeLists.txt"))
 
   (setopt project-switch-commands
-        '((project-find-file "Find file" ?f)
-          (project-find-regexp "Find regexp" ?r)
-          (project-dired "Dired" ?d)
-          (magit-project-status "Magit" ?m)
-          (project-shell "Shell" ?s))))
+          '((project-find-file "Find file" ?f)
+            (project-find-regexp "Find regexp" ?r)
+            (project-dired "Dired" ?d)
+            (magit-project-status "Magit" ?m)
+            (project-shell "Shell" ?s))))
 
 (use-package consult-project-extra
   :bind
@@ -86,7 +86,6 @@
   :after compile-multi
   :demand t
   :config (compile-multi-embark-mode +1))
-
 
 (provide 'setup-project)
 ;;; setup-project.el ends here
