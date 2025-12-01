@@ -43,8 +43,8 @@
 
       (when (and icon (not (string-empty-p icon)))
         (propertize icon
-                    'face `(,@(list (get-text-property 0 'face icon))
-                            '(:family "Symbols Nerd Font Mono" :height 1.0))
+                    'face (list (get-text-property 0 'face icon)
+                                '(:family "Symbols Nerd Font Mono" :height 1.0))
                     'help-echo (format "Major mode: %s" mode-name))))))
 
 ;;
