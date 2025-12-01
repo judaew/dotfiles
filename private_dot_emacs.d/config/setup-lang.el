@@ -30,20 +30,6 @@
   (setopt citre-peek-fill-fringe nil)
   (setopt citre-peek-use-dashes-as-horizontal-border t))
 
-;; Go block
-;; ##############################
-
-;; NOTE: Keep the package for go cmds, but leave syntax highlighting to Tree-Sitter.
-;; See https://github.com/dominikh/go-mode.el/issues/396#issuecomment-1366716882
-(defun my/go-mode-setup ()
-  "Setup Go mode to my liking."
-  (add-hook 'before-save-hook 'gofmt nil t))
-
-(use-package go-mode
-  :mode (("\\.go$" . go-ts-mode)
-         ("go.mod\\'" . go-mod-ts-mode))
-  :hook ((go-mode go-ts-mode) . my/go-mode-setup)
-  :custom (gofmt-command "goimports"))
 
 ;; Python block
 ;; ##############################
