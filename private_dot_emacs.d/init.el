@@ -8,7 +8,7 @@
 
 ;; Set fonts for fixed-pitch and variable-pitch
 (let ((font-family-fixed "VictorMono Nerd Font")
-      (font-family-pitch "Source Sans")
+      (font-family-pitch "Noto Sans")
       (font-size (if (eq system-type 'darwin) 130 110)))
   (when (member font-family-fixed (font-family-list))
     (set-face-attribute 'default nil

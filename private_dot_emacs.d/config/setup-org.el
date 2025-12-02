@@ -10,45 +10,21 @@
 
 ;;; Code:
 
-(defun open-index-org-file ()
-  "Open the ~/org/index.org file."
-  (interactive)
-
-  (unless (file-exists-p "~/org/index.org")
-    (make-directory "~/org" t)
-    (write-region "" nil "~/org/index.org"))
-
-  (find-file "~/org/index.org"))
-
-(defun org-visual-mode ()
-  "Enable `visual-line-mode' only for `org-mode'."
-  (interactive)
-  (when (derived-mode-p 'org-mode)
-    (visual-line-mode t)))
-
-(add-hook 'org-mode-hook #'org-visual-mode)
-
 (use-package org
   :bind
-  (("C-c o i" . open-index-org-file)
+  (("C-c o i" . (lambda () (interactive) (find-file "~/org/index.org")))
    ("C-c o c" . org-capture))
+  :hook
+  ((org-mode . variable-pitch-mode)
+   (org-mode . (lambda () (display-line-numbers-mode -1))))
   :custom
+  ;; Log done time stamps
   (org-log-done 'time)
-  (org-startup-indented t)
+
   ;; Add blank line before header
   (org-blank-before-new-entry '((heading . t) (plain-list-item . nil)))
 
-  (org-hide-emphasis-markers t)
-
-  (org-todo-keywords
-   '((sequence "IDEA(i)" "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELED(c)")))
-  (org-todo-keyword-faces
-   '(("IDEA" . (:foreground "#CCCCCC" :weight bold))
-     ("TODO" . (:foreground "#65D9EF" :weight bold))
-     ("NEXT" . (:foreground "#E2DB74" :weight bold))
-     ("DONE" . (:foreground "#A7E22E" :weight bold))
-     ("CANCELED" . (:foreground "#F92572" :weight bold))))
-
+  ;; Set paths
   (org-directory "~/org/")
   (org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
   (org-default-notes-file (concat org-directory "notes.org"))
@@ -66,34 +42,30 @@
       (file+headline "~/org/calendar.org" "Recurring")
       "** %?\n%T")))
 
-  ;; TODO: 2025 август
+  ;; Images
   (org-startup-with-inline-images t)
   (org-image-actual-width '(300))
-  (org-agenda-start-with-log-mode t)
-  (org-log-into-drawer t)
-  )
 
-(use-package org-download
-  :after org
-  :hook (dired-mode . org-download-enable))
+  ;; Source block
+  (org-src-fontify-natively t)
+  (org-src-tab-acts-natively t)
+  (org-edit-src-content-indentation 0)
 
-(use-package org-modern
-  :after org
-  :hook (org-mode . org-modern-mode)
-  :config (set-face-attribute 'org-modern-symbol nil :family "Iosevka"))
-
-(use-package org-appear
-  :after org
-  :hook
-  ((org-mode . org-appear-mode)
-   (org-agenda-finalize . org-modern-agenda)))
-
-;; TODO:
-;; (use-package org-crypt
-;;   :autoload org-crypt-use-before-save-magic)
-
-(use-package org
+  ;;
+  ;; ~~~ Styles & UI ~~~
+  ;; ~~~~~~~~~~~~~~~~~~~
+  :custom
+  ;; setup keywords and their colors
+  (org-todo-keywords
+   '((sequence "IDEA(i)" "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELED(c)")))
+  (org-todo-keyword-faces
+   '(("IDEA" . (:foreground "#CCCCCC" :weight bold))
+     ("TODO" . (:foreground "#65D9EF" :weight bold))
+     ("NEXT" . (:foreground "#E2DB74" :weight bold))
+     ("DONE" . (:foreground "#A7E22E" :weight bold))
+     ("CANCELED" . (:foreground "#F92572" :weight bold))))
   :config
+  ;; setup variable-pitch font
   (dolist (face '((org-level-1 . 1.2)
                   (org-level-2 . 1.2)
                   (org-level-3 . 1.15)
@@ -113,30 +85,35 @@
   (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 
   ;; Set some parts of Org document is always use fixed-pitch
-  (set-face-attribute 'org-block nil            :foreground nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch))
-  (set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-special-keyword nil  :inherit '(font-lock-comment-face
-                                                           fixed-pitch))
-  (set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
+  (set-face-attribute 'org-block nil           :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil            :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-indent nil          :inherit '(org-hide fixed-pitch))
+  (set-face-attribute 'org-verbatim nil        :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face
+                                                          fixed-pitch))
+  (set-face-attribute 'org-meta-line nil       :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil        :inherit 'fixed-pitch)
 
-  ;; Enable `variable-pitch-mode'
-  (add-hook 'org-mode-hook 'variable-pitch-mode)
-
-  ;; Decluttering & Text Prettification
-  (setq org-adapt-indentation t
+  ;; Text Prettification
+  (setq org-startup-indented t
         org-hide-leading-stars t
         org-hide-emphasis-markers t
-        org-pretty-entities t)
+        org-pretty-entities t))
 
-  (setq org-src-fontify-natively t
-	org-src-tab-acts-natively t
-        org-edit-src-content-indentation 0)
+(use-package org-download
+  :after org
+  :hook (dired-mode . org-download-enable))
 
-  (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
-  )
+(use-package org-modern
+  :after org
+  :hook (org-mode . org-modern-mode)
+  :config (set-face-attribute 'org-modern-symbol nil :family "Iosevka"))
+
+(use-package org-appear
+  :after org
+  :hook
+  ((org-mode . org-appear-mode)
+   (org-agenda-finalize . org-modern-agenda)))
 
 (provide 'setup-org)
 ;;; setup-org.el ends here
