@@ -123,7 +123,20 @@
   (set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
 
   ;; Enable `variable-pitch-mode'
-  (add-hook 'org-mode-hook 'variable-pitch-mode))
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
+
+  ;; Decluttering & Text Prettification
+  (setq org-adapt-indentation t
+        org-hide-leading-stars t
+        org-hide-emphasis-markers t
+        org-pretty-entities t)
+
+  (setq org-src-fontify-natively t
+	org-src-tab-acts-natively t
+        org-edit-src-content-indentation 0)
+
+  (add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
+  )
 
 (provide 'setup-org)
 ;;; setup-org.el ends here
