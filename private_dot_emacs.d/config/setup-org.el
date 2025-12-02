@@ -92,5 +92,38 @@
 ;; (use-package org-crypt
 ;;   :autoload org-crypt-use-before-save-magic)
 
+(use-package org
+  :config
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.2)
+                  (org-level-3 . 1.15)
+                  (org-level-4 . 1.1)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Noto Sans" :weight 'bold :height (cdr face)))
+
+  ;; Make the document title a bigger
+  (set-face-attribute 'org-document-title nil :font "Noto Sans" :weight
+                      'bold :height 1.2)
+
+  ;; To avoidline spacing issues
+  (require 'org-indent)
+  (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+
+  ;; Set some parts of Org document is always use fixed-pitch
+  (set-face-attribute 'org-block nil            :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil             :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-indent nil           :inherit '(org-hide fixed-pitch))
+  (set-face-attribute 'org-verbatim nil         :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil  :inherit '(font-lock-comment-face
+                                                           fixed-pitch))
+  (set-face-attribute 'org-meta-line nil        :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil         :inherit 'fixed-pitch)
+
+  ;; Enable `variable-pitch-mode'
+  (add-hook 'org-mode-hook 'variable-pitch-mode))
+
 (provide 'setup-org)
 ;;; setup-org.el ends here
