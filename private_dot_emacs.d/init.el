@@ -6,6 +6,19 @@
 
 ;;; General config
 
+;; Set fonts for fixed-pitch and variable-pitch
+(let ((font-family-fixed "VictorMono Nerd Font")
+      (font-family-pitch "Noto Sans")
+      (font-size (if (eq system-type 'darwin) 130 110)))
+  (when (member font-family-fixed (font-family-list))
+    (set-face-attribute 'default nil
+                        :font font-family-fixed :height font-size)
+    (set-face-attribute 'fixed-pitch nil
+                        :font font-family-fixed))
+  (when (member font-family-pitch (font-family-list))
+    (set-face-attribute 'variable-pitch nil
+                        :font font-family-pitch :height font-size)))
+
 ;; Disable creating backup and lock files
 (setopt make-backup-files nil)
 (setopt create-lockfiles nil)
