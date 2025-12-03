@@ -26,7 +26,7 @@
 
 ;; Set font
 (add-to-list 'default-frame-alist
-             `(font . ,(format "VictorMono Nerd Font Mono-%d"
+             `(font . ,(format "Iosevka Curly-%d"
                                (if (eq system-type 'darwin) 13 11))))
 
 ;; Fix background-color on startup before theme loads
