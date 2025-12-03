@@ -40,7 +40,9 @@
   :config
   (setopt diff-hl-side 'right)
   ;; highlighting changes on the fly
-  (diff-hl-flydiff-mode 1))
+  ;; FIXME: broken around 2025-12-02 in dev version of the emacs
+  ;;(diff-hl-flydiff-mode 1)
+  )
 
 (provide 'setup-git)
 ;;; setup-git.el ends here
