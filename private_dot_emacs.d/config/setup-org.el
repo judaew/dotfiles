@@ -16,8 +16,15 @@
    ("C-c o c" . org-capture))
   :hook
   ((org-mode . variable-pitch-mode)
+   (org-mode . visual-line-mode)
    (org-mode . (lambda () (display-line-numbers-mode -1))))
   :custom
+  ;; Protect hidden text edits
+  (org-fold-catch-invisible-edits 'show-and-error)
+
+  ;; Smart C-a/C-x
+  (org-special-ctrl-a/e t)
+
   ;; Log done time stamps
   (org-log-done 'time)
 
