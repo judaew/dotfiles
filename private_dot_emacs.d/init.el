@@ -134,6 +134,7 @@
 (load "setup-treesitter") ;; treesitter integration
 (load "setup-lang")       ;; misc language support
 (load "setup-lsp")        ;; LSP (Language Server Protocol)
+(load "setup-dap")        ;; DAP (Debug Adapter Protocol)
 
 ;; -----------------
 ;; Tools & ecosystem
