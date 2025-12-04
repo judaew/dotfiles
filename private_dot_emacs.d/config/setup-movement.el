@@ -6,6 +6,7 @@
 ;; - `windresize' ~ resize windows easily
 ;; - `winum'      ~ window numbering and navigation
 ;; - `avy'        ~ jump to visible text quickly
+;; - `repeat'     ~ repeating a command
 
 ;;; Code:
 
@@ -42,6 +43,13 @@
    ("M-g e" . avy-goto-word-0)
    ("M-g c" . avy-goto-char)
    ("M-g t" . avy-goto-char-timer)))
+
+;; For a more ergonomic Emacs and `dape' experience
+;; See https://www.gnu.org/software/emacs/manual/html_node/emacs/Repeating.html
+;; like C-x-left-left-left-right and etc
+(use-package repeat
+  :custom
+  (repeat-mode +1))
 
 (provide 'setup-movement)
 ;;; setup-movement.el ends here
