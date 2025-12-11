@@ -7,28 +7,41 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+(require 'subr-x)
+
 ;;
 ;; Window number
 ;;
+(defvar my/aw-number-cache nil
+  "Cached `ace-window' number for current window.")
+(defvar my/aw-cache-timestamp nil
+  "Timestamp when `ace-window' number was cached.")
+
 (defun my/aw-get-window-number ()
   "Return the `ace-window' number (label) for the selected window."
-  (when (featurep 'ace-window)
+  (when (and (featurep 'ace-window)
+             (fboundp 'avy-tree)
+             (fboundp 'aw-window-list))
     (require 'ace-window)
     (let ((ignore-window-parameters t))
-      (avy-traverse
-       (avy-tree (aw-window-list) aw-keys)
-       (lambda (path leaf)
-         (set-window-parameter
-          leaf 'ace-window-path
-          (apply #'string (reverse path))))))
-    (window-parameter (selected-window) 'ace-window-path)))
+      (condition-case nil
+          (avy-traverse
+           (avy-tree (aw-window-list) aw-keys)
+           (lambda (path leaf)
+             (set-window-parameter
+              leaf 'ace-window-path
+              (apply #'string (reverse path)))))
+        (error nil))
+      (window-parameter (selected-window) 'ace-window-path))))
 
 (defun my/mood-line-segment-ace-window-number ()
   "Mood-line segment: `ace-window' number."
-  (when-let* ((num (my/aw-get-window-number)))
-    (when (> (length num) 0)
-      (propertize (format "%s" num)
-                  'face '(:weight bold :foreground "orange")))))
+  (when-let* ((num (my/aw-get-window-number))
+              ((> (length num) 0)))
+    (propertize num
+                'face '(:weight bold :foreground "orange")
+                'help-echo "Ace-window number (mouse-1: select window)")))
 
 ;;
 ;; File or mode icon
@@ -37,14 +50,15 @@
   "Return a nerd-icons icon for the current file or major mode."
   (when (featurep 'nerd-icons)
     (let* ((file (buffer-file-name))
-           (icon (if file
-                     (nerd-icons-icon-for-file file)
-                   (nerd-icons-icon-for-mode major-mode))))
-
+           (icon (cond
+                  (file (nerd-icons-icon-for-file file))
+                  ;; Redefine icon with this example:
+                  ;;((derived-mode-p '*-mode) (nerd-icons-icon-for-mode '*-mode))
+                  (t (nerd-icons-icon-for-mode major-mode)))))
       (when (and icon (not (string-empty-p icon)))
         (propertize icon
-                    'face (list (get-text-property 0 'face icon)
-                                '(:family "Symbols Nerd Font Mono" :height 1.0))
+                    ;; 'face (list (get-text-property 0 'face icon)
+                    ;;             '(:family "Symbols Nerd Font Mono" :height 1.0))
                     'help-echo (format "Major mode: %s" mode-name))))))
 
 ;;
@@ -53,8 +67,7 @@
 (defun my/mood-line-segment-macro ()
   "Return indicator when a keyboard macro is being recorded."
   (when (or defining-kbd-macro executing-kbd-macro)
-    (propertize "● REC"
-                'face '(:weight bold :foreground "orange"))))
+    (propertize "● REC" 'face '(:weight bold :foreground "orange"))))
 
 (defun my/mood-line-segment-iedit ()
   "Return iedit match index/total."
@@ -148,12 +161,22 @@
 ;; Eglot
 ;;
 (defun my/mood-line-segment-eglot ()
-  "Show plain \"LSP:on\" string when Eglot is managing this buffer.
-Return nil otherwise so mood-line hides the segment cleanly."
+  "Show Eglot/LSP status with server name."
   (when (and (featurep 'eglot)
-             (bound-and-true-p eglot--managed-mode)
-             (ignore-errors (eglot-current-server)))
-    (propertize "LSP:on" 'face '(:weight bold :foreground "orange"))))
+             (bound-and-true-p eglot--managed-mode))
+    (let ((server (ignore-errors (eglot-current-server)))
+          (project (my/project-name)))
+      (when server
+        (propertize
+         (format "LSP:%s"
+                 (or (and (stringp project)
+                          (> (length project) 2)
+                          (substring project 1 -1))
+                     "on"))
+         'face '(:weight bold :foreground "orange")
+         'help-echo (format "LSP server: %s\nmouse-1: commands menu"
+                            (eglot-project-nickname server))
+         'mouse-face 'mode-line-highlight)))))
 
 ;;
 ;; Mood line
@@ -177,7 +200,7 @@ Return nil otherwise so mood-line hides the segment cleanly."
          :right
          (((my/mood-line-segment-project) . "  ")
           ((my/mood-line-segment-input-method) . " ")
-          ((my/mood-line-segment-eglot) . " ")
+          ;;((my/mood-line-segment-eglot) . " ")
           ((mood-line-segment-major-mode) . " " )
           ((mood-line-segment-vc) . " ")
           (mood-line-segment-checker)))))
