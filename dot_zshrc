@@ -50,20 +50,6 @@ autoload -Uz add-zsh-hook
 # See https://github.com/ohmyzsh/ohmyzsh/issues/9694
 [[ "${INSIDE_EMACS}" == "vterm" ]] && unsetopt promptsp
 
-# Git prompt helpers
-if [[ "${OSTYPE}" == "darwin"* ]]; then
-    [[ -f "/opt/local/share/git/contrib/completion/git-prompt.sh" ]] && \
-        source /opt/local/share/git/contrib/completion/git-prompt.sh
-elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
-    [[ -f "/usr/share/git/completion/git-prompt.sh" ]] && \
-        source /usr/share/git/completion/git-prompt.sh
-fi
-
-GIT_PS1_SHOWDIRTYSTATE="1"        # '*'=unstaged, '+'=staged
-GIT_PS1_SHOWUPSTREAM="verbose"    # 'u='=no difference, 'u+1'=ahead by 1 commit
-GIT_PS1_STATESEPARATOR=""         # no space between branch and index status
-GIT_PS1_DESCRIBE_STYLE="describe"
-
 function dir_trim() {
   local home_no_slash="${HOME%/}"
   local dir="${PWD}"
@@ -97,7 +83,35 @@ function chpwd-osc7-pwd() {
 }
 add-zsh-hook -Uz chpwd chpwd-osc7-pwd
 
+zstyle ':vcs_info:*' formats '(%b) %m'
+zstyle ':vcs_info:*' actionformats '(%b|%a) %m'
+
+zstyle ':vcs_info:git*+set-message:*' hooks git-check
++vi-git-check() {
+    [[ -d .git ]] || git rev-parse --git-dir >/dev/null 2>&1 || return 0
+
+    local upstream
+    local -a counts
+    if upstream=$(git rev-parse --abbrev-ref @{upstream} 2>/dev/null) &&
+            [[ -n "$upstream" ]] && [[ "$upstream" != "@{upstream}" ]]
+    then
+        local -a counts
+        if counts=(${(s: :)$(git rev-list --left-right --count "$upstream"...HEAD 2>/dev/null)}); then
+            [[ ${counts[2]:-0} -gt 0 ]] && hook_com[misc]+="u${counts[2]}"
+            [[ ${counts[1]:-0} -gt 0 ]] && hook_com[misc]+="d${counts[1]}"
+        fi
+    fi
+
+    local diff_index
+    diff_index=("${(@f)$(git diff-index --name-only HEAD)}")
+    [[ ${#diff_index:#} -ge 1 ]] && hook_com[misc]+="!${#diff_index:#}"
+}
+
+
 precmd() {
+    # init vcs info
+    vcs_info
+
     local dir_trim="$(dir_trim)"
     local title="%n@%m:${dir_trim}"
 
@@ -124,15 +138,10 @@ precmd() {
     [[ "${SHLVL}" -ne 1 ]] && print -Pn "%F{8}${desc}${lvl}%f "
 
     # print current directory
-    print -Pn "%F{cyan}${dir_trim}%f"
+    print -Pn "%F{cyan}${dir_trim}%f "
 
     # print git prompt
-    # cache the value in a variable before using pringf to avoid delay
-    local GIT_PS1=
-    (( $+functions[__git_ps1] )) && {
-        GIT_PS1="$(__git_ps1)"
-    }
-    print -Pn "%F{8}${GIT_PS1}%f"
+    print -Pn "%F{8}${vcs_info_msg_0_}%f"
 
     # Jump between prompts
     # See https://codeberg.org/dnkl/foot/wiki#jumping-between-prompts
