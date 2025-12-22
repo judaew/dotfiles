@@ -1,12 +1,18 @@
-;;; setup-ui.el --- UI enhancements -*- lexical-binding: t; -*-
+;;; init-ui.el --- UI enhancements -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;; Packages:
+
+;; === Icons ===
 ;; `all-the-icons'         ~ file and buffer icons
 ;; `nerd-the-icons'        ~ alternative icon set
+
+;; === Modeline ===
 ;; `mood-line'             ~ fancy modeline
 ;; `diminish'              ~ hide minor modes in modeline
+
+;; === Visual enhancements ===
 ;; `hl-todo'               ~ highlight TODO/FIXME comments
 ;; `highlight-parentheses' ~ highlight matching parentheses
 ;; `goggles'               ~ show changes inline
@@ -14,25 +20,21 @@
 ;; `colorful-mode'         ~ add color to buffers
 ;; `posframe'              ~ pop a posframe at point
 
-;; TODOs UI pkg:
-;; - enlight https://github.com/ichernyshovvv/enlight
-;; - sideline
-;; - hydra
-;; - popup-el
-;; - casual https://github.com/kickingvegas/casual
-;; - helpful
+;; === Themes ===
+;; - `doom-themes' ~ collection of themes
 
 ;;; Code:
 
-(use-package emacs
-  :straight nil
-  :config
-  (add-hook 'after-make-frame-functions
-            (lambda (frame)
-              (with-selected-frame frame
-                (if (display-graphic-p frame)
-                    (pixel-scroll-precision-mode 1)
-                  (pixel-scroll-precision-mode 0))))))
+;; `pixel-scroll-precision-mode'
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (with-selected-frame frame
+              (if (display-graphic-p frame)
+                  (pixel-scroll-precision-mode 1)
+                (pixel-scroll-precision-mode 0)))))
+
+;; === Icons ===
+;; -------------
 
 ;; Use M-x `all-the-icons-install-fonts' for install fonts.
 ;; The `window-system' and `display-graphic-p' are bad checks for
@@ -42,7 +44,16 @@
 (use-package nerd-icons
   :defer t)
 
+;; === Modeline ===
+;; ----------------
+
+;; mood-line
+(require 'init-modeline)
+
 (use-package diminish)
+
+;; === Visual enhancements ===
+;; ---------------------------
 
 (use-package hl-todo
   :hook (after-init . global-hl-todo-mode))
@@ -100,5 +111,19 @@
 
 (use-package posframe)
 
-(provide 'setup-ui)
-;;; setup-ui.el ends here
+;; === Themes ===
+;; --------------
+
+(use-package doom-themes
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
+  :config
+  (load-theme 'doom-molokai t)
+  (doom-themes-org-config)
+
+  ;; Use italic for comments
+  (set-face-attribute 'font-lock-comment-face nil :slant 'italic))
+
+(provide 'init-ui)
+;;; init-ui.el ends here

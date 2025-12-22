@@ -1,4 +1,4 @@
-;;; setup-org.el --- Org mode enhancements -*- lexical-binding: t; -*-
+;;; init-org.el --- Org mode enhancements -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -81,10 +81,10 @@
                   (org-level-6 . 1.1)
                   (org-level-7 . 1.1)
                   (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "Noto Sans" :weight 'bold :height (cdr face)))
+    (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'bold :height (cdr face)))
 
   ;; Make the document title a bigger
-  (set-face-attribute 'org-document-title nil :font "Noto Sans" :weight
+  (set-face-attribute 'org-document-title nil :font "Iosevka Aile" :weight
                       'bold :height 1.2)
 
   ;; To avoidline spacing issues
@@ -122,5 +122,5 @@
   ((org-mode . org-appear-mode)
    (org-agenda-finalize . org-modern-agenda)))
 
-(provide 'setup-org)
-;;; setup-org.el ends here
+(provide 'init-org)
+;;; init-org.el ends here

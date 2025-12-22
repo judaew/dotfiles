@@ -1,15 +1,22 @@
-;;; setup-dired.el --- Dired -*- lexical-binding: t; -*-
+;;; init-dired.el --- Dired -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;; Packages:
+
+;; === Built-in Dired ===
 ;; - `dired'        ~ build-in file manager core
 ;; - `dired-x'      ~ extra Dired commands
-;; - `dired-launch' ~ open files by external apps (like xdg-open)
-;; - `dirvish'      ~ modern Dired UI with preview panel, icons, async ops
+
+;; === Enhancements ===
 ;; - `diredfl'      ~ nicer faces for Dired entries
+;; - `dired-launch' ~ open with external apps (like xdg-open)
+;; - `dirvish'      ~ modern Dired UI
 
 ;;; Code:
+
+;; === Built-in Dired ===
+;; ----------------------
 
 ;; Default binds:
 ;; - "C-x C-j" . dired-jump
@@ -40,7 +47,17 @@
   :custom
   (dired-omit-files (rx (seq bol "."))))
 
-;; binds: 'J' for laucnh, 'K' for launch with prompt
+;; === Enhancements ===
+;; --------------------
+
+(use-package diredfl
+  :hook
+  ((dired-mode . diredfl-mode)
+   ;; highlight parent and directory preview as well
+   (dirvish-directory-view-mode . diredfl-mode))
+  :config
+  (set-face-attribute 'diredfl-dir-name nil :bold t))
+
 (use-package dired-launch
   :after dired
   :config
@@ -118,5 +135,5 @@
   :config
   (set-face-attribute 'diredfl-dir-name nil :bold t))
 
-(provide 'setup-dired)
-;;; setup-dired.el ends here
+(provide 'init-dired)
+;;; init-dired.el ends here

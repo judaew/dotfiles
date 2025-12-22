@@ -1,4 +1,4 @@
-;;; setup-llm.el --- Configuration for LLM interaction -*- lexical-binding: t; -*-
+;;; init-ai.el --- Configuration for LLM interaction -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -59,11 +59,12 @@
     :models '("qwen3:30b" "qwen3-coder:30b" "gpt-oss:20b"))
 
   ;; My gptel tools
-  (load "~/.emacs.d/config/setup-llm-tools.el"))
+  (load "~/.emacs.d/config/setup-llm-tools.el")
+  )
 
 (use-package gptel-quick
   :straight (gptel-quick :type git :host github :repo "karthink/gptel-quick")
   :bind ("C-c Q" . gptel-quick))
 
-(provide 'setup-llm)
-;;; setup-llm.el ends here
+(provide 'init-ai)
+;;; init-ai.el ends here

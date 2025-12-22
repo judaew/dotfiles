@@ -1,4 +1,4 @@
-;;; setup-modeline.el --- modeline enhancements -*- lexical-binding: t; -*-
+;;; init-modeline.el --- modeline enhancements -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -205,5 +205,5 @@
           ((mood-line-segment-vc) . " ")
           (mood-line-segment-checker)))))
 
-(provide 'setup-modeline)
-;;; setup-modeline.el ends here
+(provide 'init-modeline)
+;;; init-modeline.el ends here

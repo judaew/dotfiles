@@ -1,13 +1,18 @@
-;;; setup-project.el --- Project management -*- lexical-binding: t; -*-
+;;; init-projects.el --- Projects management -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;; Packages:
+
 ;; - `project'                  ~ project management core
 ;; - `consult-project-extra'    ~ enhanced project navigation
+
+;; === Projection ===
 ;; - `projection'               ~ project management library
 ;; - `projection-multi'         ~ compile-multi extension for projection
 ;; - `projection-multi-embark'  ~ embark extension for projection
+
+;; === Compile multi ===
 ;; - `compile-multi'            ~ multi target interface to compile
 ;; - `consult-compile-multi'    ~ consult extension for compile-multi
 ;; - `compile-multi-nerd-icons' ~ nerd-icons extension for compile-multi
@@ -42,6 +47,9 @@
   (("C-x p f" . consult-project-extra-find)
    ("C-x p o" . consult-project-extra-find-other-window)))
 
+;; === Projection ===
+;; ------------------
+
 (use-package projection
   :hook ((after-init . global-projection-hook-mode)
          (compilation-mode . projection-customize-compilation-mode))
@@ -63,6 +71,9 @@
   :after projection-multi
   :demand t
   :config (projection-multi-embark-setup-command-map))
+
+;; === Compile multi ===
+;; ---------------------
 
 (use-package compile-multi
   :bind ([remap compile-multi] . projection-multi-compile)
@@ -92,5 +103,5 @@
   :demand t
   :config (compile-multi-embark-mode +1))
 
-(provide 'setup-project)
-;;; setup-project.el ends here
+(provide 'init-projects)
+;;; init-projects.el ends here

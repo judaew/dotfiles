@@ -1,4 +1,4 @@
-;;; setup-git.el --- Git tools -*- lexical-binding: t; -*-
+;;; init-vc.el --- VC tools -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
@@ -40,9 +40,7 @@
   :config
   (setopt diff-hl-side 'right)
   ;; highlighting changes on the fly
-  ;; FIXME: broken around 2025-12-02 in dev version of the emacs
-  ;;(diff-hl-flydiff-mode 1)
-  )
+  (diff-hl-flydiff-mode 1))
 
-(provide 'setup-git)
-;;; setup-git.el ends here
+(provide 'init-vc)
+;;; init-vc.el ends here

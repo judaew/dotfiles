@@ -97,57 +97,19 @@
     (server-start)))
 
 ;; Load modular configuration files
-(add-to-list 'load-path "~/.emacs.d/config")
+(add-to-list 'load-path (expand-file-name "config" user-emacs-directory))
 
-;; -----------------------------------
-;; Core system & foundational behavior
-;; -----------------------------------
-(load "setup-editing")  ;; Editing utilities
-(load "setup-movement") ;; Different navigation enhancement
-(load "setup-dired")    ;; File manager improvements
-(load "setup-undo")     ;; Undo/redo system and undo navigation
-
-;; -----------------
-;; UI tweaks & theme
-;; -----------------
-(load "setup-ui")       ;; UI tweaks
-(load "setup-modeline") ;; Modeline enhancements
-(load "setup-themes")   ;; Theme configuration
-
-;; ------------------------
-;; Completion & UI feedback
-;; ------------------------
-(load "setup-completion-backend") ;; cape & other capf completion providers
-(load "setup-completion-ui")      ;; corfu as completion UI
-(load "setup-minibuffer-ui")      ;; vertico/consult and other minibuffer tweaks
-
-;; ---------------------------
-;; Spelling or syntax checking
-;; ---------------------------
-(load "setup-flymake")    ;; syntax/linting via Flymake integration
-(load "setup-spellcheck") ;; spell-checker setup
-
-;; ----------------------------------
-;; Language support, TreeSitter & LSP
-;; ----------------------------------
-(load "setup-project")    ;; project management
-(load "setup-treesitter") ;; treesitter integration
-(load "setup-lang")       ;; misc language support
-(load "setup-lsp")        ;; LSP (Language Server Protocol)
-(load "setup-dap")        ;; DAP (Debug Adapter Protocol)
-
-;; -----------------
-;; Tools & ecosystem
-;; -----------------
-(load "setup-git")    ;; git integration
-(load "setup-docker") ;; docker integration
-(load "setup-term")   ;; terminal integration
-(load "setup-llm")    ;; large language model integration
-
-;; --------------------
-;; Knowledge management
-;; --------------------
-(load "setup-org") ;; org-mode enhancement
+(require 'init-completion)
+(require 'init-editing)
+(require 'init-ide)
+(require 'init-vc)
+(require 'init-projects)
+(require 'init-org)
+(require 'init-ui)
+(require 'init-langs)
+(require 'init-term)
+(require 'init-ai)
+(require 'init-dired)
 
 ;; Set custom-file location
 (setopt custom-file (locate-user-emacs-file "custom.el"))

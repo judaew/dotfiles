@@ -1,16 +1,40 @@
-;;; setup-lang.el --- Programming language modes setup -*- lexical-binding: t; -*-
+;;; init-langs.el --- Tools for programming languages -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
 ;; Packages:
-;; - `citre'         ~ advanced Ctags frontend
+
+;; === Formatting ===
 ;; - `apheleia'      ~ run code formatter on buffer contents
+
+;; === Tags ===
+;; - `citre'         ~ advanced Ctags frontend
+
+;; === Python ===
 ;; - `pyvenv'        ~ manage Python virtual environment
+
+;; === Language modes ===
 ;; - `ninja-mode'    ~ major mode for Ninja build files
 ;; - `protobuf-mode' ~ major mode for Protocol Buffers
 ;; - `nginx-mode'    ~ major mode for Nginx config
 
+;; === Systemd ===
+;; Syntax highlighting for systemd files
+
 ;;; Code:
+
+;; === Formatting ===
+;; ------------------
+
+(use-package apheleia
+  :hook (after-init . apheleia-global-mode)
+  :config
+  (setf (alist-get 'go-ts-mode apheleia-mode-alist)
+        '(goimports)))
+
+
+;; === Tags ===
+;; ------------
 
 (use-package citre
   :defer t
@@ -29,14 +53,14 @@
   (setopt citre-peek-fill-fringe nil)
   (setopt citre-peek-use-dashes-as-horizontal-border t))
 
-(use-package apheleia
-  :hook (after-init . apheleia-global-mode)
-  :config
-  (setf (alist-get 'go-ts-mode apheleia-mode-alist)
-        '(goimports)))
+;; === Python ===
+;; --------------
 
 (use-package pyvenv
   :defer t)
+
+;; === Language modes ===
+;; ----------------------
 
 (use-package ninja-mode
   :defer t)
@@ -46,6 +70,9 @@
 
 (use-package nginx-mode
   :defer t)
+
+;; === Systemd ===
+;; ---------------
 
 ;; Syntax highlighting for systemd files
 (add-to-list 'auto-mode-alist '("\\.service\\'" . conf-unix-mode))
@@ -60,5 +87,6 @@
 (add-to-list 'auto-mode-alist '("\\.network\\'" . conf-unix-mode))
 (add-to-list 'auto-mode-alist '("\\.link\\'" . conf-unix-mode))
 
-(provide 'setup-lang)
-;;; setup-lang.el ends here
+
+(provide 'init-langs)
+;;; init-langs.el ends here
