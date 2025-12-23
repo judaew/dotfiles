@@ -13,6 +13,8 @@
 ;; - `expreg'              ; expand-region using Tree-Sitter
 
 ;; === Movement and navigation ===
+;; - `ibuffer'
+;; -
 ;; - `ace-window'          ; window numbering and navigation
 ;; - `avy'                 ; jump to visible text
 ;; - `windresize'          ; resize windows
@@ -55,6 +57,41 @@
 
 ;; === Movement and navigation ===
 ;; -------------------------------
+
+;; (use-package all-the-icons-ibuffer
+;;   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
+
+(use-package nerd-icons-ibuffer
+  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+
+(use-package ibuffer
+  :bind ("C-x C-b" . ibuffer)
+  :custom
+  (ibuffer-expert t)
+  (ibuffer-display-summary nil)
+  ;;(ibuffer-use-other-window nil)
+  (ibuffer-show-empty-filter-groups nil)
+  (ibuffer-use-header-line t)
+  ;;(ibuffer-default-shrink-to-minimum-size nil)
+  (ibuffer-default-sorting-mode 'filename/process)
+  (ibuffer-formats
+   '((mark modified read-only locked " "
+           (name 18 18 :left :elide)
+           " "
+           (size 9 -1 :right)
+           " "
+           (mode 16 16 :left :elide)
+           " " project-file-relative))))
+
+;; See https://github.com/muffinmad/emacs-ibuffer-project
+(use-package ibuffer-project
+  :config
+  (add-hook
+   'ibuffer-hook
+   (lambda ()
+     (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
+     (unless (eq ibuffer-sorting-mode 'project-file-relative)
+       (ibuffer-do-sort-by-project-file-relative)))))
 
 (use-package ace-window
   :demand t ;; for modeline
