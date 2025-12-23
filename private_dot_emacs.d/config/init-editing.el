@@ -58,21 +58,47 @@
 ;; === Movement and navigation ===
 ;; -------------------------------
 
-;; (use-package all-the-icons-ibuffer
-;;   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
+(defun my/ibuffer-to-buffer ()
+  "Open ibuffer in a bottom split window.
 
-(use-package nerd-icons-ibuffer
-  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+This function provides an improved `switch-to-buffer' experience that combines
+the power of ibuffer's buffer management with the convenience of traditional
+buffer switching.
+
+Press RET to switch to buffer in the original window.
+Press q to close the ibuffer window."
+  (interactive)
+  (let ((orig-window (selected-window)))
+    (split-window-below (round (* 0.3 (window-height))))
+
+    (setq-local my/ibuffer-orig-window orig-window)
+
+    (ibuffer nil "*Ibuffer*")
+
+    (define-key ibuffer-mode-map (kbd "RET")
+                (lambda ()
+                  (interactive)
+                  (let ((buf (ibuffer-current-buffer)))
+                    (when buf
+                      (delete-window)
+                      (select-window my/ibuffer-orig-window)
+                      (switch-to-buffer buf)))))
+
+    (define-key ibuffer-mode-map (kbd "q")
+                (lambda ()
+                  (interactive)
+                  (delete-window)
+                  (select-window my/ibuffer-orig-window)))))
 
 (use-package ibuffer
-  :bind ("C-x C-b" . ibuffer)
+  :bind ("C-x b" . my/ibuffer-to-buffer)
   :custom
   (ibuffer-expert t)
   (ibuffer-display-summary nil)
-  ;;(ibuffer-use-other-window nil)
+  (ibuffer-use-other-window t)
   (ibuffer-show-empty-filter-groups nil)
   (ibuffer-use-header-line t)
-  ;;(ibuffer-default-shrink-to-minimum-size nil)
+  (ibuffer-default-shrink-to-minimum-size t)
   (ibuffer-default-sorting-mode 'filename/process)
   (ibuffer-formats
    '((mark modified read-only locked " "
@@ -83,7 +109,6 @@
            (mode 16 16 :left :elide)
            " " project-file-relative))))
 
-;; See https://github.com/muffinmad/emacs-ibuffer-project
 (use-package ibuffer-project
   :config
   (add-hook
@@ -92,6 +117,10 @@
      (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
      (unless (eq ibuffer-sorting-mode 'project-file-relative)
        (ibuffer-do-sort-by-project-file-relative)))))
+
+(use-package nerd-icons-ibuffer
+  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+
 
 (use-package ace-window
   :demand t ;; for modeline
