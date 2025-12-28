@@ -13,8 +13,6 @@
 ;; - `expreg'              ; expand-region using Tree-Sitter
 
 ;; === Movement and navigation ===
-;; - `ibuffer'
-;; -
 ;; - `ace-window'          ; window numbering and navigation
 ;; - `avy'                 ; jump to visible text
 ;; - `windresize'          ; resize windows
@@ -57,70 +55,6 @@
 
 ;; === Movement and navigation ===
 ;; -------------------------------
-
-(defun my/ibuffer-to-buffer ()
-  "Open ibuffer in a bottom split window.
-
-This function provides an improved `switch-to-buffer' experience that combines
-the power of ibuffer's buffer management with the convenience of traditional
-buffer switching.
-
-Press RET to switch to buffer in the original window.
-Press q to close the ibuffer window."
-  (interactive)
-  (let ((orig-window (selected-window)))
-    (split-window-below (round (* 0.3 (window-height))))
-
-    (setq-local my/ibuffer-orig-window orig-window)
-
-    (ibuffer nil "*Ibuffer*")
-
-    (define-key ibuffer-mode-map (kbd "RET")
-                (lambda ()
-                  (interactive)
-                  (let ((buf (ibuffer-current-buffer)))
-                    (when buf
-                      (delete-window)
-                      (select-window my/ibuffer-orig-window)
-                      (switch-to-buffer buf)))))
-
-    (define-key ibuffer-mode-map (kbd "q")
-                (lambda ()
-                  (interactive)
-                  (delete-window)
-                  (select-window my/ibuffer-orig-window)))))
-
-(use-package ibuffer
-  :bind ("C-x b" . my/ibuffer-to-buffer)
-  :custom
-  (ibuffer-expert t)
-  (ibuffer-display-summary nil)
-  (ibuffer-use-other-window t)
-  (ibuffer-show-empty-filter-groups nil)
-  (ibuffer-use-header-line t)
-  (ibuffer-default-shrink-to-minimum-size t)
-  (ibuffer-default-sorting-mode 'filename/process)
-  (ibuffer-formats
-   '((mark modified read-only locked " "
-           (name 18 18 :left :elide)
-           " "
-           (size 9 -1 :right)
-           " "
-           (mode 16 16 :left :elide)
-           " " project-file-relative))))
-
-(use-package ibuffer-project
-  :config
-  (add-hook
-   'ibuffer-hook
-   (lambda ()
-     (setq ibuffer-filter-groups (ibuffer-project-generate-filter-groups))
-     (unless (eq ibuffer-sorting-mode 'project-file-relative)
-       (ibuffer-do-sort-by-project-file-relative)))))
-
-(use-package nerd-icons-ibuffer
-  :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
-
 
 (use-package ace-window
   :demand t ;; for modeline
