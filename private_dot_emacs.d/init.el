@@ -96,14 +96,18 @@
   (unless (server-running-p)
     (server-start)))
 
+;; See https://github.com/radian-software/straight.el/issues/551#issuecomment-667540139
+;; Add project and flymake to the pseudo-packages variable so straight.el doesn't download
+(setopt straight-built-in-pseudo-packages '(emacs project flymake))
+
 ;; Load modular configuration files
 (add-to-list 'load-path (expand-file-name "config" user-emacs-directory))
 
 (require 'init-completion)
 (require 'init-editing)
+(require 'init-projects)
 (require 'init-ide)
 (require 'init-vc)
-(require 'init-projects)
 (require 'init-org)
 (require 'init-ui)
 (require 'init-langs)
