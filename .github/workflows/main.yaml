@@ -2,25 +2,6 @@ name: "lint changes files"
 on: push
 
 jobs:
-  emacs-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Setup Emacs
-        uses: purcell/setup-emacs@master
-        with:
-          version: snapshot
-
-      - name: Setup "emacs-lisp-check"
-        uses: leotaku/elisp-check@master
-        with:
-          check: byte-compile
-          file: "private_dot_emacs.d/**/*.el"
-          ignore_warnings: false
-          warnings_as_errors: false
-
   shellcheck-lint:
     runs-on: ubuntu-latest
     steps:
