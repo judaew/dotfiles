@@ -2,67 +2,67 @@
 
 # git
 [core]
-    # See https://github.blog/2022-06-27-highlights-from-git-2-37/#a-builtin-filesystem-monitor-for-windows-and-macos
-    fsmonitor = true
+	# See https://github.blog/2022-06-27-highlights-from-git-2-37/#a-builtin-filesystem-monitor-for-windows-and-macos
+	fsmonitor = true
 
 [init]
-    defaultBranch = "main"
+	defaultBranch = "main"
 
 [user]
-    name = "Vadym-Valdis Yudaiev"
-    email = "judaew@outlook.de"
-    signingkey = "E85EF1C4A188CE00"
+	name = "Vadym-Valdis Yudaiev"
+	email = "judaew@outlook.de"
+	signingkey = "E85EF1C4A188CE00"
 
 [credential]
-    helper = libsecret
+	helper = libsecret
 
 [commit]
-    gpgsign = true
+	gpgsign = true
 
 [push]
-    default = current
+	default = current
 
 [pull]
-    rebase = true
+	rebase = true
 
 [color]
-    ui = auto
+	ui = auto
 
 # gpg
 [gpg]
-    program = gpg2
+	program = gpg2
 
 # git.alias
 [alias]
-    br = branch
-    ls = ls-files
-    # Show files ignored by git:
-    ign = ls-files -o -i --exclude-standard
+	br = branch
+	ls = ls-files
+	# Show files ignored by git:
+	ign = ls-files -o -i --exclude-standard
 
-    shoot = push origin --delete
-    unstage = reset HEAD --
-    prev = checkout -
-    discard = checkout --
+	shoot = push origin --delete
+	unstage = reset HEAD --
+	prev = checkout -
+	discard = checkout --
 
 # git.diff
 [difftool]
-    thustExitCode = true
+	thustExitCode = true
 
 # git.merge
 [merge]
-    conflictstyle = zdiff3
+	conflictstyle = zdiff3
 
 # git-lfs
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 
 # delta
 [delta]
-    navigate = true
-    light = false
+	navigate = true
+	light = false
 
 [ghq]
-    root = "~/wrk"
+	root = "~/wrk"
