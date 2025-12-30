@@ -5,6 +5,7 @@
 ;; Packages:
 ;; === LSP ===
 ;; - `eglot'           ; LSP client
+;; - `consult-eglot'   ; Jump to workspace symbols with eglot and consult
 
 ;; === Tree-sitter ===
 ;; syntax trees config
@@ -91,6 +92,14 @@ Or passes other checks that determine whether eglot should run."
   ;; Integrate with `marginalia'
   (add-to-list 'marginalia-command-categories
                '(eglot-code-actions . eglot)))
+
+(use-package consult-eglot
+  :bind ("M-g l" . consult-eglot-symbols)
+  :config
+  (with-eval-after-load 'embark
+    (with-eval-after-load 'consult-eglot
+      (require 'consult-eglot-embark)
+      (consult-eglot-embark-mode))))
 
 ;; === Tree-sitter ===
 ;; -------------------
