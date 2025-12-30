@@ -7,6 +7,7 @@
 ;; === Environment ===
 ;; - `exec-path-from-shell' ~ sync shell environment with Emacs
 ;; - `direnv'               ~ direnv integration
+;; - `with-editor'          ~ use the emacsclient as the $EDITOR of child processes
 
 ;; === Terminal ===
 ;; - `mouse'                ~ mouse support in terminal
@@ -31,6 +32,13 @@
 
 (use-package direnv
   :hook (after-init . direnv-mode))
+
+(use-package with-editor
+  :bind
+  (([remap async-shell-command] . with-editor-async-shell-command)
+   ([remap shell-command] . with-editor-shell-command))
+  :hook
+  ((shell-mode eshell-mode term-mode vterm-mode) . with-editor-export-editor))
 
 ;; === Terminal ===
 ;; ----------------
