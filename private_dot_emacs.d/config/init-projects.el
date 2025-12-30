@@ -4,19 +4,19 @@
 
 ;; Packages:
 
-;; - `project'                  ~ project management core
-;; - `consult-project-extra'    ~ enhanced project navigation
+;; - `project'                  ; project management core
+;; - `consult-project-extra'    ; enhanced project navigation
 
 ;; === Projection ===
-;; - `projection'               ~ project management library
-;; - `projection-multi'         ~ compile-multi extension for projection
-;; - `projection-multi-embark'  ~ embark extension for projection
+;; - `projection'               ; project management library
+;; - `projection-multi'         ; compile-multi extension for projection
+;; - `projection-multi-embark'  ; embark extension for projection
 
 ;; === Compile multi ===
-;; - `compile-multi'            ~ multi target interface to compile
-;; - `consult-compile-multi'    ~ consult extension for compile-multi
-;; - `compile-multi-nerd-icons' ~ nerd-icons extension for compile-multi
-;; - `compile-multi-embark'     ~ embark extension for compile-multi
+;; - `compile-multi'            ; multi target interface to compile
+;; - `consult-compile-multi'    ; consult extension for compile-multi
+;; - `compile-multi-nerd-icons' ; nerd-icons extension for compile-multi
+;; - `compile-multi-embark'     ; embark extension for compile-multi
 
 ;;; Code:
 

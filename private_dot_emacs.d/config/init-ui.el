@@ -5,20 +5,20 @@
 ;; Packages:
 
 ;; === Icons ===
-;; `all-the-icons'         ~ file and buffer icons
-;; `nerd-the-icons'        ~ alternative icon set
+;; `all-the-icons'         ; file and buffer icons
+;; `nerd-the-icons'        ; alternative icon set
 
 ;; === Modeline ===
-;; `mood-line'             ~ fancy modeline
-;; `diminish'              ~ hide minor modes in modeline
+;; `mood-line'             ; fancy modeline
+;; `diminish'              ; hide minor modes in modeline
 
 ;; === Visual enhancements ===
-;; `hl-todo'               ~ highlight TODO/FIXME comments
-;; `highlight-parentheses' ~ highlight matching parentheses
-;; `goggles'               ~ show changes inline
-;; `indent-bars'           ~ display indentation bars
-;; `colorful-mode'         ~ add color to buffers
-;; `posframe'              ~ pop a posframe at point
+;; `hl-todo'               ; highlight TODO/FIXME comments
+;; `highlight-parentheses' ; highlight matching parentheses
+;; `goggles'               ; show changes inline
+;; `indent-bars'           ; display indentation bars
+;; `colorful-mode'         ; add color to buffers
+;; `posframe'              ; pop a posframe at point
 
 ;; === Themes ===
 ;; - `doom-themes' ~ collection of themes

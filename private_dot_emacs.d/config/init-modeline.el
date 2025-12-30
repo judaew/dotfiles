@@ -3,7 +3,7 @@
 ;;; Commentary:
 
 ;; Packages:
-;; `mood-line' ~ fancy modeline
+;; `mood-line' ; fancy modeline
 
 ;;; Code:
 

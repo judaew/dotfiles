@@ -5,18 +5,18 @@
 ;; Packages:
 
 ;; === Formatting ===
-;; - `apheleia'      ~ run code formatter on buffer contents
+;; - `apheleia'      ; run code formatter on buffer contents
 
 ;; === Tags ===
-;; - `citre'         ~ advanced Ctags frontend
+;; - `citre'         ; advanced Ctags frontend
 
 ;; === Python ===
-;; - `pyvenv'        ~ manage Python virtual environment
+;; - `pyvenv'        ; manage Python virtual environment
 
 ;; === Language modes ===
-;; - `ninja-mode'    ~ major mode for Ninja build files
-;; - `protobuf-mode' ~ major mode for Protocol Buffers
-;; - `nginx-mode'    ~ major mode for Nginx config
+;; - `ninja-mode'    ; major mode for Ninja build files
+;; - `protobuf-mode' ; major mode for Protocol Buffers
+;; - `nginx-mode'    ; major mode for Nginx config
 
 ;; === Systemd ===
 ;; Syntax highlighting for systemd files

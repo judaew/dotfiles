@@ -3,13 +3,13 @@
 ;;; Commentary:
 
 ;; Packages:
-;; - `magit'           ~ Git porcelain inside Emacs
-;; - `magit-delta'     ~ use delta when viewing diffs in Magit
-;; - `magit-todos'     ~ show source files' TODOs (and FIXMEs etc) in Magit
-;; - `git-modes'       ~ major modes for Git configuration files
-;; - `git-timemachine' ~ walk through git revisions of a file
-;; - `forge'           ~ integrate Git forges (like GitHub/GitLab)
-;; - `diff-hl'         ~ highlight changes in `fringe-mode'
+;; - `magit'           ; Git porcelain inside Emacs
+;; - `magit-delta'     ; use delta when viewing diffs in Magit
+;; - `magit-todos'     ; show source files' TODOs (and FIXMEs etc) in Magit
+;; - `git-modes'       ; major modes for Git configuration files
+;; - `git-timemachine' ; walk through git revisions of a file
+;; - `forge'           ; integrate Git forges (like GitHub/GitLab)
+;; - `diff-hl'         ; highlight changes in `fringe-mode'
 
 ;;; Code:
 

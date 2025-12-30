@@ -5,13 +5,13 @@
 ;; Packages:
 
 ;; === Built-in Dired ===
-;; - `dired'        ~ build-in file manager core
-;; - `dired-x'      ~ extra Dired commands
+;; - `dired'        ; build-in file manager core
+;; - `dired-x'      ; extra Dired commands
 
 ;; === Enhancements ===
-;; - `diredfl'      ~ nicer faces for Dired entries
-;; - `dired-launch' ~ open with external apps (like xdg-open)
-;; - `dirvish'      ~ modern Dired UI
+;; - `diredfl'      ; nicer faces for Dired entries
+;; - `dired-launch' ; open with external apps (like xdg-open)
+;; - `dirvish'      ; modern Dired UI
 
 ;;; Code:
 

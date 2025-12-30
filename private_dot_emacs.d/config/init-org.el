@@ -3,10 +3,10 @@
 ;;; Commentary:
 
 ;; Packages:
-;; - `org'          ~ organize notes, tasks, and documents
-;; - `org-download' ~ drag-and-drop images into Org
-;; - `org-modern'   ~ modern visual style for Org
-;; - `org-appear'   ~ reveal Org elements contextually
+;; - `org'          ; organize notes, tasks, and documents
+;; - `org-download' ; drag-and-drop images into Org
+;; - `org-modern'   ; modern visual style for Org
+;; - `org-appear'   ; reveal Org elements contextually
 
 ;;; Code:
 
