@@ -5,19 +5,19 @@
 ;; Packages:
 
 ;; === Environment ===
-;; - `exec-path-from-shell' ~ sync shell environment with Emacs
-;; - `direnv'               ~ direnv integration
-;; - `with-editor'          ~ use the emacsclient as the $EDITOR of child processes
+;; - `exec-path-from-shell' ; sync shell environment with Emacs
+;; - `direnv'               ; direnv integration
+;; - `with-editor'          ; use the emacsclient as the $EDITOR of child processes
 
 ;; === Terminal ===
-;; - `mouse'                ~ mouse support in terminal
-;; - `vterm'                ~ libvterm integration
-;; - `termclip'             ~ clipboard support in terminal
+;; - `mouse'                ; mouse support in terminal
+;; - `vterm'                ; libvterm integration
+;; - `termclip'             ; clipboard support in terminal
 
 ;; === Docker ===
-;; - `docker'              ~ Docker integration
-;; - `dockerfile-mode'     ~ major mode for editing Dockerfiles
-;; - `docker-compose-mode' ~ major mode for editing docker-compose files
+;; - `docker'               ; Docker integration
+;; - `dockerfile-mode'      ; major mode for editing Dockerfiles
+;; - `docker-compose-mode'  ; major mode for editing docker-compose files
 
 ;;; Code:
 
