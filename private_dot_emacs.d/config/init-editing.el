@@ -6,6 +6,7 @@
 
 ;; === Editing ===
 ;; - `smart-hungry-delete' ; smart hungry delete
+;; - `multiple-cursors'    ; multiple cursors
 ;; - `ws-butler'           ; trim whitespace on save
 ;; - `iedit'               ; edit multiple regions
 ;; - `saveplace'           ; remember cursor position
@@ -34,6 +35,11 @@
          ([remap delete-backward-char] . smart-hungry-delete-backward-char)
          ([remap delete-char] . smart-hungry-delete-forward-char))
   :init (smart-hungry-delete-add-default-hooks))
+
+(use-package multiple-cursors
+  :bind
+  (("C->" . mc/mark-next-like-this)
+   ("C-<" . mc/mark-previous-like-this)))
 
 (use-package ws-butler
   :hook (prog-mode . ws-butler-mode)
