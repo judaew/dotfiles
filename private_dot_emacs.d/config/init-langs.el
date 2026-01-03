@@ -32,7 +32,6 @@
   (setf (alist-get 'go-ts-mode apheleia-mode-alist)
         '(goimports)))
 
-
 ;; === Tags ===
 ;; ------------
 
@@ -86,7 +85,6 @@
 (add-to-list 'auto-mode-alist '("\\.netdev\\'" . conf-unix-mode))
 (add-to-list 'auto-mode-alist '("\\.network\\'" . conf-unix-mode))
 (add-to-list 'auto-mode-alist '("\\.link\\'" . conf-unix-mode))
-
 
 (provide 'init-langs)
 ;;; init-langs.el ends here
