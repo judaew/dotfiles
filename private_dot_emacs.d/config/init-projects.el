@@ -6,6 +6,7 @@
 
 ;; - `project'                  ; project management core
 ;; - `consult-project-extra'    ; enhanced project navigation
+;; - `midnight'                 ; kill old buffers
 
 ;; === Projection ===
 ;; - `projection'               ; project management library
@@ -46,6 +47,12 @@
   :bind
   (("C-x p f" . consult-project-extra-find)
    ("C-x p o" . consult-project-extra-find-other-window)))
+
+(use-package midnight
+  :straight nil
+  :hook (after-init . midnight-mode)
+  :config
+  (setopt midnight-period (* 3 24 60 60))) ;; 3 days
 
 ;; === Projection ===
 ;; ------------------
