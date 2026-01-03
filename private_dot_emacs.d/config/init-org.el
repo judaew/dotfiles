@@ -7,6 +7,7 @@
 ;; - `org-download' ; drag-and-drop images into Org
 ;; - `org-modern'   ; modern visual style for Org
 ;; - `org-appear'   ; reveal Org elements contextually
+;; - `htmlize'      ; convert buffer to HTML
 
 ;;; Code:
 
@@ -121,6 +122,9 @@
   :hook
   ((org-mode . org-appear-mode)
    (org-agenda-finalize . org-modern-agenda)))
+
+(use-package htmlize
+  :defer t)
 
 (provide 'init-org)
 ;;; init-org.el ends here
