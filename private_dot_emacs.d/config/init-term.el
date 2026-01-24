@@ -57,12 +57,8 @@
   :custom
   (vterm-max-scrollback 10000))
 
-(use-package termclip
-  :straight (termclip :type git :local-repo "~/wrk/github.com/judaew/termclip.el")
-  :config
-  (if (eq system-type 'darwin)
-      (setopt termclip-clipboard-tool 'macos)
-    (setopt termclip-clipboard-tool 'wayland)))
+(use-package xclip
+  :hook (after-init . xclip-mode))
 
 ;; === Docker ===
 ;; --------------
