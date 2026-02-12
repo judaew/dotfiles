@@ -42,6 +42,7 @@
    ("C-<" . mc/mark-previous-like-this)))
 
 (use-package ws-butler
+  :straight (:repo "lewang/ws-butler")
   :hook (prog-mode . ws-butler-mode)
   :config
   (setopt ws-butler-keep-whitespace-before-point t))
