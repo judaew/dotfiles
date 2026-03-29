@@ -12,7 +12,7 @@
 ;; === Terminal ===
 ;; - `mouse'                ; mouse support in terminal
 ;; - `vterm'                ; libvterm integration
-;; - `termclip'             ; clipboard support in terminal
+;; - `xclip'                ; clipboard support in terminal
 
 ;; === Docker ===
 ;; - `docker'               ; Docker integration
@@ -42,14 +42,6 @@
 
 ;; === Terminal ===
 ;; ----------------
-
-;; `xterm-mouse-mode'
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (with-selected-frame frame
-              (if (display-graphic-p frame)
-                  (xterm-mouse-mode 0)
-                (xterm-mouse-mode 1)))))
 
 (use-package vterm
   :bind
