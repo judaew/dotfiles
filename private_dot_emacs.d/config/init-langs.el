@@ -64,7 +64,9 @@
 (use-package ninja-mode
   :defer t)
 
+;; Use emacsmirror version containing only the .el mode file (no protobuf src)
 (use-package protobuf-mode
+  :straight (protobuf-mode :type git :host github :repo "emacsmirror/protobuf-mode" :branch "master")
   :defer t)
 
 (use-package nginx-mode
