@@ -5,6 +5,7 @@
 ;; Packages:
 
 ;; === Editing ===
+;; - `sudo-edit'           ; opening files with sudo
 ;; - `smart-hungry-delete' ; smart hungry delete
 ;; - `multiple-cursors'    ; multiple cursors
 ;; - `ws-butler'           ; trim whitespace on save
@@ -29,6 +30,9 @@
 
 ;; === Editing ===
 ;; ---------------
+
+(use-package sudo-edit
+  :demand t)
 
 (use-package smart-hungry-delete
   :bind (([remap backward-delete-char-untabify] . smart-hungry-delete-backward-char)
