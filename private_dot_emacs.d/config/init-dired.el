@@ -68,8 +68,12 @@
             ("png" ("gwenview")))))
 
 ;; Unset F2 from 2C-mode for `dirvish-side'
-(when (keymapp (lookup-key global-map (kbd "<f2>")))
-  (global-unset-key (kbd "<f2>")))
+;; Only unset if the key is bound to a command whose name starts with "2C"
+(let ((key-def (lookup-key global-map (kbd "<f2>"))))
+  (when (and (not (keymapp key-def))
+             (symbolp key-def)
+             (string-match-p "\\`2C" (symbol-name key-def)))
+    (global-unset-key (kbd "<f2>"))))
 
 (use-package dirvish
   :after dired
@@ -126,14 +130,6 @@
           '(:left (path) :right (free-space))
           dirvish-mode-line-format
           '(:left (sort file-time " " file-size symlink) :right (omit yank index))))
-
-(use-package diredfl
-  :hook
-  ((dired-mode . diredfl-mode)
-   ;; highlight parent and directory preview as well
-   (dirvish-directory-view-mode . diredfl-mode))
-  :config
-  (set-face-attribute 'diredfl-dir-name nil :bold t))
 
 (provide 'init-dired)
 ;;; init-dired.el ends here
