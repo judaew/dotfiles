@@ -3,16 +3,11 @@
 ;;; Commentary:
 
 ;; Packages:
-;; - `gptel'
-;; - `gptel-quick'
+;; - `gptel'       ~ A simple, extensible LLM client
+;; - `gptel-agent' ~ Agent mode for gptel
+;; - `eca'         ~ Editor Code Assistant
 
 ;; TODO:
-;; - see evedel https://github.com/daedsidog/evedel or
-;;       elysium https://github.com/lanceberge/elysium
-;; - create an alternative to gptel-quick that will be more universal
-;; - just kidding, but maybe for fun to test gptel-autocomplete, BUT with only
-;;   local models (ollama)
-;;   https://github.com/JDNdeveloper/gptel-autocomplete
 ;; - ob-gptel https://github.com/jwiegley/ob-gptel
 
 ;;; Code:
@@ -28,6 +23,8 @@
    ("C-c g r" . gptel-context-remove-all))
   :config
   (setopt gptel-default-mode 'org-mode)
+  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "* 👤 user: ")
+  (setf (alist-get 'org-mode gptel-response-prefix-alist) "* 🤖 assistant: ")
   (setopt gptel-track-media t)
 
   (gptel-make-deepseek "DeepSeek"
@@ -37,7 +34,7 @@
   ;; Set default model
   ;; See https://github.com/karthink/gptel/issues/704#issuecomment-2759390992
   (setopt gptel-backend (gptel-get-backend "DeepSeek"))
-  (setopt gptel-model 'deepseek-chat)
+  (setopt gptel-model 'deepseek-chat) ;; or `deepseek-reasoner'
 
   (gptel-make-openai "Alibaba"
     :stream t
@@ -48,23 +45,26 @@
     :models '(;; coding
               "qwen3-coder-plus" "qwen3-coder-flash"
               ;; general
-              "qwen3-max" "qwen3-plus" "qwen-flash"
+              "qwen3.5-plus" "qwen3.5-flash"
               ;; translate
               "qwen-mt-plus"
               "qwen-mt-turbo"))
-
-  (gptel-make-ollama "Local"
-    :host "localhost:11434"
-    :stream t
-    :models '("qwen3:30b" "qwen3-coder:30b" "gpt-oss:20b"))
-
-  ;; My gptel tools
-  (load "~/.emacs.d/config/setup-llm-tools.el")
   )
 
-(use-package gptel-quick
-  :straight (gptel-quick :type git :host github :repo "karthink/gptel-quick")
-  :bind ("C-c Q" . gptel-quick))
+;; TODO: custom gptel-agent-dir path
+;; gptel-agent-dirs is a variable defined in ‘gptel-agent.el’.
+;;
+;; Its value is ("/home/judaew/.emacs.d/straight/build/gptel-agent/agents/")
+;;
+;; Agent definition directories for ‘gptel-agent’.
+;;
+;; Markdown (.md) and Org (.org) files in these directories will be scanned
+;; for gptel sub-agent definitions by ‘gptel-agent’.
+(use-package gptel-agent
+  :config (gptel-agent-update))
+
+(use-package eca
+  :straight (eca :type git :host github :repo "editor-code-assistant/eca-emacs" :branch "master"))
 
 (provide 'init-ai)
 ;;; init-ai.el ends here
