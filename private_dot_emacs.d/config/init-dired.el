@@ -9,9 +9,13 @@
 ;; - `dired-x'      ; extra Dired commands
 
 ;; === Enhancements ===
-;; - `diredfl'      ; nicer faces for Dired entries
-;; - `dired-launch' ; open with external apps (like xdg-open)
-;; - `dirvish'      ; modern Dired UI
+;; - `dired-filter'     ; filter stack
+;; - `diredfl'          ; nicer faces for Dired entries
+;; - `dired-open'       ; open with external apps
+;; - `dired-subtree'    ; show subdirectories by <TAB>
+;; - `dired-collapse'   ; show single file or directory in directories
+;; - `dired-sidebar'    ; sidebar
+;; - `nerd-icons-dired' ; use nerd-icons for dired
 
 ;;; Code:
 
@@ -20,22 +24,20 @@
 
 ;; Default binds:
 ;; - "C-x C-j" . dired-jump
+;; - "C-x C-q" . wdired for make buffer editable and "C-c C-c" for save
 (use-package dired
   :straight nil
-  :hook (dired-mode . dired-hide-details-mode)
+  :hook (dired-mode . dired-hide-details-mode) ;; hide details by default
   :custom
-  (dired-dwim-target t)
+  (dired-dwim-target t) ;; guess target directory for copy/move
   (dired-listing-switches "--almost-all --human-readable --format=long --group-directories-first --no-group")
   (dired-recursive-copies 'always)
   (dired-recursive-deletes 'top)
-  ;; enabling reuse of dired buffer on open #emacs28
-  (dired-kill-when-opening-new-dired-buffer t)
-  ;; mouse integration #emacs29
+  (dired-kill-when-opening-new-dired-buffer t) ;; reuse buffer
+  ;; mouse integration
   (dired-mouse-drag-files t)
   (mouse-drag-and-drop-region-cross-program t)
   :config
-  ;; this command is useful when you want to close the window of `dirvish-side'
-  ;; automatically when opening a file
   (put 'dired-find-alternate-file 'disabled nil))
 
 (use-package dired-x
@@ -45,29 +47,35 @@
   :bind (:map dired-mode-map
               ("." . dired-omit-mode))
   :custom
-  (dired-omit-files (rx (seq bol "."))))
+  (dired-omit-files (rx (seq bol ".")))) ;; hide dotfiles
 
 ;; === Enhancements ===
 ;; --------------------
 
+(use-package dired-filter
+  :hook (dired-mode . dired-filter-mode))
+
 (use-package diredfl
-  :hook
-  ((dired-mode . diredfl-mode)
-   ;; highlight parent and directory preview as well
-   (dirvish-directory-view-mode . diredfl-mode))
-  :config
-  (set-face-attribute 'diredfl-dir-name nil :bold t))
+  :hook (dired-mode . diredfl-mode)
+  :config (set-face-attribute 'diredfl-dir-name nil :bold t))
 
-(use-package dired-launch
+;; for macOS see dired-launch
+(use-package dired-open
+  :bind ("S-<return>" . dired-open-xdg))
+
+(use-package dired-subtree
+  :bind (:map dired-mode-map
+              ("TAB" . dired-subtree-toggle)))
+
+(use-package dired-collapse
+  :hook (dired-mode . dired-collapse-mode))
+
+(use-package dired-quick-sort
   :after dired
-  :config
-  (dired-launch-enable)
-  (setopt dired-launch-default-launcher '("xdg-open"))
-  (setopt dired-launch-extensions-map
-          '(;; fix for png extensions
-            ("png" ("gwenview")))))
+  :hook (dired-mode . dired-quick-sort-setup)
+  :custom (dired-quick-sort-suppress-setup-warning t))
 
-;; Unset F2 from 2C-mode for `dirvish-side'
+;; Unset F2 from 2C-mode for `dired-sidebar'
 ;; Only unset if the key is bound to a command whose name starts with "2C"
 (let ((key-def (lookup-key global-map (kbd "<f2>"))))
   (when (and (not (keymapp key-def))
@@ -75,61 +83,13 @@
              (string-match-p "\\`2C" (symbol-name key-def)))
     (global-unset-key (kbd "<f2>"))))
 
-(use-package dirvish
-  :after dired
-  :init (dirvish-override-dired-mode)
-  :bind
-  (("C-c f" . dirvish)
-   ("<f2>" . dirvish-side)
-   :map dirvish-mode-map
-   (";" . dired-up-directory)
-   ("?" . dirvish-dispatch)            ; [?] a helpful cheatsheet
-   ("a" . dirvish-setup-menu)          ; [a]ttributes settings
-   ("f" . dirvish-file-info-menu)      ; [f]ile info
-   ("o"   . dirvish-quick-access)      ; [o]pen `dirvish-quick-access-entries'
-   ("s"   . dirvish-quicksort)         ; [s]ort flie list
-   ("r"   . dirvish-history-jump)      ; [r]ecent visited
-   ("l"   . dirvish-ls-switches-menu)  ; [l]s command flags
-   ("v"   . dirvish-vc-menu)           ; [v]ersion control commands
-   ("*"   . dirvish-mark-menu)
-   ("y"   . dirvish-yank-menu)
-   ("N"   . dirvish-narrow)
-   ("^"   . dirvish-history-last)
-   ("TAB" . dirvish-subtree-toggle)
-   ("M-f" . dirvish-history-go-forward)
-   ("M-b" . dirvish-history-go-backward)
-   ("M-e" . dirvish-emerge-menu))
+(use-package dired-sidebar
+  :bind ("<f2>" . dired-sidebar-toggle-sidebar)
   :custom
-  (dirvish-side-width 30)
-  (dirvish-collapse-separator "/")
-  (dirvish-quick-access-entries
-   '(("h" "~/" "home")
-     ("d" "~/dl/" "dl")
-     ("w" "~/wrk/" "wrk")
-     ("o" "~/org/" "org")
-     ("m" "/mnt/" "mnt")
-     ("t" "~/.local/share/Trash/files/" "trash")))
-  :config
-  (dirvish-side-follow-mode t)
-  ;; FIXME: `vc-state' is VERY HEAVY in big repo
-  (setopt dirvish-attributes
-          (append
-           ;; The order of these attributes is insignificant, they are always
-           ;; displayed in the same position.
-           '(subtree-state nerd-icons collapse)
-           ;; FAIL: See https://github.com/alexluigit/dirvish/issues/356
-           ;; Other attributes are displayed in the order they appear in this list.
-           ;; '(git-msg file-size)))
-           ))
-  ;; Also FAIL: see prev comment
-  (setopt dirvish-side-attributes
-          (append
-           '(subtree-state nerd-icons collapse)))
+  (dired-sidebar-width 30))
 
-  (setopt dirvish-header-line-format
-          '(:left (path) :right (free-space))
-          dirvish-mode-line-format
-          '(:left (sort file-time " " file-size symlink) :right (omit yank index))))
+(use-package nerd-icons-dired
+  :hook (dired-mode . nerd-icons-dired-mode))
 
 (provide 'init-dired)
 ;;; init-dired.el ends here
