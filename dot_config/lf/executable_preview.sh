@@ -12,11 +12,6 @@ HEIGHT=$(( ${3} - 1))
 X_POS=${4}
 Y_POS=$(( ${5} + 1))
 
-try() {
-    "$@" 2>/dev/null && return 0
-    return 1
-}
-
 handle_extension() {
     case "${FILE_EXTENSION_LOWER}" in
         # Archive
