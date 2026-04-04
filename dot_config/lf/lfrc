@@ -27,10 +27,13 @@ set drawbox true
 # set gray color for border
 set borderfmt "\033[90m"
 
+# enable icons
+set icons
+
 # previewing files
 # see https://github.com/gokcehan/lf/wiki/Previews
 set previewer ~/.config/lf/preview.sh
-map i $LESSOPEN='| ~/.config/lf/preview.sh %s' less -R $f
+map i $LESSOPEN='| ~/.config/lf/preview.sh %s' less -R "$f"
 set cleaner ~/.config/lf/cleaner.sh
 
 # use enter for shell commands
@@ -78,3 +81,33 @@ cmd vlc ${{
     test -L $f && f=$(readline -f $f)
     open -a VLC "$f"
 }}
+
+set info custom
+
+# show git status inside the info column
+cmd on-load &{{
+    cd "$(dirname "$1")" || exit 1
+    [ "$(git rev-parse --is-inside-git-dir 2>/dev/null)" = false ] || exit 0
+
+    cmds=""
+
+    for file in "$@"; do
+        case "$file" in
+            */.git|*/.git/*) continue;;
+        esac
+
+        status=$(git status --porcelain --ignored -- "$file" | cut -c1-2 | head -n1)
+
+        if [ -n "$status" ]; then
+            cmds="${cmds}addcustominfo ${file} \"$status\"; "
+        else
+            cmds="${cmds}addcustominfo ${file} ''; "
+        fi
+    done
+
+    lf -remote "send $id :$cmds"
+}}
+
+# batch rename via vidir
+cmd brename $vidir -- "$PWD"
+map <a-r> brename
