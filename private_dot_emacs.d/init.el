@@ -112,7 +112,9 @@
 (require 'init-ui)
 (require 'init-ui-mode-line)
 (require 'init-langs)
+(require 'init-spell)
 (require 'init-term)
+(require 'init-term-clipboard)
 (require 'init-ai)
 (require 'init-dired)
 
