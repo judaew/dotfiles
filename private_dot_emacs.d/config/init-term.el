@@ -12,7 +12,6 @@
 ;; === Terminal ===
 ;; - `mouse'                ; mouse support in terminal
 ;; - `vterm'                ; libvterm integration
-;; - `xclip'                ; clipboard support in terminal
 
 ;; === Docker ===
 ;; - `docker'               ; Docker integration
@@ -48,9 +47,6 @@
   (("C-~" . vterm))
   :custom
   (vterm-max-scrollback 10000))
-
-(use-package xclip
-  :hook (after-init . xclip-mode))
 
 ;; === Docker ===
 ;; --------------
