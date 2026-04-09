@@ -90,6 +90,7 @@
 ;; --------------
 
 (use-package doom-themes
+  :disabled
   :custom
   (doom-themes-enable-bold t)
   (doom-themes-enable-italic t)
@@ -99,6 +100,12 @@
 
   ;; Use italic for comments
   (set-face-attribute 'font-lock-comment-face nil :slant 'italic))
+
+(use-package ronny-theme
+  ;;:straight (:host github :repo "judaew/ronny.el" )
+  :straight (ronny-theme :type git :local-repo "~/wrk/github.com/judaew/ronny.el")
+  :config
+  (load-theme 'ronny t))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
