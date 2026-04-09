@@ -9,7 +9,6 @@
 ;; `nerd-the-icons'        ; alternative icon set
 
 ;; === Visual enhancements ===
-;; `hl-todo'               ; highlight TODO/FIXME comments
 ;; `highlight-parentheses' ; highlight matching parentheses
 ;; `goggles'               ; show changes inline
 ;; `indent-bars'           ; display indentation bars
@@ -42,9 +41,6 @@
 
 ;; === Visual enhancements ===
 ;; ---------------------------
-
-(use-package hl-todo
-  :hook (after-init . global-hl-todo-mode))
 
 (use-package ligature
   :hook (after-init . global-ligature-mode)
