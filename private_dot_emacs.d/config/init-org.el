@@ -2,12 +2,22 @@
 
 ;;; Commentary:
 
+;; Basic keybindings:
+;; M-x org-info (opens the manual)
+;; C-c C-t      -- cycle TODO state
+;; C-c C-c      -- refresh current element (table, code block, checkbox)
+;; C-c '        -- edit source block in a separate buffer
+;; S-LEFT/RIGHT -- cycle headline (TODO/DONE) or list item state
+;; C-c .        -- insert a date (timestamp)
+
 ;; Packages:
 ;; - `org'          ; organize notes, tasks, and documents
+;; - `valign'       ; Pixel-perfect visual alignment for Org and Markdown tables
 ;; - `org-download' ; drag-and-drop images into Org
-;; - `org-modern'   ; modern visual style for Org
 ;; - `org-appear'   ; reveal Org elements contextually
 ;; - `htmlize'      ; convert buffer to HTML
+
+;; TODO: org-roam, ob-mermaid
 
 ;;; Code:
 
@@ -102,26 +112,42 @@
   (set-face-attribute 'org-meta-line nil       :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-checkbox nil        :inherit 'fixed-pitch)
 
+  (set-face-attribute 'org-table nil           :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table-header nil    :inherit 'fixed-pitch :weight 'bold)
+
   ;; Text Prettification
   (setq org-startup-indented t
         org-hide-leading-stars t
         org-hide-emphasis-markers t
         org-pretty-entities t))
 
+;; Disable `visual-line-mode' in org tables
+(use-package org
+  :config
+  (defun my-org-table-disable-wrap ()
+    "Disable `visual-line-mode' in org tables."
+    (if (org-at-table-p)
+        (when visual-line-mode
+          (visual-line-mode -1))
+      (unless visual-line-mode
+        (visual-line-mode +1))))
+
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (add-hook 'post-command-hook 'my-org-table-disable-wrap nil t))))
+
+(use-package valign
+  :hook (org-mode . valign-mode)
+  :custom (valign-lighter t))
+
 (use-package org-download
   :after org
   :hook (dired-mode . org-download-enable))
 
-(use-package org-modern
-  :after org
-  :hook (org-mode . org-modern-mode)
-  :config (set-face-attribute 'org-modern-symbol nil :family "Iosevka"))
-
 (use-package org-appear
   :after org
   :hook
-  ((org-mode . org-appear-mode)
-   (org-agenda-finalize . org-modern-agenda)))
+  (org-mode . org-appear-mode))
 
 (use-package htmlize
   :defer t)
