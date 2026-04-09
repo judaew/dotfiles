@@ -19,19 +19,28 @@
     (set-face-attribute 'variable-pitch nil
                         :font font-family-pitch :height font-size)))
 
-;; Disable creating backup and lock files
-(setopt make-backup-files nil)
+
+;; Disable creating lock files
 (setopt create-lockfiles nil)
 
-;; Auto-save
-(setopt auto-save-default t)
+;; Backup & auto-save
+(let ((backup-dir (concat user-emacs-directory "backup/"))
+      (autosave-dir (concat user-emacs-directory "autosaves/")))
+  (unless (file-directory-p backup-dir)
+    (make-directory backup-dir t))
+  (unless (file-directory-p autosave-dir)
+    (make-directory autosave-dir t))
 
-(let ((autosaves-dir "~/.emacs.d/autosaves/"))
-  (unless (file-directory-p autosaves-dir)
-    (make-directory autosaves-dir t)))
+  (setopt backup-directory-alist `(("." . ,backup-dir))
+          backup-by-copying t
+          version-control t
+          delete-old-versions t
+          kept-old-versions 2
+          kept-old-versions 5)
 
-(setopt auto-save-file-name-transforms
-        `((".*" "~/.emacs.d/autosaves/" t)))
+  (setopt auto-save-default t)
+  (setopt auto-save-file-name-transforms `((".*" ,autosave-dir t))
+          auto-save-visited-file-name nil))
 
 ;; Shortened yes-or-no-p to y-or-n-p
 (setopt use-short-answers t)
