@@ -17,8 +17,7 @@
 ;; === Syntax checking ===
 ;; - `flymake'         ; on-the-fly syntax checking
 
-;; === Spell checking ===
-;; - `jinx'            ; on-the-fly spell checking
+;; TODO: restclient.el
 
 ;;; Code:
 
@@ -140,15 +139,6 @@ Or passes other checks that determine whether eglot should run."
   :config
   (setopt elisp-flymake-byte-compile-load-path load-path)
   (setopt trusted-content '("~/.emacs.d/early-init.el" "~/.emacs.d/config/")))
-
-;; === Spell checking ===
-;; ----------------------
-
-(use-package jinx
-  :bind (("M-$" . jinx-correct)
-         ("C-M-$" . jinx-languages))
-  :custom
-  (jinx-languages "en_US-large uk_UA"))
 
 (provide 'init-ide)
 ;;; init-ide.el ends here
