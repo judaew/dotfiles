@@ -82,17 +82,12 @@
   ;;   :system "")
   )
 
-;; TODO: custom gptel-agent-dir path
-;; gptel-agent-dirs is a variable defined in ‘gptel-agent.el’.
-;;
-;; Its value is ("/home/judaew/.emacs.d/straight/build/gptel-agent/agents/")
-;;
-;; Agent definition directories for ‘gptel-agent’.
-;;
-;; Markdown (.md) and Org (.org) files in these directories will be scanned
-;; for gptel sub-agent definitions by ‘gptel-agent’.
 (use-package gptel-agent
-  :config (gptel-agent-update))
+  :bind
+  ("C-c g a" . gptel-agent)
+  :config
+  (setq gptel-agent-dirs '("/home/judaew/wrk/llm/agents/"))
+  (gptel-agent-update))
 
 (use-package eca
   :straight (eca :type git :host github :repo "editor-code-assistant/eca-emacs" :branch "master"))
