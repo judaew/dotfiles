@@ -8,10 +8,6 @@
 ;; `all-the-icons'         ; file and buffer icons
 ;; `nerd-the-icons'        ; alternative icon set
 
-;; === Modeline ===
-;; `mood-line'             ; fancy modeline
-;; `diminish'              ; hide minor modes in modeline
-
 ;; === Visual enhancements ===
 ;; `hl-todo'               ; highlight TODO/FIXME comments
 ;; `highlight-parentheses' ; highlight matching parentheses
@@ -43,14 +39,6 @@
   :defer t)
 (use-package nerd-icons
   :defer t)
-
-;; === Modeline ===
-;; ----------------
-
-;; mood-line
-(require 'init-modeline)
-
-(use-package diminish)
 
 ;; === Visual enhancements ===
 ;; ---------------------------

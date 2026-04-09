@@ -110,6 +110,7 @@
 (require 'init-vc)
 (require 'init-org)
 (require 'init-ui)
+(require 'init-ui-mode-line)
 (require 'init-langs)
 (require 'init-term)
 (require 'init-ai)
