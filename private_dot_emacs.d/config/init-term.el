@@ -18,6 +18,8 @@
 ;; - `dockerfile-mode'      ; major mode for editing Dockerfiles
 ;; - `docker-compose-mode'  ; major mode for editing docker-compose files
 
+;; TODO: kubernetes.el
+
 ;;; Code:
 
 ;; === Environment ===
