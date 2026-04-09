@@ -68,9 +68,18 @@
 (global-set-key (kbd "C-<next>") 'tab-next)
 (global-set-key (kbd "C-<prior>") 'tab-previous)
 
+;; Security: only save file-local variables
+(setopt enable-local-variables :safe)
+
 ;; GnuPG pinentry via the Emacs minibuffer
 (setopt epg-pinentry-mode 'loopback)
 (setopt epa-pinentry-mode 'loopback)
+
+;; Eldoc-based help-at-point
+(setopt eldoc-show-help-at-pt t)
+
+;; Smart kill-region behavior; very useful for C-w without active region
+(setopt kill-region-dwim 'emacs-word)
 
 ;;; straight.el
 
@@ -95,6 +104,8 @@
 (straight-use-package 'use-package)
 (setopt straight-use-package-by-default t)
 (setopt straight-vc-git-default-clone-depth 3)
+(setopt straight-enable-use-package-integration t)
+(setopt straight-check-for-modifications '(check-on-save))
 
 ;; Re-checks every repo only when is really change something
 (setopt straight-cache-autoloads t)
