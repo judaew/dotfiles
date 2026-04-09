@@ -15,7 +15,7 @@
 ;; - `dired-subtree'    ; show subdirectories by <TAB>
 ;; - `dired-collapse'   ; show single file or directory in directories
 ;; - `dired-sidebar'    ; sidebar
-;; - `nerd-icons-dired' ; use nerd-icons for dired
+;; - `nerd-icons-dired' ; use nerd-icons for Dired
 
 ;;; Code:
 
@@ -63,6 +63,7 @@
 (use-package dired-open
   :bind ("S-<return>" . dired-open-xdg))
 
+;; FIXME: bind dont work
 (use-package dired-subtree
   :bind (:map dired-mode-map
               ("TAB" . dired-subtree-toggle)))
@@ -85,6 +86,7 @@
 
 (use-package dired-sidebar
   :bind ("<f2>" . dired-sidebar-toggle-sidebar)
+  :hook (dired-sidebar-mode . (lambda () (display-line-numbers-mode -1)))
   :custom
   (dired-sidebar-width 30))
 
