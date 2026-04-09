@@ -9,7 +9,6 @@
 ;; `nerd-the-icons'        ; alternative icon set
 
 ;; === Visual enhancements ===
-;; `highlight-parentheses' ; highlight matching parentheses
 ;; `goggles'               ; show changes inline
 ;; `indent-bars'           ; display indentation bars
 ;; `colorful-mode'         ; add color to buffers
@@ -52,10 +51,6 @@
       ":::" "==" "!=" "===" "!==" ":=" ":-" ":+" "<*" "<*>" "*>" "<|"
       "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++"))
   (ligature-set-ligatures 'prog-mode ligatures-Iosevka))
-
-(use-package highlight-parentheses
-  :diminish highlight-parentheses-mode
-  :hook (prog-mode . highlight-parentheses-mode))
 
 (use-package goggles
   :hook ((prog-mode text-mode) . goggles-mode)
