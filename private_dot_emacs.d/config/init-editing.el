@@ -5,7 +5,6 @@
 ;; Packages:
 
 ;; === Editing ===
-;; - `sudo-edit'           ; opening files with sudo
 ;; - `smart-hungry-delete' ; smart hungry delete
 ;; - `multiple-cursors'    ; multiple cursors
 ;; - `ws-butler'           ; trim whitespace on save
@@ -31,8 +30,9 @@
 ;; === Editing ===
 ;; ---------------
 
-(use-package sudo-edit
-  :demand t)
+;; sudo-edit
+;; From Emacs-31 onwards this wont be necessary, as C-x x @ will call
+;; `tramp-revert-buffer-with-sudo'
 
 (use-package smart-hungry-delete
   :bind (([remap backward-delete-char-untabify] . smart-hungry-delete-backward-char)
@@ -72,12 +72,7 @@
   :bind ("M-o" . ace-window))
 
 (use-package avy
-  :bind
-  (("M-g f" . avy-goto-line)
-   ("M-g w" . avy-goto-word-1)
-   ("M-g e" . avy-goto-word-0)
-   ("M-g c" . avy-goto-char)
-   ("M-g t" . avy-goto-char-timer)))
+  :bind ("C-," . avy-goto-char))
 
 (use-package windresize
   :bind ("C-c r" . windresize))
