@@ -19,6 +19,8 @@
     (set-face-attribute 'variable-pitch nil
                         :font font-family-pitch :height font-size)))
 
+;; don't  compact font caches during GC
+(setopt inhibit-compacting-font-caches t)
 
 ;; Disable creating lock files
 (setopt create-lockfiles nil)
@@ -128,6 +130,7 @@
 (require 'init-projects)
 (require 'init-ide)
 (require 'init-vc)
+(require 'init-vc-gh)
 (require 'init-org)
 (require 'init-ui)
 (require 'init-ui-mode-line)
