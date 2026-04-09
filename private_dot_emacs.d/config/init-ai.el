@@ -29,7 +29,17 @@
 
   (gptel-make-deepseek "DeepSeek"
     :stream t
-    :key gptel-api-key)
+    :key gptel-api-key
+    :models '((deepseek-chat
+               :capabilities (tool)
+               :context-window 128
+               :input-cost 0.28
+               :output-cost 0.42)
+              (deepseek-reasoner
+               :capabilities (tool reasoning)
+               :context-window 128
+               :input-cost 0.28
+               :output-cost 0.42)))
 
   ;; Set default model
   ;; See https://github.com/karthink/gptel/issues/704#issuecomment-2759390992
@@ -43,12 +53,33 @@
     :host "dashscope-intl.aliyuncs.com"
     :endpoint "/compatible-mode/v1/chat/completions"
     :models '(;; coding
-              "qwen3-coder-plus" "qwen3-coder-flash"
+              ;; "qwen3-coder-plus" "qwen3-coder-flash"
               ;; general
-              "qwen3.5-plus" "qwen3.5-flash"
+              "qwen3.6-plus" "qwen3.6-flash"
               ;; translate
-              "qwen-mt-plus"
-              "qwen-mt-turbo"))
+              ;; "qwen-mt-plus" "qwen-mt-turbo"
+              ))
+
+  (gptel-make-openai "Alibaba NoThink"
+    :stream t
+    :key gptel-api-key
+    :protocol "https"
+    :host "dashscope-intl.aliyuncs.com"
+    :endpoint "/compatible-mode/v1/chat/completions"
+    :models '("qwen3.6-plus" "qwen3.6-flash")
+    :request-params '(:enable_thinking "False")
+    )
+
+  (add-to-list 'gptel-directives
+               `(english-editor . ,(with-temp-buffer
+                                     (insert-file-contents "~/wrk/llm/prompts/english-editor.md")
+                                     (buffer-string))))
+
+  ;; (gptel-make-preset 'test
+  ;;   :backend "Alibaba"
+  ;;   :model 'qwen3.6-plus
+  ;;   :request-params '(:enable_thinking "False")
+  ;;   :system "")
   )
 
 ;; TODO: custom gptel-agent-dir path
