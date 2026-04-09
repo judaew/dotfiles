@@ -18,13 +18,6 @@
   (("C-x g" . magit-status)
    ("C-x M-g" . magit-dispatch)))
 
-(use-package magit-delta
-  :hook (magit-mode . magit-delta-mode))
-
-(use-package magit-todos
-  :after magit
-  :config (magit-todos-mode 1))
-
 (use-package git-modes
   :config
   (add-to-list 'auto-mode-alist
@@ -42,7 +35,8 @@
 (use-package diff-hl
   :hook
   ((magit-post-refresh . diff-hl-magit-post-refresh)
-   (after-init . global-diff-hl-mode))
+   (after-init . global-diff-hl-mode)
+   (dired-mode . diff-hl-dired-mode))
   :config
   (setopt diff-hl-side 'right)
   ;; highlighting changes on the fly
