@@ -11,16 +11,15 @@
 
 ;;; Code:
 
-(use-package popup)
-
 (use-package google-translate
+  :after posframe
   :bind
   (("C-c t" . google-translate-at-point)
    ("C-c T" . google-translate-query-translate))
   :custom
   (google-translate-default-target-language "uk")
   (google-translate-default-source-language "en")
-  (google-translate-output-destination 'popup))
+  (google-translate-output-destination 'posframe))
 
 ;; === Spell checking ===
 ;; ----------------------
@@ -28,13 +27,12 @@
 (use-package jinx
   :hook
   ((text-mode . jinx-mode)
-   ;;(prog-mode . jinx-mode)
-   ;;(conf-mode . jinx-mode)
-   )
+   (prog-mode . jinx-mode)
+   (conf-mode . jinx-mode))
   :bind (("M-$" . jinx-correct)
          ("C-M-$" . jinx-languages))
   :custom
-  (jinx-languages "en_US-large"))
+  (jinx-languages "uk en"))
 
 (provide 'init-spell)
 ;;; init-spell.el ends here
