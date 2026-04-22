@@ -6,7 +6,6 @@
 
 ;; === Built-in Dired ===
 ;; - `dired'        ; build-in file manager core
-;; - `dired-x'      ; extra Dired commands
 
 ;; === Enhancements ===
 ;; - `dired-filter'     ; filter stack
@@ -40,20 +39,14 @@
   :config
   (put 'dired-find-alternate-file 'disabled nil))
 
-(use-package dired-x
-  :straight nil
-  :after dired
-  :hook (dired-mode . dired-omit-mode)
-  :bind (:map dired-mode-map
-              ("." . dired-omit-mode))
-  :custom
-  (dired-omit-files (rx (seq bol ".")))) ;; hide dotfiles
-
 ;; === Enhancements ===
 ;; --------------------
 
 (use-package dired-filter
-  :hook (dired-mode . dired-filter-mode))
+  :hook
+  (dired-mode . dired-filter-mode)
+  :custom
+  (dired-omit-files (rx (seq bol ".")))) ;; hide dotfiles
 
 (use-package diredfl
   :hook (dired-mode . diredfl-mode)
@@ -63,13 +56,19 @@
 (use-package dired-open
   :bind ("S-<return>" . dired-open-xdg))
 
-;; FIXME: bind dont work
 (use-package dired-subtree
+  :after dired
   :bind (:map dired-mode-map
               ("TAB" . dired-subtree-toggle)))
 
 (use-package dired-collapse
-  :hook (dired-mode . dired-collapse-mode))
+  :hook (dired-mode . dired-collapse-mode)
+  :config
+  (defun my/dired-collapse-fix-subtree (&rest _)
+    "Remove dired-collapse from subtree hook to prevent visual breakage."
+    (remove-hook 'dired-subtree-after-insert-hook #'dired-collapse 'local))
+
+  (advice-add 'dired-collapse-mode :after #'my/dired-collapse-fix-subtree))
 
 (use-package dired-quick-sort
   :after dired
