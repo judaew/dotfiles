@@ -16,7 +16,6 @@
 ;; === Docker ===
 ;; - `docker'               ; Docker integration
 ;; - `dockerfile-mode'      ; major mode for editing Dockerfiles
-;; - `docker-compose-mode'  ; major mode for editing docker-compose files
 
 ;; TODO: kubernetes.el
 
@@ -27,11 +26,13 @@
 
 (use-package exec-path-from-shell
   :config
-  (setopt exec-path-from-shell-arguments (list "-l"))
+  (setopt exec-path-from-shell-arguments
+          (if (eq system-type 'darwin) (list "-l") nil))
   (when (memq window-system '(mac ns x pgtk))
     (exec-path-from-shell-initialize)))
 
 (use-package direnv
+  :after exec-path-from-shell
   :hook (after-init . direnv-mode))
 
 (use-package with-editor
@@ -85,9 +86,6 @@
      (setopt dockerfile-mode-command "docker"))
     ('podman
      (setopt dockerfile-mode-command "podman"))))
-
-(use-package docker-compose-mode
-  :mode ("docker-compose.*\\.yml\\'" "compose.*\\.yml\\'"))
 
 (provide 'init-term)
 ;;; init-term.el ends here
