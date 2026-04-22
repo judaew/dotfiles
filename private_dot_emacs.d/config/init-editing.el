@@ -51,6 +51,8 @@
   :config
   (setopt ws-butler-keep-whitespace-before-point t))
 
+;; By default binds:
+;; - C-; -- iedit-mode
 (use-package iedit)
 
 (use-package saveplace
@@ -68,11 +70,12 @@
 ;; -------------------------------
 
 (use-package ace-window
-  :demand t ;; for modeline
   :bind ("M-o" . ace-window))
 
 (use-package avy
-  :bind ("C-," . avy-goto-char))
+  ;; By default, M-j is bound to `default-indent-new-line',
+  ;; but Avy is more useful.
+  :bind ("M-j" . avy-goto-char-timer))
 
 (use-package windresize
   :bind ("C-c r" . windresize))
