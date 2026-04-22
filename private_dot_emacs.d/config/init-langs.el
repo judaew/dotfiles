@@ -37,11 +37,11 @@
 
 (use-package citre
   :defer t
-  :bind (("C-x c j" . citre-jump)
-         ("C-x c J" . citre-jump-back)
-         ("C-x c p" . citre-peek)
-         ("C-x c u" . citre-update-database)
-         ("C-x c U" . citre-update-tags-file))
+  :bind (("C-c c j" . citre-jump)
+         ("C-c c J" . citre-jump-back)
+         ("C-c c p" . citre-peek)
+         ("C-c c u" . citre-update-database)
+         ("C-c c U" . citre-update-tags-file))
 
   ;; Avoid using citre-config because it automatically enables `citre-mode'
   ;; in all buffers, adding tags to `completion-at-point' which I want to prevent.
