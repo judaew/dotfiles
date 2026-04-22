@@ -3,6 +3,14 @@
 # --- paths ---
 ###############
 
+# Func to safely append to PATH for /etc/profile.d/*.sh
+append_path() {
+    case ":${PATH}:" in
+        *:"$1":*) ;;
+        *) PATH="${PATH:+$PATH:}$1"
+    esac
+}
+
 # Ensure path has unique entries
 typeset -U path
 path=()
@@ -29,12 +37,13 @@ path+=(
     /usr/sbin
     /usr/local/bin
     /usr/local/sbin
+    /usr/bin/vendor_perl
 )
 
 # load scripts from /etc/profile.d/*.sh if directory exists
-if [[ -d /etc/profile.d ]]; then
+if [ -d /etc/profile.d ]; then
   for profile in /etc/profile.d/*.sh; do
-    [[ -r "${profile}" ]] && source "${profile}"
+    [ -r "${profile}" ] && . "${profile}"
   done
   unset profile
 fi
@@ -47,6 +56,9 @@ export VDPAU_DRIVER="nvidia"
 export LIBVA_DRIVER_NAME="nvidia"
 # See https://github.com/elFarto/nvidia-vaapi-driver#upstream-regressions
 export NVD_BACKEND="direct"
+# Force Wayland
+export GBM_BACKEND=nvidia-drm
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
 
 # --- General variables ---
 ###########################
