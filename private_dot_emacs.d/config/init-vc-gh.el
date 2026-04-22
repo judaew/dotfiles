@@ -1155,7 +1155,7 @@ q quit (back to list + menu) | o open in browser | g refresh"
      [""
       ("q" "Quit" transient-quit-one)]])
 
-  (global-set-key (kbd "C-c G") #'gh-menu))
+  (global-set-key (kbd "C-x G") #'gh-menu))
 
 (provide 'init-vc-gh)
 ;;; init-gc-gh.el ends here
