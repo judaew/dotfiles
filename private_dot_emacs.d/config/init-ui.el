@@ -5,36 +5,30 @@
 ;; Packages:
 
 ;; === Icons ===
-;; `all-the-icons'         ; file and buffer icons
-;; `nerd-the-icons'        ; alternative icon set
+;; `nerd-icons'        ; alternative icon set
 
 ;; === Visual enhancements ===
+;; `ligature'              ; show typographical ligatures
 ;; `goggles'               ; show changes inline
 ;; `indent-bars'           ; display indentation bars
 ;; `colorful-mode'         ; add color to buffers
 ;; `posframe'              ; pop a posframe at point
 
 ;; === Themes ===
-;; - `doom-themes' ~ collection of themes
+;; - `ronny'
 
 ;;; Code:
 
-;; `pixel-scroll-precision-mode'
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (with-selected-frame frame
-              (if (display-graphic-p frame)
-                  (pixel-scroll-precision-mode 1)
-                (pixel-scroll-precision-mode 0)))))
+(use-package emacs
+  :straight nil
+  :hook (after-init . pixel-scroll-precision-mode)
+  :custom (pixel-scroll-precision-interpolation-factor 1.0))
 
 ;; === Icons ===
 ;; -------------
 
-;; Use M-x `all-the-icons-install-fonts' for install fonts.
 ;; The `window-system' and `display-graphic-p' are bad checks for
 ;; Emacs with multiples frames or in `daemonp' mode.
-(use-package all-the-icons
-  :defer t)
 (use-package nerd-icons
   :defer t)
 
@@ -58,7 +52,8 @@
   (setq-default goggles-pulse t))
 
 (use-package indent-bars
-  :hook ((c-ts-mode
+  :hook ((bash-ts-mode
+          c-ts-mode
           c++-ts-mode
           csharp-ts-mode
           css-ts-mode
@@ -74,8 +69,7 @@
           yaml-ts-mode) . indent-bars-mode)
   :custom
   (indent-bars-no-descend-lists t) ; no extra bars in continued func arg lists
-  (indent-bars-treesit-support t)
-  (indent-bars-treesit-ignore-blank-lines-types '("module")))
+  (indent-bars-treesit-support t))
 
 (use-package colorful-mode
   :defer t
@@ -89,20 +83,8 @@
 ;; === Themes ===
 ;; --------------
 
-(use-package doom-themes
-  :disabled
-  :custom
-  (doom-themes-enable-bold t)
-  (doom-themes-enable-italic t)
-  :config
-  (load-theme 'doom-molokai t)
-  (doom-themes-org-config)
-
-  ;; Use italic for comments
-  (set-face-attribute 'font-lock-comment-face nil :slant 'italic))
-
 (use-package ronny-theme
-  ;;:straight (:host github :repo "judaew/ronny.el" )
+  ;; :straight (:host github :repo "judaew/ronny.el" )
   :straight (ronny-theme :type git :local-repo "~/wrk/github.com/judaew/ronny.el")
   :config
   (load-theme 'ronny t))
