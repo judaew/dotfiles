@@ -6,7 +6,6 @@
 
 ;; === Backend ==
 ;; - `cape'              ; completion at point extension
-;; - `dabbrev'           ; dynamic abbrev
 ;; - `prescient'         ; better sorting and filtering
 ;; - `corfu-prescient'   ; prescient integration for corfu
 ;; - `vertico-prescient' ; prescient integration for vertico
@@ -27,6 +26,7 @@
 ;; - `which-key'         ; show keybindings
 
 ;; === Misc ===
+;; - `savehist'          ; saving of minibuffer history
 ;; - `char-fold'         ; flexible character folding
 ;; - `reverse-im'        ; reverse input method support
 
@@ -42,22 +42,11 @@
 (setopt text-mode-ispell-word-completion nil)
 
 (use-package cape
-  :after prescient
   :bind ("M-p" . cape-prefix-map)
   :config
-  (defun my/capf-super-unsorted (&rest capfs)
-    "Wrapper around `cape-capf-super' that disables sorting of completion candidates."
-    (let ((capf (apply #'cape-capf-super capfs)))
-      (cape-capf-properties
-       capf
-       :display-sort-function nil
-       :cycle-sort-function nil)))
-
   (defun my/setup-capf (functions)
     "Setup `completion-at-point-functions' with given FUNCTIONS list."
-    (setq-local completion-at-point-functions
-                (mapcar (lambda (f) (if (function f) f (symbol-function f)))
-                        functions)))
+    (setq-local completion-at-point-functions functions))
 
   (defconst my/capf-common-prog
     (list
@@ -110,11 +99,6 @@
    (text-mode . my/setup-capf-common-text)
    (org-mode . my/setup-capf-org)))
 
-(use-package dabbrev
-  :straight nil
-  :config
-  (add-to-list 'dabbrev-ignored-buffer-regexps "\\` "))
-
 (use-package prescient
   :config
   (prescient-persist-mode 1)
@@ -134,9 +118,9 @@
   ;; to preserve natural filesystem order and allow creating new files
   ;; like "test2.go" even if "test.go" exists.
   ;; See https://www.reddit.com/r/emacs/comments/109ryp7/comment/j4excag
-  (setf vertico-prescient-completion-category-overrides
-        (assoc-delete-all 'file
-                          vertico-prescient-completion-category-overrides)))
+  (dolist (cat '(file project-file))
+    (setf vertico-prescient-completion-category-overrides
+          (assoc-delete-all cat vertico-prescient-completion-category-overrides))))
 
 (use-package tempel
   :after cape
@@ -159,10 +143,9 @@
   :bind
   (:map corfu-map
         ("<escape>" . corfu-quit))
-  :hook (after-init . global-corfu-mode)
-  :init
-  (corfu-popupinfo-mode +1)
-  (corfu-history-mode)
+  :hook ((after-init . global-corfu-mode)
+         (after-init . corfu-popupinfo-mode)
+         (after-init . corfu-history-mode))
   :custom
   (corfu-auto t)
   (corfu-auto-delay 0.2)
@@ -298,18 +281,9 @@
   (setopt xref-show-xrefs-function #'consult-xref
           xref-show-definitions-function #'consult-xref)
 
-  ;; preview customizations
-  (consult-customize
-   consult-theme :preview-key '(:debounce 0.2 any)
-   consult-ripgrep consult-git-grep consult-grep consult-man
-   consult-bookmark consult-recent-file consult-xref
-   :preview-key '(:debounce 0.4 any))
-
+  ;; Narrow Key, like "<b" (=b=ufers, =f=iles, =r=ecent)
+  ;; in consult-buffer and etc.
   (setopt consult-narrow-key "<"))
-
-(use-package consult-flycheck
-  :after (consult flycheck)
-  :bind ("M-g f" . consult-flycheck))
 
 (use-package marginalia
   :init (marginalia-mode))
@@ -358,13 +332,16 @@
 ;; === Misc ===
 ;; ------------
 
+(use-package savehist
+  :straight nil
+  :hook (after-init . savehist-mode))
+
 (use-package char-fold
   :custom
   (char-fold-symmetric t)
   (search-default-mode #'char-fold-to-regexp))
 
 (use-package reverse-im
-  :bind ("M-T" . reverse-im-translate-word)
   :hook (after-init . reverse-im-mode)
   :custom
   ;; cache generated keymaps
