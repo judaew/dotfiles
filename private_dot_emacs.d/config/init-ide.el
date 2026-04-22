@@ -67,7 +67,7 @@ Or passes other checks that determine whether eglot should run."
   (eglot-autoshutdown t)       ;; kill server when last managed buffer is closed
   (eglot-events-buffer-size 0) ;; disable noisy logs
   (eglot-sync-connect nil)     ;; connect async
-  ;; (eglot-report-progress nil)
+  (eglot-report-progress nil) ;; reduce noise in minibuffer
   :config
   ;; Make CAPF non-blocking
   (advice-add #'eglot-completion-at-point :around #'cape-wrap-noninterruptible)
@@ -102,7 +102,7 @@ Or passes other checks that determine whether eglot should run."
 
 ;; === Tree-sitter ===
 ;; -------------------
-(setopt treesit-auto-install-grammar 'always)
+(setopt treesit-auto-install-grammar 'ask)
 (setopt treesit-enabled-modes t)
 
 ;; === DAP ===
@@ -126,9 +126,6 @@ Or passes other checks that determine whether eglot should run."
   ;; Kill compile buffer on build success
   (add-hook 'dape-compile-hook #'kill-buffer))
 
-(use-package projection-dape
-  :after projection dape)
-
 ;; === Syntax checking ===
 ;; -----------------------
 
@@ -137,7 +134,9 @@ Or passes other checks that determine whether eglot should run."
   :straight (:type built-in)
   :hook (prog-mode . flymake-mode)
   :config
+  ;; Trust your own config files for Elisp flymake checks
   (setopt elisp-flymake-byte-compile-load-path load-path)
+  ;; Ensure elisp flymake knows where to find libraries
   (setopt trusted-content '("~/.emacs.d/early-init.el" "~/.emacs.d/config/")))
 
 (provide 'init-ide)
