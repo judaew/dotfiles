@@ -4,8 +4,6 @@
 
 ;; Packages:
 ;; - `magit'           ; Git porcelain inside Emacs
-;; - `magit-delta'     ; use delta when viewing diffs in Magit
-;; - `magit-todos'     ; show source files' TODOs (and FIXMEs etc) in Magit
 ;; - `git-modes'       ; major modes for Git configuration files
 ;; - `git-timemachine' ; walk through git revisions of a file
 ;; - `forge'           ; integrate Git forges (like GitHub/GitLab)
@@ -21,7 +19,7 @@
 (use-package git-modes
   :config
   (add-to-list 'auto-mode-alist
-               (cons "/.dockerignore\\'" 'gitignore-mode)))
+               (cons "/\\.dockerignore\\'" 'gitignore-mode)))
 
 (use-package git-timemachine
   :after magit
