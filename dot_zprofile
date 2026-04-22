@@ -74,9 +74,6 @@ elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
     export BROWSER="xdg-open"
 fi
 
-# Wayland hint for Electron
-export ELECTRON_OZONE_PLATFORM_HINT="wayland"
-
 # XDG
 # See https://wiki.archlinux.org/title/XDG_Base_Directory
 export XDG_CACHE_HOME="${HOME}/.cache"
