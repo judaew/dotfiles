@@ -3,20 +3,20 @@
 # --- paths ---
 ###############
 
-# Func to safely append to PATH for /etc/profile.d/*.sh
-append_path() {
-    case ":${PATH}:" in
-        *:"$1":*) ;;
-        *) PATH="${PATH:+$PATH:}$1"
-    esac
-}
+local is_nixos=false
+[[ -f /etc/NIXOS ]] && is_nixos=true
 
 # Ensure path has unique entries
 typeset -U path
-path=()
 
+# [[ "${OSTYPE}" == "linux"* ]] && {
+#     if $is_nixos; then
+#     fi
+# }
+
+# TODO: nix vs macports?
 [[ "${OSTYPE}" == "darwin"* ]] && {
-    # macOS-specific paths
+    path=()
     path+=(
         # MacPorts and gnubin
         /opt/local/bin
@@ -29,43 +29,16 @@ path=()
         /Applications/Emacs.app/Contents/MacOS/bin
     )
 
-    export CPATH="/opt/local/include"
+    export CPATH="${CPATH:+$CPATH:}/opt/local/include"
 }
-
-path+=(
-    /usr/bin
-    /usr/sbin
-    /usr/local/bin
-    /usr/local/sbin
-    /usr/bin/vendor_perl
-)
-
-# load scripts from /etc/profile.d/*.sh if directory exists
-if [ -d /etc/profile.d ]; then
-  for profile in /etc/profile.d/*.sh; do
-    [ -r "${profile}" ] && . "${profile}"
-  done
-  unset profile
-fi
-
-# --- Drivers ---
-#################
-
-# Select NVIDIA driver for the VDPAU
-export VDPAU_DRIVER="nvidia"
-export LIBVA_DRIVER_NAME="nvidia"
-# See https://github.com/elFarto/nvidia-vaapi-driver#upstream-regressions
-export NVD_BACKEND="direct"
-# Force Wayland
-export GBM_BACKEND=nvidia-drm
-export __GLX_VENDOR_LIBRARY_NAME=nvidia
 
 # --- General variables ---
 ###########################
 
 # Fix locale if needed
-export LC_ALL="en_US.UTF-8"
+# export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
+export LC_COLLATE="C"
 
 # Default browser
 if [[ "${OSTYPE}" == "darwin"* ]]; then
@@ -91,22 +64,27 @@ export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/password-store"
 # Golang
 export GOPATH="${HOME}/.go"
 export GOBIN="${GOPATH}/bin"
-path+=(${GOBIN})
+path+=("${GOBIN}")
 
 [[ "${OSTYPE}" == "darwin"* ]] && {
     JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-25-macports.jdk/Contents/Home"
-    path+=(${JAVA_HOME/bin})
-    CPATH="${CPATH}:${JAVA_HOME}/include"
+    path+=("${JAVA_HOME}/bin")
+    export CPATH="${CPATH:+$CPATH:}${JAVA_HOME}/include"
 }
 
 # Local PATH
-path+=(${HOME}/.local/bin)
+path+=("${HOME}/.local/bin")
 
 # Tokens
 local tokens="${XDG_DATA_HOME}/env/tokens.sh"
 
-[[ ! -f "${tokens}" ]] && {
+if [[ ! -f "${tokens}" ]]; then
     mkdir -p "${tokens:h}"
     touch "${tokens}"
-}
-source "${tokens}"
+    chmod 600 "${tokens}"
+fi
+
+[[ -r "${tokens}" ]] && source "${tokens}" || print -u2 "Warning: Could not source ${tokens}"
+
+# --- Ensure final PATH is exported ---
+export PATH

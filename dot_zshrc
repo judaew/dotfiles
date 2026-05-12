@@ -275,24 +275,17 @@ export FZF_ALT_C_COMMAND="fd --type d . --color=never"
 
 # lazydocker
 # exec `systemctl --user enable --now podman.socket`
-export DOCKER_HOST=unix:///run/user/1000/podman/podman.sock
+export DOCKER_HOST="unix:///run/user/${UID}/podman/podman.sock"
 alias docker="podman"
-
-# OpenSSH
-export SSH_ASKPASS=ssh-askpass
-export SSH_ASKPASS_REQUIRE=prefer
 
 # --- Keybindings ---
 #####################
 bindkey -e
 
-if [[ "${OSTYPE}" == "darwin"* ]]; then
-    [[ -r "/opt/local/share/mcfly/mcfly.zsh" ]] && \
-        source /opt/local/share/mcfly/mcfly.zsh
-elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
-    [[ -r "/usr/share/doc/mcfly/mcfly.zsh" ]] && \
-        source /usr/share/doc/mcfly/mcfly.zsh
-fi
+# mcfly keybinds
+(( $+commands[mcfly] )) && {
+    eval "$(mcfly init zsh)"
+}
 
 # --- Functions ---
 ###################
@@ -323,9 +316,9 @@ function mkvenv() {
 # --- Complete ---
 ##################
 [[ "${OSTYPE}" == "darwin"* ]] && {
-    # MacPorts
-    fpath+=(/opt/local/share/zsh/site-functions)
+    fpath+=(/opt/local/share/zsh/site-functions) # MacPorts
 }
+
 autoload -Uz compinit && compinit
 
 # --- Zstyles ---
@@ -351,30 +344,30 @@ unsetopt menucomplete
     eval "$(direnv hook zsh)"
 }
 
-# Fish-like syntax highlighting and autosuggestions
-local f
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    f=/opt/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-else
-    f=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-[[ -f "${f}" ]] && source "${f}"
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    f=/opt/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-else
-    f=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
-[[ -f "${f}" ]] && source "${f}"
-unset f
+_my_load_zsh_plugin() {
+    local name="$1"
+    local base dir
 
-# Use history substring search
-local f
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    f=/opt/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-else
-    f=/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-fi
-[[ -f ${f} ]] && source ${f}
-unset f
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+    for base in \
+        # "${HOME}/.nix-profile/share"
+        "/run/current-system/sw/share" \
+        # "/usr/share/zsh/plugins"
+        "/opt/local/share"; do
+
+        [[ -d "${base}" ]] && dir="${base}/${name}"
+        [[ -f "${dir}/${name}.zsh" ]] && { source "${dir}/${name}.zsh"; return 0; }
+    done
+    return 1
+}
+
+# Fish-like syntax highlighting and autosuggestions
+_my_load_zsh_plugin "zsh-syntax-highlighting"
+_my_load_zsh_plugin "zsh-autosuggestions"
+
+# History substring search (built-in zsh)
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search

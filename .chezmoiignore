@@ -22,7 +22,4 @@ etc
 .config/pacman
 .config/systemd
 .config/user-dirs.dirs
-
-.local/bin/pacman-reclaim.sh
-.local/bin/_systemd-reclaim.sh
 {{- end }}
