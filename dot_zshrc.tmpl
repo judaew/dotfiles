@@ -197,8 +197,6 @@ alias yt720p="yt-dlp -f 'bestvideo[height<=720]+bestaudio'"
 alias yt1080p="yt-dlp -f 'bestvideo[height<=1080]+bestaudio'"
 alias ytaudio="yt-dlp -x --audio-format m4a --embed-thumbnail"
 
-alias fixkde="killall -s KILL plasmashell"
-
 # darwin specific
 if [[ "${OSTYPE}" == "darwin"* ]]; then
     if [[ ! -f /opt/local/libexec/gnubin/ls ]]; then
@@ -281,7 +279,7 @@ export DOCKER_HOST=unix:///run/user/1000/podman/podman.sock
 alias docker="podman"
 
 # OpenSSH
-export SSH_ASKPASS=/usr/bin/ksshaskpass
+export SSH_ASKPASS=ssh-askpass
 export SSH_ASKPASS_REQUIRE=prefer
 
 # --- Keybindings ---
