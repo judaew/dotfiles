@@ -38,14 +38,3 @@ if command -v shellcheck &> /dev/null; then
 else
     skipped
 fi
-
-linter="markdownlint"
-if command -v mdl &> /dev/null; then
-    if gem install mdl; then
-        passed
-    else
-        error
-    fi
-else
-    skipped
-fi
