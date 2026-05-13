@@ -183,7 +183,13 @@ alias rg="rg --colors 'match:fg:black' --colors 'match:bg:yellow'\
              --colors 'match:style:nobold' --colors 'path:fg:green'\
              --colors 'path:style:bold' --colors 'line:fg:yellow'"
 
-alias proj="source projects.sh"
+# === Project selection via ghq + fzf ===
+function proj() {
+    emulate -L zsh
+    local dir
+    dir="$(ghq list 2>/dev/null | fzf --prompt='project> ')" || return
+    [[ -n "${dir}" ]] && cd "${GHQ_ROOT:-${HOME}/wrk}/${dir}"
+}
 
 alias yt720p="yt-dlp -f 'bestvideo[height<=720]+bestaudio'"
 alias yt1080p="yt-dlp -f 'bestvideo[height<=1080]+bestaudio'"
@@ -215,31 +221,6 @@ export LS_COLORS="*~=0;38;2;122;112;112:bd=0;38;2;102;217;239;48;2;51;51;51:ca=0
 # https://www.gnupg.org/documentation/manuals/gnupg/Invoking-GPG_002dAGENT.html
 GPG_TTY="$(tty)"
 export GPG_TTY
-
-## Wine
-export WINEDEBUG="-all"
-export WINEESYNC=1
-export WINEFSYNC=1
-export WINEDLLOVERRIDES="winemenubuilder.exe=;${WINEDLLOVERRIDES}"
-# vkd3d
-export VKD3D_DEBUG=none
-export VKD3D_SHADER_DEBUG=none
-# wine-staging var
-export STAGING_SHARED_MEMORY=1
-# dxvk
-export DXVK_LOG_LEVEL=none
-export DXVK_HUD=0
-# dxvk-gplasync
-export DXVK_ASYNC=1
-export DXVK_GPLASYNCCACHE=1
-# dxvk-nvapi
-export DXVK_ENABLE_NVAPI=1
-export VK_ADD_IMPLICIT_LAYER_PATH="${XDG_DATA_HOME}/vulkan/implicit_layer.d"
-# caches
-export __GL_SHADER_DISK_CACHE=1
-export __GL_SHADER_DISK_CACHE_PATH="${XDG_CACHE_HOME}/shader_cache"
-export DXVK_STATE_CACHE=1
-export DXVK_STATE_CACHE_PATH="${XDG_CACHE_HOME}/dxvk_cache"
 
 # settings Mcfly
 export MCFLY_KEY_SCHEME="emacs"
