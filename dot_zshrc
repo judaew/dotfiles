@@ -163,10 +163,6 @@ precmd() {
 
 export EDITOR="emacsclient --tty --alternate-editor=''"
 alias e="emacsclient --tty --alternate-editor=''"
-alias eg="emacsclient --create-frame --alternate-editor=''"
-alias emacsd="emacs --daemon" # start Emacs server
-alias emacsd-stop="emacsclient -e '(kill-emacs)'"
-alias emacsd-restart="emacsd-stop; emacsd"
 
 alias ls="ls --color=auto"
 alias la="ls -a --group-directories-first"
@@ -177,9 +173,6 @@ alias df="df -h"
 alias du="du -h"
 alias grep="grep --color=auto"
 
-(( $+commands[trash-put] )) && {
-    alias trash="trash-put"
-}
 
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
@@ -192,7 +185,6 @@ alias rg="rg --colors 'match:fg:black' --colors 'match:bg:yellow'\
 
 alias proj="source projects.sh"
 
-alias yt480p="yt-dlp -f 'bestvideo[height<=480]+bestaudio'"
 alias yt720p="yt-dlp -f 'bestvideo[height<=720]+bestaudio'"
 alias yt1080p="yt-dlp -f 'bestvideo[height<=1080]+bestaudio'"
 alias ytaudio="yt-dlp -x --audio-format m4a --embed-thumbnail"
@@ -204,15 +196,9 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
     fi
     alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
     alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
-    alias vscode="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
     alias smerge="/Applications/Sublime\ Merge.app/Contents/SharedSupport/bin/smerge"
-    alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
-    if [[ "${DESKTOP_SESSION}" == "plasma" ]]; then
-        alias open="kioclient exec"
-    else
-        alias open="xdg-open"
-    fi
+    alias open="xdg-open"
 fi
 
 # --- Variables ---
