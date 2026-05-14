@@ -107,7 +107,7 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-check
     fi
 
     local diff_index
-    diff_index=("${(@f)$(git diff-index --name-only HEAD)}")
+    diff_index=("${(@f)$(git diff-index --name-only HEAD 2>/dev/null)}")
     [[ ${#diff_index:#} -ge 1 ]] && hook_com[misc]+="!${#diff_index:#}"
 }
 
