@@ -6,6 +6,10 @@
 # Guard against double-loading
 [[ ${ZSHRC_LOADED:-} == 1 ]] && return || ZSHRC_LOADED=1
 
+# Check NixOS
+local is_nixos=false
+[[ -f /etc/NIXOS ]] && is_nixos=true
+
 # --- Options ---
 #################
 
@@ -316,11 +320,8 @@ _my_load_zsh_plugin() {
     local base dir
 
     for base in \
-        # "${HOME}/.nix-profile/share"
-        "/run/current-system/sw/share" \
-        # "/usr/share/zsh/plugins"
+         "/usr/share/zsh/plugins" \
         "/opt/local/share"; do
-
         [[ -d "${base}" ]] && dir="${base}/${name}"
         [[ -f "${dir}/${name}.zsh" ]] && { source "${dir}/${name}.zsh"; return 0; }
     done
@@ -328,8 +329,11 @@ _my_load_zsh_plugin() {
 }
 
 # Fish-like syntax highlighting and autosuggestions
-_my_load_zsh_plugin "zsh-syntax-highlighting"
-_my_load_zsh_plugin "zsh-autosuggestions"
+# NixOS: plugins successful loading by configuration.nix
+[[ "$is_nixos" == false ]] && {
+    _my_load_zsh_plugin "zsh-syntax-highlighting"
+    _my_load_zsh_plugin "zsh-autosuggestions"
+}
 
 # History substring search (built-in zsh)
 autoload -U up-line-or-beginning-search down-line-or-beginning-search
