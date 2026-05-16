@@ -83,6 +83,12 @@
 ;; Smart kill-region behavior; very useful for C-w without active region
 (setopt kill-region-dwim 'emacs-word)
 
+;; show match numbers in the search prompt
+(setopt isearch-lazy-count t)
+
+;; Useful for tabs (like in Golang)
+(setopt x-stretch-cursor t)
+
 ;;; straight.el
 
 ;; Bootstrap Straight

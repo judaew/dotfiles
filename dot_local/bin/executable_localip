@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 for cmd in ip awk cut; do
     if ! command -v "$cmd" &>/dev/null; then

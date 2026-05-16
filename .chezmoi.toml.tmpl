@@ -1,3 +1,10 @@
 encryption="gpg"
 [gpg]
     recipient = "E85EF1C4A188CE00"
+
+[data]
+{{- if stat "/etc/NIXOS" }}
+isNixOS = true
+{{- else }}
+isNixOS = false
+{{- end }}

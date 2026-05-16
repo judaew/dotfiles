@@ -10,6 +10,10 @@
 ;; === Tags ===
 ;; - `citre'         ; advanced Ctags frontend
 
+;; === Rust ===
+;; - `rust-mode'     ; major mode and configuration for Rust
+;; - `rustic'        ; the steroids for rust-mode
+
 ;; === Python ===
 ;; - `pyvenv'        ; manage Python virtual environment
 
@@ -52,6 +56,44 @@
   (setopt citre-peek-fill-fringe nil)
   (setopt citre-peek-use-dashes-as-horizontal-border t))
 
+;; === Rust ===
+;; ------------
+
+;; - C-c C-d     -- easy insetion of dbg!
+(use-package rust-mode
+  :init
+  (setq rust-mode-treesitter-derive t)
+  :custom
+  (rust-format-on-save t))
+
+;; - C-c C-p     -- rustic-popup
+;; - C-c C-c C-u -- rustic-compile
+;; - C-c C-c C-i -- rustic-recompile
+;; - C-c C-c C-o -- rustic-format-buffer
+;; - C-c C-c C-, -- rustic-docstring-dwim
+;; - C-c C-c C-b -- rustic-cargo-build
+;; - C-c C-c C-k -- rustic-cargo-check
+;; - C-c C-c C-r -- rustic-cargo-run
+;; - C-c C-c C-f -- rustic-cargo-fmt
+;; - C-c C-c C-t -- rustic-cargo-test
+;; - C-c C-c C-c -- rustic-cargo-current-test
+;; - C-c C-c C-l -- rustic-cargo-clippy
+;; - C-c C-c C-n -- rustic-cargo-outdated
+;; - C-c C-c n   -- rustic-cargo-new
+;; - C-c C-c i   -- rustic-cargo-init
+;; - C-c C-c b   -- rustic-cargo-bench
+;; - C-c C-c d   -- rustic-cargo-doc
+;; - C-c C-c c   -- rustic-cargo-clean
+;; - C-c C-c k   -- rustic-cargo-clippy
+;; - C-c C-c f   -- rustic-cargo-clippy-fix
+;; - C-c C-c a   -- rustic-cargo-add
+;; - C-c C-c r   -- rustic-cargo-rm
+;; - C-c C-c u   -- rustic-cargo-upgrade
+(use-package rustic
+  :after rust-mode
+  :custom
+  (rustic-lsp-client 'eglot))
+
 ;; === Python ===
 ;; --------------
 
@@ -71,6 +113,9 @@
 
 (use-package nginx-mode
   :defer t)
+
+(use-package nix-ts-mode
+  :mode "\\.nix\\'")
 
 ;; === Systemd ===
 ;; ---------------

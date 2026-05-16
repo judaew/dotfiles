@@ -6,6 +6,10 @@
 # Guard against double-loading
 [[ ${ZSHRC_LOADED:-} == 1 ]] && return || ZSHRC_LOADED=1
 
+# Check NixOS
+local is_nixos=false
+[[ -f /etc/NIXOS ]] && is_nixos=true
+
 # --- Options ---
 #################
 
@@ -103,7 +107,7 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-check
     fi
 
     local diff_index
-    diff_index=("${(@f)$(git diff-index --name-only HEAD)}")
+    diff_index=("${(@f)$(git diff-index --name-only HEAD 2>/dev/null)}")
     [[ ${#diff_index:#} -ge 1 ]] && hook_com[misc]+="!${#diff_index:#}"
 }
 
@@ -143,10 +147,6 @@ precmd() {
     # print git prompt
     print -Pn "%F{8}${vcs_info_msg_0_}%f"
 
-    # Jump between prompts
-    # See https://codeberg.org/dnkl/foot/wiki#jumping-between-prompts
-    print -n "\e]133;A\e\\"
-
     # new line ("\n")
     print
 
@@ -163,10 +163,6 @@ precmd() {
 
 export EDITOR="emacsclient --tty --alternate-editor=''"
 alias e="emacsclient --tty --alternate-editor=''"
-alias eg="emacsclient --create-frame --alternate-editor=''"
-alias emacsd="emacs --daemon" # start Emacs server
-alias emacsd-stop="emacsclient -e '(kill-emacs)'"
-alias emacsd-restart="emacsd-stop; emacsd"
 
 alias ls="ls --color=auto"
 alias la="ls -a --group-directories-first"
@@ -177,9 +173,6 @@ alias df="df -h"
 alias du="du -h"
 alias grep="grep --color=auto"
 
-(( $+commands[trash-put] )) && {
-    alias trash="trash-put"
-}
 
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
@@ -190,14 +183,17 @@ alias rg="rg --colors 'match:fg:black' --colors 'match:bg:yellow'\
              --colors 'match:style:nobold' --colors 'path:fg:green'\
              --colors 'path:style:bold' --colors 'line:fg:yellow'"
 
-alias proj="source projects.sh"
+# === Project selection via ghq + fzf ===
+function proj() {
+    emulate -L zsh
+    local dir
+    dir="$(ghq list 2>/dev/null | fzf --prompt='project> ')" || return
+    [[ -n "${dir}" ]] && cd "${GHQ_ROOT:-${HOME}/wrk}/${dir}"
+}
 
-alias yt480p="yt-dlp -f 'bestvideo[height<=480]+bestaudio'"
 alias yt720p="yt-dlp -f 'bestvideo[height<=720]+bestaudio'"
 alias yt1080p="yt-dlp -f 'bestvideo[height<=1080]+bestaudio'"
 alias ytaudio="yt-dlp -x --audio-format m4a --embed-thumbnail"
-
-alias fixkde="killall -s KILL plasmashell"
 
 # darwin specific
 if [[ "${OSTYPE}" == "darwin"* ]]; then
@@ -206,15 +202,9 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
     fi
     alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
     alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
-    alias vscode="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
     alias smerge="/Applications/Sublime\ Merge.app/Contents/SharedSupport/bin/smerge"
-    alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
-    if [[ "${DESKTOP_SESSION}" == "plasma" ]]; then
-        alias open="kioclient exec"
-    else
-        alias open="xdg-open"
-    fi
+    alias open="xdg-open"
 fi
 
 # --- Variables ---
@@ -231,31 +221,6 @@ export LS_COLORS="*~=0;38;2;122;112;112:bd=0;38;2;102;217;239;48;2;51;51;51:ca=0
 # https://www.gnupg.org/documentation/manuals/gnupg/Invoking-GPG_002dAGENT.html
 GPG_TTY="$(tty)"
 export GPG_TTY
-
-## Wine
-export WINEDEBUG="-all"
-export WINEESYNC=1
-export WINEFSYNC=1
-export WINEDLLOVERRIDES="winemenubuilder.exe=;${WINEDLLOVERRIDES}"
-# vkd3d
-export VKD3D_DEBUG=none
-export VKD3D_SHADER_DEBUG=none
-# wine-staging var
-export STAGING_SHARED_MEMORY=1
-# dxvk
-export DXVK_LOG_LEVEL=none
-export DXVK_HUD=0
-# dxvk-gplasync
-export DXVK_ASYNC=1
-export DXVK_GPLASYNCCACHE=1
-# dxvk-nvapi
-export DXVK_ENABLE_NVAPI=1
-export VK_ADD_IMPLICIT_LAYER_PATH="${XDG_DATA_HOME}/vulkan/implicit_layer.d"
-# caches
-export __GL_SHADER_DISK_CACHE=1
-export __GL_SHADER_DISK_CACHE_PATH="${XDG_CACHE_HOME}/shader_cache"
-export DXVK_STATE_CACHE=1
-export DXVK_STATE_CACHE_PATH="${XDG_CACHE_HOME}/dxvk_cache"
 
 # settings Mcfly
 export MCFLY_KEY_SCHEME="emacs"
@@ -277,24 +242,17 @@ export FZF_ALT_C_COMMAND="fd --type d . --color=never"
 
 # lazydocker
 # exec `systemctl --user enable --now podman.socket`
-export DOCKER_HOST=unix:///run/user/1000/podman/podman.sock
+export DOCKER_HOST="unix:///run/user/${UID}/podman/podman.sock"
 alias docker="podman"
-
-# OpenSSH
-export SSH_ASKPASS=/usr/bin/ksshaskpass
-export SSH_ASKPASS_REQUIRE=prefer
 
 # --- Keybindings ---
 #####################
 bindkey -e
 
-if [[ "${OSTYPE}" == "darwin"* ]]; then
-    [[ -r "/opt/local/share/mcfly/mcfly.zsh" ]] && \
-        source /opt/local/share/mcfly/mcfly.zsh
-elif [[ "${OSTYPE}" == "linux-gnu"* ]]; then
-    [[ -r "/usr/share/doc/mcfly/mcfly.zsh" ]] && \
-        source /usr/share/doc/mcfly/mcfly.zsh
-fi
+# mcfly keybinds
+(( $+commands[mcfly] )) && {
+    eval "$(mcfly init zsh)"
+}
 
 # --- Functions ---
 ###################
@@ -325,9 +283,9 @@ function mkvenv() {
 # --- Complete ---
 ##################
 [[ "${OSTYPE}" == "darwin"* ]] && {
-    # MacPorts
-    fpath+=(/opt/local/share/zsh/site-functions)
+    fpath+=(/opt/local/share/zsh/site-functions) # MacPorts
 }
+
 autoload -Uz compinit && compinit
 
 # --- Zstyles ---
@@ -353,30 +311,30 @@ unsetopt menucomplete
     eval "$(direnv hook zsh)"
 }
 
-# Fish-like syntax highlighting and autosuggestions
-local f
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    f=/opt/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-else
-    f=/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-[[ -f "${f}" ]] && source "${f}"
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    f=/opt/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-else
-    f=/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
-[[ -f "${f}" ]] && source "${f}"
-unset f
+_my_load_zsh_plugin() {
+    local name="$1"
+    local base dir
 
-# Use history substring search
-local f
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    f=/opt/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-else
-    f=/usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-fi
-[[ -f ${f} ]] && source ${f}
-unset f
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+    for base in \
+         "/usr/share/zsh/plugins" \
+        "/opt/local/share"; do
+        [[ -d "${base}" ]] && dir="${base}/${name}"
+        [[ -f "${dir}/${name}.zsh" ]] && { source "${dir}/${name}.zsh"; return 0; }
+    done
+    return 1
+}
+
+# Fish-like syntax highlighting and autosuggestions
+# NixOS: plugins successful loading by configuration.nix
+[[ "$is_nixos" == false ]] && {
+    _my_load_zsh_plugin "zsh-syntax-highlighting"
+    _my_load_zsh_plugin "zsh-autosuggestions"
+}
+
+# History substring search (built-in zsh)
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search

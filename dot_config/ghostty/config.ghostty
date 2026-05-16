@@ -1,0 +1,41 @@
+font-family = "Iosevka Curly"
+font-size = 11
+
+background = 1B1D1E
+foreground = CCCCCC
+selection-foreground = 000000
+selection-background = FFFACD
+
+# black
+palette = 0=1B1D1E
+palette = 8=808080
+# red
+palette = 1=FF0044
+palette = 9=F92672
+# green
+palette = 2=82B414
+palette = 10=A6E22E
+# yellow
+palette = 3=FD971F
+palette = 11=E6DB74
+# blue
+palette = 4=266C98
+palette = 12=7070F0
+# magenta
+palette = 5=AC0CB1
+palette = 13=D63AE1
+# cyan
+palette = 6=00AAAA
+palette = 14=66D9EF
+# white
+palette = 7=CCCCCC
+palette = 15=F8F8F2
+
+cursor-color = F92672
+cursor-style = block
+shell-integration-features = no-cursor
+cursor-click-to-move = true
+mouse-hide-while-typing = true
+
+window-height = 35
+window-width  = 88
