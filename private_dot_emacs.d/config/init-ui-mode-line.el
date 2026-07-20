@@ -136,39 +136,60 @@ Replacing `Git-' with a branch symbol."
       (setcdr entry '((:eval (when jinx-mode
                                (format " s[%s]" jinx-languages))))))))
 
+;;
+;; Align
+;; -----
+;;
+(defun modeline/right-align ()
+  "Return a spacer that right-aligns `modeline/right'."
+  (let ((rhs (format-mode-line modeline/right)))
+    (propertize
+     " "
+     'display
+     `(space :align-to (- right ,(string-width rhs))))))
+
+;;
 ;; Formats mode-line
-(setq-default mode-line-format
-              '("%e" "  "
-                ;; (:propertize " " display (raise +0.1)) ;; Top padding
-                ;; (:propertize " " display (raise -0.1)) ;; Bottom padding
+;; -----------------
+;;
+(defconst modeline/left
+  '((:eval (modeline/file-or-mode-icon))
+    " "
+    (:eval (modeline/matches-info))
+    " "
+    ;; e.g.: U:@---
+    mode-line-mule-info
+    mode-line-client
+    mode-line-modified
+    mode-line-remote
 
-                ;; ### LEFT ###
-                ;; ############
-                (:eval (modeline/file-or-mode-icon)) " "
-                (:eval (modeline/matches-info)) " "
+    ;; mode-line-frame-identification
+    (:eval (modeline/buffer-name-smart-truncate))
+    " "
+    mode-line-position)
+  "Left part of the mode-line.")
 
-                ;; e.g.: U:@---
-                mode-line-mule-info
-                mode-line-client
-                mode-line-modified
-                mode-line-remote
+(defconst modeline/right
+  '((project-mode-line project-mode-line-format)
+    " "
+    (vc-mode (:eval (modeline/shorten-vc-mode vc-mode)))
+    " "
+    mode-line-modes
+    mode-line-misc-info
+    "  ")
+  "Right part of the mode-line.")
 
-                ;; mode-line-frame-identification
-                (:eval (modeline/buffer-name-smart-truncate)) " "
-                mode-line-position
-
-                ;; ### RIGHT ###
-                ;; #############
-                mode-line-format-right-align
-                (project-mode-line project-mode-line-format) " "
-                (vc-mode (:eval (modeline/shorten-vc-mode vc-mode))) " "
-                mode-line-modes
-                mode-line-misc-info
-                "  ")
-              project-mode-line t
-              mode-line-buffer-identification '(" %b")
-              mode-line-position-column-line-format '("%l:%c")
-              mode-line-percent-position '(""))
+(setq-default
+ mode-line-format
+ '("%e"
+   "  "
+   modeline/left
+   (:eval (modeline/right-align))
+   modeline/right)
+ project-mode-line t
+ mode-line-buffer-identification '(" %b")
+ mode-line-position-column-line-format '("%l:%c")
+ mode-line-percent-position '(""))
 
 (setq mode-line-modes-delimiters '("" . ""))  ;; EMACS-31
 
