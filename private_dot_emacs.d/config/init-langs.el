@@ -21,6 +21,7 @@
 ;; - `ninja-mode'    ; major mode for Ninja build files
 ;; - `protobuf-mode' ; major mode for Protocol Buffers
 ;; - `nginx-mode'    ; major mode for Nginx config
+;; - `nix-ts-mode'   ; major mode for Nix
 
 ;; === Systemd ===
 ;; Syntax highlighting for systemd files
@@ -114,6 +115,7 @@
 (use-package nginx-mode
   :defer t)
 
+;; Nix grammar: https://github.com/nix-community/tree-sitter-nix
 (use-package nix-ts-mode
   :mode "\\.nix\\'")
 

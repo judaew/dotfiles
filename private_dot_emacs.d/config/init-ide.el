@@ -44,6 +44,7 @@ Or passes other checks that determine whether eglot should run."
      java-ts-mode
      lua-ts-mode
      python-ts-mode
+     nix-ts-mode
      cmake-ts-mode
      dockerfile-ts-mode) . my/eglot-ensure)
    (eglot-managed-mode . eglot-inlay-hints-mode)
