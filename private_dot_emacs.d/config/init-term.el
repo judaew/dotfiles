@@ -11,7 +11,7 @@
 
 ;; === Terminal ===
 ;; - `mouse'                ; mouse support in terminal
-;; - `vterm'                ; libvterm integration
+;; - `ghostel'              ; libghostty-vt integration
 
 ;; === Docker ===
 ;; - `docker'               ; Docker integration
@@ -24,6 +24,9 @@
 ;; === Environment ===
 ;; -------------------
 
+(use-package emacs
+  :hook (after-init . xterm-mouse-mode))
+
 (use-package exec-path-from-shell
   :config
   (setopt exec-path-from-shell-arguments
@@ -35,21 +38,25 @@
   :after exec-path-from-shell
   :hook (after-init . direnv-mode))
 
-(use-package with-editor
-  :bind
-  (([remap async-shell-command] . with-editor-async-shell-command)
-   ([remap shell-command] . with-editor-shell-command))
-  :hook
-  ((shell-mode eshell-mode term-mode vterm-mode) . with-editor-export-editor))
-
 ;; === Terminal ===
 ;; ----------------
 
-(use-package vterm
+(use-package vterm)
+
+(use-package ghostel
   :bind
-  (("C-~" . vterm))
-  :custom
-  (vterm-max-scrollback 10000))
+  (("C-~" . ghostel))
+  :hook
+  ((after-init . ghostel-compile-global-mode)
+   (after-init . ghostel-comint-global-mode)))
+
+(use-package vtermux
+  :straight (vtermux :type git :host github :repo "pcmantz/vtermux")
+  :config
+  (setopt vtermux-backend 'ghostel)
+  (vtermux-define zsh)
+  (vtermux-define lf)
+  (vtermux-define htop))
 
 ;; === Docker ===
 ;; --------------
