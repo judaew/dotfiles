@@ -140,7 +140,6 @@
 (require 'init-org)
 (require 'init-ui)
 (require 'init-ui-mode-line)
-(require 'init-ui-highlight-keywords)
 (require 'init-langs)
 (require 'init-spell)
 (require 'init-term)
