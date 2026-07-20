@@ -31,7 +31,6 @@ setopt share_history      # share hist between sessions
 setopt always_to_end
 setopt auto_menu
 setopt complete_in_word
-setopt menu_complete
 
 # input
 setopt correct
@@ -95,7 +94,6 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-check
     [[ -d .git ]] || git rev-parse --git-dir >/dev/null 2>&1 || return 0
 
     local upstream
-    local -a counts
     if upstream=$(git rev-parse --abbrev-ref @{upstream} 2>/dev/null) &&
             [[ -n "$upstream" ]] && [[ "$upstream" != "@{upstream}" ]]
     then
@@ -211,6 +209,7 @@ fi
 ###################
 # Most environment variables have been moved to ~/.zprofile
 HISTSIZE=100000
+# TODO: move to ${XDG_STATE_HOME}/zsh/history and add mkdir with check
 HISTFILE="${HOME}/.zsh_history"
 SAVEHIST=100000
 
@@ -299,17 +298,13 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 
-# don't insert the first match completely -- only the common part
-# (it's completion behave like Bash completion)
-unsetopt menucomplete
-
 # --- plugins and third party ---
 #################################
 
 # run direnv hook
-(( $+commands[direnv] )) && {
+if [[ "$is_nixos" == false ]] && (( $+commands[direnv] )); then
     eval "$(direnv hook zsh)"
-}
+fi
 
 _my_load_zsh_plugin() {
     local name="$1"
