@@ -89,6 +89,15 @@
 ;; Useful for tabs (like in Golang)
 (setopt x-stretch-cursor t)
 
+;; Eldoc at point
+(setopt eldoc-help-at-pt t)
+
+;; KB/MB instead of raw byte counts
+(setopt ibuffer-human-readable-size t)
+
+;; Stop native-comp jobs on battery
+;; (setopt native-comp-async-on-battery-power t)
+
 ;;; straight.el
 
 ;; Bootstrap Straight
