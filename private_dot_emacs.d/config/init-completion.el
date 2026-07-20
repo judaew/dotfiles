@@ -350,7 +350,7 @@
   (reverse-im-char-fold t)
   (reverse-im-read-char-advice-function #'reverse-im-read-char-include)
   ;; translate these methods
-  (reverse-im-input-methods '("ukrainian-computer" "russian-computer")))
+  (reverse-im-input-methods '("ukrainian-computer")))
 
 (provide 'init-completion)
 ;;; init-completion.el ends here
