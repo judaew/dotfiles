@@ -45,41 +45,6 @@
   ;; See https://github.com/karthink/gptel/issues/704#issuecomment-2759390992
   (setopt gptel-backend (gptel-get-backend "DeepSeek"))
   (setopt gptel-model 'deepseek-chat) ;; or `deepseek-reasoner'
-
-  (gptel-make-openai "Alibaba"
-    :stream t
-    :key gptel-api-key
-    :protocol "https"
-    :host "dashscope-intl.aliyuncs.com"
-    :endpoint "/compatible-mode/v1/chat/completions"
-    :models '(;; coding
-              ;; "qwen3-coder-plus" "qwen3-coder-flash"
-              ;; general
-              "qwen3.6-plus" "qwen3.6-flash"
-              ;; translate
-              ;; "qwen-mt-plus" "qwen-mt-turbo"
-              ))
-
-  (gptel-make-openai "Alibaba NoThink"
-    :stream t
-    :key gptel-api-key
-    :protocol "https"
-    :host "dashscope-intl.aliyuncs.com"
-    :endpoint "/compatible-mode/v1/chat/completions"
-    :models '("qwen3.6-plus" "qwen3.6-flash")
-    :request-params '(:enable_thinking "False")
-    )
-
-  (add-to-list 'gptel-directives
-               `(english-editor . ,(with-temp-buffer
-                                     (insert-file-contents "~/wrk/llm/prompts/english-editor.md")
-                                     (buffer-string))))
-
-  ;; (gptel-make-preset 'test
-  ;;   :backend "Alibaba"
-  ;;   :model 'qwen3.6-plus
-  ;;   :request-params '(:enable_thinking "False")
-  ;;   :system "")
   )
 
 (use-package gptel-agent
@@ -88,9 +53,6 @@
   :config
   (setq gptel-agent-dirs '("/home/judaew/wrk/llm/agents/"))
   (gptel-agent-update))
-
-(use-package eca
-  :straight (eca :type git :host github :repo "editor-code-assistant/eca-emacs" :branch "master"))
 
 (provide 'init-ai)
 ;;; init-ai.el ends here
