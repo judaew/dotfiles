@@ -333,7 +333,7 @@
 ;; ------------
 
 (use-package savehist
-  :straight nil
+  :straight (:type built-in)
   :hook (after-init . savehist-mode))
 
 (use-package char-fold

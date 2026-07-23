@@ -88,7 +88,6 @@
 ;; --------------
 
 (use-package ronny-theme
-  ;; :straight (:host github :repo "judaew/ronny.el" )
   :straight (ronny-theme :type git :local-repo "~/wrk/github.com/judaew/ronny.el")
   :config
   (load-theme 'ronny t))

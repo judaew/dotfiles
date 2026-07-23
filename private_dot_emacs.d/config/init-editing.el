@@ -56,11 +56,11 @@
 (use-package iedit)
 
 (use-package saveplace
-  :straight nil
+  :straight (:type built-in)
   :hook (after-init . save-place-mode))
 
 (use-package editorconfig
-  :straight nil
+  :straight (:type built-in)
   :hook (after-init . editorconfig-mode))
 
 (use-package expreg
@@ -84,6 +84,7 @@
 ;; See https://www.gnu.org/software/emacs/manual/html_node/emacs/Repeating.html
 ;; like C-x-left-left-left-right and etc
 (use-package repeat
+  :straight (:type built-in)
   :custom
   (repeat-mode +1))
 
@@ -112,7 +113,7 @@
   :bind ("C-x u" . vundo))
 
 (use-package winner
-  :straight nil
+  :straight (:type built-in)
   :hook (after-init . winner-mode))
 
 (provide 'init-editing)

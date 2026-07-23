@@ -49,7 +49,7 @@ if one already exists."
    ("C-x p o" . consult-project-extra-find-other-window)))
 
 (use-package midnight
-  :straight nil
+  :straight (:type built-in)
   :hook (after-init . midnight-mode)
   :custom (midnight-period (* 3 24 60 60))) ;; 3 days
 
