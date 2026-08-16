@@ -15,7 +15,7 @@
 ;; - `projection-dape' ; Projection integration for dape
 
 ;; === Syntax checking ===
-;; - `flymake'         ; on-the-fly syntax checking
+;; - `flycheck'        ; on-the-fly syntax checking
 
 ;; TODO: restclient.el
 
@@ -130,11 +130,15 @@ Or passes other checks that determine whether eglot should run."
 ;; === Syntax checking ===
 ;; -----------------------
 
-(use-package flymake
+(use-package flycheck
   :defer 1
-  :straight (:type built-in)
-  :hook (prog-mode . flymake-mode)
   :config
+  (global-flycheck-mode 1)
+  ;; Report Eglot's LSP diagnostics through Flycheck
+  (global-flycheck-eglot-mode 1)
+  ;; Report Eglot's LSP diagnostics through Flycheck
+  (global-flycheck-eglot-mode 1)
+
   ;; Trust your own config files for Elisp flymake checks
   (setopt elisp-flymake-byte-compile-load-path load-path)
   ;; Ensure elisp flymake knows where to find libraries
