@@ -18,6 +18,7 @@
 ;; - `pyvenv'        ; manage Python virtual environment
 
 ;; === Language modes ===
+;; - `md-mode'       ; org-inspired Markdown editing
 ;; - `ninja-mode'    ; major mode for Ninja build files
 ;; - `protobuf-mode' ; major mode for Protocol Buffers
 ;; - `nginx-mode'    ; major mode for Nginx config
@@ -36,6 +37,8 @@
   (apheleia-global-mode 1)
   (setf (alist-get 'go-ts-mode apheleia-mode-alist)
         '(goimports)))
+
+(use-package package-lint)
 
 ;; === Tags ===
 ;; ------------
@@ -102,6 +105,10 @@
 
 ;; === Language modes ===
 ;; ----------------------
+
+(use-package md-mode
+  :ensure (:host github :repo "yibie/md-mode")
+  :mode ("\\.md\\'" . md-mode))
 
 (use-package ninja-mode
   :defer t)
