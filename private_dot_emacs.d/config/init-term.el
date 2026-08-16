@@ -6,7 +6,7 @@
 
 ;; === Environment ===
 ;; - `exec-path-from-shell' ; sync shell environment with Emacs
-;; - `direnv'               ; direnv integration
+;; - `envrc'                ; direnv integration
 ;; - `with-editor'          ; use the emacsclient as the $EDITOR of child processes
 
 ;; === Terminal ===
@@ -35,29 +35,26 @@
   (when (memq window-system '(mac ns x pgtk))
     (exec-path-from-shell-initialize)))
 
-(use-package direnv
-  :after exec-path-from-shell
-  :hook (after-init . direnv-mode))
+(use-package envrc
+  :config (envrc-global-mode 1))
 
 ;; === Terminal ===
 ;; ----------------
 
-(use-package vterm)
+(add-to-list 'elpaca-ignored-dependencies 'ghostel)
 
 (use-package ghostel
+  :ensure nil ;; nix
   :bind
-  (("C-~" . ghostel))
-  :hook
-  ((after-init . ghostel-compile-global-mode)
-   (after-init . ghostel-comint-global-mode)))
+  (("C-~" . ghostel)))
 
-(use-package vtermux
-  :straight (vtermux :type git :host github :repo "pcmantz/vtermux")
-  :config
-  (setopt vtermux-backend 'ghostel)
-  (vtermux-define zsh)
-  (vtermux-define lf)
-  (vtermux-define htop))
+(use-package ghostel-compile
+  :ensure nil ;; nix
+  :config (ghostel-compile-global-mode 1))
+
+(use-package ghostel-comint
+  :ensure nil ;; nix
+  :config (ghostel-comint-global-mode 1))
 
 ;; === Docker ===
 ;; --------------
@@ -82,18 +79,6 @@
      (setopt docker-command "podman"
              docker-compose-command "podman-compose"
              docker-container-tramp-method "podman"))))
-
-;; NOTE: Keep the package for `dockerfile-build-buffer' and
-;; `dockerfile-build-no-cache-buffer', but leave syntax highlighting to Tree-Sitter.
-(use-package dockerfile-mode
-  :mode (("Dockerfile\\'" . dockerfile-ts-mode)
-         ("Containerfile\\'" . dockerfile-ts-mode))
-  :config
-  (pcase my/emacs-docker-executable
-    ('docker
-     (setopt dockerfile-mode-command "docker"))
-    ('podman
-     (setopt dockerfile-mode-command "podman"))))
 
 (provide 'init-term)
 ;;; init-term.el ends here
