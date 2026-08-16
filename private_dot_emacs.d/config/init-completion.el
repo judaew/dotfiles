@@ -130,10 +130,6 @@
 ;; === UI ===
 ;; ----------
 
-;; Enable Completion Preview mode in code buffers (#emacs30)
-;; https://eshelyaron.com/posts/2023-11-17-completion-preview-in-emacs.html
-(global-completion-preview-mode +1)
-
 (use-package corfu
   :bind
   (:map corfu-map
@@ -208,8 +204,8 @@
 
 (use-package vertico
   :init
-  (vertico-mode)
-  (vertico-mouse-mode)
+  (vertico-mode 1)
+  (vertico-mouse-mode 1)
   :bind (:map vertico-map ("M-R" . vertico-repeat))
   :custom
   (vertico-cycle t))
@@ -279,8 +275,10 @@
   ;; in consult-buffer and etc.
   (setopt consult-narrow-key "<"))
 
+(use-package consult-flycheck)
+
 (use-package marginalia
-  :init (marginalia-mode))
+  :init (marginalia-mode 1))
 
 (use-package embark
   :bind
@@ -315,7 +313,7 @@
 ;; Icons for vartico + marginalia
 (use-package nerd-icons-completion
   :config
-  (nerd-icons-completion-mode)
+  (nerd-icons-completion-mode 1)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
 ;; Build-in from Emacs 30
