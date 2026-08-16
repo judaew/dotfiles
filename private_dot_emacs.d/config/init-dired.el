@@ -9,11 +9,11 @@
 
 ;; === Enhancements ===
 ;; - `dired-filter'     ; filter stack
-;; - `diredfl'          ; nicer faces for Dired entries
 ;; - `dired-open'       ; open with external apps
 ;; - `dired-subtree'    ; show subdirectories by <TAB>
 ;; - `dired-collapse'   ; show single file or directory in directories
-;; - `dired-sidebar'    ; sidebar
+;; - `dired-sidebar'    ; a sidebar for Dired
+;; - `ibuffer-sidebar'  ; a sidebar for IBuffer
 ;; - `nerd-icons-dired' ; use nerd-icons for Dired
 
 ;;; Code:
@@ -46,11 +46,8 @@
   :hook
   (dired-mode . dired-filter-mode)
   :custom
-  (dired-omit-files (rx (seq bol ".")))) ;; hide dotfiles
-
-(use-package diredfl
-  :hook (dired-mode . diredfl-mode)
-  :config (set-face-attribute 'diredfl-dir-name nil :bold t))
+  (dired-omit-files (rx (seq bol "."))) ;; hide dotfiles
+  (dired-filter-verbose nil)) ;; dired-sidebar is very spammy with these messages
 
 ;; for macOS see dired-launch
 (use-package dired-open
@@ -69,11 +66,6 @@
 
   (advice-add 'dired-collapse-mode :after #'my/dired-collapse-fix-subtree))
 
-(use-package dired-quick-sort
-  :after dired
-  :hook (dired-mode . dired-quick-sort-setup)
-  :custom (dired-quick-sort-suppress-setup-warning t))
-
 ;; Unset F2 from 2C-mode for `dired-sidebar'
 ;; Only unset if the key is bound to a command whose name starts with "2C"
 (let ((key-def (lookup-key global-map (kbd "<f2>"))))
@@ -87,6 +79,9 @@
   :hook (dired-sidebar-mode . (lambda () (display-line-numbers-mode -1)))
   :custom
   (dired-sidebar-width 30))
+
+(use-package ibuffer-sidebar
+  :bind ("<S-f2>" . ibuffer-sidebar-toggle-sidebar))
 
 (use-package nerd-icons-dired
   :hook (dired-mode . nerd-icons-dired-mode))
