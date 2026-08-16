@@ -122,12 +122,16 @@ Replacing `Git-' with a branch symbol."
       vc)))
 
 ;;
-;; Shorten Flymake and Jinx string
+;; Shorten Flymake, Flycheck and Jinx string
 ;; -------------------------------
 ;;
 ;; e.g.: Flymake[0 4 1] -> f[0 4 1]
 (with-eval-after-load 'flymake
   (setq flymake-mode-line-lighter " f"))
+
+;; e.g.: FlyC:0 -> f:0
+(with-eval-after-load 'flycheck
+  (setq flycheck-mode-line-prefix "f"))
 
 ;; e.g.: Jinx[en uk] -> s[en ua]
 (with-eval-after-load 'jinx
@@ -196,14 +200,16 @@ Replacing `Git-' with a branch symbol."
 ;; EMACS-31
 (setq mode-line-collapse-minor-modes
       '(abbrev-mode
-        auto-revert-mode
         apheleia-mode
+        auto-revert-mode
         buffer-face-mode
-        completion-preview-mode
+        citre-mode
         eldoc-mode
+        envrc-mode
         flyspell-mode
         goggles-mode
         gptel-mode
+        jinx-mode
         org-indent-mode
         outline-minor-mode
         smooth-scroll-mode
@@ -212,9 +218,13 @@ Replacing `Git-' with a branch symbol."
         ws-butler-mode
 
         ;; replaced by modeline/matches-info
-        defining-kbd-macro
         iedit-mode
         isearch-mode
+        defining-kbd-macro
+
+        ;; Dired
+        dired-filter-mode
+        nerd-icons-dired-mode
         ))
 
 (provide 'init-ui-mode-line)
