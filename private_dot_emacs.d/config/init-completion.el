@@ -44,55 +44,53 @@
 (use-package cape
   :bind ("M-p" . cape-prefix-map)
   :config
-  (defun my/setup-capf (functions)
-    "Setup `completion-at-point-functions' with given FUNCTIONS list."
-    (setq-local completion-at-point-functions functions))
+  (defun my/setup-capf (&rest capfs)
+    "Install CAPFS as local completion-at-point-functions."
+    (setq-local completion-at-point-functions capfs))
 
-  (defconst my/capf-common-prog
-    (list
-     #'tempel-complete
-     (cape-capf-inside-string #'cape-rfc1345)
-     (cape-capf-inside-comment #'cape-rfc1345)
-     (cape-capf-inside-string #'cape-dabbrev)
-     (cape-capf-inside-comment #'cape-dabbrev)
-     #'cape-keyword)
-    "Completion list for prog-based modes (non-LSP).")
   (defun my/setup-capf-common-prog ()
-    (my/setup-capf my/capf-common-prog))
+    (my/setup-capf
+     (cape-capf-super
+      #'tempel-complete
+      (cape-capf-inside-string #'cape-rfc1345)
+      (cape-capf-inside-comment #'cape-rfc1345)
+      (cape-capf-inside-string #'cape-dabbrev)
+      (cape-capf-inside-comment #'cape-dabbrev)
+      #'cape-keyword)))
 
-  (defconst my/capf-eglot
-    (list
-     #'tempel-complete
-     #'eglot-completion-at-point
-     (cape-capf-inside-string #'cape-dabbrev)
-     (cape-capf-inside-comment #'cape-dabbrev))
-    "Completion list for eglot-based modes.")
   (defun my/setup-capf-eglot ()
-    (my/setup-capf my/capf-eglot))
+    (my/setup-capf
+     (cape-capf-super
+      #'tempel-complete
+      #'eglot-completion-at-point
+      (cape-capf-inside-string #'cape-dabbrev)
+      (cape-capf-inside-comment #'cape-dabbrev))))
 
-  (defconst my/capf-elisp
-    (list
-     #'tempel-complete
-     #'cape-elisp-symbol
-     (cape-capf-inside-string #'cape-dabbrev)
-     (cape-capf-inside-comment #'cape-dabbrev))
-    "Completion list for `emacs-lisp-mode'")
   (defun my/setup-capf-elisp ()
-    (my/setup-capf my/capf-elisp))
+    (my/setup-capf
+     (cape-capf-super
+      #'tempel-complete
+      #'cape-elisp-symbol
+      (cape-capf-inside-string #'cape-dabbrev)
+      (cape-capf-inside-comment #'cape-dabbrev))))
 
-  (defconst my/capf-common-text
-    (list
-     #'tempel-complete
-     #'cape-rfc1345
-     #'cape-dabbrev
-     #'cape-keyword)
-    "Completion list for text-based modes.")
   (defun my/setup-capf-common-text ()
-    (my/setup-capf my/capf-common-text))
+    (my/setup-capf
+     (cape-capf-super
+      #'tempel-complete
+      #'cape-rfc1345
+      #'cape-dabbrev
+      #'cape-keyword)))
 
   (defun my/setup-capf-org ()
     (my/setup-capf
-     (cons #'cape-elisp-block my/capf-common-text)))
+     (cape-capf-super
+      #'tempel-complete
+      #'cape-rfc1345
+      #'cape-dabbrev
+      #'cape-keyword
+      #'cape-elisp-block)))
+
   :hook
   ((prog-mode . my/setup-capf-common-prog)
    (emacs-lisp-mode . my/setup-capf-elisp)

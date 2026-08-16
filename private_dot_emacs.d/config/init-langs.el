@@ -4,7 +4,7 @@
 
 ;; Packages:
 
-;; === Formatting ===
+;; === Formatting & Linters ===
 ;; - `apheleia'      ; run code formatter on buffer contents
 
 ;; === Tags ===
@@ -55,10 +55,13 @@
   ;; in all buffers, adding tags to `completion-at-point' which I want to prevent.
   ;; `citre-peek' and `citre-jump' work perfectly fine without citre-mode.
   ;;
-  ;;:init (require 'citre-config)
+  :init
+  (require 'citre)
+  (require 'citre-config)
   :config
   (setopt citre-peek-fill-fringe nil)
-  (setopt citre-peek-use-dashes-as-horizontal-border t))
+  (setopt citre-peek-use-dashes-as-horizontal-border t)
+  (setopt citre-enable-capf-integration nil))
 
 ;; === Rust ===
 ;; ------------
