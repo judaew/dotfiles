@@ -15,7 +15,7 @@
 ;;; Code:
 
 (use-package emacs-solo-gh
-  :straight nil
+  :ensure nil
   :no-require t
   :defer t
   :init

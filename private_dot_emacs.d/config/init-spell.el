@@ -12,7 +12,6 @@
 ;;; Code:
 
 (use-package google-translate
-  :after posframe
   :bind
   (("C-c t" . google-translate-at-point)
    ("C-c T" . google-translate-query-translate))
@@ -25,6 +24,7 @@
 ;; ----------------------
 
 (use-package jinx
+  :ensure nil
   :hook
   ((text-mode . jinx-mode)
    (prog-mode . jinx-mode)

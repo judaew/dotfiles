@@ -105,12 +105,10 @@
   (setopt prescient-aggressive-file-save t))
 
 (use-package corfu-prescient
-  :after corfu prescient
   :config
   (corfu-prescient-mode 1))
 
 (use-package vertico-prescient
-  :after vertico prescient
   :config
   (vertico-prescient-mode 1)
 
@@ -123,7 +121,6 @@
           (assoc-delete-all cat vertico-prescient-completion-category-overrides))))
 
 (use-package tempel
-  :after cape
   :bind
   (("M-+" . tempel-complete)
    (:map tempel-map
@@ -143,9 +140,6 @@
   :bind
   (:map corfu-map
         ("<escape>" . corfu-quit))
-  :hook ((after-init . global-corfu-mode)
-         (after-init . corfu-popupinfo-mode)
-         (after-init . corfu-history-mode))
   :custom
   (corfu-auto t)
   (corfu-auto-delay 0.2)
@@ -154,10 +148,12 @@
   (corfu-separator ?\s)
   (corfu-echo-documentation 0.25)
   :config
+  (global-corfu-mode)
+  (corfu-popupinfo-mode)
+  (corfu-history-mode)
   (define-key corfu-map (kbd "RET") nil))
 
 (use-package kind-icon
-  :after corfu
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
   (plist-put kind-icon-default-style :height 0.8)
@@ -320,29 +316,29 @@
 
 ;; Icons for vartico + marginalia
 (use-package nerd-icons-completion
-  :after marginalia
   :config
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
 ;; Build-in from Emacs 30
 (use-package which-key
-  :hook (after-init . which-key-mode))
+  :config (which-key-mode 1))
 
 ;; === Misc ===
 ;; ------------
 
 (use-package savehist
-  :straight (:type built-in)
-  :hook (after-init . savehist-mode))
+  :ensure nil
+  :config (savehist-mode 1))
 
 (use-package char-fold
+  :ensure nil
   :custom
   (char-fold-symmetric t)
   (search-default-mode #'char-fold-to-regexp))
 
 (use-package reverse-im
-  :hook (after-init . reverse-im-mode)
+  :config (reverse-im-mode 1)
   :custom
   ;; cache generated keymaps
   (reverse-im-cache-file (locate-user-emacs-file "reverse-im-cache.el"))

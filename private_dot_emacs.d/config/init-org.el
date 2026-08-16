@@ -25,6 +25,7 @@
 ;;; Code:
 
 (use-package org
+  :ensure nil
   :bind
   (("C-c o i" . (lambda () (interactive) (find-file org-directory)))
    ("C-c o a" . org-agenda)
@@ -116,7 +117,6 @@
   :custom (valign-lighter t))
 
 (use-package org-download
-  :after org
   :hook (dired-mode . org-download-enable))
 
 (use-package org-appear

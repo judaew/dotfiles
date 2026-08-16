@@ -21,8 +21,8 @@
 ;;; Code:
 
 (use-package emacs
-  :straight nil
-  :hook (after-init . pixel-scroll-precision-mode)
+  :ensure nil
+  :config (pixel-scroll-precision-mode 1)
   :custom (pixel-scroll-precision-interpolation-factor 1.0))
 
 ;; === Icons ===
@@ -37,11 +37,11 @@
 ;; ---------------------------
 
 (use-package hl-todo
-  :hook (after-init . global-hl-todo-mode))
+  :config (global-hl-todo-mode))
 
 (use-package ligature
-  :hook (after-init . global-ligature-mode)
   :config
+  (global-ligature-mode 1)
   (defvar ligatures-Iosevka
     '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->"
       "<---->" "<!--" "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">="
@@ -88,7 +88,7 @@
 ;; --------------
 
 (use-package ronny-theme
-  :straight (ronny-theme :type git :local-repo "~/wrk/github.com/judaew/ronny.el")
+  :ensure (:repo "~/wrk/github.com/judaew/ronny.el/")
   :config
   (load-theme 'ronny t))
 

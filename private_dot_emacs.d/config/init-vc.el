@@ -22,20 +22,18 @@
                (cons "/\\.dockerignore\\'" 'gitignore-mode)))
 
 (use-package git-timemachine
-  :after magit
   :commands (git-timemachine))
 
 (use-package forge
-  :after magit
   :custom
   (forge-add-default-bindings t))
 
 (use-package diff-hl
   :hook
   ((magit-post-refresh . diff-hl-magit-post-refresh)
-   (after-init . global-diff-hl-mode)
    (dired-mode . diff-hl-dired-mode))
   :config
+  (global-diff-hl-mode 1)
   (setopt diff-hl-side 'right)
   ;; highlighting changes on the fly
   (diff-hl-flydiff-mode 1))

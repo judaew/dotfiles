@@ -52,7 +52,4 @@
 (setopt warning-minimum-level :error)
 (setopt warning-suppress-types '((lexical-binding)))
 
-;;; Disable package.el
-(setopt package-enable-at-startup nil)
-
 ;;; early-init.el ends here

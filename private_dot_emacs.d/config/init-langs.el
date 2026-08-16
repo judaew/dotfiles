@@ -32,8 +32,8 @@
 ;; ------------------
 
 (use-package apheleia
-  :hook (after-init . apheleia-global-mode)
   :config
+  (apheleia-global-mode 1)
   (setf (alist-get 'go-ts-mode apheleia-mode-alist)
         '(goimports)))
 
@@ -91,7 +91,6 @@
 ;; - C-c C-c r   -- rustic-cargo-rm
 ;; - C-c C-c u   -- rustic-cargo-upgrade
 (use-package rustic
-  :after rust-mode
   :custom
   (rustic-lsp-client 'eglot))
 
@@ -109,7 +108,8 @@
 
 ;; Use emacsmirror version containing only the .el mode file (no protobuf src)
 (use-package protobuf-mode
-  :straight (protobuf-mode :type git :host github :repo "emacsmirror/protobuf-mode" :branch "master")
+  :ensure (:host github :repo "emacsmirror/protobuf-mode" :branch "master"
+                 :files ("protobuf-mode.el"))
   :defer t)
 
 (use-package nginx-mode

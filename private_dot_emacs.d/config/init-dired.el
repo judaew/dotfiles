@@ -25,7 +25,7 @@
 ;; - "C-x C-j" . dired-jump
 ;; - "C-x C-q" . wdired for make buffer editable and "C-c C-c" for save
 (use-package dired
-  :straight (:type built-in)
+  :ensure nil
   :hook (dired-mode . dired-hide-details-mode) ;; hide details by default
   :custom
   (dired-dwim-target t) ;; guess target directory for copy/move
@@ -57,7 +57,6 @@
   :bind ("S-<return>" . dired-open-xdg))
 
 (use-package dired-subtree
-  :after dired
   :bind (:map dired-mode-map
               ("TAB" . dired-subtree-toggle)))
 

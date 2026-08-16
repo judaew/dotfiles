@@ -11,7 +11,7 @@
 ;;; Code:
 
 (use-package project
-  :straight (:type built-in)
+  :ensure nil
   :config
   (setopt project-switch-commands
           '((project-find-file "Find file" ?f)
@@ -43,14 +43,13 @@ if one already exists."
   (advice-add 'project-shell :override #'my/project-shell))
 
 (use-package consult-project-extra
-  :after (project consult)
   :bind
   (("C-x p f" . consult-project-extra-find)
    ("C-x p o" . consult-project-extra-find-other-window)))
 
 (use-package midnight
-  :straight (:type built-in)
-  :hook (after-init . midnight-mode)
+  :ensure nil
+  :config (midnight-mode 1)
   :custom (midnight-period (* 3 24 60 60))) ;; 3 days
 
 ;; Compile extensions
@@ -67,8 +66,7 @@ if one already exists."
     (compile cmd)))
 
 (use-package go-ts-mode
-  :straight nil
-  :after transient
+  :ensure nil
   :bind (:map go-ts-mode-map ("C-x c" . my/go-ts-mode-compile-transient))
   :config
   (defun my/go-ts-mode-build ()

@@ -16,7 +16,7 @@
 ;;; Code:
 
 (use-package emacs-solo-clipboard
-  :straight nil
+  :ensure nil
   :no-require t
   :defer t
   :init

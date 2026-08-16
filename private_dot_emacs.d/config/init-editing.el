@@ -46,7 +46,7 @@
    ("C-<" . mc/mark-previous-like-this)))
 
 (use-package ws-butler
-  :straight (ws-butler :type git :host github :repo "lewang/ws-butler" :branch "master")
+  :ensure (:host github :repo "lewang/ws-butler" :branch "master")
   :hook (prog-mode . ws-butler-mode)
   :config
   (setopt ws-butler-keep-whitespace-before-point t))
@@ -56,12 +56,12 @@
 (use-package iedit)
 
 (use-package saveplace
-  :straight (:type built-in)
-  :hook (after-init . save-place-mode))
+  :ensure nil
+  :config (save-place-mode 1))
 
 (use-package editorconfig
-  :straight (:type built-in)
-  :hook (after-init . editorconfig-mode))
+  :ensure nil
+  :config (editorconfig-mode 1))
 
 (use-package expreg
   :bind ("C-=" . expreg-expand))
@@ -84,7 +84,7 @@
 ;; See https://www.gnu.org/software/emacs/manual/html_node/emacs/Repeating.html
 ;; like C-x-left-left-left-right and etc
 (use-package repeat
-  :straight (:type built-in)
+  :ensure nil
   :custom
   (repeat-mode +1))
 
@@ -101,20 +101,21 @@
   (undo-outer-limit (* 128 1024 1024)))
 
 (use-package undo-fu-session
-  :hook (after-init . undo-fu-session-global-mode)
   :init
   (setopt undo-fu-session-directory (expand-file-name "undo-fu-session/" user-emacs-directory))
   (unless (file-directory-p undo-fu-session-directory)
     (make-directory undo-fu-session-directory))
 
-  (setopt undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
+  (setopt undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+  :config
+  (undo-fu-session-global-mode 1))
 
 (use-package vundo
   :bind ("C-x u" . vundo))
 
 (use-package winner
-  :straight (:type built-in)
-  :hook (after-init . winner-mode))
+  :ensure nil
+  :config (winner-mode 1))
 
 (provide 'init-editing)
 ;;; init-editing.el ends here.

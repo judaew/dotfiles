@@ -25,8 +25,8 @@
 ;; -------------------
 
 (use-package emacs
-  :straight nil
-  :hook (after-init . xterm-mouse-mode))
+  :ensure nil
+  :config (xterm-mouse-mode 1))
 
 (use-package exec-path-from-shell
   :config

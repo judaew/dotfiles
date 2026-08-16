@@ -34,7 +34,7 @@ Or passes other checks that determine whether eglot should run."
     (eglot-ensure)))
 
 (use-package eglot
-  :after cape which-key marginalia
+  :ensure nil
   :hook
   (((bash-ts-mode
      c-ts-mode
