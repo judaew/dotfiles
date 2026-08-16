@@ -5,7 +5,6 @@
 ;; Packages:
 ;; - `gptel'       ~ A simple, extensible LLM client
 ;; - `gptel-agent' ~ Agent mode for gptel
-;; - `eca'         ~ Editor Code Assistant
 
 ;; TODO:
 ;; - ob-gptel https://github.com/jwiegley/ob-gptel
@@ -51,7 +50,7 @@
   :bind
   ("C-c g a" . gptel-agent)
   :config
-  (setq gptel-agent-dirs '("/home/judaew/wrk/llm/agents/"))
+  ;; (setq gptel-agent-dirs '("/home/judaew/wrk/llm/agents/"))
   (gptel-agent-update))
 
 (provide 'init-ai)
