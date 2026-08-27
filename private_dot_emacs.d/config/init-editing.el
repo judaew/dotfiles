@@ -7,7 +7,6 @@
 ;; === Editing ===
 ;; - `smart-hungry-delete' ; smart hungry delete
 ;; - `multiple-cursors'    ; multiple cursors
-;; - `ws-butler'           ; trim whitespace on save
 ;; - `iedit'               ; edit multiple regions
 ;; - `saveplace'           ; remember cursor position
 ;; - `editorconfig'        ; .editorconfig support
@@ -34,6 +33,9 @@
 ;; From Emacs-31 onwards this wont be necessary, as C-x x @ will call
 ;; `tramp-revert-buffer-with-sudo'
 
+;; Trim whitespace on save
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
+
 (use-package smart-hungry-delete
   :bind (([remap backward-delete-char-untabify] . smart-hungry-delete-backward-char)
          ([remap delete-backward-char] . smart-hungry-delete-backward-char)
@@ -44,12 +46,6 @@
   :bind
   (("C->" . mc/mark-next-like-this)
    ("C-<" . mc/mark-previous-like-this)))
-
-(use-package ws-butler
-  :ensure (:host github :repo "lewang/ws-butler" :branch "master")
-  :hook (prog-mode . ws-butler-mode)
-  :config
-  (setopt ws-butler-keep-whitespace-before-point t))
 
 ;; By default binds:
 ;; - C-; -- iedit-mode
@@ -85,8 +81,7 @@
 ;; like C-x-left-left-left-right and etc
 (use-package repeat
   :ensure nil
-  :custom
-  (repeat-mode +1))
+  :init (repeat-mode 1))
 
 ;; === Undo & redo support ===
 ;; ---------------------------
