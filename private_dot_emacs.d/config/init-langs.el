@@ -34,17 +34,17 @@
 
 (use-package apheleia
   :config
-  (apheleia-global-mode 1)
+  (apheleia-global-mode +1)
   (setf (alist-get 'go-ts-mode apheleia-mode-alist)
         '(goimports)))
 
-(use-package package-lint)
+(use-package package-lint
+  :defer t)
 
 ;; === Tags ===
 ;; ------------
 
 (use-package citre
-  :defer t
   :bind (("C-c c j" . citre-jump)
          ("C-c c J" . citre-jump-back)
          ("C-c c p" . citre-peek)
@@ -69,7 +69,7 @@
 ;; - C-c C-d     -- easy insetion of dbg!
 (use-package rust-mode
   :init
-  (setq rust-mode-treesitter-derive t)
+  (setopt rust-mode-treesitter-derive t)
   :custom
   (rust-format-on-save t))
 
@@ -129,21 +129,18 @@
 (use-package nix-ts-mode
   :mode "\\.nix\\'")
 
+(use-package portfile-ts-mode
+  :ensure nil
+  :if (file-directory-p "~/wrk/github.com/judaew/tree-sitter-portfile/")
+  :load-path "~/wrk/github.com/judaew/tree-sitter-portfile/extra/emacs/portfile-ts-mode/")
+
 ;; === Systemd ===
 ;; ---------------
 
 ;; Syntax highlighting for systemd files
-(add-to-list 'auto-mode-alist '("\\.service\\'" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.timer\\'" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.target\\'" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.mount\\'" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.automount\\'" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.slice\\'" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.socket\\'" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.path\\'" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.netdev\\'" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.network\\'" . conf-unix-mode))
-(add-to-list 'auto-mode-alist '("\\.link\\'" . conf-unix-mode))
+(dolist (ext '("service" "timer" "target" "mount" "automount"
+               "slice" "socket" "path" "netdev" "network" "link"))
+  (add-to-list 'auto-mode-alist (cons (format "\\.%s\\'" ext) 'conf-unix-mode)))
 
 (provide 'init-langs)
 ;;; init-langs.el ends here
