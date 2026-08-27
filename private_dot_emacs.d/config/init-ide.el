@@ -3,6 +3,10 @@
 ;;; Commentary:
 
 ;; Packages:
+
+;; === UI ===
+;; `breadcrump'        ; headerline indication of where you are in a large project
+
 ;; === LSP ===
 ;; - `eglot'           ; LSP client
 ;; - `consult-eglot'   ; Jump to workspace symbols with eglot and consult
@@ -17,9 +21,15 @@
 ;; === Syntax checking ===
 ;; - `flycheck'        ; on-the-fly syntax checking
 
-;; TODO: restclient.el
+;; TODO: beardbolt, restclient.el
 
 ;;; Code:
+
+;; === UI ===
+;; ----------
+
+(use-package breadcrumb
+  :hook (prog-mode . breadcrumb-mode))
 
 ;; === LSP ===
 ;; -----------
@@ -94,12 +104,10 @@ Or passes other checks that determine whether eglot should run."
                '(eglot-code-actions . eglot)))
 
 (use-package consult-eglot
-  :bind ("M-g l" . consult-eglot-symbols)
-  :config
-  (with-eval-after-load 'embark
-    (with-eval-after-load 'consult-eglot
-      (require 'consult-eglot-embark)
-      (consult-eglot-embark-mode))))
+  :bind ("M-g l" . consult-eglot-symbols))
+
+(use-package consult-eglot-embark
+  :config (consult-eglot-embark-mode 1))
 
 ;; === Tree-sitter ===
 ;; -------------------
@@ -135,14 +143,7 @@ Or passes other checks that determine whether eglot should run."
   :config
   (global-flycheck-mode 1)
   ;; Report Eglot's LSP diagnostics through Flycheck
-  (global-flycheck-eglot-mode 1)
-  ;; Report Eglot's LSP diagnostics through Flycheck
-  (global-flycheck-eglot-mode 1)
-
-  ;; Trust your own config files for Elisp flymake checks
-  (setopt elisp-flymake-byte-compile-load-path load-path)
-  ;; Ensure elisp flymake knows where to find libraries
-  (setopt trusted-content '("~/.emacs.d/early-init.el" "~/.emacs.d/config/")))
+  (global-flycheck-eglot-mode 1))
 
 (provide 'init-ide)
 ;;; init-ide.el ends here
