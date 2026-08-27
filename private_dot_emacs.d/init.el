@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-(defvar elpaca-core-date '(20260724))
+(defvar elpaca-core-date '(20260811))
 
 ;;; Elpaca: An Elisp Package Manager
 
@@ -48,23 +48,19 @@
 (elpaca `(,@elpaca-order))
 
 ;; Packages
-(elpaca elpaca-use-package (elpaca-use-package-mode))
-(setopt use-package-always-ensure t)
+(elpaca elpaca-use-package
+  (elpaca-use-package-mode)
+  (setopt use-package-always-ensure t))
 
 ;;; General config
 
-;; Set fonts for fixed-pitch and variable-pitch
+;; Set fonts for fixed-pitch and variable-pitch (default already set in early-init)
 (let ((font-family-fixed "Iosevka Curly")
-      (font-family-pitch "Iosevka Aile")
-      (font-size (if (eq system-type 'darwin) 130 110)))
+      (font-family-pitch "Iosevka Aile"))
   (when (member font-family-fixed (font-family-list))
-    (set-face-attribute 'default nil
-                        :font font-family-fixed :height font-size)
-    (set-face-attribute 'fixed-pitch nil
-                        :font font-family-fixed))
+    (set-face-attribute 'fixed-pitch nil :font font-family-fixed))
   (when (member font-family-pitch (font-family-list))
-    (set-face-attribute 'variable-pitch nil
-                        :font font-family-pitch :height font-size)))
+    (set-face-attribute 'variable-pitch nil :font font-family-pitch)))
 
 ;; don't  compact font caches during GC
 (setopt inhibit-compacting-font-caches t)
@@ -84,7 +80,6 @@
           backup-by-copying t
           version-control t
           delete-old-versions t
-          kept-old-versions 2
           kept-old-versions 5)
 
   (setopt auto-save-default t)
@@ -98,19 +93,20 @@
 (setopt project-mode-line t)
 
 ;; Enable line numbers
-(global-display-line-numbers-mode t)
+(setopt global-display-line-numbers-mode t)
 
 ;; Add line and column to modeline
-(line-number-mode)
-(column-number-mode)
+(setopt line-number-mode t)
+(setopt column-number-mode t)
 
 ;; Enable smart parens
-(electric-pair-mode t)
+(setopt electric-pair-mode t)
 
 ;; Don't use /anywhere/ tabs
 (setq-default indent-tabs-mode nil)
 
-(add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
+;; Disable line truncation
+(setopt truncate-lines t)
 
 ;; Tab-bar
 (setopt tab-bar-show 1) ;; auto-hide
@@ -124,8 +120,8 @@
 (setopt epg-pinentry-mode 'loopback)
 (setopt epa-pinentry-mode 'loopback)
 
-;; Eldoc-based help-at-point
-(setopt eldoc-show-help-at-pt t)
+;; Eldoc at point
+(setopt eldoc-help-at-pt t)
 
 ;; Smart kill-region behavior; very useful for C-w without active region
 (setopt kill-region-dwim 'emacs-word)
@@ -136,20 +132,8 @@
 ;; Useful for tabs (like in Golang)
 (setopt x-stretch-cursor t)
 
-;; Eldoc at point
-(setopt eldoc-help-at-pt t)
-
 ;; KB/MB instead of raw byte counts
 (setopt ibuffer-human-readable-size t)
-
-;; Stop native-comp jobs on battery
-;; (setopt native-comp-async-on-battery-power t)
-
-;; (use-package server
-;;   :ensure nil
-;;   :config
-;;   (unless (server-running-p)
-;;     (server-start)))
 
 ;; Load modular configuration files
 (add-to-list 'load-path (expand-file-name "config" user-emacs-directory))
@@ -159,7 +143,6 @@
 (require 'init-projects)
 (require 'init-ide)
 (require 'init-vc)
-(require 'init-vc-gh)
 (require 'init-org)
 (require 'init-ui)
 (require 'init-ui-mode-line)
@@ -177,5 +160,8 @@
 
 ;; Make Flymake see packages from current load-path
 (setopt elisp-flymake-byte-compile-load-path load-path)
+;; Ensure elisp flymake knows where to find libraries
+(dolist (path '("~/.emacs.d/early-init.el" "~/.emacs.d/config/"))
+  (cl-pushnew path trusted-content :test #'string=))
 
 ;;; init.el ends here
