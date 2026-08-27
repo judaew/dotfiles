@@ -91,9 +91,15 @@
       #'cape-keyword
       #'cape-elisp-block)))
 
+  (defun my/setup-capf-portfile ()
+    (my/setup-capf
+     (cape-capf-super
+      #'portfile-ts-mode-completion-at-point)))
+
   :hook
   ((prog-mode . my/setup-capf-common-prog)
    (emacs-lisp-mode . my/setup-capf-elisp)
+   (portfile-ts-mode . my/setup-capf-portfile)
    (text-mode . my/setup-capf-common-text)
    (org-mode . my/setup-capf-org)))
 
@@ -115,10 +121,11 @@
   ;; like "test2.go" even if "test.go" exists.
   ;; See https://www.reddit.com/r/emacs/comments/109ryp7/comment/j4excag
   (dolist (cat '(file project-file))
-    (setf vertico-prescient-completion-category-overrides
+    (setq vertico-prescient-completion-category-overrides
           (assoc-delete-all cat vertico-prescient-completion-category-overrides))))
 
 (use-package tempel
+  :demand t
   :bind
   (("M-+" . tempel-complete)
    (:map tempel-map
@@ -150,46 +157,7 @@
 (use-package kind-icon
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
-  (plist-put kind-icon-default-style :height 0.8)
-
-  ;; Using VS Code icons
-  (setopt kind-icon-mapping
-          '((array          "a"   :icon "symbol-array"       :face font-lock-type-face              :collection "vscode")
-            (boolean        "b"   :icon "symbol-boolean"     :face font-lock-builtin-face           :collection "vscode")
-            (color          "#"   :icon "symbol-color"       :face success                          :collection "vscode")
-            (command        "cm"  :icon "chevron-right"      :face default                          :collection "vscode")
-            (constant       "co"  :icon "symbol-constant"    :face font-lock-constant-face          :collection "vscode")
-            (class          "c"   :icon "symbol-class"       :face font-lock-type-face              :collection "vscode")
-            (constructor    "cn"  :icon "symbol-method"      :face font-lock-function-name-face     :collection "vscode")
-            (enum           "e"   :icon "symbol-enum"        :face font-lock-builtin-face           :collection "vscode")
-            (enummember     "em"  :icon "symbol-enum-member" :face font-lock-builtin-face           :collection "vscode")
-            (enum-member    "em"  :icon "symbol-enum-member" :face font-lock-builtin-face           :collection "vscode")
-            (event          "ev"  :icon "symbol-event"       :face font-lock-warning-face           :collection "vscode")
-            (field          "fd"  :icon "symbol-field"       :face font-lock-variable-name-face     :collection "vscode")
-            (file           "f"   :icon "symbol-file"        :face font-lock-string-face            :collection "vscode")
-            (folder         "d"   :icon "folder"             :face font-lock-doc-face               :collection "vscode")
-            (function       "f"   :icon "symbol-method"      :face font-lock-function-name-face     :collection "vscode")
-            (interface      "if"  :icon "symbol-interface"   :face font-lock-type-face              :collection "vscode")
-            (keyword        "kw"  :icon "symbol-keyword"     :face font-lock-keyword-face           :collection "vscode")
-            (macro          "mc"  :icon "lambda"             :face font-lock-keyword-face)
-            (magic          "ma"  :icon "lightbulb-autofix"  :face font-lock-builtin-face           :collection "vscode")
-            (method         "m"   :icon "symbol-method"      :face font-lock-function-name-face     :collection "vscode")
-            (module         "{"   :icon "file-code-outline"  :face font-lock-preprocessor-face)
-            (numeric        "nu"  :icon "symbol-numeric"     :face font-lock-builtin-face           :collection "vscode")
-            (operator       "op"  :icon "symbol-operator"    :face font-lock-comment-delimiter-face :collection "vscode")
-            (param          "pa"  :icon "gear"               :face default                          :collection "vscode")
-            (property       "pr"  :icon "symbol-property"    :face font-lock-variable-name-face     :collection "vscode")
-            (reference      "rf"  :icon "library"            :face font-lock-variable-name-face     :collection "vscode")
-            (snippet        "S"   :icon "symbol-snippet"     :face font-lock-string-face            :collection "vscode")
-            (string         "s"   :icon "symbol-string"      :face font-lock-string-face            :collection "vscode")
-            (struct         "%"   :icon "symbol-structure"   :face font-lock-variable-name-face     :collection "vscode")
-            (text           "tx"  :icon "symbol-key"         :face font-lock-doc-face               :collection "vscode")
-            (typeparameter  "tp"  :icon "symbol-parameter"   :face font-lock-type-face              :collection "vscode")
-            (type-parameter "tp"  :icon "symbol-parameter"   :face font-lock-type-face              :collection "vscode")
-            (unit           "u"   :icon "symbol-ruler"       :face font-lock-constant-face          :collection "vscode")
-            (value          "v"   :icon "symbol-enum"        :face font-lock-builtin-face           :collection "vscode")
-            (variable       "va"  :icon "symbol-variable"    :face font-lock-variable-name-face     :collection "vscode")
-            (t              "."   :icon "question"           :face font-lock-warning-face           :collection "vscode"))))
+  (plist-put kind-icon-default-style :height 0.8))
 
 ;; === Minibuffer ===
 ;; ------------------
@@ -275,7 +243,8 @@
   ;; in consult-buffer and etc.
   (setopt consult-narrow-key "<"))
 
-(use-package consult-flycheck)
+(use-package consult-flycheck
+  :bind ("M-s f" . consult-flycheck))
 
 (use-package marginalia
   :init (marginalia-mode 1))
@@ -325,7 +294,7 @@
 
 (use-package savehist
   :ensure nil
-  :config (savehist-mode 1))
+  :init (savehist-mode 1))
 
 (use-package char-fold
   :ensure nil
