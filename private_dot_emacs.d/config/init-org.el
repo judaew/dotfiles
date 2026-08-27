@@ -20,6 +20,7 @@
 ;; - `org-appear'   ; reveal Org elements contextually
 ;; - `htmlize'      ; convert buffer to HTML
 
+;; TODO: setup org-babel
 ;; TODO: org-journal, org-roam, ob-mermaid
 
 ;;; Code:
@@ -44,14 +45,14 @@
 
   ;; Set paths
   (org-directory (expand-file-name "~/org/"))
-  (org-agenda-files '("~/org/inbox.org"
-                      "~/org/agenda.org"
-                      "~/org/projects.org"))
+  (org-agenda-files (list (expand-file-name "inbox.org" org-directory)
+                          (expand-file-name "agenda.org" org-directory)
+                          (expand-file-name "projects.org" org-directory)))
 
   ;; refile
   (org-refile-targets
-   '((org-agenda-files :maxlevel . 2)
-     ("~/org/someday.org" :maxlevel . 1)))
+   `((org-agenda-files :maxlevel . 2)
+     (,(expand-file-name "someday.org" org-directory) :maxlevel . 1)))
   (org-refile-use-outline-path 'file)
   (org-outline-path-complete-in-steps nil)
   (org-refile-allow-creating-parent-nodes 'confirm)
@@ -60,9 +61,9 @@
   ;; - https://orgmode.org/manual/Capture-templates.html
   ;; - https://howardism.org/Technical/Emacs/capturing-intro.html
   (org-capture-templates
-   '(("t" "Task" entry (file "~/org/inbox.org")
+   '(("t" "Task" entry (file ,(expand-file-name "inbox.org" org-directory))
       "* TODO %?\n%U" :empty-lines 1)
-     ("n" "Note" entry (file "~/org/inbox.org")
+     ("n" "Note" entry (file ,(expand-file-name "inbox.org" org-directory))
       "* %?\n%U" :empty-lines 1)))
 
   ;; Images & source block
@@ -75,7 +76,6 @@
   ;;
   ;; ~~~ Styles & UI ~~~
   ;; ~~~~~~~~~~~~~~~~~~~
-  :custom
   ;; setup keywords and their colors
   (org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELED(c)")))
@@ -117,7 +117,9 @@
   :custom (valign-lighter t))
 
 (use-package org-download
-  :hook (dired-mode . org-download-enable))
+  :hook
+  ;; Drag-and-Drop to Dired
+  (dired-mode . org-download-enable))
 
 (use-package org-appear
   :hook (org-mode . org-appear-mode)
