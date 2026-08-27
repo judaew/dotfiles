@@ -1,4 +1,4 @@
-;;; package --- Summary -*- lexical-binding: t; -*-
+;;; early-init.el --- Early Init Configuration -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
