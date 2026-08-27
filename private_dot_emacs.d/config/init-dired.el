@@ -10,7 +10,6 @@
 ;; === Enhancements ===
 ;; - `dired-filter'     ; filter stack
 ;; - `dired-open'       ; open with external apps
-;; - `dired-subtree'    ; show subdirectories by <TAB>
 ;; - `dired-collapse'   ; show single file or directory in directories
 ;; - `dired-sidebar'    ; a sidebar for Dired
 ;; - `ibuffer-sidebar'  ; a sidebar for IBuffer
@@ -29,7 +28,7 @@
   :hook (dired-mode . dired-hide-details-mode) ;; hide details by default
   :custom
   (dired-dwim-target t) ;; guess target directory for copy/move
-  (dired-listing-switches "--almost-all --human-readable --format=long --group-directories-first --no-group")
+  (dired-listing-switches "-alhoGF")
   (dired-recursive-copies 'always)
   (dired-recursive-deletes 'top)
   (dired-kill-when-opening-new-dired-buffer t) ;; reuse buffer
@@ -52,10 +51,6 @@
 ;; for macOS see dired-launch
 (use-package dired-open
   :bind ("S-<return>" . dired-open-xdg))
-
-(use-package dired-subtree
-  :bind (:map dired-mode-map
-              ("TAB" . dired-subtree-toggle)))
 
 (use-package dired-collapse
   :hook (dired-mode . dired-collapse-mode)
