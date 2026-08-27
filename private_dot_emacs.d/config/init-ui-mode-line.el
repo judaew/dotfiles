@@ -15,7 +15,8 @@
 ;;
 (defun modeline/file-or-mode-icon ()
   "Return a nerd-icons icon for the current file or major mode."
-  (when (featurep 'nerd-icons)
+  (when (fboundp 'nerd-icons-icon-for-file)
+    (require 'nerd-icons nil t)
     (let* ((file (buffer-file-name))
            (icon (if file (nerd-icons-icon-for-file file)
                    (nerd-icons-icon-for-mode major-mode))))
@@ -42,9 +43,8 @@
                                  (and (>= (point) (overlay-start ov))
                                       (< (point) (overlay-end ov))))
                                overlays))
-           (normal-index (if cur-ov (cl-position cur-ov overlays) -1))
-           ;; reverse order for normalize (first is first, last is last)
-           (reverse-index (if (>= normal-index 0)
+           (normal-index (when cur-ov (cl-position cur-ov overlays)))
+           (reverse-index (if (and normal-index (>= normal-index 0))
                               (- total normal-index)
                             "-")))
       (propertize (format "[%s/%d]" reverse-index total)
@@ -122,23 +122,12 @@ Replacing `Git-' with a branch symbol."
       vc)))
 
 ;;
-;; Shorten Flymake, Flycheck and Jinx string
+;; Shorten Flycheck string
 ;; -------------------------------
 ;;
-;; e.g.: Flymake[0 4 1] -> f[0 4 1]
-(with-eval-after-load 'flymake
-  (setq flymake-mode-line-lighter " f"))
-
 ;; e.g.: FlyC:0 -> f:0
 (with-eval-after-load 'flycheck
   (setq flycheck-mode-line-prefix "f"))
-
-;; e.g.: Jinx[en uk] -> s[en ua]
-(with-eval-after-load 'jinx
-  (let ((entry (assoc 'jinx-mode minor-mode-alist)))
-    (when entry
-      (setcdr entry '((:eval (when jinx-mode
-                               (format " s[%s]" jinx-languages))))))))
 
 ;;
 ;; Align
@@ -191,13 +180,11 @@ Replacing `Git-' with a branch symbol."
    (:eval (modeline/right-align))
    modeline/right)
  project-mode-line t
- mode-line-buffer-identification '(" %b")
  mode-line-position-column-line-format '("%l:%c")
  mode-line-percent-position '(""))
 
-(setq mode-line-modes-delimiters '("" . ""))  ;; EMACS-31
+(setq mode-line-modes-delimiters '("" . ""))
 
-;; EMACS-31
 (setq mode-line-collapse-minor-modes
       '(abbrev-mode
         apheleia-mode
