@@ -20,77 +20,62 @@
 
 ;;; Code:
 
-(use-package emacs
-  :ensure nil
-  :config (pixel-scroll-precision-mode 1)
-  :custom (pixel-scroll-precision-interpolation-factor 1.0))
+(setopt pixel-scroll-precision-mode t)
+(setopt pixel-scroll-precision-interpolation-factor 1.0)
 
 ;; === Icons ===
 ;; -------------
 
 ;; The `window-system' and `display-graphic-p' are bad checks for
 ;; Emacs with multiples frames or in `daemonp' mode.
-(use-package nerd-icons
-  :defer t)
+(use-package nerd-icons)
 
 ;; === Visual enhancements ===
 ;; ---------------------------
 
 (use-package hl-todo
-  :config (global-hl-todo-mode))
+  :config (global-hl-todo-mode 1))
 
 (use-package ligature
   :config
   (global-ligature-mode 1)
-  (defvar ligatures-Iosevka
-    '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->"
-      "<---->" "<!--" "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">="
-      "<=>" "<==>" "<===>" "<====>" "<!---" "<~~" "<~" "~>" "~~>" "::"
-      ":::" "==" "!=" "===" "!==" ":=" ":-" ":+" "<*" "<*>" "*>" "<|"
-      "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++"))
-  (ligature-set-ligatures 'prog-mode ligatures-Iosevka))
+  (ligature-set-ligatures ;; Iosevka
+   'prog-mode
+   '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->"
+     "<---->" "<!--" "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">="
+     "<=>" "<==>" "<===>" "<====>" "<!---" "<~~" "<~" "~>" "~~>" "::"
+     ":::" "==" "!=" "===" "!==" ":=" ":-" ":+" "<*" "<*>" "*>" "<|"
+     "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++")))
 
 (use-package goggles
   :hook ((prog-mode text-mode) . goggles-mode)
-  :config
-  (setq-default goggles-pulse t))
+  :custom (goggles-pulse t))
 
 (use-package indent-bars
-  :hook ((bash-ts-mode
-          c-ts-mode
-          c++-ts-mode
-          csharp-ts-mode
-          css-ts-mode
-          go-ts-mode
-          java-ts-mode
-          javascript-ts-mode
-          lua-ts-mode
-          rust-ts-mode
-          python-ts-mode
-          ruby-ts-mode
-          tsx-ts-mode
-          typescript-ts-mode
-          yaml-ts-mode) . indent-bars-mode)
+  :hook
+  ((prog-mode . indent-bars-mode)
+   (emacs-lisp-mode . (lambda () (indent-bars-mode -1))))
   :custom
   (indent-bars-no-descend-lists t) ; no extra bars in continued func arg lists
   (indent-bars-treesit-support t))
 
 (use-package colorful-mode
-  :defer t
   :hook (css-ts-mode
          html-ts-mode
          json-ts-mode
          yaml-ts-mode))
 
-(use-package posframe)
+(use-package posframe
+  :defer t)
 
 ;; === Themes ===
 ;; --------------
 
 (use-package ronny-theme
-  :ensure (:repo "~/wrk/github.com/judaew/ronny.el/")
-  :config
-  (load-theme 'ronny t))
+  :ensure nil
+  :if (file-directory-p "~/wrk/github.com/judaew/ronny.el/")
+  :load-path "~/wrk/github.com/judaew/ronny.el/"
+  :config (load-theme 'ronny t))
 
 (provide 'init-ui)
 ;;; init-ui.el ends here
