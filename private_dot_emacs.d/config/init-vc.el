@@ -24,9 +24,7 @@
 (use-package git-timemachine
   :commands (git-timemachine))
 
-(use-package forge
-  :custom
-  (forge-add-default-bindings t))
+(use-package forge)
 
 (use-package diff-hl
   :hook
