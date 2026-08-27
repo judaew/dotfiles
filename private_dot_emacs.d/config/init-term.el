@@ -7,7 +7,6 @@
 ;; === Environment ===
 ;; - `exec-path-from-shell' ; sync shell environment with Emacs
 ;; - `envrc'                ; direnv integration
-;; - `with-editor'          ; use the emacsclient as the $EDITOR of child processes
 
 ;; === Terminal ===
 ;; - `mouse'                ; mouse support in terminal
@@ -24,9 +23,7 @@
 ;; === Environment ===
 ;; -------------------
 
-(use-package emacs
-  :ensure nil
-  :config (xterm-mouse-mode 1))
+(setopt xterm-mouse-mode t)
 
 (use-package exec-path-from-shell
   :config
@@ -41,6 +38,7 @@
 ;; === Terminal ===
 ;; ----------------
 
+(add-to-list 'elpaca-ignored-dependencies 'compat)
 (add-to-list 'elpaca-ignored-dependencies 'ghostel)
 
 (use-package ghostel
