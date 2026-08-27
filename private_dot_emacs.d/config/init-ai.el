@@ -27,7 +27,6 @@
   (setopt gptel-track-media t)
 
   (gptel-make-deepseek "DeepSeek"
-    :stream t
     :key gptel-api-key
     :models '((deepseek-chat
                :capabilities (tool)
@@ -48,10 +47,7 @@
 
 (use-package gptel-agent
   :bind
-  ("C-c g a" . gptel-agent)
-  :config
-  ;; (setq gptel-agent-dirs '("/home/judaew/wrk/llm/agents/"))
-  (gptel-agent-update))
+  ("C-c g A" . gptel-agent))
 
 (provide 'init-ai)
 ;;; init-ai.el ends here
