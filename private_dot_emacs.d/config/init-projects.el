@@ -19,38 +19,12 @@
             (consult-ripgrep "Find via ripgrep" ?R)
             (project-dired "Dired" ?d)
             (magit-project-status "Magit" ?m)
-            (project-shell "Shell" ?s)))
-
-  ;; See https://mocompute.codeberg.page/item/2024/2024-09-03-emacs-project-vterm.html
-  (defun my/project-shell ()
-    "Start an inferior shell in the current project's root directory.
-If a buffer already exists for running a shell in the project's root,
-switch to it.  Otherwise, create a new shell buffer.
-With \\[universal-argument] prefix arg, create a new inferior shell buffer even
-if one already exists."
-    (interactive)
-    (require 'comint)
-    (require 'vterm)
-    (let* ((default-directory (project-root (project-current t)))
-           (default-project-shell-name (project-prefixed-buffer-name "shell"))
-           (shell-buffer (get-buffer default-project-shell-name)))
-      (if (and shell-buffer (not current-prefix-arg))
-          (if (comint-check-proc shell-buffer)
-              (pop-to-buffer shell-buffer (bound-and-true-p display-comint-buffer-action))
-            (vterm shell-buffer))
-        (vterm (generate-new-buffer-name default-project-shell-name)))))
-
-  (advice-add 'project-shell :override #'my/project-shell))
-
-(use-package consult-project-extra
-  :bind
-  (("C-x p f" . consult-project-extra-find)
-   ("C-x p o" . consult-project-extra-find-other-window)))
+            (ghostel-project "Shell (ghostel)" ?s))))
 
 (use-package midnight
   :ensure nil
   :config (midnight-mode 1)
-  :custom (midnight-period (* 3 24 60 60))) ;; 3 days
+  :custom (midnight-period (* 24 60 60))) ;; 1 days
 
 ;; Compile extensions
 
@@ -67,6 +41,7 @@ if one already exists."
 
 (use-package go-ts-mode
   :ensure nil
+  :after transient
   :bind (:map go-ts-mode-map ("C-x c" . my/go-ts-mode-compile-transient))
   :config
   (defun my/go-ts-mode-build ()
