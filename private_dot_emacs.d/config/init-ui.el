@@ -4,8 +4,12 @@
 
 ;; Packages:
 
+;; === Interface ===
+;; `custom-css'            ; style Emacs's GTK widgets with custom CSS
+;; `ondemand-scroll-bar'   ; show scroll bars on demand in Emacs
+
 ;; === Icons ===
-;; `nerd-icons'        ; alternative icon set
+;; `nerd-icons'            ; alternative icon set
 
 ;; === Visual enhancements ===
 ;; `hl-todo'               ; highlight TODO keywords
@@ -37,6 +41,16 @@
 
 ;; === Visual enhancements ===
 ;; ---------------------------
+
+(use-package custom-css
+  :ensure nil ;; nix
+  :config
+  (setopt custom-css-scroll-bar-mode t))
+
+(use-package on-demand-scroll-bar
+  :ensure (:host github :repo "florommel/on-demand-scroll-bar")
+  :config
+  (setopt on-demand-scroll-bar-mode t))
 
 (use-package hl-todo
   :config (global-hl-todo-mode 1))
