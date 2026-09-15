@@ -4,22 +4,23 @@
 
 ;; Packages:
 
-;; - `google-translate' ; interface to Google Translate
+;; - `gt.el'           ; translator
 
 ;; === Spell checking ===
 ;; - `jinx'            ; on-the-fly spell checking
 
 ;;; Code:
 
-(use-package google-translate
-  :after posframe
+(use-package gt
   :bind
-  (("C-c t" . google-translate-at-point)
-   ("C-c T" . google-translate-query-translate))
-  :custom
-  (google-translate-default-target-language "uk")
-  (google-translate-default-source-language "en")
-  (google-translate-output-destination 'posframe))
+  (("C-c t" . gt-translate)
+   ("C-c T" . gt-setup))
+  :config
+  (setq gt-default-translator
+        (gt-translator
+         :taker (gt-taker :prompt t :langs '(en uk))
+         :engines (gt-google-engine)
+         :render (gt-kill-ring-render :then (gt-render)))))
 
 ;; === Spell checking ===
 ;; ----------------------
