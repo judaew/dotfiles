@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-(defvar elpaca-core-date '(20260811))
+(defvar elpaca-core-date '(20260824))
 
 ;;; Elpaca: An Elisp Package Manager
 
@@ -88,9 +88,6 @@
 
 ;; Shortened yes-or-no-p to y-or-n-p
 (setopt use-short-answers t)
-
-;; Show current project on the default mode-line
-(setopt project-mode-line t)
 
 ;; Enable line numbers
 (setopt global-display-line-numbers-mode t)
