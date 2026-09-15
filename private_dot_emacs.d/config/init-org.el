@@ -15,6 +15,7 @@
 
 ;; Packages:
 ;; - `org'          ; organize notes, tasks, and documents
+;; - `org-timegrid' ; an SVG week calendar
 ;; - `valign'       ; Pixel-perfect visual alignment for Org and Markdown tables
 ;; - `org-download' ; drag-and-drop images into Org
 ;; - `org-appear'   ; reveal Org elements contextually
@@ -22,6 +23,7 @@
 
 ;; TODO: setup org-babel
 ;; TODO: org-journal, org-roam, ob-mermaid
+;; TODO: org-outlook
 
 ;;; Code:
 
@@ -111,6 +113,17 @@
 
   (set-face-attribute 'org-table nil           :inherit 'fixed-pitch)
   (set-face-attribute 'org-table-header nil    :inherit 'fixed-pitch :weight 'bold))
+
+(use-package org-timegrid
+  :ensure (:host github :repo "Gleek/org-timegrid")
+  :commands (org-timegrid-week))
+
+(use-package org-timegrid-agenda
+  :ensure nil
+  :after org-agenda
+  :demand t
+  :config
+  (org-timegrid-agenda-mode 1))
 
 (use-package valign
   :hook (org-mode . valign-mode)
