@@ -114,15 +114,7 @@
 
 (use-package vertico-prescient
   :config
-  (vertico-prescient-mode 1)
-
-  ;; Disable prescient sorting for file completions (e.g. C-x C-f)
-  ;; to preserve natural filesystem order and allow creating new files
-  ;; like "test2.go" even if "test.go" exists.
-  ;; See https://www.reddit.com/r/emacs/comments/109ryp7/comment/j4excag
-  (dolist (cat '(file project-file))
-    (setq vertico-prescient-completion-category-overrides
-          (assoc-delete-all cat vertico-prescient-completion-category-overrides))))
+  (vertico-prescient-mode 1))
 
 (use-package tempel
   :demand t
