@@ -15,6 +15,11 @@
 ;; `colorful-mode'         ; add color to buffers
 ;; `posframe'              ; pop a posframe at point
 
+;; === Folding ===
+;; ---------------
+;; `hs-minor-mode'         ; minor mode to selectively hide/show code and comment
+;; `kirigami'              ; a unified method to fold and unfold text
+
 ;; === Themes ===
 ;; - `ronny'
 
@@ -67,6 +72,35 @@
 
 (use-package posframe
   :defer t)
+
+;; === Folding ===
+;; ---------------
+
+(add-hook 'prog-mode-hook #'hs-minor-mode)
+
+(use-package kirigami
+  :init
+  (kirigami-global-mode 1)
+  :custom
+  (kirigami-show-menu-bar t)
+  (kirigami-show-context-menu t)
+
+  (push
+   '((hs-minor-mode)
+     :open-all    hs-show-all
+     :close-all   hs-hide-all
+     :toggle      hs-toggle-hiding
+     :open        hs-show-block
+     :open-rec    nil
+     :close       hs-hide-block)
+   kirigami-fold-list)
+  :bind
+  (("C-c z o" . kirigami-open-fold)
+   ("C-c z O" . kirigami-open-fold-rec)
+   ("C-c z r" . kirigami-open-folds)
+   ("C-c z c" . kirigami-close-fold)
+   ("C-c z m" . kirigami-close-folds)
+   ("C-c z a" . kirigami-toggle-fold)))
 
 ;; === Themes ===
 ;; --------------

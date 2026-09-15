@@ -196,7 +196,9 @@ Replacing `Git-' with a branch symbol."
         flyspell-mode
         goggles-mode
         gptel-mode
+        hs-minor-mode
         jinx-mode
+        kirigami-mode
         org-indent-mode
         outline-minor-mode
         smooth-scroll-mode
