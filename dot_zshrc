@@ -172,8 +172,9 @@ alias du="du -h"
 alias grep="grep --color=auto"
 
 # NixOS
-alias dry-run="sudo nixos-rebuild dry-run --flake"
-alias switch="sudo nixos-rebuild switch --flake"
+alias n-dry-run="sudo nixos-rebuild dry-run --flake"
+alias n-build="sudo nixos-rebuild build --flake"
+alias n-switch="sudo nixos-rebuild switch --flake"
 
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
