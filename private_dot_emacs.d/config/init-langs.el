@@ -18,7 +18,7 @@
 ;; - `pyvenv'        ; manage Python virtual environment
 
 ;; === Language modes ===
-;; - `md-mode'       ; org-inspired Markdown editing
+;; - `markdown-ts-mode' ; enable built-in experimental markdown mode
 ;; - `ninja-mode'    ; major mode for Ninja build files
 ;; - `protobuf-mode' ; major mode for Protocol Buffers
 ;; - `nginx-mode'    ; major mode for Nginx config
@@ -109,9 +109,11 @@
 ;; === Language modes ===
 ;; ----------------------
 
-(use-package md-mode
-  :ensure (:host github :repo "yibie/md-mode")
-  :mode ("\\.md\\'" . md-mode))
+(use-package markdown-ts-mode
+  :ensure nil
+  :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
+  :config
+  (require 'markdown-ts-mode-x))
 
 (use-package ninja-mode
   :defer t)
@@ -128,6 +130,23 @@
 ;; Nix grammar: https://github.com/nix-community/tree-sitter-nix
 (use-package nix-ts-mode
   :mode "\\.nix\\'")
+
+(use-package yaml-mode
+  :commands (yaml-indent-line
+             yaml-electric-backspace
+             yaml-electric-bar-and-angle))
+
+(use-package yaml-ts-mode
+  :ensure nil ;; builtin
+  :bind
+  (:map yaml-ts-mode-map
+        ("DEL" . yaml-electric-backspace)
+        ("|" . yaml-electric-bar-and-angle)
+        (">" . yaml-electric-bar-and-angle))
+  :hook
+  (yaml-ts-mode . (lambda ()
+                    (setq-local indent-line-function #'yaml-indent-line
+                                electric-indent-inhibit t))))
 
 (use-package portfile-ts-mode
   :ensure nil

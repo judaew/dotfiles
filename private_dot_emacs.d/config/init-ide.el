@@ -101,7 +101,11 @@ Or passes other checks that determine whether eglot should run."
 
   ;; Integrate with `marginalia'
   (add-to-list 'marginalia-command-categories
-               '(eglot-code-actions . eglot)))
+               '(eglot-code-actions . eglot))
+
+  ;; Render via experimental markdown-ts
+  (require 'markdown-ts-mode-x)
+  (setopt eglot-documentation-renderer #'markdown-ts-view-mode))
 
 (use-package consult-eglot
   :bind ("M-g l" . consult-eglot-symbols))
