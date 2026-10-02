@@ -59,10 +59,5 @@
 	process = git-lfs filter-process
 	required = true
 
-# delta
-[delta]
-	navigate = true
-	light = false
-
 [ghq]
 	root = "~/wrk"
