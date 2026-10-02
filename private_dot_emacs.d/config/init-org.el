@@ -63,7 +63,7 @@
   ;; - https://orgmode.org/manual/Capture-templates.html
   ;; - https://howardism.org/Technical/Emacs/capturing-intro.html
   (org-capture-templates
-   '(("t" "Task" entry (file ,(expand-file-name "inbox.org" org-directory))
+   `(("t" "Task" entry (file ,(expand-file-name "inbox.org" org-directory))
       "* TODO %?\n%U" :empty-lines 1)
      ("n" "Note" entry (file ,(expand-file-name "inbox.org" org-directory))
       "* %?\n%U" :empty-lines 1)))
@@ -113,17 +113,6 @@
 
   (set-face-attribute 'org-table nil           :inherit 'fixed-pitch)
   (set-face-attribute 'org-table-header nil    :inherit 'fixed-pitch :weight 'bold))
-
-(use-package org-timegrid
-  :ensure (:host github :repo "Gleek/org-timegrid")
-  :commands (org-timegrid-week))
-
-(use-package org-timegrid-agenda
-  :ensure nil
-  :after org-agenda
-  :demand t
-  :config
-  (org-timegrid-agenda-mode 1))
 
 (use-package valign
   :hook (org-mode . valign-mode)
