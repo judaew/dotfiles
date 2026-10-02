@@ -271,7 +271,7 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-;; Icons for vartico + marginalia
+;; Icons for vertico + marginalia
 (use-package nerd-icons-completion
   :config
   (nerd-icons-completion-mode 1)
