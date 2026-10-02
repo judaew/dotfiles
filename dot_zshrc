@@ -159,8 +159,8 @@ precmd() {
 # --- Aliases ---
 #################
 
-export EDITOR="emacsclient --tty --alternate-editor=''"
-alias e="emacsclient --tty --alternate-editor=''"
+export EDITOR="emacsclient --tty --alternate-editor='zile'"
+alias e="emacsclient --tty --alternate-editor='zile'"
 
 alias ls="ls --color=auto"
 alias la="ls -a --group-directories-first"
