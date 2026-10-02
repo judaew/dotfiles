@@ -15,9 +15,7 @@
 ;; `hl-todo'               ; highlight TODO keywords
 ;; `ligature'              ; show typographical ligatures
 ;; `goggles'               ; show changes inline
-;; `indent-bars'           ; display indentation bars
 ;; `colorful-mode'         ; add color to buffers
-;; `posframe'              ; pop a posframe at point
 
 ;; === Folding ===
 ;; ---------------
@@ -70,22 +68,11 @@
   :hook ((prog-mode text-mode) . goggles-mode)
   :custom (goggles-pulse t))
 
-(use-package indent-bars
-  :hook
-  ((prog-mode . indent-bars-mode)
-   (emacs-lisp-mode . (lambda () (indent-bars-mode -1))))
-  :custom
-  (indent-bars-no-descend-lists t) ; no extra bars in continued func arg lists
-  (indent-bars-treesit-support t))
-
 (use-package colorful-mode
   :hook (css-ts-mode
          html-ts-mode
          json-ts-mode
          yaml-ts-mode))
-
-(use-package posframe
-  :defer t)
 
 ;; === Folding ===
 ;; ---------------
