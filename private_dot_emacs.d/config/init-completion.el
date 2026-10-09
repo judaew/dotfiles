@@ -94,7 +94,7 @@
   (defun my/setup-capf-portfile ()
     (my/setup-capf
      (cape-capf-super
-      #'portfile-ts-mode-completion-at-point)))
+      #'portfile-ts-completion-at-point)))
 
   :hook
   ((prog-mode . my/setup-capf-common-prog)

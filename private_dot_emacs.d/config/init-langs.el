@@ -18,11 +18,12 @@
 ;; - `pyvenv'        ; manage Python virtual environment
 
 ;; === Language modes ===
+;; - `json-par'      ; minor mode for structural editing of JSON
 ;; - `markdown-ts-mode' ; enable built-in experimental markdown mode
-;; - `ninja-mode'    ; major mode for Ninja build files
 ;; - `protobuf-mode' ; major mode for Protocol Buffers
 ;; - `nginx-mode'    ; major mode for Nginx config
 ;; - `nix-ts-mode'   ; major mode for Nix
+;; - `portfile-ts-mode' ; major mode for Portfile
 
 ;; === Systemd ===
 ;; Syntax highlighting for systemd files
@@ -109,14 +110,14 @@
 ;; === Language modes ===
 ;; ----------------------
 
+(use-package json-par
+  :hook (json-ts-mode . json-par-mode))
+
 (use-package markdown-ts-mode
   :ensure nil
   :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
   :config
   (require 'markdown-ts-mode-x))
-
-(use-package ninja-mode
-  :defer t)
 
 ;; Use emacsmirror version containing only the .el mode file (no protobuf src)
 (use-package protobuf-mode
@@ -149,9 +150,10 @@
                                 electric-indent-inhibit t))))
 
 (use-package portfile-ts-mode
-  :ensure nil
-  :if (file-directory-p "~/wrk/github.com/judaew/tree-sitter-portfile/")
-  :load-path "~/wrk/github.com/judaew/tree-sitter-portfile/extra/emacs/portfile-ts-mode/")
+  ;; :ensure (:host github :repo "judaew/portfile-ts-mode"
+  ;;               :files ("*.el" "portfile-language.json"))
+  ;; For local development:
+  :load-path "~/wrk/github.com/judaew/portfile-ts-mode/")
 
 ;; === Systemd ===
 ;; ---------------
