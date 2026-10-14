@@ -30,7 +30,7 @@
   :hook
   ((magit-post-refresh . diff-hl-magit-post-refresh)
    (dired-mode . diff-hl-dired-mode))
-  :config
+  :init
   (global-diff-hl-mode 1)
   (setopt diff-hl-side 'right)
   ;; highlighting changes on the fly
