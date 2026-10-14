@@ -107,9 +107,8 @@
 ;; --------------
 
 (use-package ronny-theme
-  :ensure nil
-  :if (file-directory-p "~/wrk/github.com/judaew/ronny.el/")
-  :load-path "~/wrk/github.com/judaew/ronny.el/"
+  ;; :ensure nil
+  ;; :load-path "~/wrk/github.com/judaew/ronny.el/"
   :config (load-theme 'ronny t))
 
 (provide 'init-ui)

@@ -163,8 +163,8 @@ Replacing `Git-' with a branch symbol."
   "Left part of the mode-line.")
 
 (defconst modeline/right
-  '((project-mode-line project-mode-line-format)
-    " "
+  '(;; (project-mode-line project-mode-line-format)
+    ;; " "
     (vc-mode (:eval (modeline/shorten-vc-mode vc-mode)))
     " "
     mode-line-modes
