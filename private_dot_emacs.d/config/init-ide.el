@@ -85,7 +85,7 @@ Or passes other checks that determine whether eglot should run."
 
   ;; Integrate with `which-key'
   (which-key-add-key-based-replacements
-    "C-c l" "eglot"
+    "C-c l"   "eglot"
     "C-c l r" "rename"
     "C-c l f" "format"
     "C-c l F" "format buffer"
