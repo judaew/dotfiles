@@ -102,7 +102,7 @@
   (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
 
   ;; Set some parts of Org document is always use fixed-pitch
-  (set-face-attribute 'org-block nil           :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-block nil           :inherit 'fixed-pitch)
   (set-face-attribute 'org-code nil            :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-indent nil          :inherit '(org-hide fixed-pitch))
   (set-face-attribute 'org-verbatim nil        :inherit '(shadow fixed-pitch))
