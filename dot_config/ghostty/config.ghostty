@@ -42,6 +42,9 @@ window-width  = 88
 
 grapheme-width-method = legacy
 
+# Set Ctrl-Backspace as ESC-DEL
+keybind = ctrl+backspace=text:\x1b\x7f
+
 # Fix non-Latin keymaps
 ## Terminal control characters
 keybind = ctrl+key_c=text:\x03
