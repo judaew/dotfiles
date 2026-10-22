@@ -36,6 +36,8 @@ if [[ "$is_darwin" == true ]]; then
         /opt/local/libexec/gnubin
         # Apple and etc
         /bin
+        /usr/bin
+        /usr/sbin
         /Library/Apple/usr/bin
         # Emacs
         /Applications/Emacs.app/Contents/MacOS/bin
