@@ -1,0 +1,70 @@
+# -*- mode: sh; sh-shell: zsh -*-
+
+typeset -g is_nixos=false
+typeset -g is_linux=false
+typeset -g is_darwin=false
+
+case "$OSTYPE" in
+    linux*)
+        is_linux=true
+        [[ -e /etc/NIXOS ]] && is_nixos=true
+        ;;
+    darwin*)
+        is_darwin=true
+        ;;
+esac
+
+# Locale
+export LANG="en_US.UTF-8"
+export LC_COLLATE="C"
+
+# -- XDG Base Directory ------------------------------------------------------
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
+
+# -- PATH --------------------------------------------------------------------
+
+typeset -U path
+
+if [[ "$is_darwin" == true ]]; then
+    path=(
+        # MacPorts and gnubin
+        /opt/local/bin
+        /opt/local/sbin
+        /opt/local/libexec/gnubin
+        # Apple and etc
+        /bin
+        /Library/Apple/usr/bin
+        # Emacs
+        /Applications/Emacs.app/Contents/MacOS/bin
+        "${path[@]}"
+    )
+
+    export CPATH="${CPATH:+${CPATH}:}/opt/local/include"
+fi
+
+# -- Development Environments ------------------------------------------------
+
+# Golang
+export GOPATH="${HOME}/.go"
+export GOBIN="${GOPATH}/bin"
+path+=("${GOBIN}")
+
+# Java (macOS, MacPorts)
+
+if [[ "$is_darwin" == true ]]; then
+    JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-25-macports.jdk/Contents/Home"
+    path+=("${JAVA_HOME}/bin")
+    export CPATH="${CPATH:+${CPATH}:}${JAVA_HOME}/include"
+    unset JAVA_HOME
+fi
+
+# Local PATH
+path+=("${HOME}/.local/bin")
+
+# -- Other Environments ------------------------------------------------------
+
+# Pass
+export PASSWORD_STORE_DIR="${XDG_DATA_HOME}/password-store"
