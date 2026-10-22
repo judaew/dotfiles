@@ -11,6 +11,7 @@ misc
 etc
 
 {{- if ne .chezmoi.os "darwin" }}
+.config/ghostty/darwin.ghostty
 .local/bin/port-livecheck.sh
 .local/bin/port-update.sh
 .local/bin/portlist.sh
@@ -19,5 +20,4 @@ etc
 {{- if ne .chezmoi.os "linux" }}
 .config/environment.d
 .config/systemd
-.config/user-dirs.dirs
 {{- end }}
