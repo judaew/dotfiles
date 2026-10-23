@@ -333,7 +333,7 @@ _my_load_zsh_plugin() {
     local base dir
 
     for base in \
-         "/usr/share/zsh/plugins" \
+        "/usr/share/zsh/plugins" \
         "/opt/local/share"; do
         [[ -d "${base}" ]] && dir="${base}/${name}"
         [[ -f "${dir}/${name}.zsh" ]] && { source "${dir}/${name}.zsh"; return 0; }
