@@ -100,6 +100,31 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-check
     [[ ${#diff_index:#} -ge 1 ]] && hook_com[misc]+="!${#diff_index:#}"
 }
 
+_shlvl() {
+    local lvl="${SHLVL:-1}" em=emacs out e
+    local -a ctx
+
+    [[ -n "${TMUX}" ]] && { (( lvl-- )); ctx+=( tmux ) }
+
+    if [[ -n "${INSIDE_EMACS}" ]]; then
+        (( lvl-- ))
+        for e (ghostel vterm eat) { [[ "${INSIDE_EMACS}" == *$e* ]] && { em=$e; break } }
+        ctx+=( "${em}" )
+    fi
+
+    if [[ -n "${LF_LEVEL}" ]]; then
+        local lfl=1
+        [[ "${LF_LEVEL}" == <-> ]] && lfl="${LF_LEVEL}"
+        (( lvl -= lfl ))
+        (( lfl > 1 )) && ctx+=( "lf(${lfl})" ) || ctx+=( lf )
+    fi
+
+    (( lvl < 1 )) && lvl=1
+    out="${(j:+:)ctx}"
+    (( lvl > 1 )) && out+="${out:++}${lvl}"
+    [[ -n "${out}" ]] && print -Pn "%F{8}${out}%f "
+}
+
 precmd() {
     # init vcs info
     vcs_info
@@ -118,16 +143,7 @@ precmd() {
         print -Pn "%F{242}${USER}@${HOST%%.*}%f "
     }
 
-    # shell-level indicator (ignore tmux/lf)
-    local lvl="${SHLVL}"
-    local desc=
-
-    [[ -n "${TMUX}" ]] && { desc="${desc}tmux+"; (( lvl-- )) }
-    [[ -n "${LF_LEVEL}" ]] && {
-        desc="${desc}lf(${LF_LEVEL})+"
-        (( lvl -= "${LF_LEVEL}" ))
-    }
-    [[ "${SHLVL}" -ne 1 ]] && print -Pn "%F{8}${desc}${lvl}%f "
+    _shlvl
 
     # print current directory
     print -Pn "%F{cyan}${dir_trim}%f "
