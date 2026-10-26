@@ -1,0 +1,9 @@
+[[mgr.append_keymap]]
+  on = "!"
+  run = 'shell "$SHELL" --block'
+  desc = "Open shell here"
+
+[[mgr.append_keymap]]
+  on = "e"
+  run = "open"
+  desc = "Open selected files"
