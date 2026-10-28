@@ -4,6 +4,7 @@
 
 ;; Packages:
 ;; - `magit'           ; Git porcelain inside Emacs
+;; - `pinentry'        ; GnuPG Pinentry server implementation
 ;; - `git-modes'       ; major modes for Git configuration files
 ;; - `git-timemachine' ; walk through git revisions of a file
 ;; - `forge'           ; integrate Git forges (like GitHub/GitLab)
@@ -15,6 +16,10 @@
   :bind
   (("C-x g" . magit-status)
    ("C-x M-g" . magit-dispatch)))
+
+(use-package pinentry
+  :defer nil
+  :config (pinentry-start))
 
 (use-package git-modes
   :config
