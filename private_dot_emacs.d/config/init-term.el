@@ -41,18 +41,17 @@
 (add-to-list 'elpaca-ignored-dependencies 'compat)
 (add-to-list 'elpaca-ignored-dependencies 'ghostel)
 
-(use-package ghostel
-  :ensure nil ;; nix
-  :bind
-  (("C-~" . ghostel)))
+(if is-nixos
+    (use-package ghostel :ensure nil :bind (("C-~" . ghostel)))
+  (use-package ghostel :bind (("C-~" . ghostel))))
 
 (use-package ghostel-compile
-  :if (not (eq system-type 'darwin))
+  :if is-nixos
   :ensure nil ;; nix
   :config (ghostel-compile-global-mode 1))
 
 (use-package ghostel-comint
-  :if (not (eq system-type 'darwin))
+  :if is-nixos
   :ensure nil ;; nix
   :config (ghostel-comint-global-mode 1))
 

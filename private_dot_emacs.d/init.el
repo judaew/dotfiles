@@ -132,6 +132,16 @@
 ;; KB/MB instead of raw byte counts
 (setopt ibuffer-human-readable-size t)
 
+(defconst is-linux
+  (eq system-type 'gnu/linux))
+
+(defconst is-darwin
+  (eq system-type 'darwin))
+
+(defconst is-nixos
+  (and (eq system-type 'gnu/linux)
+       (file-exists-p "/etc/NIXOS")))
+
 ;; Load modular configuration files
 (add-to-list 'load-path (expand-file-name "config" user-emacs-directory))
 
