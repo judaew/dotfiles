@@ -40,17 +40,17 @@
 ;; === Visual enhancements ===
 ;; ---------------------------
 
-(if is-nixos
-    (use-package custom-css :if is-linux :ensure nil
-      :config (setopt custom-css-scroll-bar-mode t))
-  (use-package custom-css :if is-linux
-    :config (setopt custom-css-scroll-bar-mode t)))
+;; custom-css available only with NixOS
+(when is-nixos
+  (use-package custom-css
+    :ensure nil
+    :config
+    (setopt custom-css-scroll-bar-mode t))
 
-(use-package on-demand-scroll-bar
-  :if is-linux
-  :ensure (:host github :repo "florommel/on-demand-scroll-bar")
-  :config
-  (setopt on-demand-scroll-bar-mode t))
+  (use-package on-demand-scroll-bar
+    :ensure (:host github :repo "florommel/on-demand-scroll-bar")
+    :config
+    (setopt on-demand-scroll-bar-mode t)))
 
 (use-package hl-todo
   :config (global-hl-todo-mode 1))
