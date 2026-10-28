@@ -150,10 +150,11 @@
                                 electric-indent-inhibit t))))
 
 (use-package portfile-ts-mode
-  ;; :ensure (:host github :repo "judaew/portfile-ts-mode"
-  ;;               :files ("*.el" "portfile-language.json"))
+  :ensure (:host github :repo "judaew/portfile-ts-mode"
+                 :files ("*.el" "portfile-language.json"))
   ;; For local development:
-  :load-path "~/wrk/github.com/judaew/portfile-ts-mode/")
+  ;; :load-path "~/wrk/github.com/judaew/portfile-ts-mode/"
+  )
 
 ;; === Systemd ===
 ;; ---------------

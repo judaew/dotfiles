@@ -41,11 +41,13 @@
 ;; ---------------------------
 
 (use-package custom-css
+  :if (not (eq system-type 'darwin))
   :ensure nil ;; nix
   :config
   (setopt custom-css-scroll-bar-mode t))
 
 (use-package on-demand-scroll-bar
+  :if (not (eq system-type 'darwin))
   :ensure (:host github :repo "florommel/on-demand-scroll-bar")
   :config
   (setopt on-demand-scroll-bar-mode t))

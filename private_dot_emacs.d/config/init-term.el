@@ -47,10 +47,12 @@
   (("C-~" . ghostel)))
 
 (use-package ghostel-compile
+  :if (not (eq system-type 'darwin))
   :ensure nil ;; nix
   :config (ghostel-compile-global-mode 1))
 
 (use-package ghostel-comint
+  :if (not (eq system-type 'darwin))
   :ensure nil ;; nix
   :config (ghostel-comint-global-mode 1))
 
