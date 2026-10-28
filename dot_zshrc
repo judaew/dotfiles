@@ -173,6 +173,8 @@ alias df="df -h"
 alias du="du -h"
 alias grep="grep --color=auto"
 
+alias y="yazi"
+
 # NixOS
 alias n_dry_run="sudo nixos-rebuild dry-run --flake"
 alias n_build="sudo nixos-rebuild build --flake"
